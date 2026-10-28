@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "MM",
+    "MM"
+  ],
+  "key": {
+    "M": {
+      "item": "mythsofworlds:marble"
+    }
+  },
+  "result": {
+    "id": "mythsofworlds:marble_bricks",
+    "count": 4
+  }
+}

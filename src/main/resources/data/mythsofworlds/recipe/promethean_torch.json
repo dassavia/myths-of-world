@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "minecraft:flint"
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "mythsofworlds:olympian_marble"
+    },
+    {
+      "item": "minecraft:torch"
+    }
+  ],
+  "result": {
+    "id": "mythsofworlds:promethean_torch",
+    "count": 1
+  }
+}

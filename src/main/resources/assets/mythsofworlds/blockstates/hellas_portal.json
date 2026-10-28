@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "mythsofworlds:block/hellas_portal_ns"
+    },
+    "axis=z": {
+      "model": "mythsofworlds:block/hellas_portal_ew"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "mythsofworlds:nemean_lion_den",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 24,
+    "separation": 8,
+    "salt": 1450108
+  }
+}

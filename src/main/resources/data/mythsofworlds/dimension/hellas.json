@@ -1,0 +1,96 @@
+{
+  "type": "mythsofworlds:hellas",
+  "generator": {
+    "type": "minecraft:noise",
+    "settings": "minecraft:overworld",
+    "biome_source": {
+      "type": "minecraft:multi_noise",
+      "biomes": [
+        {
+          "biome": "mythsofworlds:olympus_peaks",
+          "parameters": {
+            "temperature": -0.2,
+            "humidity": 0.0,
+            "continentalness": 0.5,
+            "erosion": -0.8,
+            "weirdness": 0.0,
+            "depth": 0.0,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "mythsofworlds:elysian_fields",
+          "parameters": {
+            "temperature": 0.6,
+            "humidity": -0.3,
+            "continentalness": 0.3,
+            "erosion": 0.5,
+            "weirdness": 0.0,
+            "depth": 0.0,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "mythsofworlds:arcadian_grove",
+          "parameters": {
+            "temperature": 0.3,
+            "humidity": 0.5,
+            "continentalness": 0.3,
+            "erosion": 0.2,
+            "weirdness": 0.0,
+            "depth": 0.0,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "mythsofworlds:asphodel_meadows",
+          "parameters": {
+            "temperature": -0.6,
+            "humidity": -0.4,
+            "continentalness": 0.5,
+            "erosion": 0.4,
+            "weirdness": 0.5,
+            "depth": 0.0,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "mythsofworlds:stygian_marsh",
+          "parameters": {
+            "temperature": -0.3,
+            "humidity": 0.7,
+            "continentalness": 0.15,
+            "erosion": 0.8,
+            "weirdness": 0.0,
+            "depth": 0.0,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "mythsofworlds:aegean_coast",
+          "parameters": {
+            "temperature": 0.5,
+            "humidity": -0.2,
+            "continentalness": -0.1,
+            "erosion": 0.3,
+            "weirdness": 0.0,
+            "depth": 0.0,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "mythsofworlds:aegean_sea",
+          "parameters": {
+            "temperature": 0.5,
+            "humidity": 0.0,
+            "continentalness": -0.6,
+            "erosion": 0.0,
+            "weirdness": 0.0,
+            "depth": 0.0,
+            "offset": 0.0
+          }
+        }
+      ]
+    }
+  }
+}

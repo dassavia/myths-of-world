@@ -17,8 +17,14 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - name: Build
         run: ./gradlew build --stacktrace
-      - name: Game tests (portal + Jotunheim data)
+      - name: Game tests (portals, data, structures, mobs)
         run: ./gradlew runGameTestServer --stacktrace
+      - name: World smoke test (generate every dimension, biome and structure)
+        timeout-minutes: 20
+        run: |
+          mkdir -p run/smoke
+          echo "eula=true" > run/smoke/eula.txt
+          ./gradlew runSmokeTest --stacktrace
       - uses: actions/upload-artifact@v4
         with:
           name: mythsofworlds-jar
