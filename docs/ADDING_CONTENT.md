@@ -12,8 +12,18 @@ src/main/java/com/mythsofworlds/
 │   ├── PortalShape.java        поиск замкнутой рамки любой формы
 │   ├── PortalPlacement.java    поиск или постройка портала на другой стороне
 │   └── PortalIgniterItem.java  «зажигалка» для порталов
+├── mythology/Mythology.java    список шести мифологий и их измерений
+├── mythology/greek/            всё греческое (полный пример)
+│   ├── GreekContent.java       блоки, предметы, портал, Факел Прометея, списки биомов и структур
+│   ├── GreekEntities.java      мобы: типы, характеристики, яйца призыва, правила спавна
+│   ├── entity/                 поведение мобов; GreekBoss — общая основа боссов (шкала здоровья, без деспавна)
+│   ├── client/                 модели и рендеры мобов (только клиент)
+│   └── item/MedusaHeadItem.java
 ├── mythology/norse/NorseContent.java   всё скандинавское: блоки, предметы, измерение
-└── gametest/                   автотесты (./gradlew runGameTestServer)
+├── mythology/slavic|oceanic|egyptian|indian/   заготовки: только ключ измерения
+└── gametest/                   автотесты (./gradlew runGameTestServer) и WorldSmokeTest (./gradlew runSmokeTest)
+
+tools/gen_greek_assets.py       генератор греческих JSON, шаблонов структур (.nbt) и временных текстур
 
 src/main/resources/
 ├── assets/mythsofworlds/       то, что видит игрок: текстуры, модели, переводы
@@ -75,6 +85,33 @@ public static final DeferredItem<Item> RAVEN_FEATHER = ITEMS.registerSimpleItem(
 6. Биомы: скопируйте файлы из `worldgen/biome/` и поменяйте цвета неба, тумана, воды, мобов и украшения.
    Если используете ванильные биомы (`minecraft:desert` и т.п.), свои файлы не нужны.
 
+## Греческие данные генерируются скриптом
+
+Биомы Эллады, структуры, лут, модели, переводы и измерения-заготовки описаны таблицами в
+`tools/gen_greek_assets.py` (постройки — в `tools/structures.py`). Поменяйте таблицу и запустите:
+
+```bash
+python3 tools/gen_greek_assets.py             # JSON и .nbt
+python3 tools/gen_greek_assets.py --textures  # плюс перерисовать временные текстуры (затрёт PNG)
+```
+
+Скрипт сам следит за порядком украшений в биомах. Готовые файлы можно править и руками, но следующий запуск
+скрипта их перезапишет. Структуру удобно доработать в игре блоком структуры (`/give @s structure_block`),
+сохранить и положить .nbt в `data/mythsofworlds/structure/greek/`.
+
+## Новый моб
+
+1. Класс в `mythology/greek/entity/` (обычный монстр — по образцу `Satyr`, босс — наследник `GreekBoss`, как `Minotaur`).
+2. В `GreekEntities`: тип (`register(...)`), яйцо (`egg(...)`), строка в `registerAttributes`, при естественном спавне — в `registerSpawnPlacements`.
+3. В `client/GreekClient`: рендер. Человекоподобным подходит `GreekHumanoidRenderer` со слоем `HUMANOID`, зверям — `BeastModel`.
+4. Текстура `textures/entity/<имя>.png`, лут `loot_table/entities/<имя>.json`, перевод `entity.mythsofworlds.<имя>`,
+   модель яйца `models/item/<имя>_spawn_egg.json`. Где спавнится — в `spawners` нужных биомов.
+
+## Как развить заготовку мифологии
+
+Например, славянскую: в `SlavicContent` добавьте блок рамки, `MythPortalBlock` и зажигалку по образцу `GreekContent`,
+поставьте `true` у `SLAVIC` в `Mythology.java`, замените ванильные биомы в `dimension/nav.json` своими.
+
 ## Измерения: что можно менять без кода
 
 - `dimension_type/*.json`: `fixed_time` (12500 = вечные сумерки, 6000 = вечный полдень, убрать = смена дня и ночи),
@@ -98,4 +135,6 @@ GitHub Actions выполняет сборку и тесты на каждый p
 на странице запуска (вкладка Actions).
 
 Новый автотест: добавьте метод с `@GameTest(template = "empty")` в класс из пакета `gametest`
-по образцу `NorsePortalTests`.
+по образцу `NorsePortalTests` или `GreekTests`. Автотесты не создают модовые измерения, поэтому в CI ещё запускается
+`./gradlew runSmokeTest`: настоящий сервер генерирует все измерения, находит каждый биом и структуру Эллады и выходит
+с ошибкой, если что-то не так (перед первым запуском создайте `run/smoke/eula.txt` с текстом `eula=true`).
