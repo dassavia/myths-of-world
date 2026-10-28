@@ -42,6 +42,12 @@ neoForge {
             systemProperty 'mythsofworlds.smokeTest', 'true'
             gameDirectory = project.file('run/smoke')
         }
+        // Client that quits on reaching the title screen (see ClientSmokeTest); used by CI.
+        clientSmokeTest {
+            client()
+            systemProperty 'mythsofworlds.clientSmokeTest', 'true'
+            gameDirectory = project.file('run/client-smoke')
+        }
     }
 
     mods {
