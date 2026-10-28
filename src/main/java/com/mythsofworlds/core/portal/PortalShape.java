@@ -1,6 +1,5 @@
-package com.mythsofworlds.norse;
+package com.mythsofworlds.core.portal;
 
-import com.mythsofworlds.registry.ModBlocks;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashSet;
@@ -13,27 +12,28 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Finds a closed runestone frame around an air pocket and fills it with Bifrost portal blocks.
- * Any shape works as long as it is a flat, closed outline of runestone (like a nether portal, but not only rectangles).
+ * Finds a closed frame around an air pocket and fills it with portal blocks.
+ * Works for any {@link MythPortalBlock}: the frame block comes from its {@link PortalSettings}.
+ * Any flat, closed outline is accepted (rectangles like a nether portal, but also other shapes).
  */
-public final class BifrostPortalShape {
+public final class PortalShape {
     /** Largest interior a frame may enclose: 21 x 21, the same limit as a nether portal. */
     public static final int MAX_INTERIOR = 21 * 21;
-    /** Smallest interior: at least two blocks tall so a player fits. */
+    /** Smallest interior: at least two blocks so a player fits. */
     public static final int MIN_INTERIOR = 2;
 
-    private BifrostPortalShape() {
+    private PortalShape() {
     }
 
     /** Tries both vertical orientations from {@code start}; returns true if a portal was created. */
-    public static boolean tryLight(Level level, BlockPos start) {
+    public static boolean tryLight(Level level, BlockPos start, MythPortalBlock portal) {
+        Block frame = portal.settings().frame().get();
         for (Direction.Axis axis : new Direction.Axis[]{Direction.Axis.X, Direction.Axis.Z}) {
-            Set<BlockPos> interior = findInterior(level, start, axis);
+            Set<BlockPos> interior = findInterior(level, start, axis, frame);
             if (interior != null) {
-                BlockState portal = ModBlocks.BIFROST_PORTAL.get().defaultBlockState()
-                        .setValue(BifrostPortalBlock.AXIS, axis);
+                BlockState state = portal.defaultBlockState().setValue(MythPortalBlock.AXIS, axis);
                 for (BlockPos pos : interior) {
-                    level.setBlock(pos, portal, Block.UPDATE_CLIENTS | Block.UPDATE_KNOWN_SHAPE);
+                    level.setBlock(pos, state, Block.UPDATE_CLIENTS | Block.UPDATE_KNOWN_SHAPE);
                 }
                 return true;
             }
@@ -43,10 +43,10 @@ public final class BifrostPortalShape {
 
     /**
      * Flood-fills air in the vertical plane of {@code axis}. Returns null if the pocket leaks (touches a block
-     * that is neither air nor runestone, or grows past {@link #MAX_INTERIOR}).
+     * that is neither air nor {@code frame}, or grows past {@link #MAX_INTERIOR}).
      */
     @Nullable
-    public static Set<BlockPos> findInterior(Level level, BlockPos start, Direction.Axis axis) {
+    public static Set<BlockPos> findInterior(Level level, BlockPos start, Direction.Axis axis, Block frame) {
         if (!level.getBlockState(start).isAir()) {
             return null;
         }
@@ -66,7 +66,7 @@ public final class BifrostPortalShape {
                     continue;
                 }
                 BlockState state = level.getBlockState(next);
-                if (state.is(ModBlocks.RUNESTONE.get())) {
+                if (state.is(frame)) {
                     continue;
                 }
                 if (!state.isAir() || level.isOutsideBuildHeight(next)) {

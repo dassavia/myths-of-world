@@ -1,14 +1,14 @@
 package com.mythsofworlds.gametest;
 
 import com.mythsofworlds.MythsOfWorlds;
-import com.mythsofworlds.norse.BifrostPortalBlock;
-import com.mythsofworlds.norse.BifrostPortalShape;
-import com.mythsofworlds.registry.ModBlocks;
-import com.mythsofworlds.world.ModDimensions;
+import com.mythsofworlds.core.portal.MythPortalBlock;
+import com.mythsofworlds.core.portal.PortalPlacement;
+import com.mythsofworlds.core.portal.PortalShape;
+import com.mythsofworlds.mythology.norse.NorseContent;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
@@ -19,13 +19,17 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 public class NorsePortalTests {
     private static final BlockPos INSIDE = new BlockPos(1, 1, 1);
 
+    private static MythPortalBlock portal() {
+        return NorseContent.BIFROST_PORTAL.get();
+    }
+
     /** 4x5 runestone frame in the X plane at z=1, interior x=1..2, y=1..3. */
     private static void buildFrame(GameTestHelper helper, boolean closed) {
         for (int x = 0; x <= 3; x++) {
             for (int y = 0; y <= 4; y++) {
                 boolean edge = x == 0 || x == 3 || y == 0 || y == 4;
                 if (edge && (closed || y != 4)) {
-                    helper.setBlock(new BlockPos(x, y, 1), ModBlocks.RUNESTONE.get());
+                    helper.setBlock(new BlockPos(x, y, 1), NorseContent.RUNESTONE.get());
                 }
             }
         }
@@ -34,11 +38,11 @@ public class NorsePortalTests {
     @GameTest(template = "empty")
     public static void runeLightsClosedFrame(GameTestHelper helper) {
         buildFrame(helper, true);
-        helper.assertTrue(BifrostPortalShape.tryLight(helper.getLevel(), helper.absolutePos(INSIDE)),
+        helper.assertTrue(PortalShape.tryLight(helper.getLevel(), helper.absolutePos(INSIDE), portal()),
                 "a closed runestone frame should light");
         for (int x = 1; x <= 2; x++) {
             for (int y = 1; y <= 3; y++) {
-                helper.assertBlockPresent(ModBlocks.BIFROST_PORTAL.get(), new BlockPos(x, y, 1));
+                helper.assertBlockPresent(portal(), new BlockPos(x, y, 1));
             }
         }
         helper.succeed();
@@ -47,36 +51,43 @@ public class NorsePortalTests {
     @GameTest(template = "empty")
     public static void runeIgnoresOpenFrame(GameTestHelper helper) {
         buildFrame(helper, false);
-        helper.assertTrue(!BifrostPortalShape.tryLight(helper.getLevel(), helper.absolutePos(INSIDE)),
+        helper.assertTrue(!PortalShape.tryLight(helper.getLevel(), helper.absolutePos(INSIDE), portal()),
                 "a frame without a top must not light");
-        helper.assertBlockNotPresent(ModBlocks.BIFROST_PORTAL.get(), INSIDE);
+        helper.assertBlockNotPresent(portal(), INSIDE);
         helper.succeed();
     }
 
     @GameTest(template = "empty")
     public static void portalCollapsesWhenFrameBreaks(GameTestHelper helper) {
         buildFrame(helper, true);
-        BifrostPortalShape.tryLight(helper.getLevel(), helper.absolutePos(INSIDE));
+        PortalShape.tryLight(helper.getLevel(), helper.absolutePos(INSIDE), portal());
         helper.setBlock(new BlockPos(0, 2, 1), Blocks.AIR);
         helper.succeedWhen(() -> {
             for (int x = 1; x <= 2; x++) {
                 for (int y = 1; y <= 3; y++) {
-                    helper.assertBlockNotPresent(ModBlocks.BIFROST_PORTAL.get(), new BlockPos(x, y, 1));
+                    helper.assertBlockNotPresent(portal(), new BlockPos(x, y, 1));
                 }
             }
         });
     }
 
-    /** Loads Jotunheim (validating its worldgen JSON), builds an arrival portal there and finds it again. */
-    @GameTest(template = "empty", timeoutTicks = 400)
-    public static void jotunheimArrivalPortal(GameTestHelper helper) {
-        ServerLevel jotunheim = helper.getLevel().getServer().getLevel(ModDimensions.JOTUNHEIM);
-        helper.assertTrue(jotunheim != null, "Jotunheim dimension is not loaded");
-        BlockPos built = BifrostPortalBlock.findOrCreatePortal(jotunheim, new BlockPos(0, 64, 0));
-        helper.assertTrue(jotunheim.getBlockState(built).is(ModBlocks.BIFROST_PORTAL.get()),
-                "arrival portal was not built at " + built);
-        BlockPos found = BifrostPortalBlock.findPortal(jotunheim, new BlockPos(3, 64, 3));
-        helper.assertTrue(built.equals(found), "expected to find portal at " + built + " but got " + found);
+    /** The game-test server only creates vanilla levels, so check that Jotunheim's JSON loaded into the registry. */
+    @GameTest(template = "empty")
+    public static void jotunheimIsRegistered(GameTestHelper helper) {
+        boolean registered = helper.getLevel().registryAccess().registryOrThrow(Registries.LEVEL_STEM)
+                .containsKey(NorseContent.JOTUNHEIM.location());
+        helper.assertTrue(registered, "Jotunheim dimension JSON did not load");
+        helper.succeed();
+    }
+
+    /** Arrival portal: built on the surface the first time, found again (not rebuilt) the second time. */
+    @GameTest(template = "empty")
+    public static void arrivalPortalIsBuiltThenReused(GameTestHelper helper) {
+        BlockPos near = helper.absolutePos(new BlockPos(1, 1, 1)).offset(200, 0, 200);
+        BlockPos built = PortalPlacement.findOrCreate(helper.getLevel(), near, portal());
+        helper.assertTrue(helper.getLevel().getBlockState(built).is(portal()), "arrival portal was not built at " + built);
+        BlockPos found = PortalPlacement.findOrCreate(helper.getLevel(), near.offset(3, 0, 3), portal());
+        helper.assertTrue(built.equals(found), "expected to reuse portal at " + built + " but got " + found);
         helper.succeed();
     }
 }
