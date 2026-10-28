@@ -2,8 +2,8 @@
   "itemGroup.mythsofworlds": "Myths of Worlds",
   "block.mythsofworlds.runestone": "Runestone",
   "block.mythsofworlds.bifrost_portal": "Bifrost Portal",
-  "item.mythsofworlds.bifrost_rune": "Bifrost Rune",
-  "item.mythsofworlds.bifrost_rune.desc": "Use inside a closed runestone frame to open the way to Jotunheim",
+  "item.mythsofworlds.rune_igniter": "Rune Igniter",
+  "item.mythsofworlds.rune_igniter.desc": "Use inside a closed runestone frame to open the way to Jotunheim",
   "biome.mythsofworlds.frost_wastes": "Frost Wastes",
   "biome.mythsofworlds.giants_taiga": "Giants' Taiga"
 }

@@ -2,8 +2,8 @@
   "itemGroup.mythsofworlds": "Мифы Миров",
   "block.mythsofworlds.runestone": "Рунный камень",
   "block.mythsofworlds.bifrost_portal": "Портал Бифрёст",
-  "item.mythsofworlds.bifrost_rune": "Руна Бифрёст",
-  "item.mythsofworlds.bifrost_rune.desc": "Примените внутри замкнутой рамки из рунного камня, чтобы открыть путь в Йотунхейм",
+  "item.mythsofworlds.rune_igniter": "Рунное огниво",
+  "item.mythsofworlds.rune_igniter.desc": "Примените внутри замкнутой рамки из рунного камня, чтобы открыть путь в Йотунхейм",
   "biome.mythsofworlds.frost_wastes": "Ледяные пустоши",
   "biome.mythsofworlds.giants_taiga": "Тайга великанов"
 }

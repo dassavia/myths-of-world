@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {"item": "minecraft:flint"},
+    {"item": "minecraft:iron_ingot"},
+    {"item": "mythsofworlds:runestone"},
+    {"item": "minecraft:amethyst_shard"}
+  ],
+  "result": {"id": "mythsofworlds:rune_igniter", "count": 1}
+}

@@ -16,9 +16,9 @@ import net.minecraft.world.level.Level;
 
 import java.util.List;
 
-/** Right-click the inside of a runestone frame to open a Bifrost portal. */
-public class BifrostRuneItem extends Item {
-    public BifrostRuneItem(Properties properties) {
+/** Igniter for the Bifrost portal: right-click the inside of a runestone frame, like flint and steel on obsidian. */
+public class RuneIgniterItem extends Item {
+    public RuneIgniterItem(Properties properties) {
         super(properties);
     }
 

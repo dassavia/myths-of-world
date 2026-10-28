@@ -1,7 +1,7 @@
 package com.mythsofworlds.registry;
 
 import com.mythsofworlds.MythsOfWorlds;
-import com.mythsofworlds.norse.BifrostRuneItem;
+import com.mythsofworlds.norse.RuneIgniterItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -13,8 +13,8 @@ public final class ModItems {
 
     public static final DeferredItem<BlockItem> RUNESTONE = ITEMS.registerSimpleBlockItem(ModBlocks.RUNESTONE);
 
-    public static final DeferredItem<BifrostRuneItem> BIFROST_RUNE = ITEMS.register("bifrost_rune",
-            () -> new BifrostRuneItem(new Item.Properties().durability(16).rarity(Rarity.RARE)));
+    public static final DeferredItem<RuneIgniterItem> RUNE_IGNITER = ITEMS.register("rune_igniter",
+            () -> new RuneIgniterItem(new Item.Properties().durability(16).rarity(Rarity.RARE)));
 
     private ModItems() {
     }

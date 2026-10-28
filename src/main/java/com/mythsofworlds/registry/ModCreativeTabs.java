@@ -14,10 +14,10 @@ public final class ModCreativeTabs {
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MAIN = TABS.register("main",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup." + MythsOfWorlds.MODID))
-                    .icon(() -> ModItems.BIFROST_RUNE.get().getDefaultInstance())
+                    .icon(() -> ModItems.RUNE_IGNITER.get().getDefaultInstance())
                     .displayItems((params, output) -> {
                         output.accept(ModItems.RUNESTONE.get());
-                        output.accept(ModItems.BIFROST_RUNE.get());
+                        output.accept(ModItems.RUNE_IGNITER.get());
                     })
                     .build());
 

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "mythsofworlds:item/bifrost_rune"
+    "layer0": "mythsofworlds:item/rune_igniter"
   }
 }
