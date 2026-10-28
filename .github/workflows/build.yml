@@ -9,17 +9,46 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: 21
       - uses: gradle/actions/setup-gradle@v4
       - name: Build
         run: ./gradlew build --stacktrace
-      - name: Game tests (portal + Jotunheim worldgen)
+      - name: Game tests (portal + Jotunheim data)
         run: ./gradlew runGameTestServer --stacktrace
       - uses: actions/upload-artifact@v4
         with:
           name: mythsofworlds-jar
           path: build/libs/*.jar
+
+  # Every push to main publishes the jar on the Releases page, so players can download it without logging in.
+  # The release is named after mod_version in gradle.properties: bump it to start a new release,
+  # otherwise the jar of the current release is replaced.
+  release:
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v4
+        with:
+          name: mythsofworlds-jar
+          path: dist
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION=$(grep '^mod_version=' gradle.properties | cut -d= -f2 | tr -d '[:space:]')
+          TAG="v$VERSION"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" dist/*.jar --clobber
+          else
+            gh release create "$TAG" dist/*.jar --target "$GITHUB_SHA" \
+              --title "Мифы Миров $VERSION (Minecraft 1.21.1, NeoForge)" \
+              --notes-file .github/release-notes.md
+          fi

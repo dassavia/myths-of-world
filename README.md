@@ -1,7 +1,14 @@
 # Мифы Миров (Myths of Worlds)
 
-Мод для **NeoForge 1.21.1** о мифологиях: славянской, греческой, скандинавской и египетской.
-Дизайн-документ: https://claude.ai/artifact/2L4E9shkouhht7MJkwrfuM
+Мод для **Minecraft 1.21.1 на NeoForge** о мифологиях: пока готова скандинавская часть с порталом в Йотунхейм.
+
+## Скачать и установить
+
+**[⬇ Скачать последнюю версию](https://github.com/dassavia/myths-of-world/releases/latest)** (файл `mythsofworlds-*.jar` в разделе Assets)
+
+1. Установите [NeoForge](https://neoforged.net/) для Minecraft 1.21.1 (21.1.172 или новее): запустите установщик и выберите «Install client».
+2. Положите скачанный `.jar` в папку `mods` (Windows: `%appdata%\.minecraft\mods`).
+3. Запустите игру с профилем NeoForge.
 
 ## Что уже есть (v0.1.0, скандинавская часть)
 
@@ -25,4 +32,6 @@
 ./gradlew runGameTestServer  # автотесты портала и генерации Йотунхейма
 ```
 
-Нужна Java 21. GitHub Actions собирает jar и прогоняет тесты на каждый push (артефакт `mythsofworlds-jar`).
+Нужна Java 21. GitHub Actions собирает jar и прогоняет тесты на каждый push. После push в `main` jar автоматически публикуется на странице
+[Releases](https://github.com/dassavia/myths-of-world/releases). Новый релиз создаётся, когда меняется `mod_version`
+в `gradle.properties`; иначе обновляется файл в текущем релизе.

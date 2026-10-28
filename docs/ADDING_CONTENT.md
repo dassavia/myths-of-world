@@ -93,7 +93,8 @@ public static final DeferredItem<Item> RAVEN_FEATHER = ITEMS.registerSimpleItem(
 ./gradlew runGameTestServer  # автотесты; падают с ошибкой, если что-то сломано
 ```
 
-GitHub Actions выполняет сборку и тесты на каждый push. Готовый jar лежит в артефакте `mythsofworlds-jar`
+GitHub Actions выполняет сборку и тесты на каждый push, а после push в `main` выкладывает jar в Releases.
+Чтобы выпустить новую версию, увеличьте `mod_version` в `gradle.properties`. Сборки других веток лежат в артефакте `mythsofworlds-jar`
 на странице запуска (вкладка Actions).
 
 Новый автотест: добавьте метод с `@GameTest(template = "empty")` в класс из пакета `gametest`
