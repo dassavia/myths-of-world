@@ -17,7 +17,7 @@ public final class PortalPlacement {
     private PortalPlacement() {
     }
 
-    /** Returns the bottom block of a {@code portal} near {@code near} in {@code level}, building one if none exists. */
+    /** Returns the bottom corner block (smallest x/z) of a {@code portal} near {@code near} in {@code level}, building one if none exists. */
     public static BlockPos findOrCreate(ServerLevel level, BlockPos near, MythPortalBlock portal) {
         BlockPos existing = find(level, near, portal);
         return existing != null ? existing : build(level, near, portal);
@@ -44,7 +44,18 @@ public final class PortalPlacement {
                 }
             }
         }
-        return best;
+        return best == null ? null : cornerOf(level, best, portal);
+    }
+
+    /** Walks from any bottom portal block to the bottom corner with the smallest x/z, so results are stable. */
+    private static BlockPos cornerOf(ServerLevel level, BlockPos bottom, MythPortalBlock portal) {
+        Direction back = level.getBlockState(bottom).getValue(MythPortalBlock.AXIS) == Direction.Axis.X
+                ? Direction.WEST : Direction.NORTH;
+        BlockPos pos = bottom;
+        while (level.getBlockState(pos.relative(back)).is(portal)) {
+            pos = pos.relative(back);
+        }
+        return pos;
     }
 
     /** Builds a 2x3 portal in its frame on the surface, with a small platform on both sides. */

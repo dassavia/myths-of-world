@@ -71,12 +71,19 @@ public class NorsePortalTests {
         });
     }
 
-    /** The game-test server only creates vanilla levels, so check that Jotunheim's JSON loaded into the registry. */
+    /**
+     * The game-test server only creates vanilla levels, so Jotunheim itself is not loaded here.
+     * Instead check that its dimension type and biomes parsed, which catches most JSON mistakes.
+     */
     @GameTest(template = "empty")
-    public static void jotunheimIsRegistered(GameTestHelper helper) {
-        boolean registered = helper.getLevel().registryAccess().registryOrThrow(Registries.LEVEL_STEM)
-                .containsKey(NorseContent.JOTUNHEIM.location());
-        helper.assertTrue(registered, "Jotunheim dimension JSON did not load");
+    public static void jotunheimDataLoads(GameTestHelper helper) {
+        var registries = helper.getLevel().registryAccess();
+        helper.assertTrue(registries.registryOrThrow(Registries.DIMENSION_TYPE).containsKey(NorseContent.JOTUNHEIM.location()),
+                "dimension_type/jotunheim.json did not load");
+        for (String biome : new String[]{"frost_wastes", "giants_taiga"}) {
+            helper.assertTrue(registries.registryOrThrow(Registries.BIOME).containsKey(MythsOfWorlds.id(biome)),
+                    "worldgen/biome/" + biome + ".json did not load");
+        }
         helper.succeed();
     }
 
