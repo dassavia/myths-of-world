@@ -1,0 +1,36 @@
+{
+  "type": "mythsofworlds:jotunheim",
+  "generator": {
+    "type": "minecraft:noise",
+    "settings": "minecraft:amplified",
+    "biome_source": {
+      "type": "minecraft:multi_noise",
+      "biomes": [
+        {
+          "biome": "mythsofworlds:frost_wastes",
+          "parameters": {
+            "temperature": 0.0,
+            "humidity": -0.4,
+            "continentalness": 0.0,
+            "erosion": 0.0,
+            "weirdness": 0.0,
+            "depth": 0.0,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "mythsofworlds:giants_taiga",
+          "parameters": {
+            "temperature": 0.0,
+            "humidity": 0.4,
+            "continentalness": 0.0,
+            "erosion": 0.0,
+            "weirdness": 0.0,
+            "depth": 0.0,
+            "offset": 0.0
+          }
+        }
+      ]
+    }
+  }
+}

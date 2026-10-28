@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " A ",
+    "RDR",
+    " A "
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "R": {
+      "item": "mythsofworlds:runestone"
+    }
+  },
+  "result": {
+    "id": "mythsofworlds:bifrost_rune",
+    "count": 1
+  }
+}
