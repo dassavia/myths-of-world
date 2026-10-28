@@ -3,6 +3,7 @@ package com.mythsofworlds.registry;
 import com.mythsofworlds.MythsOfWorlds;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Items;
@@ -19,6 +20,8 @@ public final class ModRegistries {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MythsOfWorlds.MODID);
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
             DeferredRegister.create(Registries.ENTITY_TYPE, MythsOfWorlds.MODID);
+    public static final DeferredRegister<SoundEvent> SOUNDS =
+            DeferredRegister.create(Registries.SOUND_EVENT, MythsOfWorlds.MODID);
     public static final DeferredRegister<CreativeModeTab> TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MythsOfWorlds.MODID);
 
@@ -38,6 +41,7 @@ public final class ModRegistries {
         BLOCKS.register(modBus);
         ITEMS.register(modBus);
         ENTITY_TYPES.register(modBus);
+        SOUNDS.register(modBus);
         TABS.register(modBus);
     }
 }

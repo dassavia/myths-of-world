@@ -1,7 +1,9 @@
 package com.mythsofworlds.mythology.greek.entity;
 
+import com.mythsofworlds.mythology.greek.GreekSounds;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -21,8 +23,13 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
-/** Translucent ghost of the dead from the Asphodel Meadows. Its touch drains strength and dims the light. */
+/**
+ * Translucent ghost of the dead from the Asphodel Meadows. Its touch drains strength and dims the light, and it
+ * feeds on the life it takes. Running is no use: a shade blinks through the mist to appear beside its prey.
+ */
 public class Shade extends Monster {
+    private int blinkCooldown = 100;
+
     public Shade(EntityType<? extends Monster> type, Level level) {
         super(type, level);
     }
@@ -52,8 +59,43 @@ public class Shade extends Monster {
         if (hit && target instanceof LivingEntity living) {
             living.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 100, 0), this);
             living.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 80, 0), this);
+            heal(2.0F);
         }
         return hit;
+    }
+
+    @Override
+    protected void customServerAiStep() {
+        super.customServerAiStep();
+        LivingEntity target = getTarget();
+        if (--blinkCooldown > 0 || target == null) {
+            return;
+        }
+        blinkCooldown = 40;
+        if (distanceToSqr(target) > 64.0 && distanceToSqr(target) < 900.0) {
+            blinkTo(target);
+            blinkCooldown = 140;
+        }
+    }
+
+    /** Teleports to a random spot 2-4 blocks from the target. */
+    private void blinkTo(LivingEntity target) {
+        double fromX = getX();
+        double fromY = getY();
+        double fromZ = getZ();
+        for (int attempt = 0; attempt < 8; attempt++) {
+            double angle = random.nextDouble() * Math.PI * 2.0;
+            double distance = 2.0 + random.nextDouble() * 2.0;
+            if (randomTeleport(target.getX() + Math.cos(angle) * distance, target.getY(),
+                    target.getZ() + Math.sin(angle) * distance, false)) {
+                if (level() instanceof ServerLevel server) {
+                    server.sendParticles(ParticleTypes.SOUL, fromX, fromY + 1.0, fromZ, 10, 0.3, 0.6, 0.3, 0.02);
+                    server.sendParticles(ParticleTypes.SOUL, getX(), getY() + 1.0, getZ(), 10, 0.3, 0.6, 0.3, 0.02);
+                }
+                playSound(GreekSounds.SHADE_TELEPORT.get(), 1.0F, 1.0F);
+                return;
+            }
+        }
     }
 
     @Override
@@ -63,16 +105,16 @@ public class Shade extends Monster {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.VEX_AMBIENT;
+        return GreekSounds.SHADE_AMBIENT.get();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.VEX_HURT;
+        return GreekSounds.SHADE_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.VEX_DEATH;
+        return GreekSounds.SHADE_DEATH.get();
     }
 }

@@ -3,6 +3,8 @@ package com.mythsofworlds.mythology.greek.client;
 import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.mythology.greek.GreekEntities;
 import com.mythsofworlds.mythology.greek.entity.Cerberus;
+import com.mythsofworlds.mythology.greek.entity.Hydra;
+import com.mythsofworlds.mythology.greek.entity.HydraHatchling;
 import com.mythsofworlds.mythology.greek.entity.NemeanLion;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -23,6 +25,7 @@ public final class GreekClient {
     public static final ModelLayerLocation NEMEAN_LION = layer("nemean_lion");
     public static final ModelLayerLocation CERBERUS = layer("cerberus");
     public static final ModelLayerLocation HYDRA = layer("hydra");
+    public static final ModelLayerLocation GOLDEN_HIND = layer("golden_hind");
 
     private GreekClient() {
     }
@@ -40,6 +43,7 @@ public final class GreekClient {
         event.registerLayerDefinition(NEMEAN_LION, () -> BeastModel.createBodyLayer(1, true));
         event.registerLayerDefinition(CERBERUS, () -> BeastModel.createBodyLayer(3, false));
         event.registerLayerDefinition(HYDRA, HydraModel::createBodyLayer);
+        event.registerLayerDefinition(GOLDEN_HIND, HindModel::createBodyLayer);
     }
 
     @SubscribeEvent
@@ -62,7 +66,12 @@ public final class GreekClient {
         event.registerEntityRenderer(GreekEntities.MINOTAUR.get(),
                 ctx -> new GreekHumanoidRenderer<>(ctx, new MinotaurModel(ctx.bakeLayer(MINOTAUR)), "minotaur", 1.5F, false));
         event.registerEntityRenderer(GreekEntities.HYDRA.get(),
-                ctx -> new GreekMobRenderer<>(ctx, new HydraModel(ctx.bakeLayer(HYDRA)), "hydra", 1.8F));
+                ctx -> new GreekMobRenderer<Hydra, HydraModel<Hydra>>(ctx, new HydraModel<>(ctx.bakeLayer(HYDRA)), "hydra", 1.8F));
+        event.registerEntityRenderer(GreekEntities.HYDRA_HATCHLING.get(),
+                ctx -> new GreekMobRenderer<HydraHatchling, HydraModel<HydraHatchling>>(ctx, new HydraModel<>(ctx.bakeLayer(HYDRA)),
+                        "hydra_hatchling", 0.45F));
+        event.registerEntityRenderer(GreekEntities.GOLDEN_HIND.get(), HindRenderer::new);
+        event.registerEntityRenderer(GreekEntities.GREEK_MERCHANT.get(), GreekMerchantRenderer::new);
         event.registerEntityRenderer(GreekEntities.CERBERUS.get(),
                 ctx -> new GreekMobRenderer<Cerberus, BeastModel<Cerberus>>(ctx, new BeastModel<>(ctx.bakeLayer(CERBERUS), 3),
                         "cerberus", 1.8F));

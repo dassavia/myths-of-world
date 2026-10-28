@@ -208,7 +208,8 @@ BIOMES = {
         "spawners": {
             "monster": [spawn(f"{NS}:satyr", 80, 2, 4), spawn("minecraft:spider", 40, 1, 2), spawn("minecraft:creeper", 30, 1, 2),
                         spawn("minecraft:zombie", 30, 1, 3)],
-            "creature": [spawn("minecraft:fox", 8, 2, 3), spawn("minecraft:sheep", 8, 2, 4), spawn("minecraft:pig", 8, 2, 4),
+            "creature": [spawn(f"{NS}:golden_hind", 3, 1, 2), spawn("minecraft:fox", 8, 2, 3), spawn("minecraft:sheep", 8, 2, 4),
+                         spawn("minecraft:pig", 8, 2, 4),
                          spawn("minecraft:wolf", 4, 2, 4), spawn("minecraft:rabbit", 4, 2, 3)],
         },
     },
@@ -352,15 +353,20 @@ def worldgen_features():
 # ====================================================================== structures
 
 # name: (biomes, spacing, separation, salt, heightmap, depth offset, terrain adaptation)
+# Spacing is in chunks; v0.3 doubled it so that lairs no longer crowd each other.
 STRUCTURES = {
-    "greek_temple": (["olympus_peaks", "elysian_fields"], 28, 10, 1450101, "WORLD_SURFACE_WG", 0, "beard_thin"),
-    "oracle_of_delphi": (["arcadian_grove", "olympus_peaks"], 24, 8, 1450102, "WORLD_SURFACE_WG", 0, "beard_thin"),
-    "labyrinth": (["elysian_fields", "aegean_coast", "arcadian_grove"], 34, 12, 1450103, "WORLD_SURFACE_WG", -1, "beard_box"),
-    "gates_of_hades": (["asphodel_meadows"], 30, 10, 1450104, "WORLD_SURFACE_WG", 0, "beard_thin"),
-    "hydra_lair": (["stygian_marsh"], 26, 8, 1450105, "WORLD_SURFACE_WG", -2, "beard_thin"),
-    "medusa_lair": (["aegean_coast"], 26, 8, 1450106, "WORLD_SURFACE_WG", 0, "beard_thin"),
-    "cyclops_cave": (["olympus_peaks", "aegean_coast", "arcadian_grove"], 28, 10, 1450107, "WORLD_SURFACE_WG", 0, "beard_thin"),
-    "nemean_lion_den": (["arcadian_grove"], 24, 8, 1450108, "WORLD_SURFACE_WG", 0, "beard_thin"),
+    "greek_temple": (["olympus_peaks", "elysian_fields"], 56, 20, 1450201, "WORLD_SURFACE_WG", 0, "beard_thin"),
+    "oracle_of_delphi": (["arcadian_grove", "olympus_peaks"], 48, 16, 1450202, "WORLD_SURFACE_WG", 0, "beard_thin"),
+    "labyrinth": (["elysian_fields", "aegean_coast", "arcadian_grove"], 64, 24, 1450203, "WORLD_SURFACE_WG", -1, "beard_box"),
+    "gates_of_hades": (["asphodel_meadows"], 56, 20, 1450204, "WORLD_SURFACE_WG", 0, "beard_thin"),
+    "hydra_lair": (["stygian_marsh"], 52, 18, 1450205, "WORLD_SURFACE_WG", -2, "beard_thin"),
+    "medusa_lair": (["aegean_coast"], 52, 18, 1450206, "WORLD_SURFACE_WG", 0, "beard_thin"),
+    "cyclops_cave": (["olympus_peaks", "aegean_coast", "arcadian_grove"], 56, 20, 1450207, "WORLD_SURFACE_WG", 0, "beard_thin"),
+    "nemean_lion_den": (["arcadian_grove"], 48, 16, 1450208, "WORLD_SURFACE_WG", 0, "beard_thin"),
+    # The agora is the hub of Hellas, so it stays the most common structure.
+    "agora": (["elysian_fields", "arcadian_grove", "aegean_coast"], 32, 12, 1450209, "WORLD_SURFACE_WG", 0, "beard_thin"),
+    "ship_of_theseus": (["aegean_sea"], 44, 14, 1450210, "WORLD_SURFACE_WG", -3, "none"),
+    "perseus_refuge": (["aegean_coast", "olympus_peaks"], 44, 14, 1450211, "WORLD_SURFACE_WG", 0, "beard_thin"),
 }
 
 STRUCTURE_NAMES = {
@@ -372,6 +378,9 @@ STRUCTURE_NAMES = {
     "medusa_lair": ("Логово Медузы", "Lair of Medusa"),
     "cyclops_cave": ("Пещера циклопа", "Cyclops Cave"),
     "nemean_lion_den": ("Логово Немейского льва", "Den of the Nemean Lion"),
+    "agora": ("Агора", "Agora"),
+    "ship_of_theseus": ("Корабль Тесея", "Ship of Theseus"),
+    "perseus_refuge": ("Убежище Персея", "Refuge of Perseus"),
 }
 
 
@@ -444,7 +453,7 @@ def mob(name, drops):
 
 
 def loot():
-    for block in ("marble", "marble_bricks", "marble_pillar", "olympian_marble", "asphodel"):
+    for block in ("marble", "marble_bricks", "marble_pillar", "olympian_marble", "asphodel", "brazier"):
         write_json(data("loot_table", "blocks", f"{block}.json"), {
             "type": "minecraft:block",
             "pools": [{"rolls": 1, "bonus_rolls": 0, "entries": [{"type": "minecraft:item", "name": f"{NS}:{block}"}],
@@ -488,6 +497,30 @@ def loot():
         entry("minecraft:book", 3, enchant=True), entry("minecraft:golden_apple", 2),
     ])
 
+    chest("agora_house", (3, 6), [
+        entry("minecraft:bread", 10, 1, 4), entry("minecraft:wheat", 8, 2, 6), entry("minecraft:honey_bottle", 4),
+        entry("minecraft:emerald", 6, 1, 4), entry("minecraft:sweet_berries", 6, 2, 6), entry("minecraft:clay_ball", 4, 2, 8),
+        entry(f"{NS}:marble", 4, 2, 8),
+    ])
+    chest("agora_temple", (3, 5), gold + [
+        entry("minecraft:emerald", 10, 2, 8), entry(f"{NS}:ambrosia", 3), entry(f"{NS}:promethean_torch", 3),
+        entry("minecraft:feather", 4, 2, 5), entry("minecraft:golden_boots", 2, enchant=True),
+    ])
+    chest("ship_of_theseus", (3, 6), gold + [
+        entry("minecraft:string", 6, 3, 10), entry("minecraft:map", 3), entry("minecraft:compass", 3),
+        entry("minecraft:trident", 1), entry("minecraft:nautilus_shell", 3, 1, 2), entry("minecraft:book", 4, enchant=True),
+        entry("minecraft:black_wool", 6, 2, 6), entry(f"{NS}:ambrosia", 2),
+    ])
+    chest("perseus_refuge", (2, 4), [
+        entry("minecraft:bread", 6, 1, 3), entry(f"{NS}:ambrosia", 3), entry("minecraft:golden_apple", 2),
+        entry("minecraft:arrow", 5, 4, 12), entry("minecraft:leather_boots", 3, enchant=True),
+    ], bonus=[entry(f"{NS}:harpe", 1)])
+    # The polished shield always waits beside the harpe.
+    with open(data("loot_table", "chests", "perseus_refuge.json"), encoding="utf-8") as f:
+        table = json.load(f)
+    table["pools"].append({"rolls": 1, "entries": [entry("minecraft:shield", 1)]})
+    write_json(data("loot_table", "chests", "perseus_refuge.json"), table)
+
     mob("satyr", [("minecraft:leather", 0, 2, None), ("minecraft:wheat", 0, 2, None)])
     mob("harpy", [(f"{NS}:harpy_feather", 0, 2, None), ("minecraft:feather", 0, 2, None)])
     mob("spartoi", [("minecraft:bone", 0, 2, None), ("minecraft:iron_nugget", 0, 3, None)])
@@ -495,9 +528,11 @@ def loot():
     mob("pegasus", [("minecraft:leather", 0, 2, None), (f"{NS}:harpy_feather", 1, 2, None)])
     mob("cyclops", [(f"{NS}:cyclops_eye", 1, 1, None), ("minecraft:mutton", 2, 6, None), ("minecraft:iron_ingot", 2, 6, None)])
     mob("medusa", [(f"{NS}:medusa_head", 1, 1, None), ("minecraft:gold_ingot", 2, 5, None)])
-    mob("nemean_lion", [(f"{NS}:nemean_pelt", 1, 1, None), ("minecraft:leather", 3, 6, None)])
+    mob("nemean_lion", [(f"{NS}:nemean_pelt", 1, 1, None), (f"{NS}:nemean_claw", 1, 2, None), ("minecraft:leather", 3, 6, None)])
+    mob("golden_hind", [("minecraft:leather", 0, 2, None), ("minecraft:gold_nugget", 1, 4, None)])
     mob("minotaur", [(f"{NS}:minotaur_horn", 1, 2, None), ("minecraft:gold_ingot", 4, 10, None), ("minecraft:diamond", 1, 3, None)])
-    mob("hydra", [(f"{NS}:hydra_scale", 3, 6, None), ("minecraft:emerald", 4, 10, None), ("minecraft:diamond", 1, 3, None)])
+    mob("hydra", [(f"{NS}:hydra_scale", 3, 6, None), ("minecraft:emerald", 4, 10, None), ("minecraft:diamond", 1, 3, None),
+                 (f"{NS}:hydra_egg", 1, 1, None)])
     mob("cerberus", [(f"{NS}:cerberus_fang", 1, 3, None), ("minecraft:blaze_rod", 2, 5, None), ("minecraft:diamond", 1, 3, None)])
 
 
@@ -531,10 +566,21 @@ def recipes():
                         {"item": "minecraft:torch"}],
         "result": {"id": f"{NS}:promethean_torch", "count": 1},
     })
+    write_json(data("recipe", "brazier.json"), {
+        "type": "minecraft:crafting_shaped", "category": "building",
+        "pattern": ["C C", "CCC", " M "],
+        "key": {"C": {"item": "minecraft:copper_ingot"}, "M": {"item": f"{NS}:olympian_marble"}},
+        "result": {"id": f"{NS}:brazier", "count": 1},
+    })
+    write_json(data("recipe", "nemean_claw_dagger.json"), {
+        "type": "minecraft:crafting_shaped", "category": "equipment",
+        "pattern": ["C", "S"], "key": {"C": {"item": f"{NS}:nemean_claw"}, "S": {"item": "minecraft:stick"}},
+        "result": {"id": f"{NS}:nemean_claw_dagger", "count": 1},
+    })
     pickaxe = os.path.join(ROOT, "data", "minecraft", "tags", "block", "mineable", "pickaxe.json")
     with open(pickaxe, encoding="utf-8") as f:
         tag = json.load(f)
-    for block in ("marble", "marble_bricks", "marble_pillar", "olympian_marble"):
+    for block in ("marble", "marble_bricks", "marble_pillar", "olympian_marble", "brazier"):
         if f"{NS}:{block}" not in tag["values"]:
             tag["values"].append(f"{NS}:{block}")
     write_json(pickaxe, tag)
@@ -547,8 +593,10 @@ def recipes():
 # ====================================================================== models
 
 ITEMS = ["promethean_torch", "ambrosia", "harpy_feather", "minotaur_horn", "hydra_scale", "cerberus_fang",
-         "nemean_pelt", "cyclops_eye", "medusa_head"]
-MOBS = ["satyr", "harpy", "spartoi", "shade", "pegasus", "cyclops", "medusa", "nemean_lion", "minotaur", "hydra", "cerberus"]
+         "nemean_pelt", "cyclops_eye", "medusa_head", "nemean_claw", "nemean_claw_dagger", "harpe", "hydra_egg"]
+HANDHELD = {"promethean_torch", "nemean_claw_dagger", "harpe"}
+MOBS = ["satyr", "harpy", "spartoi", "shade", "pegasus", "golden_hind", "hydra_hatchling", "greek_merchant",
+        "cyclops", "medusa", "nemean_lion", "minotaur", "hydra", "cerberus"]
 
 
 def models():
@@ -574,17 +622,45 @@ def models():
     write_json(assets("models", "item", "asphodel.json"),
                {"parent": "minecraft:item/generated", "textures": {"layer0": f"{NS}:block/asphodel"}})
 
-    write_json(assets("blockstates", "hellas_portal.json"), {"variants": {
-        "axis=x": {"model": f"{NS}:block/hellas_portal_ns"},
-        "axis=z": {"model": f"{NS}:block/hellas_portal_ew"},
+    # The lit pool: a flat golden surface a little below the rim, like water.
+    write_json(assets("blockstates", "hellas_portal.json"), {"variants": {"": {"model": f"{NS}:block/hellas_portal"}}})
+    write_json(assets("models", "block", "hellas_portal.json"), {
+        "render_type": "minecraft:translucent",
+        "textures": {"particle": f"{NS}:block/hellas_portal", "portal": f"{NS}:block/hellas_portal"},
+        "elements": [{"from": [0, 0, 0], "to": [16, 12, 16], "shade": False,
+                      "faces": {"up": {"uv": [0, 0, 16, 16], "texture": "#portal"},
+                                "down": {"uv": [0, 0, 16, 16], "texture": "#portal", "cullface": "down"}}}],
+    })
+    for old in ("hellas_portal_ns", "hellas_portal_ew"):  # the vertical portal of v0.2
+        if os.path.exists(assets("models", "block", f"{old}.json")):
+            os.remove(assets("models", "block", f"{old}.json"))
+
+    write_json(assets("blockstates", "brazier.json"), {"variants": {
+        "lit=false": {"model": f"{NS}:block/brazier"},
+        "lit=true": {"model": f"{NS}:block/brazier_lit"},
     }})
-    for suffix in ("ns", "ew"):
-        write_json(assets("models", "block", f"hellas_portal_{suffix}.json"), {
-            "parent": f"minecraft:block/nether_portal_{suffix}", "render_type": "minecraft:translucent",
-            "textures": {"particle": f"{NS}:block/hellas_portal", "portal": f"{NS}:block/hellas_portal"}})
+    bowl = [
+        {"from": [5, 0, 5], "to": [11, 6, 11], "faces": {f: {"texture": "#foot"} for f in ("north", "south", "east", "west", "down")}},
+        {"from": [2, 6, 2], "to": [14, 10, 14], "faces": dict(
+            {f: {"texture": "#side"} for f in ("north", "south", "east", "west")},
+            down={"texture": "#side"}, up={"texture": "#top"})},
+    ]
+    textures = {"particle": f"{NS}:block/brazier_side", "foot": f"{NS}:block/marble_pillar",
+                "side": f"{NS}:block/brazier_side", "top": f"{NS}:block/brazier_top"}
+    write_json(assets("models", "block", "brazier.json"), {"textures": textures, "elements": bowl})
+    flames = [{"from": [3, 10, 8], "to": [13, 20, 8], "shade": False, "rotation": {"origin": [8, 8, 8], "axis": "y", "angle": 45},
+               "faces": {"north": {"uv": [0, 0, 16, 16], "texture": "#fire"}, "south": {"uv": [0, 0, 16, 16], "texture": "#fire"}}},
+              {"from": [8, 10, 3], "to": [8, 20, 13], "shade": False, "rotation": {"origin": [8, 8, 8], "axis": "y", "angle": 45},
+               "faces": {"east": {"uv": [0, 0, 16, 16], "texture": "#fire"}, "west": {"uv": [0, 0, 16, 16], "texture": "#fire"}}}]
+    write_json(assets("models", "block", "brazier_lit.json"), {
+        "render_type": "minecraft:cutout",
+        "textures": dict(textures, fire="minecraft:block/fire_0", top=f"{NS}:block/brazier_top_lit"),
+        "elements": bowl + flames,
+    })
+    write_json(assets("models", "item", "brazier.json"), {"parent": f"{NS}:block/brazier"})
 
     for item in ITEMS:
-        parent = "minecraft:item/handheld" if item == "promethean_torch" else "minecraft:item/generated"
+        parent = "minecraft:item/handheld" if item in HANDHELD else "minecraft:item/generated"
         write_json(assets("models", "item", f"{item}.json"), {"parent": parent, "textures": {"layer0": f"{NS}:item/{item}"}})
     for name in MOBS:
         write_json(assets("models", "item", f"{name}_spawn_egg.json"), {"parent": "minecraft:item/template_spawn_egg"})
@@ -597,12 +673,13 @@ LANG = {
     "block.mythsofworlds.marble_bricks": ("Мраморные кирпичи", "Marble Bricks"),
     "block.mythsofworlds.marble_pillar": ("Мраморная колонна", "Marble Pillar"),
     "block.mythsofworlds.olympian_marble": ("Олимпийский мрамор", "Olympian Marble"),
-    "block.mythsofworlds.hellas_portal": ("Врата Эллады", "Gate of Hellas"),
+    "block.mythsofworlds.hellas_portal": ("Священный водоём Эллады", "Sacred Pool of Hellas"),
+    "block.mythsofworlds.brazier": ("Жертвенная чаша", "Brazier"),
     "block.mythsofworlds.asphodel": ("Асфодель", "Asphodel"),
     "item.mythsofworlds.promethean_torch": ("Факел Прометея", "Promethean Torch"),
     "item.mythsofworlds.promethean_torch.desc": (
-        "Примените внутри замкнутой рамки из олимпийского мрамора, чтобы открыть путь в Элладу",
-        "Use inside a closed Olympian marble frame to open the way to Hellas"),
+        "Обложите водоём олимпийским мрамором, поставьте жертвенные чаши на 4 угла и зажгите их факелом",
+        "Ring a pool with Olympian marble, put braziers on its 4 corners and light them with the torch"),
     "item.mythsofworlds.ambrosia": ("Амброзия", "Ambrosia"),
     "item.mythsofworlds.harpy_feather": ("Перо гарпии", "Harpy Feather"),
     "item.mythsofworlds.minotaur_horn": ("Рог Минотавра", "Minotaur Horn"),
@@ -611,6 +688,12 @@ LANG = {
     "item.mythsofworlds.nemean_pelt": ("Шкура Немейского льва", "Nemean Lion Pelt"),
     "item.mythsofworlds.cyclops_eye": ("Глаз циклопа", "Cyclops Eye"),
     "item.mythsofworlds.medusa_head": ("Голова Медузы", "Head of Medusa"),
+    "item.mythsofworlds.nemean_claw": ("Коготь Немейского льва", "Nemean Lion Claw"),
+    "item.mythsofworlds.nemean_claw_dagger": ("Кинжал из когтя Немейского льва", "Nemean Claw Dagger"),
+    "item.mythsofworlds.harpe": ("Харпа Персея", "Harpe of Perseus"),
+    "item.mythsofworlds.hydra_egg": ("Яйцо гидры", "Hydra Egg"),
+    "item.mythsofworlds.hydra_egg.desc": (
+        "ПКМ по земле: вылупится ручной гидрёныш", "Right-click the ground: a tame little hydra hatches"),
     "item.mythsofworlds.medusa_head.desc": (
         "ПКМ: обращает в камень всех существ перед вами на 5 секунд",
         "Right-click: turns the creatures in front of you to stone for 5 seconds"),
@@ -627,12 +710,16 @@ LANG = {
     "entity.mythsofworlds.minotaur": ("Минотавр", "Minotaur"),
     "entity.mythsofworlds.hydra": ("Лернейская гидра", "Lernaean Hydra"),
     "entity.mythsofworlds.cerberus": ("Цербер", "Cerberus"),
+    "entity.mythsofworlds.golden_hind": ("Керинейская лань", "Ceryneian Hind"),
+    "entity.mythsofworlds.hydra_hatchling": ("Гидрёныш", "Hydra Hatchling"),
+    "entity.mythsofworlds.greek_merchant": ("Торговец агоры", "Agora Merchant"),
 }
 
 MOB_NAMES_RU = {
     "satyr": "сатира", "harpy": "гарпии", "spartoi": "спарта", "shade": "тени умершего", "pegasus": "пегаса",
     "cyclops": "циклопа", "medusa": "Медузы Горгоны", "nemean_lion": "Немейского льва", "minotaur": "Минотавра",
-    "hydra": "Лернейской гидры", "cerberus": "Цербера",
+    "hydra": "Лернейской гидры", "cerberus": "Цербера", "golden_hind": "Керинейской лани",
+    "hydra_hatchling": "гидрёныша", "greek_merchant": "торговца агоры",
 }
 
 

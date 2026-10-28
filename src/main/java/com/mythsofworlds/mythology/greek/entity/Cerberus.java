@@ -1,12 +1,17 @@
 package com.mythsofworlds.mythology.greek.entity;
 
+import com.mythsofworlds.mythology.greek.GreekEntities;
+import com.mythsofworlds.mythology.greek.GreekSounds;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
@@ -16,10 +21,12 @@ import net.minecraft.world.phys.Vec3;
 
 /**
  * Cerberus, the three-headed hound guarding the Gates of Hades. Immune to fire; its bite sets the target
- * ablaze and every few seconds each head breathes a fireball.
+ * ablaze and every few seconds each head breathes a fireball. At half health it howls and calls three shades
+ * of the dead to its side.
  */
 public class Cerberus extends GreekBoss {
     private int breathCooldown = 60;
+    private boolean summoned;
 
     public Cerberus(EntityType<? extends Monster> type, Level level) {
         super(type, level, BossEvent.BossBarColor.PURPLE, false);
@@ -47,6 +54,10 @@ public class Cerberus extends GreekBoss {
     @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
+        if (!summoned && enraged() && level() instanceof ServerLevel server) {
+            summoned = true;
+            summonShades(server);
+        }
         LivingEntity target = getTarget();
         if (--breathCooldown <= 0) {
             breathCooldown = 20;
@@ -55,6 +66,34 @@ public class Cerberus extends GreekBoss {
                 breathCooldown = 70;
             }
         }
+    }
+
+    private void summonShades(ServerLevel server) {
+        for (int i = 0; i < 3; i++) {
+            Shade shade = GreekEntities.SHADE.get().create(server);
+            if (shade == null) {
+                continue;
+            }
+            double angle = i * Math.PI * 2.0 / 3.0;
+            shade.moveTo(getX() + Math.cos(angle) * 2.5, getY(), getZ() + Math.sin(angle) * 2.5, getYRot(), 0.0F);
+            shade.finalizeSpawn(server, server.getCurrentDifficultyAt(shade.blockPosition()), MobSpawnType.MOB_SUMMONED, null);
+            shade.setTarget(getTarget());
+            server.addFreshEntity(shade);
+            server.sendParticles(ParticleTypes.SOUL, shade.getX(), shade.getY() + 1.0, shade.getZ(), 12, 0.3, 0.6, 0.3, 0.02);
+        }
+        playSound(GreekSounds.CERBERUS_AMBIENT.get(), 3.0F, 0.6F);
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putBoolean("SummonedShades", summoned);
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        summoned = tag.getBoolean("SummonedShades");
     }
 
     /** One fireball per head, slightly spread. */
@@ -69,26 +108,22 @@ public class Cerberus extends GreekBoss {
             fireball.setPos(getX() + side.x * head * 0.6, getY(0.6), getZ() + side.z * head * 0.6);
             level().addFreshEntity(fireball);
         }
-        playSound(SoundEvents.BLAZE_SHOOT, 2.0F, 0.7F);
+        playSound(GreekSounds.CERBERUS_BREATH.get(), 2.0F, 1.0F);
     }
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.WOLF_GROWL;
+        return GreekSounds.CERBERUS_AMBIENT.get();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.WOLF_HURT;
+        return GreekSounds.CERBERUS_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.WOLF_DEATH;
+        return GreekSounds.CERBERUS_DEATH.get();
     }
 
-    @Override
-    public float getVoicePitch() {
-        return 0.5F;
-    }
 }

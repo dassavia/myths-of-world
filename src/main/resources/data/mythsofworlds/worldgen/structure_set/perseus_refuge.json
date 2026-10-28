@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "mythsofworlds:perseus_refuge",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 44,
+    "separation": 14,
+    "salt": 1450211
+  }
+}

@@ -1,21 +1,22 @@
 package com.mythsofworlds.mythology.greek;
 
 import com.mythsofworlds.MythsOfWorlds;
-import com.mythsofworlds.core.portal.MythPortalBlock;
-import com.mythsofworlds.core.portal.PortalIgniterItem;
-import com.mythsofworlds.core.portal.PortalSettings;
+import com.mythsofworlds.mythology.greek.item.HydraEggItem;
 import com.mythsofworlds.mythology.greek.item.MedusaHeadItem;
+import com.mythsofworlds.mythology.greek.portal.BrazierBlock;
+import com.mythsofworlds.mythology.greek.portal.PoolPortalBlock;
+import com.mythsofworlds.mythology.greek.portal.PrometheanTorchItem;
 import java.util.List;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FlowerBlock;
@@ -31,7 +32,7 @@ import static com.mythsofworlds.registry.ModRegistries.BLOCKS;
 import static com.mythsofworlds.registry.ModRegistries.ITEMS;
 
 /**
- * Greek mythology: marble, the Promethean Torch and the portal to Hellas, plus the trophies dropped by its monsters.
+ * Greek mythology: marble, the Promethean Torch and the sacred pool portal to Hellas, plus the trophies dropped by its monsters.
  * Mobs live in {@link GreekEntities}; biomes, structures and loot are data files under data/mythsofworlds.
  */
 public final class GreekContent {
@@ -43,7 +44,8 @@ public final class GreekContent {
             "asphodel_meadows", "stygian_marsh", "aegean_coast", "aegean_sea");
     /** Structures of Hellas (data/mythsofworlds/worldgen/structure, templates in data/mythsofworlds/structure/greek). */
     public static final List<String> STRUCTURES = List.of("greek_temple", "oracle_of_delphi", "labyrinth",
-            "gates_of_hades", "hydra_lair", "medusa_lair", "cyclops_cave", "nemean_lion_den");
+            "gates_of_hades", "hydra_lair", "medusa_lair", "cyclops_cave", "nemean_lion_den",
+            "agora", "ship_of_theseus", "perseus_refuge");
 
     // ---- Blocks ----
 
@@ -65,17 +67,26 @@ public final class GreekContent {
     public static final DeferredBlock<Block> OLYMPIAN_MARBLE = BLOCKS.registerSimpleBlock("olympian_marble",
             marble().mapColor(MapColor.GOLD).strength(3.0F, 9.0F).lightLevel(state -> 4));
 
-    public static final DeferredBlock<MythPortalBlock> HELLAS_PORTAL = BLOCKS.register("hellas_portal",
-            () -> new MythPortalBlock(
-                    PortalSettings.toDimension(OLYMPIAN_MARBLE, HELLAS, ParticleTypes.END_ROD),
-                    BlockBehaviour.Properties.of()
-                            .mapColor(MapColor.GOLD)
-                            .noCollission()
-                            .strength(-1.0F)
-                            .sound(SoundType.GLASS)
-                            .lightLevel(state -> 12)
-                            .noLootTable()
-                            .pushReaction(PushReaction.BLOCK)));
+    /** Bowl of sacred fire for the corners of the portal pool (see portal/PoolPortal). */
+    public static final DeferredBlock<BrazierBlock> BRAZIER = BLOCKS.register("brazier",
+            () -> new BrazierBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_ORANGE)
+                    .strength(2.0F, 6.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.COPPER)
+                    .noOcclusion()
+                    .lightLevel(state -> state.getValue(BrazierBlock.LIT) ? 15 : 0)));
+
+    /** Golden surface of a lit sacred pool. */
+    public static final DeferredBlock<PoolPortalBlock> HELLAS_PORTAL = BLOCKS.register("hellas_portal",
+            () -> new PoolPortalBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.GOLD)
+                    .noCollission()
+                    .strength(-1.0F)
+                    .sound(SoundType.GLASS)
+                    .lightLevel(state -> 12)
+                    .noLootTable()
+                    .pushReaction(PushReaction.BLOCK)));
 
     /** Pale flower of the Asphodel Meadows, where the shades of the dead wander. */
     public static final DeferredBlock<FlowerBlock> ASPHODEL = BLOCKS.register("asphodel",
@@ -94,11 +105,11 @@ public final class GreekContent {
     public static final DeferredItem<BlockItem> MARBLE_PILLAR_ITEM = ITEMS.registerSimpleBlockItem(MARBLE_PILLAR);
     public static final DeferredItem<BlockItem> OLYMPIAN_MARBLE_ITEM = ITEMS.registerSimpleBlockItem(OLYMPIAN_MARBLE);
     public static final DeferredItem<BlockItem> ASPHODEL_ITEM = ITEMS.registerSimpleBlockItem(ASPHODEL);
+    public static final DeferredItem<BlockItem> BRAZIER_ITEM = ITEMS.registerSimpleBlockItem(BRAZIER);
 
-    /** The fire Prometheus stole from the gods: opens the portal to Hellas. */
-    public static final DeferredItem<PortalIgniterItem> PROMETHEAN_TORCH = ITEMS.register("promethean_torch",
-            () -> new PortalIgniterItem(new Item.Properties().durability(16).rarity(Rarity.EPIC),
-                    () -> SoundEvents.FIRECHARGE_USE, List.of(HELLAS_PORTAL)));
+    /** The fire Prometheus stole from the gods: lights the braziers of the portal pool. */
+    public static final DeferredItem<PrometheanTorchItem> PROMETHEAN_TORCH = ITEMS.register("promethean_torch",
+            () -> new PrometheanTorchItem(new Item.Properties().durability(32).rarity(Rarity.EPIC)));
 
     /** Food of the gods, found in temples. */
     public static final DeferredItem<Item> AMBROSIA = ITEMS.registerItem("ambrosia", props -> new Item(props
@@ -123,6 +134,20 @@ public final class GreekContent {
             new Item.Properties().rarity(Rarity.UNCOMMON));
     public static final DeferredItem<Item> CYCLOPS_EYE = ITEMS.registerSimpleItem("cyclops_eye",
             new Item.Properties().rarity(Rarity.UNCOMMON));
+    /** Claw of the Nemean Lion: the only blade that can cut its hide. */
+    public static final DeferredItem<Item> NEMEAN_CLAW = ITEMS.registerSimpleItem("nemean_claw",
+            new Item.Properties().rarity(Rarity.RARE));
+    /** Dagger made from the lion's claw. Hurts the Nemean Lion like any other creature. */
+    public static final DeferredItem<SwordItem> NEMEAN_CLAW_DAGGER = ITEMS.register("nemean_claw_dagger",
+            () -> new SwordItem(Tiers.DIAMOND, new Item.Properties().rarity(Rarity.RARE)
+                    .attributes(SwordItem.createAttributes(Tiers.DIAMOND, 2, -1.8F))));
+    /** Sickle-sword of Perseus, found in his refuge. Deals double damage to Medusa. */
+    public static final DeferredItem<SwordItem> HARPE = ITEMS.register("harpe",
+            () -> new SwordItem(Tiers.IRON, new Item.Properties().rarity(Rarity.RARE)
+                    .attributes(SwordItem.createAttributes(Tiers.IRON, 4, -2.4F))));
+    /** Dropped by the Hydra. Use it on the ground to hatch a tame little hydra. */
+    public static final DeferredItem<HydraEggItem> HYDRA_EGG = ITEMS.register("hydra_egg",
+            () -> new HydraEggItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
     /** Medusa's head still petrifies: right-click to freeze the creatures in front of you. */
     public static final DeferredItem<MedusaHeadItem> MEDUSA_HEAD = ITEMS.register("medusa_head",
             () -> new MedusaHeadItem(new Item.Properties().durability(32).rarity(Rarity.EPIC)));

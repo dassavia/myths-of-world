@@ -1,12 +1,13 @@
 package com.mythsofworlds.mythology.greek.entity;
 
+import com.mythsofworlds.mythology.greek.GreekContent;
+import com.mythsofworlds.mythology.greek.GreekSounds;
 import com.mythsofworlds.mythology.greek.item.MedusaHeadItem;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -25,7 +26,8 @@ import net.minecraft.world.phys.Vec3;
 /**
  * Medusa the Gorgon, mini-boss of the coast. Looking at her slows you down, and after 3 seconds of eye
  * contact you start turning to stone (heavy damage). Like Perseus with his mirrored shield, a player
- * holding a shield is safe from the gaze. Her snake hair poisons on every bite.
+ * holding a shield is safe from the gaze. Her snake hair poisons on every bite. The harpe, the sickle-sword
+ * Perseus beheaded her with, deals her double damage.
  */
 public class Medusa extends GreekBoss {
     private static final double GAZE_RANGE = 24.0;
@@ -61,6 +63,15 @@ public class Medusa extends GreekBoss {
     }
 
     @Override
+    public boolean hurt(DamageSource source, float amount) {
+        if (source.isDirect() && source.getEntity() instanceof LivingEntity attacker
+                && attacker.getMainHandItem().is(GreekContent.HARPE.get())) {
+            amount *= 2.0F;
+        }
+        return super.hurt(source, amount);
+    }
+
+    @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
         if (tickCount % 5 != 0) {
@@ -75,6 +86,7 @@ public class Medusa extends GreekBoss {
             int ticks = gazeTicks.merge(player.getUUID(), 5, Integer::sum);
             player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 2));
             if (ticks == PETRIFY_AFTER) {
+                playSound(GreekSounds.MEDUSA_GAZE.get(), 1.5F, 1.0F);
                 player.displayClientMessage(Component.translatable("entity.mythsofworlds.medusa.petrify"), true);
             }
             if (ticks >= PETRIFY_AFTER) {
@@ -95,16 +107,16 @@ public class Medusa extends GreekBoss {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.CAT_HISS;
+        return GreekSounds.MEDUSA_AMBIENT.get();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.WITCH_HURT;
+        return GreekSounds.MEDUSA_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.WITCH_DEATH;
+        return GreekSounds.MEDUSA_DEATH.get();
     }
 }

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "mythsofworlds:block/brazier"
+    },
+    "lit=true": {
+      "model": "mythsofworlds:block/brazier_lit"
+    }
+  }
+}

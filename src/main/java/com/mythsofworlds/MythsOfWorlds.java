@@ -3,6 +3,7 @@ package com.mythsofworlds;
 import com.mythsofworlds.mythology.egyptian.EgyptianContent;
 import com.mythsofworlds.mythology.greek.GreekContent;
 import com.mythsofworlds.mythology.greek.GreekEntities;
+import com.mythsofworlds.mythology.greek.GreekSounds;
 import com.mythsofworlds.mythology.indian.IndianContent;
 import com.mythsofworlds.mythology.norse.NorseContent;
 import com.mythsofworlds.mythology.oceanic.OceanicContent;
@@ -19,6 +20,7 @@ public final class MythsOfWorlds {
     public MythsOfWorlds(IEventBus modBus) {
         // One line per mythology (see mythology/Mythology.java for the list).
         GreekContent.init();
+        GreekSounds.init();
         GreekEntities.init(modBus);
         NorseContent.init();
         SlavicContent.init();

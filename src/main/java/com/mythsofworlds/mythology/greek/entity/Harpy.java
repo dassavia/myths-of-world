@@ -1,9 +1,12 @@
 package com.mythsofworlds.mythology.greek.entity;
 
+import com.mythsofworlds.mythology.greek.GreekSounds;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
@@ -18,10 +21,20 @@ import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
-/** Winged storm spirit, half woman, half bird. Swoops at travellers on the peaks and the coast, day and night. */
+/**
+ * Winged storm spirit, half woman, half bird. Swoops at travellers on the peaks and the coast, day and night.
+ * Like the harpies that tormented Phineus, it snatches food: a hit steals one piece of food from your inventory,
+ * and the harpy flies off with it. Kill it to get your food back.
+ */
 public class Harpy extends Monster {
+    private static final int FLEE_TICKS = 100;
+
+    private int fleeTicks;
+
     public Harpy(EntityType<? extends Monster> type, Level level) {
         super(type, level);
         this.moveControl = new FlyingMoveControl(this, 20, true);
@@ -57,6 +70,42 @@ public class Harpy extends Monster {
     }
 
     @Override
+    public boolean doHurtTarget(Entity target) {
+        boolean hit = super.doHurtTarget(target);
+        if (hit && target instanceof Player player && getMainHandItem().isEmpty() && stealFood(player)) {
+            fleeTicks = FLEE_TICKS;
+            setTarget(null);
+        }
+        return hit;
+    }
+
+    private boolean stealFood(Player player) {
+        for (ItemStack stack : player.getInventory().items) {
+            if (!stack.isEmpty() && stack.has(DataComponents.FOOD)) {
+                setItemSlot(EquipmentSlot.MAINHAND, stack.split(1));
+                setGuaranteedDrop(EquipmentSlot.MAINHAND);
+                playSound(GreekSounds.HARPY_AMBIENT.get(), 1.2F, 1.4F);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    protected void customServerAiStep() {
+        super.customServerAiStep();
+        if (fleeTicks > 0) {
+            fleeTicks--;
+            setTarget(null);
+            Player player = level().getNearestPlayer(this, 24.0);
+            if (player != null) {
+                Vec3 away = position().subtract(player.position()).normalize().scale(10.0);
+                getMoveControl().setWantedPosition(getX() + away.x, Math.max(getY(), player.getY()) + 4.0, getZ() + away.z, 1.4);
+            }
+        }
+    }
+
+    @Override
     public boolean causeFallDamage(float distance, float multiplier, DamageSource source) {
         return false;
     }
@@ -67,16 +116,16 @@ public class Harpy extends Monster {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.PHANTOM_AMBIENT;
+        return GreekSounds.HARPY_AMBIENT.get();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.PHANTOM_HURT;
+        return GreekSounds.HARPY_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.PHANTOM_DEATH;
+        return GreekSounds.HARPY_DEATH.get();
     }
 }
