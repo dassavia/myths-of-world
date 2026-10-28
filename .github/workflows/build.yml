@@ -26,8 +26,10 @@ jobs:
           echo "eula=true" > run/smoke/eula.txt
           ./gradlew runSmokeTest --stacktrace
       - name: Client smoke test (start the game up to the title screen)
-        timeout-minutes: 20
+        timeout-minutes: 15
         run: |
+          mkdir -p run/client-smoke
+          echo "onboardAccessibility:false" > run/client-smoke/options.txt
           sudo apt-get update -q && sudo apt-get install -y -q xvfb
           xvfb-run -a -s "-screen 0 1280x720x24" ./gradlew runClientSmokeTest --stacktrace
       - uses: actions/upload-artifact@v4
