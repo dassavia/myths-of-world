@@ -35,6 +35,19 @@ neoForge {
             type = 'gameTestServer'
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
+        // Real dedicated server that generates every mythology's world, then exits (see WorldSmokeTest); used by CI.
+        smokeTest {
+            server()
+            programArgument '--nogui'
+            systemProperty 'mythsofworlds.smokeTest', 'true'
+            gameDirectory = project.file('run/smoke')
+        }
+        // Client that quits on reaching the title screen (see ClientSmokeTest); used by CI.
+        clientSmokeTest {
+            client()
+            systemProperty 'mythsofworlds.clientSmokeTest', 'true'
+            gameDirectory = project.file('run/client-smoke')
+        }
     }
 
     mods {

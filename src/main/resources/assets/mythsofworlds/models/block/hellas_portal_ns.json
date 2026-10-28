@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/nether_portal_ns",
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "particle": "mythsofworlds:block/hellas_portal",
+    "portal": "mythsofworlds:block/hellas_portal"
+  }
+}
