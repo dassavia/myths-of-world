@@ -94,11 +94,6 @@ public class Medusa extends GreekBoss {
     }
 
     @Override
-    public boolean canBreatheUnderwater() {
-        return true;
-    }
-
-    @Override
     protected SoundEvent getAmbientSound() {
         return SoundEvents.CAT_HISS;
     }
