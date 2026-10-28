@@ -175,7 +175,7 @@ public class GreekTests {
                 new BlockHitResult(Vec3.atCenterOf(ground), Direction.UP, ground, false)));
         var pets = helper.getLevel().getEntitiesOfClass(HydraHatchling.class, new AABB(ground).inflate(2.0));
         helper.assertTrue(pets.size() == 1, "one hatchling should hatch, got " + pets.size());
-        helper.assertTrue(pets.get(0).isTame() && pets.get(0).isOwnedBy(player), "the hatchling should belong to whoever hatched it");
+        helper.assertTrue(pets.get(0).isTame() && player.getUUID().equals(pets.get(0).getOwnerUUID()), "the hatchling should belong to whoever hatched it");
         helper.assertTrue(player.getMainHandItem().isEmpty(), "the egg should be used up");
         pets.get(0).discard();
         helper.succeed();
