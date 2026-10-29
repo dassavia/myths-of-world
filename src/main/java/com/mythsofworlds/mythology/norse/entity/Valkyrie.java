@@ -26,7 +26,9 @@ public class Valkyrie extends Amazon {
 
     private static final String[] NAMES = {"Brynhild", "Sigrun", "Svanhvit", "Hildr", "Gondul", "Skogul", "Hrist",
             "Mist", "Skuld", "Kara", "Eir", "Geirskogul", "Randgrid", "Reginleif", "Sigrdrifa", "Thrud", "Alvitr",
-            "Olrun", "Gunnr", "Herfjotur"};
+            "Olrun", "Gunnr", "Herfjotur", "Goll", "Geironul", "Hlokk", "Herja", "Hrund", "Sanngrid", "Skeggjold",
+            "Svipul", "Thogn", "Hervor", "Svava", "Brynja", "Astrid", "Ingrid", "Sigrid", "Freydis", "Ragnhild",
+            "Gunnhild", "Solveig", "Thora", "Ylva", "Alfhild", "Dagny", "Eydis", "Halla", "Runa", "Sigyn", "Tove"};
 
     public Valkyrie(EntityType<? extends AgeableMob> type, Level level) {
         super(type, level);

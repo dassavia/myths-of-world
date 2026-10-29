@@ -1284,7 +1284,6 @@ def amazon(rng, skin, hair, dress, trim, eyes=0x4A3320, outfit="chiton", style="
         img.putpixel((x + inner, y + 4), iris)
         img.putpixel((x + inner, y + 5), scale(iris, 1.35))
         img.putpixel((x + outer, y + 5), mix(s, iris, 0.15))
-    img.putpixel((x + 3, y + 6), mix(s, rgb(lips), 0.2))    # only a hint of a mouth
     for i in range(1, 7):                             # the chin falls into shade
         img.putpixel((x + i, y + 7), scale(s, 0.94))
     # --- hair layer: volume over the head and strands hanging past it ---

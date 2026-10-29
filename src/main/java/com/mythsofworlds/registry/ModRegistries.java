@@ -1,12 +1,14 @@
 package com.mythsofworlds.registry;
 
 import com.mythsofworlds.MythsOfWorlds;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.neoforged.bus.api.IEventBus;
@@ -39,8 +41,9 @@ public final class ModRegistries {
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MAIN_TAB = TABS.register("main",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup." + MythsOfWorlds.MODID))
-                    .icon(() -> ITEMS.getEntries().stream().findFirst()
-                            .map(item -> item.get().getDefaultInstance())
+                    // The flaming sword of Surtr, as on the mod's logo.
+                    .icon(() -> BuiltInRegistries.ITEM.getOptional(MythsOfWorlds.id("surtr_sword"))
+                            .map(Item::getDefaultInstance)
                             .orElse(Items.BOOK.getDefaultInstance()))
                     .displayItems((params, output) -> ITEMS.getEntries().forEach(item -> output.accept(item.get())))
                     .build());

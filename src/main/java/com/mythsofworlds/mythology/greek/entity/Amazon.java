@@ -87,7 +87,10 @@ public class Amazon extends AgeableMob {
 
     private static final String[] NAMES = {"Antiope", "Melanippe", "Penthesilea", "Otrere", "Aella", "Areto", "Alcippe",
             "Hippothoe", "Lampedo", "Marpesia", "Orithyia", "Clonie", "Polemusa", "Derinoe", "Antibrote", "Bremusa",
-            "Thermodosa", "Andromache", "Philippis", "Prothoe"};
+            "Thermodosa", "Andromache", "Philippis", "Prothoe", "Myrina", "Thalestris", "Lysippe", "Ainia", "Antianeira",
+            "Asteria", "Celaeno", "Eurybe", "Phoebe", "Deianira", "Tecmessa", "Alcibie", "Evandre", "Glauke", "Harmothoe",
+            "Hippomache", "Iphito", "Molpadia", "Pantariste", "Toxaris", "Xanthippe", "Euryale", "Okyale", "Pisto",
+            "Laomache", "Thraso", "Iodoke", "Kreousa", "Gortyessa", "Hippolyte", "Antandre", "Elaia", "Kleite"};
     private static final EntityDataAccessor<Integer> DATA_VARIANT = SynchedEntityData.defineId(Amazon.class, EntityDataSerializers.INT);
 
     private final Map<UUID, Integer> affection = new HashMap<>();
