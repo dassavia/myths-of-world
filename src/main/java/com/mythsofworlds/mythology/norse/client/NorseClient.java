@@ -13,6 +13,7 @@ import com.mythsofworlds.mythology.norse.entity.Garm;
 import com.mythsofworlds.mythology.norse.entity.Warg;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.world.entity.animal.Parrot;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -57,7 +58,7 @@ public final class NorseClient {
         event.registerEntityRenderer(NorseEntities.GARM.get(),
                 ctx -> new GreekMobRenderer<Garm, BeastModel<Garm>>(ctx, new BeastModel<>(ctx.bakeLayer(GreekClient.NEMEAN_LION), 1),
                         "garm", 1.6F));
-        event.registerEntityRenderer(NorseEntities.RAVEN.get(), RavenRenderer::new);
+        event.<Parrot>registerEntityRenderer(NorseEntities.RAVEN.get(), RavenRenderer::new);
         event.registerEntityRenderer(NorseEntities.NORSE_MERCHANT.get(), NorseMerchantRenderer::new);
         event.registerEntityRenderer(NorseEntities.VALKYRIE.get(), AmazonRenderer::new);
     }

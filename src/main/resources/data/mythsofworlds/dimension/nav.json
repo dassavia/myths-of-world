@@ -2,16 +2,16 @@
   "type": "mythsofworlds:nav",
   "generator": {
     "type": "minecraft:noise",
-    "settings": "minecraft:overworld",
+    "settings": "mythsofworlds:nav",
     "biome_source": {
       "type": "minecraft:multi_noise",
       "biomes": [
         {
-          "biome": "minecraft:dark_forest",
+          "biome": "mythsofworlds:dense_forest",
           "parameters": {
             "temperature": 0.0,
-            "humidity": 0.3,
-            "continentalness": 0.0,
+            "humidity": 0.5,
+            "continentalness": 0.3,
             "erosion": 0.0,
             "weirdness": 0.0,
             "depth": 0.0,
@@ -19,11 +19,11 @@
           }
         },
         {
-          "biome": "minecraft:old_growth_spruce_taiga",
+          "biome": "mythsofworlds:birch_grove",
           "parameters": {
-            "temperature": 0.0,
-            "humidity": -0.3,
-            "continentalness": 0.0,
+            "temperature": 0.2,
+            "humidity": -0.1,
+            "continentalness": 0.3,
             "erosion": 0.0,
             "weirdness": 0.0,
             "depth": 0.0,
@@ -31,12 +31,60 @@
           }
         },
         {
-          "biome": "minecraft:swamp",
+          "biome": "mythsofworlds:kikimora_bog",
           "parameters": {
             "temperature": 0.0,
-            "humidity": 0.6,
-            "continentalness": 0.0,
-            "erosion": 0.8,
+            "humidity": 0.8,
+            "continentalness": 0.2,
+            "erosion": 0.7,
+            "weirdness": 0.0,
+            "depth": 0.0,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "mythsofworlds:wild_field",
+          "parameters": {
+            "temperature": 0.4,
+            "humidity": -0.6,
+            "continentalness": 0.4,
+            "erosion": 0.0,
+            "weirdness": 0.0,
+            "depth": 0.0,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "mythsofworlds:smorodina",
+          "parameters": {
+            "temperature": 0.8,
+            "humidity": -0.8,
+            "continentalness": 0.6,
+            "erosion": 0.0,
+            "weirdness": -0.6,
+            "depth": 0.0,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "mythsofworlds:koschei_realm",
+          "parameters": {
+            "temperature": -0.7,
+            "humidity": 0.0,
+            "continentalness": 0.6,
+            "erosion": -0.4,
+            "weirdness": 0.6,
+            "depth": 0.0,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "mythsofworlds:okiyan_sea",
+          "parameters": {
+            "temperature": 0.0,
+            "humidity": 0.0,
+            "continentalness": -0.6,
+            "erosion": 0.0,
             "weirdness": 0.0,
             "depth": 0.0,
             "offset": 0.0

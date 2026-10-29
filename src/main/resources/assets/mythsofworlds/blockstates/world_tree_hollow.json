@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "mythsofworlds:block/world_tree_hollow",
+      "y": 0
+    },
+    "facing=east": {
+      "model": "mythsofworlds:block/world_tree_hollow",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "mythsofworlds:block/world_tree_hollow",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "mythsofworlds:block/world_tree_hollow",
+      "y": 270
+    }
+  }
+}

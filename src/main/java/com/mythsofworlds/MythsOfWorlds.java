@@ -12,6 +12,7 @@ import com.mythsofworlds.mythology.norse.NorseContent;
 import com.mythsofworlds.mythology.norse.NorseEntities;
 import com.mythsofworlds.mythology.oceanic.OceanicContent;
 import com.mythsofworlds.mythology.slavic.SlavicContent;
+import com.mythsofworlds.mythology.slavic.SlavicEntities;
 import com.mythsofworlds.registry.ModRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
@@ -32,6 +33,7 @@ public final class MythsOfWorlds {
         NorseContent.init();
         NorseEntities.init(modBus);
         SlavicContent.init();
+        SlavicEntities.init(modBus);
         OceanicContent.init();
         EgyptianContent.init();
         IndianContent.init();

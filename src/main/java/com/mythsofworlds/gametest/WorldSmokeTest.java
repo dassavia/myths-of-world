@@ -16,6 +16,12 @@ import com.mythsofworlds.mythology.norse.entity.NorseMerchant;
 import com.mythsofworlds.mythology.norse.entity.Surtr;
 import com.mythsofworlds.mythology.norse.entity.Thrym;
 import com.mythsofworlds.mythology.norse.entity.Valkyrie;
+import com.mythsofworlds.mythology.slavic.SlavicContent;
+import com.mythsofworlds.mythology.slavic.block.WorldTree;
+import com.mythsofworlds.mythology.slavic.entity.Koschei;
+import com.mythsofworlds.mythology.slavic.entity.SlavicMerchant;
+import com.mythsofworlds.mythology.slavic.entity.Solovei;
+import com.mythsofworlds.mythology.slavic.entity.ZmeyGorynych;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +44,7 @@ import net.neoforged.neoforge.event.server.ServerStartedEvent;
 /**
  * The game-test server only creates vanilla levels, so this check runs on a real dedicated server instead:
  * {@code ./gradlew runSmokeTest} (needs eula=true in run/smoke/eula.txt). It loads every mythology's dimension,
- * generates terrain, finds every biome and structure of Hellas and Jotunheim, generates them, then exits with code 0 or 1.
+ * generates terrain, finds every biome and structure of Hellas, Jotunheim and Nav, generates them, then exits with code 0 or 1.
  * It does nothing unless the system property {@value #PROPERTY} is set.
  */
 @EventBusSubscriber(modid = MythsOfWorlds.MODID)
@@ -128,7 +134,12 @@ public final class WorldSmokeTest {
             Map.entry("fenrir_island", Fenrir.class),
             Map.entry("muspel_fortress", Surtr.class),
             Map.entry("helgrind", Garm.class),
-            Map.entry("valkyrie_hall", Valkyrie.class));
+            Map.entry("valkyrie_hall", Valkyrie.class),
+            Map.entry("slavic_village", SlavicMerchant.class),
+            Map.entry("baba_yaga_hut", SlavicMerchant.class),
+            Map.entry("solovei_nest", Solovei.class),
+            Map.entry("kalinov_bridge", ZmeyGorynych.class),
+            Map.entry("koschei_castle", Koschei.class));
 
     @SubscribeEvent
     public static void onServerStarted(ServerStartedEvent event) {
@@ -163,6 +174,16 @@ public final class WorldSmokeTest {
             checkWorld(server, failures, jotunheim, NorseContent.BIOMES, NorseContent.STRUCTURES);
         } else {
             failures.add("Jotunheim is not loaded");
+        }
+        ServerLevel nav = server.getLevel(SlavicContent.NAV);
+        if (nav != null) {
+            check(failures, "arrival tree", () -> {
+                var arrival = WorldTree.findOrGrow(nav, new BlockPos(0, 64, 0));
+                report("world tree in Nav at " + arrival.pos());
+            });
+            checkWorld(server, failures, nav, SlavicContent.BIOMES, SlavicContent.STRUCTURES);
+        } else {
+            failures.add("Nav is not loaded");
         }
         report(failures.isEmpty() ? "OK" : "FAILED " + failures.size() + ": " + failures);
         Runtime.getRuntime().halt(failures.isEmpty() ? 0 : 1);

@@ -158,3 +158,18 @@ def norse():
     ])
     return [("ores", "intro", None, *ores), ("dark_iron_tools", "intro", None, *tools),
             ("dark_iron_armour", "intro", None, *armour), ("gods_gear", "intro", None, *relics)]
+
+
+def slavic():
+    relics = paginate(("Дары из сказок", "Gifts from the Tales"), [
+        ("Меч-кладенец: урон 9, скорость 1.6, прочность 2031, не горит. Каждый удар рубит и врагов вокруг: "
+         "урон 6 в 3 блоках.",
+         "Sword kladenets: damage 9, attack speed 1.6, durability 2031, fireproof. Every blow also cuts the foes "
+         "around: 6 damage within 3 blocks."),
+        ("Сапоги-скороходы: броня 3, твёрдость 1, прочность 390. Скорость III и прыжок.",
+         "Seven-league boots: armour 3, toughness 1, durability 390. Speed III and Jump Boost."),
+        ("Шапка-невидимка: броня 2, прочность 330. Пока вы крадётесь, вас не видно.",
+         "Cap of invisibility: armour 2, durability 330. While you sneak, no one can see you."),
+        BACK_SLOT,
+    ])
+    return [("gods_gear", "intro", None, *relics)]

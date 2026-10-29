@@ -1,0 +1,126 @@
+{
+  "entries": [
+    {
+      "id": "slavic.portal",
+      "category": "intro",
+      "pages": 3
+    },
+    {
+      "id": "slavic.lands",
+      "category": "intro",
+      "pages": 2
+    },
+    {
+      "id": "slavic.waters",
+      "category": "intro",
+      "pages": 2
+    },
+    {
+      "id": "slavic.gods_gear",
+      "category": "intro",
+      "pages": 3
+    },
+    {
+      "id": "slavic.leshy",
+      "category": "creature",
+      "pages": 2,
+      "entity": "mythsofworlds:leshy"
+    },
+    {
+      "id": "slavic.kikimora",
+      "category": "creature",
+      "pages": 1,
+      "entity": "mythsofworlds:kikimora"
+    },
+    {
+      "id": "slavic.upyr",
+      "category": "creature",
+      "pages": 1,
+      "entity": "mythsofworlds:upyr"
+    },
+    {
+      "id": "slavic.volkolak",
+      "category": "creature",
+      "pages": 1,
+      "entity": "mythsofworlds:volkolak"
+    },
+    {
+      "id": "slavic.rusalka",
+      "category": "creature",
+      "pages": 1,
+      "entity": "mythsofworlds:rusalka"
+    },
+    {
+      "id": "slavic.firebird",
+      "category": "creature",
+      "pages": 2,
+      "entity": "mythsofworlds:firebird"
+    },
+    {
+      "id": "slavic.slavic_merchant",
+      "category": "creature",
+      "pages": 2,
+      "entity": "mythsofworlds:slavic_merchant"
+    },
+    {
+      "id": "slavic.solovei",
+      "category": "boss",
+      "pages": 2,
+      "entity": "mythsofworlds:solovei"
+    },
+    {
+      "id": "slavic.zmey_gorynych",
+      "category": "boss",
+      "pages": 2,
+      "entity": "mythsofworlds:zmey_gorynych"
+    },
+    {
+      "id": "slavic.koschei",
+      "category": "boss",
+      "pages": 3,
+      "entity": "mythsofworlds:koschei"
+    },
+    {
+      "id": "slavic.slavic_village",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:slavic_village"
+    },
+    {
+      "id": "slavic.baba_yaga_hut",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:baba_yaga_hut"
+    },
+    {
+      "id": "slavic.kapishche",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:kapishche"
+    },
+    {
+      "id": "slavic.koschei_oak",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:koschei_oak"
+    },
+    {
+      "id": "slavic.solovei_nest",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:solovei_nest"
+    },
+    {
+      "id": "slavic.kalinov_bridge",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:kalinov_bridge"
+    },
+    {
+      "id": "slavic.koschei_castle",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:koschei_castle"
+    }
+  ]
+}

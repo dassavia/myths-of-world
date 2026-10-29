@@ -1,0 +1,22 @@
+{
+  "structures": [
+    {
+      "structure": "mythsofworlds:solovei_nest",
+      "weight": 3
+    },
+    {
+      "structure": "mythsofworlds:kalinov_bridge",
+      "weight": 3
+    },
+    {
+      "structure": "mythsofworlds:koschei_castle",
+      "weight": 3
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 48,
+    "separation": 30,
+    "salt": 2560300
+  }
+}

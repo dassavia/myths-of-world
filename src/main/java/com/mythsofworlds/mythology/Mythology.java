@@ -11,13 +11,13 @@ import net.minecraft.world.level.Level;
 
 /**
  * The six mythologies of the mod and the world (dimension) each one leads to.
- * Greek and Norse have portals; the others are stubs: their dimension exists (reach it with
+ * Greek, Norse and Slavic have portals; the others are stubs: their dimension exists (reach it with
  * {@code /execute in mythsofworlds:<id> run tp @s ~ 120 ~}) but has no portal or own content yet.
  */
 public enum Mythology {
     GREEK(GreekContent.HELLAS, true),
     NORSE(NorseContent.JOTUNHEIM, true),
-    SLAVIC(SlavicContent.NAV, false),
+    SLAVIC(SlavicContent.NAV, true),
     OCEANIC(OceanicContent.HAWAIKI, false),
     EGYPTIAN(EgyptianContent.DUAT, false),
     INDIAN(IndianContent.SVARGA, false);
