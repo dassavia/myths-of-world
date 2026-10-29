@@ -249,7 +249,6 @@ def spawn(entity, weight, min_count, max_count):
 # clouds for the gods, golden meadows of the blessed, groves of olive and cypress, the grey fields of the dead.
 OLYMPUS_MUSIC = (f"{NS}:music.hellas.elysium", 6000, 18000)
 UNDERWORLD_MUSIC = (f"{NS}:music.hellas.underworld", 6000, 18000)
-CHIMES = (f"{NS}:ambient.hellas.chimes", 0.004)
 
 BIOMES = {
     "olympus_peaks": {
@@ -257,7 +256,7 @@ BIOMES = {
         "point": {"c": 0.5, "e": -0.8, "t": -0.2},
         "temperature": 0.3, "downfall": 0.4,
         "sky": 0xB4DCFF, "fog": 0xFFF6E2, "water": 0x55C8F0, "water_fog": 0x0A3A5A, "grass": 0xA8C98A, "foliage": 0x8FA27A,
-        "particle": ("minecraft:end_rod", 0.0008), "music": OLYMPUS_MUSIC, "additions": CHIMES,
+        "particle": ("minecraft:end_rod", 0.0008), "music": OLYMPUS_MUSIC,
         "features": COMMON + [f"{NS}:marble_ruin", f"{NS}:cloud_island", f"{NS}:ore_marble", f"{NS}:olympus_marble",
                               f"{NS}:olympus_calcite", "minecraft:ore_emerald", f"{NS}:laurel_bush", f"{NS}:cypress_tree",
                               "minecraft:flower_meadow", "minecraft:patch_grass_plain"],
@@ -271,7 +270,7 @@ BIOMES = {
         "point": {"c": 0.3, "e": 0.5, "t": 0.6, "h": -0.3},
         "temperature": 0.8, "downfall": 0.4,
         "sky": 0xFFE09A, "fog": 0xFFF1C9, "water": 0x7FE9FF, "water_fog": 0x0A4A5A, "grass": 0xE6CC5A, "foliage": 0xD9B84A,
-        "particle": ("minecraft:end_rod", 0.003), "music": OLYMPUS_MUSIC, "additions": CHIMES,
+        "particle": ("minecraft:end_rod", 0.003), "music": OLYMPUS_MUSIC,
         "features": COMMON + [f"{NS}:marble_ruin", f"{NS}:cloud_island", f"{NS}:golden_apple_tree", f"{NS}:olive_tree", f"{NS}:olive_grove", f"{NS}:pomegranate_tree",
                               f"{NS}:elysian_flowers", "minecraft:flower_meadow", "minecraft:patch_sunflower",
                               "minecraft:patch_grass_plain", "minecraft:patch_sugar_cane"],
