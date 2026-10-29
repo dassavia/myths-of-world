@@ -61,11 +61,6 @@ public class Kikimora extends Monster {
     }
 
     @Override
-    public boolean canBreatheUnderwater() {
-        return true;
-    }
-
-    @Override
     protected SoundEvent getAmbientSound() {
         return SoundEvents.WITCH_CELEBRATE;
     }

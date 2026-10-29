@@ -360,6 +360,8 @@ def recipes():
     g.add_tag("item", "foot_armor", ["skorokhody"])
     g.add_tag("item", "head_armor", ["shapka_nevidimka"])
     g.add_tag("item", "swords", ["kladenets"])
+    # Breathing under water is a tag since 1.20.5 (LivingEntity.canBreatheUnderwater is final).
+    g.add_tag("entity_type", "can_breathe_under_water", ["kikimora", "rusalka"])
 
 
 # ====================================================================== models

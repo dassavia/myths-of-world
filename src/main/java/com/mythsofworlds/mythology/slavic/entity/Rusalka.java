@@ -94,11 +94,6 @@ public class Rusalka extends Monster {
     }
 
     @Override
-    public boolean canBreatheUnderwater() {
-        return true;
-    }
-
-    @Override
     public boolean isPushedByFluid() {
         return false;
     }
