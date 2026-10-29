@@ -345,5 +345,38 @@
     "sounds": [
       "mythsofworlds:block/brazier_ignite"
     ]
+  },
+  "ambient.hellas.chimes": {
+    "subtitle": "subtitles.mythsofworlds.ambient.hellas.chimes",
+    "sounds": [
+      {
+        "name": "mythsofworlds:ambient/chimes1",
+        "volume": 0.5
+      },
+      {
+        "name": "mythsofworlds:ambient/chimes2",
+        "volume": 0.5
+      },
+      {
+        "name": "mythsofworlds:ambient/chimes3",
+        "volume": 0.5
+      }
+    ]
+  },
+  "music.hellas.elysium": {
+    "sounds": [
+      {
+        "name": "mythsofworlds:music/elysium",
+        "stream": true
+      }
+    ]
+  },
+  "music.hellas.underworld": {
+    "sounds": [
+      {
+        "name": "mythsofworlds:music/underworld",
+        "stream": true
+      }
+    ]
   }
 }

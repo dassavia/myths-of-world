@@ -77,6 +77,9 @@ SOUNDS = {
     "entity.nemean_lion.death": ([event("minecraft:entity.polar_bear.death", 0.6)], "Лев погибает", "Lion dies"),
     "entity.greek_merchant.greet": (own("greek_merchant/lyre", 2), "Торговец приветствует вас", "Merchant greets you"),
     "block.brazier.ignite": (own("block/brazier_ignite"), "Священный огонь вспыхивает", "Sacred fire flares up"),
+    "ambient.hellas.chimes": (own("ambient/chimes", 3, 0.5), "Звон небесных колокольчиков", "Heavenly chimes"),
+    "music.hellas.elysium": ([{"name": f"{NS}:music/elysium", "stream": True}], None, None),
+    "music.hellas.underworld": ([{"name": f"{NS}:music/underworld", "stream": True}], None, None),
 }
 
 
@@ -193,7 +196,68 @@ def brazier_ignite(rng, seed):
     return whoosh + crackle + chime * 0.5 * (x > 0.2)
 
 
+def bell(freq, seconds):
+    x = t(seconds)
+    return sum(a * np.sin(2 * np.pi * freq * m * x) * np.exp(-x * d) for m, a, d in ((1, 1.0, 2.0), (2.76, 0.4, 3.5), (5.4, 0.2, 6.0)))
+
+
+def chimes(rng, seed):
+    out = np.zeros(int(RATE * 3.0))
+    scale = [1046.5, 1174.7, 1318.5, 1568.0, 1760.0]
+    for k in range(3 + seed):
+        start = int(RATE * (0.25 * k + rng.uniform(0, 0.1)))
+        note = bell(scale[rng.integers(len(scale))], 2.2)[:len(out) - start]
+        out[start:start + len(note)] += note * rng.uniform(0.5, 1.0)
+    return out
+
+
+def elysium(rng, seed):
+    """About a minute of slow lyre music in D major pentatonic, over a soft drone."""
+    seconds = 64.0
+    out = np.zeros(int(RATE * seconds))
+    x = t(seconds)
+    out += 0.08 * (np.sin(2 * np.pi * 146.8 * x) + 0.5 * np.sin(2 * np.pi * 220.0 * x)) * envelope(len(x), 4.0, 6.0)
+    scale = [293.7, 329.6, 370.0, 440.0, 493.9, 587.3, 659.3, 740.0]
+    chords = [[293.7, 370.0, 440.0], [246.9, 293.7, 370.0], [329.6, 392.0, 493.9], [220.0, 277.2, 329.6]]
+    beat = 0.6
+    i = 0
+    pos = 1.0
+    while pos < seconds - 4:
+        bar = chords[(i // 8) % len(chords)]
+        if i % 8 == 0:
+            for k, f in enumerate(bar):
+                start = int(RATE * (pos + 0.05 * k))
+                note = pluck(f / 2, 3.0, rng, 0.998)[:len(out) - start]
+                out[start:start + len(note)] += note * 0.5
+        if rng.random() < 0.75:
+            f = scale[rng.integers(len(scale))]
+            start = int(RATE * pos)
+            note = pluck(f, 2.0, rng, 0.997)[:len(out) - start]
+            out[start:start + len(note)] += note * 0.7
+        pos += beat * (2 if rng.random() < 0.25 else 1)
+        i += 1
+    return out * envelope(len(out), 2.0, 4.0)
+
+
+def underworld(rng, seed):
+    """About a minute of low drones, distant breath and slow bells: the Asphodel Meadows and the Styx."""
+    seconds = 60.0
+    x = t(seconds)
+    drone = (np.sin(2 * np.pi * 55.0 * x + 2 * np.sin(2 * np.pi * 0.05 * x)) + 0.6 * np.sin(2 * np.pi * 82.4 * x)
+             + 0.3 * np.sin(2 * np.pi * 110.6 * x)) * (0.6 + 0.4 * np.sin(2 * np.pi * 0.03 * x))
+    wind = lowpass(rng.normal(0, 1, len(x)), 0.01) * 6 * (0.5 + 0.5 * np.sin(2 * np.pi * 0.07 * x + 1))
+    out = drone * 0.5 + wind
+    for k in range(7):
+        start = int(RATE * (4 + k * 8 + rng.uniform(0, 2)))
+        note = bell(rng.choice([220.0, 261.6, 196.0, 233.1]), 6.0)[:len(out) - start]
+        out[start:start + len(note)] += note * 0.35
+    return out * envelope(len(out), 4.0, 6.0)
+
+
 SYNTHS = {
+    "ambient/chimes": chimes,
+    "music/elysium": elysium,
+    "music/underworld": underworld,
     "satyr/pan_flute": pan_flute,
     "greek_merchant/lyre": lyre,
     "medusa/hiss": medusa_hiss,
@@ -225,7 +289,7 @@ def write_ogg(samples, path):
 def main():
     sounds = {}
     for key, (entries, ru, en) in SOUNDS.items():
-        sounds[key] = {"subtitle": f"subtitles.{NS}.{key}", "sounds": entries}
+        sounds[key] = {"subtitle": f"subtitles.{NS}.{key}", "sounds": entries} if ru else {"sounds": entries}
     with open(os.path.join(ROOT, "sounds.json"), "w", encoding="utf-8") as f:
         json.dump(sounds, f, indent=2, ensure_ascii=False)
         f.write("\n")
@@ -234,7 +298,8 @@ def main():
         with open(path, encoding="utf-8") as f:
             lang = json.load(f)
         for key, (_, ru, en) in SOUNDS.items():
-            lang[f"subtitles.{NS}.{key}"] = (ru, en)[index]
+            if ru:
+                lang[f"subtitles.{NS}.{key}"] = (ru, en)[index]
         with open(path, "w", encoding="utf-8") as f:
             json.dump(lang, f, indent=2, ensure_ascii=False)
             f.write("\n")

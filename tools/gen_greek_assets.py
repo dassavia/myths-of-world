@@ -126,7 +126,7 @@ FEATURE_ORDER = [
     ["minecraft:lake_lava_underground", "minecraft:lake_lava_surface"],
     ["minecraft:amethyst_geode", "minecraft:forest_rock"],
     ["minecraft:monster_room", "minecraft:monster_room_deep"],
-    [],
+    [f"{NS}:marble_ruin", f"{NS}:cloud_island"],
     [],
     ["minecraft:ore_dirt", "minecraft:ore_gravel", "minecraft:ore_granite_upper", "minecraft:ore_granite_lower",
      "minecraft:ore_diorite_upper", "minecraft:ore_diorite_lower", "minecraft:ore_andesite_upper",
@@ -135,10 +135,11 @@ FEATURE_ORDER = [
      "minecraft:ore_gold_lower", "minecraft:ore_redstone", "minecraft:ore_redstone_lower", "minecraft:ore_diamond",
      "minecraft:ore_diamond_medium", "minecraft:ore_diamond_large", "minecraft:ore_diamond_buried",
      "minecraft:ore_lapis", "minecraft:ore_lapis_buried", "minecraft:ore_copper", "minecraft:ore_emerald",
-     f"{NS}:ore_marble", "minecraft:disk_sand", "minecraft:disk_clay", "minecraft:disk_gravel"],
+     f"{NS}:ore_marble", f"{NS}:olympus_marble", f"{NS}:olympus_calcite", f"{NS}:white_cliffs", "minecraft:disk_sand", "minecraft:disk_clay", "minecraft:disk_gravel"],
     [],
     ["minecraft:spring_water", "minecraft:spring_lava"],
-    ["minecraft:glow_lichen", "minecraft:trees_plains", "minecraft:trees_birch_and_oak", "minecraft:trees_savanna",
+    ["minecraft:glow_lichen", f"{NS}:asphodel_ash", f"{NS}:stygian_mud", f"{NS}:golden_apple_tree", f"{NS}:olive_tree",
+     f"{NS}:cypress_tree", f"{NS}:laurel_bush", f"{NS}:dead_trunk", f"{NS}:elysian_flowers", "minecraft:trees_plains", "minecraft:trees_birch_and_oak", "minecraft:trees_savanna",
      "minecraft:trees_swamp", "minecraft:trees_meadow", "minecraft:flower_meadow", "minecraft:flower_plains",
      "minecraft:flower_default", "minecraft:flower_swamp", f"{NS}:patch_asphodel", "minecraft:patch_sunflower",
      "minecraft:patch_grass_plain", "minecraft:patch_grass_forest", "minecraft:patch_tall_grass_2",
@@ -167,63 +168,68 @@ def spawn(entity, weight, min_count, max_count):
     return {"type": entity, "weight": weight, "minCount": min_count, "maxCount": max_count}
 
 
+# The biomes are meant to look like the world of the myths, not like the Overworld: marble mountains under
+# clouds for the gods, golden meadows of the blessed, groves of olive and cypress, the grey fields of the dead.
+OLYMPUS_MUSIC = (f"{NS}:music.hellas.elysium", 6000, 18000)
+UNDERWORLD_MUSIC = (f"{NS}:music.hellas.underworld", 6000, 18000)
+CHIMES = (f"{NS}:ambient.hellas.chimes", 0.004)
+
 BIOMES = {
     "olympus_peaks": {
         "ru": "Вершины Олимпа", "en": "Peaks of Olympus",
         "point": {"c": 0.5, "e": -0.8, "t": -0.2},
-        "temperature": -0.2, "downfall": 0.4,
-        "sky": 0x9FD3FF, "fog": 0xE6F0FF, "water": 0x3D9BE9, "water_fog": 0x050533, "grass": 0x8AB689, "foliage": 0x6FA05A,
-        "particle": ("minecraft:white_ash", 0.004),
-        "features": COMMON + ["minecraft:amethyst_geode", "minecraft:forest_rock", "minecraft:ore_emerald",
-                              f"{NS}:ore_marble", "minecraft:trees_meadow", "minecraft:flower_meadow",
-                              "minecraft:patch_grass_plain"],
+        "temperature": 0.3, "downfall": 0.4,
+        "sky": 0xB4DCFF, "fog": 0xFFF6E2, "water": 0x55C8F0, "water_fog": 0x0A3A5A, "grass": 0xA8C98A, "foliage": 0x8FA27A,
+        "particle": ("minecraft:end_rod", 0.0008), "music": OLYMPUS_MUSIC, "additions": CHIMES,
+        "features": COMMON + [f"{NS}:marble_ruin", f"{NS}:cloud_island", f"{NS}:ore_marble", f"{NS}:olympus_marble",
+                              f"{NS}:olympus_calcite", "minecraft:ore_emerald", f"{NS}:laurel_bush", f"{NS}:cypress_tree",
+                              "minecraft:flower_meadow", "minecraft:patch_grass_plain"],
         "spawners": {
-            "monster": [spawn(f"{NS}:harpy", 70, 1, 3), spawn("minecraft:skeleton", 30, 1, 2), spawn("minecraft:creeper", 20, 1, 1)],
-            "creature": [spawn(f"{NS}:pegasus", 6, 1, 2), spawn("minecraft:goat", 8, 1, 3)],
+            "monster": [spawn(f"{NS}:harpy", 70, 1, 3), spawn("minecraft:skeleton", 20, 1, 2)],
+            "creature": [spawn(f"{NS}:pegasus", 8, 1, 2), spawn("minecraft:goat", 8, 1, 3)],
         },
     },
     "elysian_fields": {
         "ru": "Елисейские поля", "en": "Elysian Fields",
         "point": {"c": 0.3, "e": 0.5, "t": 0.6, "h": -0.3},
         "temperature": 0.8, "downfall": 0.4,
-        "sky": 0xFFD98A, "fog": 0xFFF1C9, "water": 0x4FD3E8, "water_fog": 0x0A3A4A, "grass": 0xD9C25A, "foliage": 0xC9B24A,
-        "particle": ("minecraft:end_rod", 0.0006),
-        "features": COMMON + ["minecraft:trees_plains", "minecraft:flower_meadow", "minecraft:flower_plains",
-                              "minecraft:patch_sunflower", "minecraft:patch_grass_plain", "minecraft:patch_sugar_cane",
-                              "minecraft:patch_pumpkin"],
+        "sky": 0xFFE09A, "fog": 0xFFF1C9, "water": 0x7FE9FF, "water_fog": 0x0A4A5A, "grass": 0xE6CC5A, "foliage": 0xD9B84A,
+        "particle": ("minecraft:end_rod", 0.003), "music": OLYMPUS_MUSIC, "additions": CHIMES,
+        "features": COMMON + [f"{NS}:marble_ruin", f"{NS}:cloud_island", f"{NS}:golden_apple_tree", f"{NS}:olive_tree",
+                              f"{NS}:elysian_flowers", "minecraft:flower_meadow", "minecraft:patch_sunflower",
+                              "minecraft:patch_grass_plain", "minecraft:patch_sugar_cane"],
         "spawners": {
-            "monster": [spawn(f"{NS}:satyr", 20, 1, 2), spawn("minecraft:zombie", 20, 1, 2)],
-            "creature": [spawn(f"{NS}:pegasus", 5, 1, 3), spawn("minecraft:sheep", 12, 2, 4), spawn("minecraft:cow", 8, 2, 4),
-                         spawn("minecraft:horse", 4, 2, 4)],
+            "monster": [spawn(f"{NS}:satyr", 20, 1, 2)],
+            "creature": [spawn(f"{NS}:pegasus", 6, 1, 3), spawn(f"{NS}:golden_hind", 2, 1, 2), spawn("minecraft:sheep", 10, 2, 4),
+                         spawn("minecraft:cow", 6, 2, 4), spawn("minecraft:horse", 4, 2, 4)],
         },
     },
     "arcadian_grove": {
         "ru": "Рощи Аркадии", "en": "Arcadian Grove",
         "point": {"c": 0.3, "e": 0.2, "t": 0.3, "h": 0.5},
         "temperature": 0.7, "downfall": 0.8,
-        "sky": 0x88C8FF, "fog": 0xC0D8FF, "water": 0x3F76E4, "water_fog": 0x050533, "grass": 0x6CBF3F, "foliage": 0x59AE30,
-        "features": COMMON + ["minecraft:amethyst_geode", "minecraft:forest_rock", f"{NS}:ore_marble",
-                              "minecraft:trees_birch_and_oak", "minecraft:flower_default", "minecraft:patch_grass_forest",
-                              "minecraft:patch_tall_grass_2", "minecraft:patch_pumpkin"],
+        "sky": 0x8ECFFF, "fog": 0xCFE6FF, "water": 0x3FA0E4, "water_fog": 0x050533, "grass": 0x7FBF4A, "foliage": 0x8AA36A,
+        "particle": ("minecraft:spore_blossom_air", 0.002),
+        "features": COMMON + ["minecraft:amethyst_geode", "minecraft:forest_rock", f"{NS}:marble_ruin", f"{NS}:ore_marble",
+                              f"{NS}:olive_tree", f"{NS}:cypress_tree", f"{NS}:laurel_bush", "minecraft:flower_default",
+                              "minecraft:patch_grass_forest", "minecraft:patch_tall_grass_2", "minecraft:patch_pumpkin"],
         "spawners": {
-            "monster": [spawn(f"{NS}:satyr", 80, 2, 4), spawn("minecraft:spider", 40, 1, 2), spawn("minecraft:creeper", 30, 1, 2),
-                        spawn("minecraft:zombie", 30, 1, 3)],
+            "monster": [spawn(f"{NS}:satyr", 80, 2, 4), spawn("minecraft:spider", 30, 1, 2), spawn("minecraft:zombie", 20, 1, 3)],
             "creature": [spawn(f"{NS}:golden_hind", 3, 1, 2), spawn("minecraft:fox", 8, 2, 3), spawn("minecraft:sheep", 8, 2, 4),
-                         spawn("minecraft:pig", 8, 2, 4),
-                         spawn("minecraft:wolf", 4, 2, 4), spawn("minecraft:rabbit", 4, 2, 3)],
+                         spawn("minecraft:pig", 6, 2, 4), spawn("minecraft:wolf", 4, 2, 4), spawn("minecraft:rabbit", 4, 2, 3)],
         },
     },
     "asphodel_meadows": {
         "ru": "Асфоделевые луга", "en": "Asphodel Meadows",
         "point": {"c": 0.5, "e": 0.4, "t": -0.6, "h": -0.4, "w": 0.5},
         "temperature": 0.4, "downfall": 0.0, "precipitation": False,
-        "sky": 0x8A8F99, "fog": 0x9AA0A8, "water": 0x5A6B7A, "water_fog": 0x1A2228, "grass": 0x9DA39A, "foliage": 0x8C928A,
-        "particle": ("minecraft:ash", 0.02),
-        "features": COMMON + ["minecraft:lake_lava_underground", "minecraft:lake_lava_surface", f"{NS}:patch_asphodel",
+        "sky": 0x5E636C, "fog": 0x6C7078, "water": 0x4A5A6A, "water_fog": 0x10181E, "grass": 0x8A9088, "foliage": 0x6E746C,
+        "particle": ("minecraft:soul", 0.004), "music": UNDERWORLD_MUSIC,
+        "additions": ("minecraft:ambient.soul_sand_valley.additions", 0.0111),
+        "features": COMMON + ["minecraft:lake_lava_underground", f"{NS}:asphodel_ash", f"{NS}:dead_trunk", f"{NS}:patch_asphodel",
                               "minecraft:patch_dead_bush"],
         "spawners": {
-            "monster": [spawn(f"{NS}:shade", 100, 1, 3), spawn(f"{NS}:spartoi", 60, 1, 3), spawn("minecraft:skeleton", 20, 1, 2),
-                        spawn("minecraft:enderman", 5, 1, 1)],
+            "monster": [spawn(f"{NS}:shade", 100, 1, 3), spawn(f"{NS}:spartoi", 60, 1, 3), spawn("minecraft:skeleton", 20, 1, 2)],
             "ambient": [spawn("minecraft:bat", 10, 8, 8)],
         },
     },
@@ -231,14 +237,13 @@ BIOMES = {
         "ru": "Стигийские топи", "en": "Stygian Marsh",
         "point": {"c": 0.15, "e": 0.8, "t": -0.3, "h": 0.7},
         "temperature": 0.6, "downfall": 0.9,
-        "sky": 0x6B7F6B, "fog": 0x5E6E5E, "water": 0x3B4A2F, "water_fog": 0x161E10, "grass": 0x4C6B3A, "foliage": 0x3E5A2E,
-        "particle": ("minecraft:mycelium", 0.01),
-        "features": COMMON + ["minecraft:disk_clay", "minecraft:trees_swamp", "minecraft:flower_swamp",
-                              "minecraft:brown_mushroom_swamp", "minecraft:red_mushroom_swamp",
-                              "minecraft:patch_sugar_cane_swamp", "minecraft:patch_waterlily", "minecraft:seagrass_swamp"],
+        "sky": 0x4E5A52, "fog": 0x3E4A42, "water": 0x1E2A24, "water_fog": 0x0A100C, "grass": 0x4C6040, "foliage": 0x3A4A30,
+        "particle": ("minecraft:soul_fire_flame", 0.002), "music": UNDERWORLD_MUSIC,
+        "additions": ("minecraft:ambient.basalt_deltas.additions", 0.0111),
+        "features": COMMON + ["minecraft:disk_clay", f"{NS}:stygian_mud", f"{NS}:dead_trunk", "minecraft:trees_swamp",
+                              "minecraft:brown_mushroom_swamp", "minecraft:patch_waterlily", "minecraft:seagrass_swamp"],
         "spawners": {
-            "monster": [spawn(f"{NS}:shade", 60, 1, 2), spawn("minecraft:zombie", 50, 2, 3), spawn("minecraft:witch", 5, 1, 1),
-                        spawn("minecraft:slime", 1, 1, 1)],
+            "monster": [spawn(f"{NS}:shade", 80, 1, 2), spawn("minecraft:drowned", 30, 1, 2), spawn("minecraft:witch", 5, 1, 1)],
             "creature": [spawn("minecraft:frog", 10, 2, 5)],
         },
     },
@@ -246,12 +251,12 @@ BIOMES = {
         "ru": "Эгейское побережье", "en": "Aegean Coast",
         "point": {"c": -0.1, "e": 0.3, "t": 0.5, "h": -0.2},
         "temperature": 0.9, "downfall": 0.3,
-        "sky": 0x78B8FF, "fog": 0xC8E4FF, "water": 0x2FD1C5, "water_fog": 0x05313A, "grass": 0xA9C25A, "foliage": 0x9AB04A,
-        "features": COMMON + DISKS + ["minecraft:trees_savanna", "minecraft:flower_default", "minecraft:patch_grass_plain",
-                                      "minecraft:patch_dead_bush", "minecraft:patch_sugar_cane", "minecraft:seagrass_warm",
-                                      "minecraft:sea_pickle"],
+        "sky": 0x78C0FF, "fog": 0xD8EEFF, "water": 0x2FD8D0, "water_fog": 0x05313A, "grass": 0xA9C25A, "foliage": 0x8FA27A,
+        "features": COMMON + DISKS + [f"{NS}:marble_ruin", f"{NS}:white_cliffs", f"{NS}:olive_tree", f"{NS}:cypress_tree",
+                                      "minecraft:flower_default", "minecraft:patch_grass_plain", "minecraft:patch_dead_bush",
+                                      "minecraft:patch_sugar_cane", "minecraft:seagrass_warm", "minecraft:sea_pickle"],
         "spawners": {
-            "monster": [spawn(f"{NS}:harpy", 40, 1, 3), spawn("minecraft:drowned", 30, 1, 2), spawn("minecraft:zombie", 30, 1, 2)],
+            "monster": [spawn(f"{NS}:harpy", 40, 1, 3), spawn("minecraft:drowned", 30, 1, 2), spawn("minecraft:zombie", 20, 1, 2)],
             "creature": [spawn("minecraft:turtle", 5, 2, 5), spawn("minecraft:goat", 4, 1, 2)],
             "water_creature": [spawn("minecraft:squid", 4, 1, 4)],
             "water_ambient": [spawn("minecraft:tropical_fish", 25, 8, 8)],
@@ -261,11 +266,11 @@ BIOMES = {
         "ru": "Эгейское море", "en": "Aegean Sea",
         "point": {"c": -0.6, "t": 0.5},
         "temperature": 0.8, "downfall": 0.5,
-        "sky": 0x6AAAFF, "fog": 0xC0D8FF, "water": 0x2FD1C5, "water_fog": 0x05313A, "grass": 0xA9C25A, "foliage": 0x9AB04A,
+        "sky": 0x6AB4FF, "fog": 0xD0E8FF, "water": 0x2FD8D0, "water_fog": 0x05313A, "grass": 0xA9C25A, "foliage": 0x8FA27A,
         "features": COMMON + DISKS + ["minecraft:seagrass_warm", "minecraft:sea_pickle", "minecraft:warm_ocean_vegetation"],
         "spawners": {
             "monster": [spawn("minecraft:drowned", 100, 1, 3)],
-            "water_creature": [spawn("minecraft:dolphin", 2, 1, 2), spawn("minecraft:squid", 4, 1, 4)],
+            "water_creature": [spawn("minecraft:dolphin", 4, 1, 3), spawn("minecraft:squid", 4, 1, 4)],
             "water_ambient": [spawn("minecraft:tropical_fish", 25, 8, 8), spawn("minecraft:pufferfish", 5, 1, 3)],
         },
     },
@@ -289,6 +294,12 @@ def biome_json(spec):
     if "particle" in spec:
         particle, probability = spec["particle"]
         effects["particle"] = {"options": {"type": particle}, "probability": probability}
+    if "music" in spec:
+        sound, min_delay, max_delay = spec["music"]
+        effects["music"] = {"sound": sound, "min_delay": min_delay, "max_delay": max_delay, "replace_current_music": False}
+    if "additions" in spec:
+        sound, chance = spec["additions"]
+        effects["additions_sound"] = {"sound": sound, "tick_chance": chance}
     return {
         "has_precipitation": spec.get("precipitation", True),
         "temperature": spec["temperature"],
@@ -301,7 +312,155 @@ def biome_json(spec):
     }
 
 
+def ore(name, block, size, count, lo, hi, rarity=None):
+    write_json(data("worldgen", "configured_feature", f"{name}.json"), {
+        "type": "minecraft:ore",
+        "config": {"size": size, "discard_chance_on_air_exposure": 0.0, "targets": [{
+            "target": {"predicate_type": "minecraft:tag_match", "tag": "minecraft:stone_ore_replaceables"},
+            "state": {"Name": block}}]},
+    })
+    placement = [{"type": "minecraft:count", "count": count}, {"type": "minecraft:in_square"},
+                 {"type": "minecraft:height_range", "height": {"type": "minecraft:uniform", "min_inclusive": {"absolute": lo},
+                                                               "max_inclusive": {"absolute": hi}}},
+                 {"type": "minecraft:biome"}]
+    if rarity:
+        placement.insert(0, {"type": "minecraft:rarity_filter", "chance": rarity})
+    write_json(data("worldgen", "placed_feature", f"{name}.json"), {"feature": f"{NS}:{name}", "placement": placement})
+
+
+SAPLING_OK = {"type": "minecraft:block_predicate_filter",
+              "predicate": {"type": "minecraft:would_survive", "state": {"Name": "minecraft:oak_sapling", "Properties": {"stage": "0"}}}}
+
+
+def surface_placement(count=None, rarity=None, extra=None):
+    placement = []
+    if rarity:
+        placement.append({"type": "minecraft:rarity_filter", "chance": rarity})
+    if count:
+        placement.append({"type": "minecraft:count", "count": count})
+    placement += [{"type": "minecraft:in_square"}, {"type": "minecraft:surface_water_depth_filter", "max_water_depth": 0},
+                  {"type": "minecraft:heightmap", "heightmap": "OCEAN_FLOOR"}]
+    placement += extra or []
+    placement.append({"type": "minecraft:biome"})
+    return placement
+
+
+def state(name, **props):
+    s = {"Name": name}
+    if props:
+        s["Properties"] = {k: str(v).lower() for k, v in props.items()}
+    return s
+
+
+def simple(name, **props):
+    return {"type": "minecraft:simple_state_provider", "state": state(name, **props)}
+
+
+def tree(name, log, leaves, trunk, foliage, count=None, rarity=None, dirt="minecraft:dirt"):
+    write_json(data("worldgen", "configured_feature", f"{name}.json"), {
+        "type": "minecraft:tree",
+        "config": {
+            "trunk_provider": simple(log, axis="y"),
+            "foliage_provider": simple(leaves, distance=7, persistent=False, waterlogged=False),
+            "dirt_provider": simple(dirt),
+            "trunk_placer": trunk,
+            "foliage_placer": foliage,
+            "minimum_size": {"type": "minecraft:two_layers_feature_size", "limit": 1, "lower_size": 0, "upper_size": 1},
+            "decorators": [],
+            "ignore_vines": True,
+            "force_dirt": False,
+        },
+    })
+    write_json(data("worldgen", "placed_feature", f"{name}.json"),
+               {"feature": f"{NS}:{name}", "placement": surface_placement(count, rarity, [SAPLING_OK])})
+
+
+def hellas_features():
+    # Olympus is a mountain of marble: huge veins of marble and calcite all the way to the peaks.
+    ore("olympus_marble", f"{NS}:marble", 64, 28, 50, 320)
+    ore("olympus_calcite", "minecraft:calcite", 48, 12, 60, 320)
+    # The chalk-white cliffs of the Aegean.
+    ore("white_cliffs", "minecraft:calcite", 40, 10, 55, 120)
+
+    # Olive: short, gnarled, forking trunk with a wide silvery crown.
+    tree("olive_tree", "minecraft:oak_log", "minecraft:oak_leaves",
+         {"type": "minecraft:forking_trunk_placer", "base_height": 3, "height_rand_a": 2, "height_rand_b": 1},
+         {"type": "minecraft:acacia_foliage_placer", "radius": 2, "offset": 0}, count=1)
+    # Cypress: a tall dark-green spire.
+    tree("cypress_tree", "minecraft:spruce_log", "minecraft:spruce_leaves",
+         {"type": "minecraft:straight_trunk_placer", "base_height": 7, "height_rand_a": 4, "height_rand_b": 0},
+         {"type": "minecraft:spruce_foliage_placer", "radius": {"type": "minecraft:uniform", "min_inclusive": 1, "max_inclusive": 1},
+          "offset": 0, "trunk_height": {"type": "minecraft:uniform", "min_inclusive": 1, "max_inclusive": 2}}, rarity=2)
+    # Laurel of Apollo: a low round bush.
+    tree("laurel_bush", "minecraft:oak_log", "minecraft:azalea_leaves",
+         {"type": "minecraft:straight_trunk_placer", "base_height": 1, "height_rand_a": 0, "height_rand_b": 0},
+         {"type": "minecraft:bush_foliage_placer", "radius": 2, "offset": 1, "height": 2}, count=2)
+    # The golden apple trees of the Hesperides: white trunks, glowing golden leaves.
+    tree("golden_apple_tree", "minecraft:birch_log", f"{NS}:golden_leaves",
+         {"type": "minecraft:straight_trunk_placer", "base_height": 5, "height_rand_a": 2, "height_rand_b": 0},
+         {"type": "minecraft:blob_foliage_placer", "radius": 2, "offset": 0, "height": 3}, rarity=2)
+
+    for name, rarity in (("cloud_island", 5), ("marble_ruin", 6)):
+        write_json(data("worldgen", "configured_feature", f"{name}.json"), {"type": f"{NS}:{name}", "config": {}})
+    write_json(data("worldgen", "placed_feature", "cloud_island.json"), {"feature": f"{NS}:cloud_island", "placement": [
+        {"type": "minecraft:rarity_filter", "chance": 5}, {"type": "minecraft:in_square"},
+        {"type": "minecraft:height_range", "height": {"type": "minecraft:uniform", "min_inclusive": {"absolute": 150},
+                                                      "max_inclusive": {"absolute": 200}}},
+        {"type": "minecraft:biome"}]})
+    write_json(data("worldgen", "placed_feature", "marble_ruin.json"), {"feature": f"{NS}:marble_ruin", "placement": [
+        {"type": "minecraft:rarity_filter", "chance": 6}, {"type": "minecraft:in_square"},
+        {"type": "minecraft:heightmap", "heightmap": "WORLD_SURFACE_WG"}, {"type": "minecraft:biome"}]})
+
+    # Fields of the dead: grey soul soil and coarse earth among the asphodels.
+    def patch(name, ground, vegetation, count, chance):
+        write_json(data("worldgen", "configured_feature", f"{name}.json"), {
+            "type": "minecraft:vegetation_patch",
+            "config": {
+                "replaceable": "#minecraft:moss_replaceable",
+                "ground_state": {"type": "minecraft:weighted_state_provider",
+                                 "entries": [{"weight": w, "data": state(b)} for b, w in ground]},
+                "vegetation_feature": {"feature": {"type": "minecraft:simple_block", "config": {"to_place": vegetation}},
+                                       "placement": []},
+                "surface": "floor", "depth": 1, "extra_bottom_block_chance": 0.0, "vertical_range": 5,
+                "vegetation_chance": chance, "xz_radius": {"type": "minecraft:uniform", "min_inclusive": 3, "max_inclusive": 7},
+                "extra_edge_column_chance": 0.3,
+            },
+        })
+        write_json(data("worldgen", "placed_feature", f"{name}.json"), {"feature": f"{NS}:{name}", "placement": [
+            {"type": "minecraft:count", "count": count}, {"type": "minecraft:in_square"},
+            {"type": "minecraft:heightmap", "heightmap": "WORLD_SURFACE_WG"}, {"type": "minecraft:biome"}]})
+
+    patch("asphodel_ash", [("minecraft:soul_soil", 3), ("minecraft:coarse_dirt", 2), ("minecraft:gravel", 1)],
+          simple(f"{NS}:asphodel"), 4, 0.25)
+    patch("stygian_mud", [("minecraft:mud", 4), ("minecraft:soul_soil", 1)],
+          {"type": "minecraft:weighted_state_provider", "entries": [
+              {"weight": 3, "data": state("minecraft:dead_bush")}, {"weight": 1, "data": state("minecraft:brown_mushroom")}]}, 3, 0.1)
+
+    # Bare black trunks of trees that died with the light.
+    write_json(data("worldgen", "configured_feature", "dead_trunk.json"), {"type": "minecraft:block_column", "config": {
+        "layers": [{"height": {"type": "minecraft:uniform", "min_inclusive": 2, "max_inclusive": 5},
+                    "provider": simple("minecraft:stripped_dark_oak_log", axis="y")}],
+        "direction": "up", "allowed_placement": {"type": "minecraft:matching_blocks", "blocks": "minecraft:air"},
+        "prioritize_tip": False}})
+    write_json(data("worldgen", "placed_feature", "dead_trunk.json"),
+               {"feature": f"{NS}:dead_trunk", "placement": surface_placement(rarity=2, extra=[SAPLING_OK])})
+
+    # Meadows of the blessed: white, blue and gold flowers everywhere.
+    write_json(data("worldgen", "configured_feature", "elysian_flowers.json"), {"type": "minecraft:flower", "config": {
+        "tries": 96, "xz_spread": 7, "y_spread": 3, "feature": {"feature": {"type": "minecraft:simple_block", "config": {
+            "to_place": {"type": "minecraft:weighted_state_provider", "entries": [
+                {"weight": w, "data": state(f)} for f, w in (
+                    ("minecraft:oxeye_daisy", 3), ("minecraft:lily_of_the_valley", 3), ("minecraft:dandelion", 2),
+                    ("minecraft:azure_bluet", 2), ("minecraft:cornflower", 1), (f"{NS}:asphodel", 1))]}}},
+            "placement": [{"type": "minecraft:block_predicate_filter",
+                           "predicate": {"type": "minecraft:matching_blocks", "blocks": "minecraft:air"}}]}}})
+    write_json(data("worldgen", "placed_feature", "elysian_flowers.json"), {"feature": f"{NS}:elysian_flowers", "placement": [
+        {"type": "minecraft:count", "count": 4}, {"type": "minecraft:in_square"},
+        {"type": "minecraft:heightmap", "heightmap": "MOTION_BLOCKING"}, {"type": "minecraft:biome"}]})
+
+
 def worldgen_features():
+    hellas_features()
     write_json(data("worldgen", "configured_feature", "ore_marble.json"), {
         "type": "minecraft:ore",
         "config": {
@@ -497,6 +656,30 @@ def loot():
         entry("minecraft:book", 3, enchant=True), entry("minecraft:golden_apple", 2),
     ])
 
+    shears_or_silk = {"condition": "minecraft:any_of", "terms": [
+        {"condition": "minecraft:match_tool", "predicate": {"items": "minecraft:shears"}},
+        {"condition": "minecraft:match_tool", "predicate": {"predicates": {"minecraft:enchantments": [
+            {"enchantments": "minecraft:silk_touch", "levels": {"min": 1}}]}}}]}
+    write_json(data("loot_table", "blocks", "golden_leaves.json"), {
+        "type": "minecraft:block",
+        "pools": [{"rolls": 1, "entries": [{"type": "minecraft:alternatives", "children": [
+            {"type": "minecraft:item", "name": f"{NS}:golden_leaves", "conditions": [shears_or_silk]},
+            {"type": "minecraft:item", "name": "minecraft:golden_apple",
+             "conditions": [{"condition": "minecraft:random_chance", "chance": 0.04}]},
+            {"type": "minecraft:item", "name": "minecraft:gold_nugget",
+             "conditions": [{"condition": "minecraft:random_chance", "chance": 0.15}]}]}]}],
+        "random_sequence": f"{NS}:blocks/golden_leaves",
+    })
+    write_json(data("loot_table", "blocks", "cloud.json"), {
+        "type": "minecraft:block",
+        "pools": [{"rolls": 1, "entries": [{"type": "minecraft:item", "name": f"{NS}:cloud"}]}],
+        "random_sequence": f"{NS}:blocks/cloud",
+    })
+    chest("cloud_shrine", (3, 6), gold + [
+        entry(f"{NS}:ambrosia", 6, 1, 3), entry("minecraft:golden_apple", 4), entry("minecraft:enchanted_golden_apple", 1),
+        entry("minecraft:feather", 6, 2, 6), entry(f"{NS}:harpy_feather", 4, 1, 3), entry("minecraft:book", 4, enchant=True),
+        entry(f"{NS}:cloud", 5, 4, 12),
+    ])
     chest("agora_house", (3, 6), [
         entry("minecraft:bread", 10, 1, 4), entry("minecraft:wheat", 8, 2, 6), entry("minecraft:honey_bottle", 4),
         entry("minecraft:emerald", 6, 1, 4), entry("minecraft:sweet_berries", 6, 2, 6), entry("minecraft:clay_ball", 4, 2, 8),
@@ -584,6 +767,12 @@ def recipes():
         if f"{NS}:{block}" not in tag["values"]:
             tag["values"].append(f"{NS}:{block}")
     write_json(pickaxe, tag)
+    for tag_name, values in (("leaves", ["golden_leaves"]), ("mineable/hoe", ["golden_leaves"]),
+                             ("mineable/shovel", ["cloud"])):
+        write_json(os.path.join(ROOT, "data", "minecraft", "tags", "block", f"{tag_name}.json"),
+                   {"replace": False, "values": [f"{NS}:{v}" for v in values]})
+    write_json(os.path.join(ROOT, "data", "minecraft", "tags", "item", "leaves.json"),
+               {"replace": False, "values": [f"{NS}:golden_leaves"]})
     write_json(os.path.join(ROOT, "data", "minecraft", "tags", "block", "small_flowers.json"),
                {"replace": False, "values": [f"{NS}:asphodel"]})
     write_json(os.path.join(ROOT, "data", "minecraft", "tags", "item", "small_flowers.json"),
@@ -635,6 +824,17 @@ def models():
         if os.path.exists(assets("models", "block", f"{old}.json")):
             os.remove(assets("models", "block", f"{old}.json"))
 
+    write_json(assets("blockstates", "cloud.json"), {"variants": {"": {"model": f"{NS}:block/cloud"}}})
+    write_json(assets("models", "block", "cloud.json"), {"parent": "minecraft:block/cube_all", "render_type": "minecraft:translucent",
+                                                         "textures": {"all": f"{NS}:block/cloud"}})
+    write_json(assets("models", "item", "cloud.json"), {"parent": f"{NS}:block/cloud"})
+    # Golden leaves are not tinted by the biome, so they use cube_all rather than the leaves parent.
+    write_json(assets("blockstates", "golden_leaves.json"), {"variants": {"": {"model": f"{NS}:block/golden_leaves"}}})
+    write_json(assets("models", "block", "golden_leaves.json"), {"parent": "minecraft:block/cube_all",
+                                                                 "render_type": "minecraft:cutout_mipped",
+                                                                 "textures": {"all": f"{NS}:block/golden_leaves"}})
+    write_json(assets("models", "item", "golden_leaves.json"), {"parent": f"{NS}:block/golden_leaves"})
+
     write_json(assets("blockstates", "brazier.json"), {"variants": {
         "lit=false": {"model": f"{NS}:block/brazier"},
         "lit=true": {"model": f"{NS}:block/brazier_lit"},
@@ -675,6 +875,8 @@ LANG = {
     "block.mythsofworlds.olympian_marble": ("Олимпийский мрамор", "Olympian Marble"),
     "block.mythsofworlds.hellas_portal": ("Священный водоём Эллады", "Sacred Pool of Hellas"),
     "block.mythsofworlds.brazier": ("Жертвенная чаша", "Brazier"),
+    "block.mythsofworlds.cloud": ("Облако", "Cloud"),
+    "block.mythsofworlds.golden_leaves": ("Листва золотой яблони", "Golden Apple Leaves"),
     "block.mythsofworlds.asphodel": ("Асфодель", "Asphodel"),
     "item.mythsofworlds.promethean_torch": ("Факел Прометея", "Promethean Torch"),
     "item.mythsofworlds.promethean_torch.desc": (

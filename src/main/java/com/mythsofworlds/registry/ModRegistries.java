@@ -7,6 +7,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -22,6 +23,8 @@ public final class ModRegistries {
             DeferredRegister.create(Registries.ENTITY_TYPE, MythsOfWorlds.MODID);
     public static final DeferredRegister<SoundEvent> SOUNDS =
             DeferredRegister.create(Registries.SOUND_EVENT, MythsOfWorlds.MODID);
+    public static final DeferredRegister<Feature<?>> FEATURES =
+            DeferredRegister.create(Registries.FEATURE, MythsOfWorlds.MODID);
     public static final DeferredRegister<CreativeModeTab> TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MythsOfWorlds.MODID);
 
@@ -42,6 +45,7 @@ public final class ModRegistries {
         ITEMS.register(modBus);
         ENTITY_TYPES.register(modBus);
         SOUNDS.register(modBus);
+        FEATURES.register(modBus);
         TABS.register(modBus);
     }
 }

@@ -937,7 +937,35 @@ def brazier_top(rng, lit=False):
     return img
 
 
+def cloud(rng):
+    img = Image.new("RGBA", (16, 16))
+    for x in range(16):
+        for y in range(16):
+            puff = math.sin(x * 0.7) * math.cos(y * 0.6) + math.sin((x + y) * 0.4)
+            v = int(238 + 10 * puff + rng.randint(-4, 4))
+            img.putpixel((x, y), (min(255, v), min(255, v), min(255, v + 4), 215 + int(15 * puff)))
+    return img
+
+
+def golden_leaves(rng):
+    img = Image.new("RGBA", (16, 16), (0, 0, 0, 0))
+    for x in range(16):
+        for y in range(16):
+            if rng.random() < 0.82:
+                c = rng.choice((0xF2C440, 0xE2B33C, 0xD49A2A, 0xFFE08A, 0xC98A2E))
+                img.putpixel((x, y), jitter(rgb(c), rng, 10))
+    # A few golden apples among the leaves.
+    for _ in range(2):
+        ax, ay = rng.randrange(1, 14), rng.randrange(1, 14)
+        for dx, dy in ((0, 0), (1, 0), (0, 1), (1, 1)):
+            img.putpixel((ax + dx, ay + dy), rgb(0xFFD700 if (dx, dy) != (0, 0) else 0xFFF6C0))
+        img.putpixel((ax + 1, ay - 1), rgb(0x6B4A2B))
+    return img
+
+
 BLOCKS = {
+    "cloud": cloud,
+    "golden_leaves": golden_leaves,
     "brazier_side": brazier_side,
     "brazier_top": brazier_top,
     "brazier_top_lit": lambda rng: brazier_top(rng, lit=True),

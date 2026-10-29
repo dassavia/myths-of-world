@@ -3,6 +3,7 @@ package com.mythsofworlds.mythology.greek;
 import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.mythology.greek.item.HydraEggItem;
 import com.mythsofworlds.mythology.greek.item.MedusaHeadItem;
+import com.mythsofworlds.mythology.greek.block.CloudBlock;
 import com.mythsofworlds.mythology.greek.portal.BrazierBlock;
 import com.mythsofworlds.mythology.greek.portal.PoolPortalBlock;
 import com.mythsofworlds.mythology.greek.portal.PrometheanTorchItem;
@@ -20,6 +21,7 @@ import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FlowerBlock;
+import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -98,6 +100,32 @@ public final class GreekContent {
                     .offsetType(BlockBehaviour.OffsetType.XZ)
                     .pushReaction(PushReaction.DESTROY)));
 
+    /** Soft white cloud of the islands that float above Olympus and Elysium. Breaks any fall. */
+    public static final DeferredBlock<CloudBlock> CLOUD = BLOCKS.register("cloud",
+            () -> new CloudBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.SNOW)
+                    .strength(0.3F)
+                    .sound(SoundType.WOOL)
+                    .noOcclusion()
+                    .speedFactor(0.8F)
+                    .isViewBlocking((state, level, pos) -> false)
+                    .isSuffocating((state, level, pos) -> false)));
+
+    /** Leaves of the golden apple trees of the Hesperides, in the Elysian Fields. Sometimes drop a golden apple. */
+    public static final DeferredBlock<LeavesBlock> GOLDEN_LEAVES = BLOCKS.register("golden_leaves",
+            () -> new LeavesBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.GOLD)
+                    .strength(0.2F)
+                    .randomTicks()
+                    .sound(SoundType.AZALEA_LEAVES)
+                    .noOcclusion()
+                    .lightLevel(state -> 6)
+                    .isValidSpawn((state, level, pos, type) -> false)
+                    .isSuffocating((state, level, pos) -> false)
+                    .isViewBlocking((state, level, pos) -> false)
+                    .ignitedByLava()
+                    .pushReaction(PushReaction.DESTROY)));
+
     // ---- Items ----
 
     public static final DeferredItem<BlockItem> MARBLE_ITEM = ITEMS.registerSimpleBlockItem(MARBLE);
@@ -106,6 +134,8 @@ public final class GreekContent {
     public static final DeferredItem<BlockItem> OLYMPIAN_MARBLE_ITEM = ITEMS.registerSimpleBlockItem(OLYMPIAN_MARBLE);
     public static final DeferredItem<BlockItem> ASPHODEL_ITEM = ITEMS.registerSimpleBlockItem(ASPHODEL);
     public static final DeferredItem<BlockItem> BRAZIER_ITEM = ITEMS.registerSimpleBlockItem(BRAZIER);
+    public static final DeferredItem<BlockItem> CLOUD_ITEM = ITEMS.registerSimpleBlockItem(CLOUD);
+    public static final DeferredItem<BlockItem> GOLDEN_LEAVES_ITEM = ITEMS.registerSimpleBlockItem(GOLDEN_LEAVES);
 
     /** The fire Prometheus stole from the gods: lights the braziers of the portal pool. */
     public static final DeferredItem<PrometheanTorchItem> PROMETHEAN_TORCH = ITEMS.register("promethean_torch",

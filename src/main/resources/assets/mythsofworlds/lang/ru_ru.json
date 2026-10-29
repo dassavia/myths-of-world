@@ -98,5 +98,8 @@
   "subtitles.mythsofworlds.entity.nemean_lion.hurt": "Лев ранен",
   "subtitles.mythsofworlds.entity.nemean_lion.death": "Лев погибает",
   "subtitles.mythsofworlds.entity.greek_merchant.greet": "Торговец приветствует вас",
-  "subtitles.mythsofworlds.block.brazier.ignite": "Священный огонь вспыхивает"
+  "subtitles.mythsofworlds.block.brazier.ignite": "Священный огонь вспыхивает",
+  "block.mythsofworlds.cloud": "Облако",
+  "block.mythsofworlds.golden_leaves": "Листва золотой яблони",
+  "subtitles.mythsofworlds.ambient.hellas.chimes": "Звон небесных колокольчиков"
 }

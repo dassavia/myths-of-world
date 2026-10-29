@@ -3,12 +3,12 @@
   "temperature": 0.4,
   "downfall": 0.0,
   "effects": {
-    "sky_color": 9080729,
-    "fog_color": 10133672,
-    "water_color": 5925754,
-    "water_fog_color": 1712680,
-    "grass_color": 10331034,
-    "foliage_color": 9212554,
+    "sky_color": 6185836,
+    "fog_color": 7106680,
+    "water_color": 4872810,
+    "water_fog_color": 1054750,
+    "grass_color": 9080968,
+    "foliage_color": 7238764,
     "mood_sound": {
       "sound": "minecraft:ambient.cave",
       "tick_delay": 6000,
@@ -17,9 +17,19 @@
     },
     "particle": {
       "options": {
-        "type": "minecraft:ash"
+        "type": "minecraft:soul"
       },
-      "probability": 0.02
+      "probability": 0.004
+    },
+    "music": {
+      "sound": "mythsofworlds:music.hellas.underworld",
+      "min_delay": 6000,
+      "max_delay": 18000,
+      "replace_current_music": false
+    },
+    "additions_sound": {
+      "sound": "minecraft:ambient.soul_sand_valley.additions",
+      "tick_chance": 0.0111
     }
   },
   "spawners": {
@@ -41,12 +51,6 @@
         "weight": 20,
         "minCount": 1,
         "maxCount": 2
-      },
-      {
-        "type": "minecraft:enderman",
-        "weight": 5,
-        "minCount": 1,
-        "maxCount": 1
       }
     ],
     "ambient": [
@@ -69,8 +73,7 @@
   "features": [
     [],
     [
-      "minecraft:lake_lava_underground",
-      "minecraft:lake_lava_surface"
+      "minecraft:lake_lava_underground"
     ],
     [],
     [
@@ -113,6 +116,8 @@
     ],
     [
       "minecraft:glow_lichen",
+      "mythsofworlds:asphodel_ash",
+      "mythsofworlds:dead_trunk",
       "mythsofworlds:patch_asphodel",
       "minecraft:patch_dead_bush"
     ],

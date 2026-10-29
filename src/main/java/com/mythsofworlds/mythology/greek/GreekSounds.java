@@ -45,6 +45,10 @@ public final class GreekSounds {
     public static final DeferredHolder<SoundEvent, SoundEvent> LION_DEATH = sound("entity.nemean_lion.death");
     public static final DeferredHolder<SoundEvent, SoundEvent> MERCHANT_GREET = sound("entity.greek_merchant.greet");
     public static final DeferredHolder<SoundEvent, SoundEvent> PORTAL_IGNITE = sound("block.brazier.ignite");
+    // Biome music and ambience (data/mythsofworlds/worldgen/biome/*.json).
+    public static final DeferredHolder<SoundEvent, SoundEvent> MUSIC_ELYSIUM = sound("music.hellas.elysium");
+    public static final DeferredHolder<SoundEvent, SoundEvent> MUSIC_UNDERWORLD = sound("music.hellas.underworld");
+    public static final DeferredHolder<SoundEvent, SoundEvent> AMBIENT_CHIMES = sound("ambient.hellas.chimes");
 
     private GreekSounds() {
     }

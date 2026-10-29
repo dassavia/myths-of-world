@@ -98,5 +98,8 @@
   "subtitles.mythsofworlds.entity.nemean_lion.hurt": "Lion hurts",
   "subtitles.mythsofworlds.entity.nemean_lion.death": "Lion dies",
   "subtitles.mythsofworlds.entity.greek_merchant.greet": "Merchant greets you",
-  "subtitles.mythsofworlds.block.brazier.ignite": "Sacred fire flares up"
+  "subtitles.mythsofworlds.block.brazier.ignite": "Sacred fire flares up",
+  "block.mythsofworlds.cloud": "Cloud",
+  "block.mythsofworlds.golden_leaves": "Golden Apple Leaves",
+  "subtitles.mythsofworlds.ambient.hellas.chimes": "Heavenly chimes"
 }
