@@ -62,7 +62,7 @@
     {
       "id": "greek.amazon",
       "category": "creature",
-      "pages": 4,
+      "pages": 6,
       "entity": "mythsofworlds:amazon"
     },
     {
@@ -85,7 +85,7 @@
     },
     {
       "id": "greek.karkinos",
-      "category": "boss",
+      "category": "creature",
       "pages": 2,
       "entity": "mythsofworlds:karkinos"
     },

@@ -278,7 +278,7 @@ STRUCTURES = {
                     "WORLD_SURFACE_WG", 0, "beard_thin"),
 }
 LAIRS = {"structures": {"utgard": 3, "fenrir_island": 3, "muspel_fortress": 3, "helgrind": 3, "barrow": 4},
-         "spacing": 36, "separation": 18, "salt": 2450300}
+         "spacing": 56, "separation": 36, "salt": 2450300}
 
 STRUCTURE_NAMES = {
     "viking_village": ("Поселение викингов", "Viking Village"),

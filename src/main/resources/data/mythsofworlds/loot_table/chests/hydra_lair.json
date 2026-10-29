@@ -97,6 +97,11 @@
           "type": "minecraft:item",
           "name": "minecraft:golden_apple",
           "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "mythsofworlds:necklace_of_harmonia",
+          "weight": 1
         }
       ]
     }

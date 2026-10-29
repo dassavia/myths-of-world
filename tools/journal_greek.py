@@ -117,18 +117,26 @@ ENTRIES = [
       "Ухаживание: дарите цветы, золото, оружие, трофеи или еду, раз в 20 секунд. ПКМ пустой рукой: она скажет, что "
       "любит больше всего, и такой подарок ценится вдвое.",
       "При симпатии 100 подарите обручальное кольцо (алмаз над тремя слитками золота). Жена идёт за вами и сражается "
-      "рядом. Shift+ПКМ: ждать или идти.",
+      "рядом. Shift+ПКМ: идти за вами, ждать или гулять рядом.",
       "Торт жене: родится дочь, раз в день. Она вырастет за 20 минут в амазонку, верную вашей семье. Удар по амазонке "
-      "сильно снижает симпатию."],
+      "сильно снижает симпатию.",
+      "Больше всего на свете амазонки любят ожерелье Гармонии: подарите его, и она сразу влюбится (симпатия 100). "
+      "Его не скрафтить, оно лежит в сокровищницах храмов, лабиринта и логов чудовищ.",
+      "Амазонки держатся своего лагеря. Если они разбрелись, протрубите в горн Фемискиры (козий рог, золото и кожа): "
+      "все вокруг вернутся домой."],
      ["Amazon",
       "Warrior woman of Themiscyra, in the camps and the city. She fights monsters, and if you hurt her she answers "
       "together with her sisters.",
       "Courtship: give flowers, gold, weapons, trophies or food, once every 20 seconds. Right-click with an empty hand: "
       "she says what she likes best, and that gift counts double.",
       "At affection 100, give her a wedding ring (a diamond over three gold ingots). Your wife follows you and fights "
-      "at your side. Shift + right-click: stay or follow.",
+      "at your side. Shift + right-click: follow, stay or wander nearby.",
       "Give your wife a cake and a daughter is born, once a day. In 20 minutes she grows into an amazon loyal to your "
-      "family. Hitting an amazon costs a lot of affection."]),
+      "family. Hitting an amazon costs a lot of affection.",
+      "Above all, amazons love the necklace of Harmonia: give it and she falls in love at once (affection 100). It "
+      "cannot be crafted; it lies in the treasuries of temples, the labyrinth and the monsters' lairs.",
+      "Amazons keep to their camp. If they have wandered off, blow the horn of Themiscyra (a goat horn, gold and "
+      "leather): everyone around goes back home."]),
 
     # ---------------------------------------------------------------- bosses
     ("cyclops", "boss", mob("cyclops"),
@@ -166,14 +174,14 @@ ENTRIES = [
       "dagger made from its own claw hurt it.",
       "How to beat: bring down the first lion with potions. Make a dagger from its claw (a claw over a stick). Drops "
       "its pelt and claws."]),
-    ("karkinos", "boss", mob("karkinos"),
+    ("karkinos", "creature", mob("karkinos"),
      ["Каркин",
-      "Гигантский рак, посланный Герой на помощь гидре. Сидит на берегу её логова. В мифе он ущипнул Геракла за "
+      "Рак, посланный Герой на помощь гидре: маленький, но злой. Сидит на берегу её логова. В мифе он ущипнул Геракла за "
       "пятку, и тот одолел гидру лишь с Иолаем.",
       "Способности: щипок держит жертву на месте, панцирь вдвое ослабляет стрелы. Как победить: Геракл раздавил его "
       "ногой. Удар в прыжке наносит двойной урон. Роняет клешню."],
      ["Karkinos",
-      "The giant crab Hera sent to help the Hydra. Sits on the bank of its lair. In the myth it pinched Heracles by "
+      "The crab Hera sent to help the Hydra: small but vicious. Sits on the bank of its lair. In the myth it pinched Heracles by "
       "the heel, so he beat the Hydra only with Iolaus.",
       "Abilities: its pinch holds you in place, its shell halves arrows. How to beat: Heracles crushed it under his "
       "foot. A jump attack does double damage. Drops a claw."]),
@@ -216,19 +224,19 @@ ENTRIES = [
      ["Ипполита",
       "Царица амазонок на троне Фемискиры, 220 здоровья. Нападает на любого чужака, сёстры приходят ей на помощь.",
       "Как победить: доведите её до шестой части здоровья, и она сдастся: перестанет биться и отдаст пояс "
-      "(сила и стойкость, носится вместо поножей).",
+      "(сила II, стойкость II, скорость и регенерация, носится вместо поножей).",
       "Свадьба: она слушает только победителя и принимает лишь царские дары: трофеи чудовищ, амброзию, зачарованные "
-      "золотые яблоки, незерит, сердце моря.",
-      "Каждый дар засчитывается один раз, прочее она отвергает. Женатого не примет. Ребёнок: амброзия, не каждую ночь "
-      "и раз в три дня. Её дочери - царевны."],
+      "золотые яблоки, незерит, сердце моря и ожерелье Гармонии (сразу 100).",
+      "Новый дар даёт 20 симпатии, повторный 10, прочее она отвергает. Бой прощён, когда она сдаётся. Женатого не "
+      "примет. Ребёнок: амброзия, раз в три дня."],
      ["Hippolyta",
       "Queen of the Amazons on the throne of Themiscyra, 220 health. She attacks any stranger; her sisters come to help.",
       "How to beat: bring her down to a sixth of her health and she yields: she stops fighting and hands over her "
-      "girdle (strength and resistance, worn in the legs slot).",
+      "girdle (Strength II, Resistance II, Speed and Regeneration, worn in the legs slot).",
       "Marriage: she listens only to her victor and accepts only gifts fit for a queen: monster trophies, ambrosia, "
-      "enchanted golden apples, netherite, the heart of the sea.",
-      "Each gift counts once; anything else she scorns. She turns away a married man. A child: ambrosia, not every "
-      "night, once in three days. Her daughters are princesses."]),
+      "enchanted golden apples, netherite, the heart of the sea and the necklace of Harmonia (100 at once).",
+      "A new gift gives 20 affection, a repeat 10; anything else she scorns. The duel is forgiven once she yields. "
+      "She turns away a married man. A child: ambrosia, once in three days."]),
 
     # ---------------------------------------------------------------- places
     ("greek_temple", "place", place("greek_temple"),

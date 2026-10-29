@@ -102,6 +102,11 @@
           "type": "minecraft:item",
           "name": "mythsofworlds:ambrosia",
           "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "mythsofworlds:necklace_of_harmonia",
+          "weight": 1
         }
       ]
     }

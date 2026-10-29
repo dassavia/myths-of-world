@@ -1095,6 +1095,24 @@ def draw_girdle(img, d, rng):
         img.putpixel((x, 8), rgb(0x8A1E2A))
 
 
+def draw_necklace(img, d, rng):
+    d.arc([2, 0, 13, 12], 20, 160, fill=rgb(0xE2B33C), width=1)
+    for x, y, c in ((3, 7, 0x3AB8C8), (5, 9, 0xE85A5A), (8, 11, 0x3AB8C8), (10, 9, 0xE85A5A), (12, 7, 0x3AB8C8)):
+        img.putpixel((x, y), rgb(c))
+    d.polygon([(7, 11), (9, 11), (9, 14), (8, 15), (7, 14)], fill=rgb(0xC9962E))
+    img.putpixel((8, 12), rgb(0x5AE0A0))
+    img.putpixel((8, 13), rgb(0x3AB888))
+
+
+def draw_horn_of_themiscyra(img, d, rng):
+    d.polygon([(2, 12), (4, 9), (8, 6), (12, 3), (14, 2), (13, 5), (9, 9), (5, 12), (3, 14)], fill=rgb(0xD8C8A0))
+    d.line([(4, 11), (12, 4)], fill=rgb(0xB8A47A))
+    for x, y in ((5, 10), (8, 7), (11, 4)):
+        img.putpixel((x, y), rgb(0xE2B33C))
+        img.putpixel((x + 1, y + 1), rgb(0xE2B33C))
+    d.line([(3, 13), (6, 15)], fill=rgb(0x8A1E2A))
+
+
 def draw_ring(img, d, rng):
     d.ellipse([3, 5, 12, 14], outline=rgb(0xE2B33C), width=2)
     d.polygon([(7, 1), (9, 1), (10, 3), (8, 5), (6, 3)], fill=rgb(0xBFF4FF))
@@ -1116,6 +1134,8 @@ NEW_ITEMS = {
     "wings_of_daedalus": draw_wings,
     "karkinos_claw": draw_karkinos_claw,
     "girdle_of_hippolyta": draw_girdle,
+    "necklace_of_harmonia": draw_necklace,
+    "horn_of_themiscyra": draw_horn_of_themiscyra,
     "wedding_ring": draw_ring,
     "greek_journal": draw_journal,
     "greek_journal_complete": lambda img, d, rng: draw_journal(img, d, rng, cover=0x4A2A6A),
@@ -1161,41 +1181,79 @@ SKIN = {"head": (0, 0, 8, 8, 8), "hat": (32, 0, 8, 8, 8), "body": (16, 16, 8, 12
         "left_leg": (16, 48, 4, 12, 4), "left_pants": (0, 48, 4, 12, 4)}
 
 
-def amazon(rng, skin, hair, tunic, armour, trim, eyes=0x4A3320, crown=None, girdle=None, braid=True, plume=None):
+def amazon(rng, skin, hair, tunic, armour, trim, eyes=0x4A3320, crown=None, girdle=None, style="long", plume=None,
+           flower=None, band=None, lips=0xC8505E):
+    """A young amazon on the slim player skin. style: long, wavy, braid, ponytail or bob."""
     img = Image.new("RGBA", (64, 64), (0, 0, 0, 0))
     parts = {}
     s = rgb(skin)
-    parts["head"] = paint_box(img, *SKIN["head"], s, rng, 4, faces={"top": rgb(hair), "back": rgb(hair)}, shaded=False)
+    h_c = rgb(hair)
+    dark_hair = scale(h_c, 0.72)
+    light_hair = scale(h_c, 1.25)
+
+    def hair_px(x, y):
+        c = h_c if (x + y) % 3 else light_hair
+        if style == "wavy" and (x * 2 + y) % 5 == 0:
+            c = dark_hair
+        img.putpixel((x, y), jitter(c, rng, 6))
+
+    def hair_rect(x, y, w, h):
+        for i in range(x, x + w):
+            for j in range(y, y + h):
+                hair_px(i, j)
+
+    parts["head"] = paint_box(img, *SKIN["head"], s, rng, 3, shaded=False)
     hd = parts["head"]
+    hair_rect(*hd["top"])
+    hair_rect(*hd["back"])
+    long_hair = style in ("long", "wavy")
     for name in ("right", "left"):
         x, y, w, h = hd[name]
-        fill_rect(img, x, y, w, 3, rgb(hair), rng, 8)
-        fill_rect(img, x + (w - 3 if name == "right" else 0), y, 3, h, rgb(hair), rng, 8)
+        hair_rect(x, y, w, 3)
+        back = 5 if long_hair else 4 if style != "bob" else 6
+        hair_rect(x + (w - back if name == "right" else 0), y, back, h if style != "bob" else 6)
+        if style == "bob":
+            hair_rect(x + (w - 7 if name == "right" else 0), y + 3, 7, 3)
     x, y, w, h = hd["front"]
-    fill_rect(img, x, y, w, 2, rgb(hair), rng, 8)
-    img.putpixel((x, y + 2), rgb(hair))
-    img.putpixel((x + 7, y + 2), rgb(hair))
-    # Almond eyes with lashes, soft blush, red lips.
-    for ex in (1, 5):
-        img.putpixel((x + ex, y + 4), rgb(0xF4F1EA))
-        img.putpixel((x + ex + 1, y + 4), rgb(eyes))
-        img.putpixel((x + ex, y + 3), scale(rgb(hair), 0.7))
-        img.putpixel((x + ex + 1, y + 3), scale(rgb(hair), 0.7))
-    img.putpixel((x + 1, y + 5), mix(s, rgb(0xE07A7A), 0.35))
-    img.putpixel((x + 6, y + 5), mix(s, rgb(0xE07A7A), 0.35))
-    img.putpixel((x + 3, y + 6), rgb(0xB8404A))
-    img.putpixel((x + 4, y + 6), rgb(0xB8404A))
-    img.putpixel((x + 3, y + 5), scale(s, 0.9))
-    # Hair layer: long hair down the back and sides, a fringe; a braid or a plumed helmet.
+    # A side-swept fringe that leaves the forehead partly bare.
+    hair_rect(x, y, w, 1)
+    hair_rect(x, y + 1, 5, 1)
+    hair_px(x, y + 2)
+    hair_px(x + 7, y + 2)
+    if long_hair or style == "bob":
+        for j in range(2, 7 if long_hair else 6):
+            hair_px(x, y + j)
+            hair_px(x + 7, y + j)
+    # Brows, big eyes with dark lashes and a catchlight, a soft blush and full lips.
+    for bx in (1, 2, 5, 6):
+        img.putpixel((x + bx, y + 2), scale(dark_hair, 0.85))
+    iris = rgb(eyes)
+    for ex, outer in ((1, 0), (5, 1)):
+        lash = rgb(0x1E1414)
+        img.putpixel((x + ex, y + 3), lash)
+        img.putpixel((x + ex + 1, y + 3), lash)
+        white, pupil = (x + ex, x + ex + 1) if outer == 0 else (x + ex + 1, x + ex)
+        img.putpixel((white, y + 4), rgb(0xF6F2EC))
+        img.putpixel((pupil, y + 4), iris)
+    img.putpixel((x + 2, y + 3), mix(rgb(0x1E1414), iris, 0.5))
+    img.putpixel((x + 5, y + 3), mix(rgb(0x1E1414), iris, 0.5))
+    img.putpixel((x + 4, y + 5), scale(s, 0.9))
+    img.putpixel((x + 1, y + 5), mix(s, rgb(0xF08080), 0.4))
+    img.putpixel((x + 6, y + 5), mix(s, rgb(0xF08080), 0.4))
+    img.putpixel((x + 3, y + 6), rgb(lips))
+    img.putpixel((x + 4, y + 6), scale(rgb(lips), 1.15))
+    # Hair layer: volume over the crown, long hair down the back.
     hat = box_faces(*SKIN["hat"])
-    for name in ("top", "back"):
-        fill_rect(img, *hat[name], rgb(hair), rng, 10)
+    hair_rect(*hat["top"])
+    hx, hy, hw, hh = hat["back"]
+    hair_rect(hx, hy, hw, hh if long_hair else 6)
     for name in ("right", "left"):
         hx, hy, hw, hh = hat[name]
-        fill_rect(img, hx, hy, hw, 2, rgb(hair), rng, 10)
-        fill_rect(img, hx + (hw - 3 if name == "right" else 0), hy, 3, hh, rgb(hair), rng, 10)
+        hair_rect(hx, hy, hw, 2)
+        hair_rect(hx + (hw - 3 if name == "right" else 0), hy, 3, hh if long_hair else 5)
     fx, fy, fw, fh = hat["front"]
-    fill_rect(img, fx, fy, fw, 1, rgb(hair), rng, 10)
+    hair_rect(fx, fy, fw, 1)
+    hair_rect(fx, fy + 1, 3, 1)
     if crown:
         for name in ("front", "right", "left", "back"):
             cx, cy, cw, ch = hat[name]
@@ -1204,55 +1262,79 @@ def amazon(rng, skin, hair, tunic, armour, trim, eyes=0x4A3320, crown=None, gird
                 img.putpixel((cx + i, cy), scale(rgb(crown), 1.15))
         img.putpixel((fx + 3, fy + 1), rgb(0xC0262E))
         img.putpixel((fx + 4, fy + 1), rgb(0xC0262E))
+    if band:
+        for name in ("front", "right", "left", "back"):
+            cx, cy, cw, ch = hat[name]
+            fill_rect(img, cx, cy + 1, cw, 1, rgb(band), rng, 4)
+    if flower:
+        rx, ry, rw, rh = hat["left"]
+        for dx, dy in ((1, 1), (2, 2), (1, 3), (0, 2)):
+            img.putpixel((rx + dx, ry + dy), rgb(flower))
+        img.putpixel((rx + 1, ry + 2), rgb(0xFFE08A))
     if plume:
         tx, ty, tw, th = hat["top"]
         fill_rect(img, tx + 3, ty, 2, th, rgb(plume), rng, 12)
-    parts["body"] = paint_box(img, *SKIN["body"], rgb(tunic), rng, 8, shaded=False)
+        for name in ("front", "right", "left", "back"):
+            cx, cy, cw, ch = hat[name]
+            fill_rect(img, cx, cy, cw, 1, rgb(armour), rng, 6)
+    parts["body"] = paint_box(img, *SKIN["body"], rgb(tunic), rng, 6, shaded=False)
+    bx, by, bw, bh = parts["body"]["front"]
+    fill_rect(img, bx + 2, by, 4, 1, s, rng, 3)       # a modest neckline
     for arm in ("right_arm", "left_arm"):
-        parts[arm] = paint_box(img, *SKIN[arm], s, rng, 4, shaded=False)
+        parts[arm] = paint_box(img, *SKIN[arm], s, rng, 3, shaded=False)
         for rect in side_faces(parts[arm]):
             ax, ay, aw, ah = rect
             fill_rect(img, ax, ay, aw, 2, rgb(tunic), rng, 6)
             fill_rect(img, ax, ay + 8, aw, 2, rgb(armour), rng, 6)   # bracers
     for leg in ("right_leg", "left_leg"):
-        parts[leg] = paint_box(img, *SKIN[leg], s, rng, 4, shaded=False)
+        parts[leg] = paint_box(img, *SKIN[leg], s, rng, 3, shaded=False)
         for rect in side_faces(parts[leg]):
             lx, ly, lw, lh = rect
             fill_rect(img, lx, ly, lw, 3, rgb(tunic), rng, 6)
             fill_rect(img, lx, ly + lh - 2, lw, 2, rgb(0x6B4A2B), rng, 6)    # sandals
             for j in range(lh - 6, lh - 2, 2):
                 fill_rect(img, lx, ly + j, lw, 1, rgb(0x6B4A2B), rng, 4)     # straps
-    # Armour layer: a bronze cuirass on the chest, a skirt of leather strips over the hips.
+    # Armour layer: a shaped cuirass, a belt and a skirt of leather strips over the hips.
     jacket = box_faces(*SKIN["jacket"])
     for name in ("front", "back", "right", "left"):
         jx, jy, jw, jh = jacket[name]
-        fill_rect(img, jx, jy + 1, jw, 6, rgb(armour), rng, 10)
+        fill_rect(img, jx, jy + 2, jw, 5, rgb(armour), rng, 8)
         fill_rect(img, jx, jy + 7, jw, 1, rgb(girdle or trim), rng, 4)
         for i in range(jw):
-            if i % 2 == 0:
-                fill_rect(img, jx + i, jy + 8, 1, 4, rgb(trim), rng, 8)
-            else:
-                fill_rect(img, jx + i, jy + 8, 1, 4, scale(rgb(trim), 0.75), rng, 8)
+            c = rgb(trim) if i % 2 == 0 else scale(rgb(trim), 0.75)
+            fill_rect(img, jx + i, jy + 8, 1, 3 + (i % 2), c, rng, 6)
     jx, jy, jw, jh = jacket["front"]
-    img.putpixel((jx + 2, jy + 3), scale(rgb(armour), 1.25))
-    img.putpixel((jx + 5, jy + 3), scale(rgb(armour), 1.25))
+    for px_ in (1, 2, 5, 6):
+        img.putpixel((jx + px_, jy + 3), scale(rgb(armour), 1.22))
+    img.putpixel((jx + 3, jy + 5), scale(rgb(armour), 0.8))
+    img.putpixel((jx + 4, jy + 5), scale(rgb(armour), 0.8))
     if girdle:
         img.putpixel((jx + 3, jy + 7), rgb(0xC0262E))
         img.putpixel((jx + 4, jy + 7), rgb(0xFFE08A))
     for pants in ("right_pants", "left_pants"):
-        p = box_faces(*SKIN[pants])
+        pf = box_faces(*SKIN[pants])
         for name in ("front", "back", "right", "left"):
-            px, py, pw, ph = p[name]
+            px, py, pw, ph = pf[name]
             for i in range(pw):
                 fill_rect(img, px + i, py, 1, 3, rgb(trim) if i % 2 == 0 else scale(rgb(trim), 0.75), rng, 8)
     for sleeve in ("right_sleeve", "left_sleeve"):
-        p = box_faces(*SKIN[sleeve])
+        pf = box_faces(*SKIN[sleeve])
         for name in ("front", "back", "right", "left"):
-            px, py, pw, ph = p[name]
+            px, py, pw, ph = pf[name]
             fill_rect(img, px, py, pw, 2, rgb(armour), rng, 8)
-    if braid:
-        bx, by, bw, bh = parts["body"]["back"]
-        fill_rect(img, bx + 3, by, 2, 7, rgb(hair), rng, 10)
+    # Hair down the back of the body.
+    jx, jy, jw, jh = jacket["back"]
+    if long_hair:
+        hair_rect(jx + 1, jy, jw - 2, 6)
+        for i in range(1, jw - 1, 2):
+            hair_px(jx + i, jy + 6)
+    elif style == "braid":
+        hair_rect(jx + 3, jy, 2, 9)
+        img.putpixel((jx + 3, jy + 9), rgb(band or trim))
+        img.putpixel((jx + 4, jy + 9), rgb(band or trim))
+    elif style == "ponytail":
+        hair_rect(jx + 2, jy, 4, 2)
+        hair_rect(jx + 3, jy + 2, 2, 5)
     for name in ("jacket", "right_pants", "left_pants", "right_sleeve", "left_sleeve", "hat"):
         parts[name] = box_faces(*SKIN[name])
     shade_parts(img, parts)
@@ -1282,12 +1364,23 @@ def wings_of_daedalus_entity(rng):
 NEW_ENTITIES = {
     "lion": lion,
     "karkinos": crab,
-    "amazon_0": lambda rng: amazon(rng, 0xD8A47A, 0x2A1A10, 0xF2ECDC, 0xB8823A, 0x7A3A22, plume=0xC0262E),
-    "amazon_1": lambda rng: amazon(rng, 0xC08A5E, 0x5A2E18, 0x8A2E22, 0xA8A8A8, 0x4A3220, eyes=0x2E5A2E),
-    "amazon_2": lambda rng: amazon(rng, 0xE8C4A0, 0xC9962E, 0x2E5FA8, 0xC9963E, 0xE2B33C, eyes=0x2E5FA8),
-    "amazon_3": lambda rng: amazon(rng, 0x8A5A3A, 0x161010, 0x3E6B34, 0x8A6A3A, 0x6B4A2B, braid=False, plume=0xF4F1EA),
-    "amazon_4": lambda rng: amazon(rng, 0xE2B894, 0x3A1E12, 0x6A2A6A, 0xE2B33C, 0xF4ECD8, crown=0xE2B33C),
-    "hippolyta": lambda rng: amazon(rng, 0xDDAE86, 0x1E120C, 0x8A1E2A, 0xE2B33C, 0x5A1018, eyes=0x6B3E1A,
+    # Common looks 0-3 and 5-9; 4 is the royal look of Hippolyta's daughters.
+    "amazon_0": lambda rng: amazon(rng, 0xE0AE86, 0x3A2418, 0xF2ECDC, 0xB8823A, 0x7A3A22, eyes=0x5A3A22, band=0xC0262E),
+    "amazon_1": lambda rng: amazon(rng, 0xC9946A, 0x8A3A1C, 0x8A2E22, 0xB8B8B8, 0x4A3220, eyes=0x3E6A3A, style="braid"),
+    "amazon_2": lambda rng: amazon(rng, 0xF0D0B0, 0xE0B04A, 0x3A6AB8, 0xD9A441, 0xE2B33C, eyes=0x3A7AC8, style="wavy"),
+    "amazon_3": lambda rng: amazon(rng, 0x8A5A3A, 0x1A1210, 0x3E7B44, 0xA87A3A, 0x6B4A2B, eyes=0x3A2418, style="wavy",
+                                   flower=0xF4F1EA, lips=0xA8404A),
+    "amazon_4": lambda rng: amazon(rng, 0xEEC4A0, 0x3A1E12, 0x6A2A7A, 0xE2B33C, 0xF4ECD8, eyes=0x6A3A8A, crown=0xE2B33C),
+    "amazon_5": lambda rng: amazon(rng, 0xF4D4BC, 0xC0501E, 0x2E8A8A, 0x8A5A30, 0x5A3A20, eyes=0x3E8A3E, style="ponytail"),
+    "amazon_6": lambda rng: amazon(rng, 0xD8A880, 0x141010, 0xF4F1EA, 0xD9A441, 0xE2B33C, eyes=0x2A1A10, style="bob",
+                                   band=0xE2B33C),
+    "amazon_7": lambda rng: amazon(rng, 0xF6DCC8, 0xF0E6C8, 0x8AB8D8, 0xC8CCD4, 0x5A6A8A, eyes=0x4A8AD8, style="braid",
+                                   band=0x5A8AC8),
+    "amazon_8": lambda rng: amazon(rng, 0x6E4228, 0x1E1410, 0xC9862E, 0xB8823A, 0x6B3A1E, eyes=0x2A1A10, style="braid",
+                                   plume=0xC0262E, lips=0x9A3A44),
+    "amazon_9": lambda rng: amazon(rng, 0xE6B892, 0x6A3E22, 0xD87A8A, 0xC9963E, 0x8A4A3A, eyes=0x6A4A2A, style="wavy",
+                                   flower=0xF06A9A),
+    "hippolyta": lambda rng: amazon(rng, 0xE6B894, 0x1E120C, 0x8A1E2A, 0xE2B33C, 0x5A1018, eyes=0x6B3E1A,
                                     crown=0xFFD34E, girdle=0xFFD34E),
     "wings_of_daedalus": wings_of_daedalus_entity,
 }

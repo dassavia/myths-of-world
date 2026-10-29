@@ -20,6 +20,7 @@ import net.minecraft.world.level.Level;
  * Karkinos, the giant crab Hera sent to help the Hydra: it pinched Heracles by the heel while he fought the
  * monster, so he needed Iolaus to win. Guards the Hydra's lair. Its pinch holds the victim in place; its shell
  * turns arrows. Heracles crushed it under his foot: a blow struck while falling (a jump attack) does double damage.
+ * A small crab at the hero's heel, so it has no health bar.
  */
 public class Karkinos extends GreekBoss {
     public Karkinos(EntityType<? extends Monster> type, Level level) {
@@ -28,13 +29,18 @@ public class Karkinos extends GreekBoss {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, 90.0)
-                .add(Attributes.ATTACK_DAMAGE, 7.0)
+                .add(Attributes.MAX_HEALTH, 40.0)
+                .add(Attributes.ATTACK_DAMAGE, 5.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.3)
-                .add(Attributes.ARMOR, 14.0)
+                .add(Attributes.ARMOR, 10.0)
                 .add(Attributes.ARMOR_TOUGHNESS, 4.0)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.8)
                 .add(Attributes.FOLLOW_RANGE, 24.0);
+    }
+
+    @Override
+    protected boolean hasBossBar() {
+        return false;
     }
 
     @Override

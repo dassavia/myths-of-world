@@ -64,10 +64,17 @@ public abstract class GreekBoss extends Monster {
         bossEvent.setProgress(getHealth() / getMaxHealth());
     }
 
+    /** False for the small guardians that fight without a health bar on the screen. */
+    protected boolean hasBossBar() {
+        return true;
+    }
+
     @Override
     public void startSeenByPlayer(ServerPlayer player) {
         super.startSeenByPlayer(player);
-        bossEvent.addPlayer(player);
+        if (hasBossBar()) {
+            bossEvent.addPlayer(player);
+        }
     }
 
     @Override

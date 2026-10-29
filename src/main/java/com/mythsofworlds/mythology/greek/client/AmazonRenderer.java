@@ -12,14 +12,14 @@ import net.minecraft.resources.ResourceLocation;
 
 /**
  * Amazons and Hippolyta: the slim player model (with its hair and armour overlay layers) and a texture per look,
- * textures/entity/amazon_&lt;variant&gt;.png (4 is the royal look of Hippolyta's daughters) and hippolyta.png.
+ * textures/entity/amazon_&lt;variant&gt;.png, 0 to 9 (4 is the royal look of Hippolyta's daughters) and hippolyta.png.
  */
 public class AmazonRenderer extends HumanoidMobRenderer<Amazon, PlayerModel<Amazon>> {
-    private static final ResourceLocation[] TEXTURES = new ResourceLocation[Amazon.VARIANTS + 1];
+    private static final ResourceLocation[] TEXTURES = new ResourceLocation[Amazon.VARIANTS];
     private static final ResourceLocation HIPPOLYTA = MythsOfWorlds.id("textures/entity/hippolyta.png");
 
     static {
-        for (int variant = 0; variant <= Amazon.VARIANTS; variant++) {
+        for (int variant = 0; variant < Amazon.VARIANTS; variant++) {
             TEXTURES[variant] = MythsOfWorlds.id("textures/entity/amazon_" + variant + ".png");
         }
     }

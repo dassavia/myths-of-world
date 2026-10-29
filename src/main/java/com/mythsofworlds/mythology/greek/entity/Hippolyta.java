@@ -37,12 +37,14 @@ import net.minecraft.world.level.Level;
  * <p>
  * She can be married too, but she is very particular. She listens only to someone who has defeated her, wants only
  * gifts worthy of a queen (trophies of the great monsters, ambrosia, enchanted golden apples, netherite, the heart
- * of the sea), counts each kind of gift only once, and scorns anything else. She will not share her husband: a man
+ * of the sea, the necklace of Harmonia), values a new kind of treasure twice as much as one she already has, and
+ * scorns anything else. The duel itself is forgiven once she yields. She will not share her husband: a man
  * who is already married is turned away. A child with her asks for ambrosia, not every night is right, and she
  * rests three days between children; her daughters are princesses.
  */
 public class Hippolyta extends Amazon {
     private static final int GIFT_POINTS = 20;
+    private static final int REPEAT_POINTS = 10;
 
     private final ServerBossEvent bossEvent = new ServerBossEvent(getDisplayName(), BossEvent.BossBarColor.PURPLE,
             BossEvent.BossBarOverlay.PROGRESS);
@@ -114,6 +116,8 @@ public class Hippolyta extends Amazon {
     public void yieldTo(Player player) {
         yielded = true;
         worthy.add(player.getUUID());
+        // The blows of an honest duel are forgiven: courtship starts afresh.
+        setAffection(player, Math.max(0, affection(player)));
         setHealth(getMaxHealth() / 2.0F);
         setTarget(null);
         setLastHurtByMob(null);
@@ -154,12 +158,10 @@ public class Hippolyta extends Amazon {
             say(player, "scorn", affection(player), LOVE);
             return 0;
         }
-        if (!treasures.add(key)) {
-            say(player, "already");
-            return 0;
-        }
-        say(player, "gift", affection(player) + GIFT_POINTS, LOVE);
-        return GIFT_POINTS;
+        // A new kind of treasure delights her; another of a kind she already has still pleases her, a little less.
+        int points = treasures.add(key) ? GIFT_POINTS : REPEAT_POINTS;
+        say(player, points == GIFT_POINTS ? "gift" : "gift_again", affection(player) + points, LOVE);
+        return points;
     }
 
     /** Worthy gifts are welcome even if they are not on the amazons' list (the Medusa head, netherite...). */
@@ -181,6 +183,11 @@ public class Hippolyta extends Amazon {
             return InteractionResult.SUCCESS;
         }
         return super.mobInteract(player, hand);
+    }
+
+    @Override
+    protected boolean acceptsNecklace(Player player) {
+        return isWorthy(player);
     }
 
     @Override

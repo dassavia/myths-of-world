@@ -663,7 +663,7 @@ STRUCTURES = {
 }
 LAIRS = {"structures": {"labyrinth": 3, "gates_of_hades": 3, "hydra_lair": 3, "medusa_lair": 3, "cyclops_cave": 3,
                         "nemean_lion_den": 3, "themiscyra": 2},
-         "spacing": 40, "separation": 22, "salt": 1450300}
+         "spacing": 56, "separation": 36, "salt": 1450300}
 
 STRUCTURE_NAMES = {
     "greek_temple": ("Храм Олимпийцев", "Temple of the Olympians"),
@@ -773,7 +773,7 @@ def loot():
     chest("greek_temple", (3, 6), gold + [
         entry(f"{NS}:ambrosia", 6, 1, 2), entry("minecraft:golden_apple", 5), entry("minecraft:enchanted_golden_apple", 1),
         entry(f"{NS}:olympian_marble", 6, 2, 6), entry("minecraft:book", 4, enchant=True), entry("minecraft:golden_sword", 3, enchant=True),
-        entry(f"{NS}:promethean_torch", 2),
+        entry(f"{NS}:promethean_torch", 2), entry(f"{NS}:necklace_of_harmonia", 1),
     ])
     chest("oracle_of_delphi", (2, 5), [
         entry("minecraft:glass_bottle", 6, 1, 3), entry("minecraft:glowstone_dust", 6, 1, 4), entry("minecraft:amethyst_shard", 6, 1, 4),
@@ -783,19 +783,20 @@ def loot():
     chest("labyrinth", (4, 8), gold + [
         entry("minecraft:iron_ingot", 8, 2, 6), entry("minecraft:diamond", 3, 1, 2), entry("minecraft:string", 6, 4, 12),
         entry("minecraft:iron_sword", 3, enchant=True), entry("minecraft:golden_apple", 3), entry(f"{NS}:ambrosia", 2),
+        entry(f"{NS}:necklace_of_harmonia", 1),
     ])
     chest("gates_of_hades", (4, 7), [
         entry("minecraft:soul_lantern", 4, 1, 3), entry("minecraft:obsidian", 6, 2, 6), entry("minecraft:diamond", 4, 1, 3),
         entry("minecraft:netherite_scrap", 1), entry("minecraft:gold_ingot", 6, 2, 6), entry("minecraft:book", 4, enchant=True),
-        entry("minecraft:enchanted_golden_apple", 1),
+        entry("minecraft:enchanted_golden_apple", 1), entry(f"{NS}:necklace_of_harmonia", 1),
     ])
     chest("hydra_lair", (3, 6), gold + [
         entry("minecraft:slime_ball", 6, 1, 4), entry("minecraft:emerald", 4, 1, 4), entry("minecraft:diamond", 3, 1, 2),
-        entry("minecraft:book", 4, enchant=True), entry("minecraft:golden_apple", 3),
+        entry("minecraft:book", 4, enchant=True), entry("minecraft:golden_apple", 3), entry(f"{NS}:necklace_of_harmonia", 1),
     ])
     chest("medusa_lair", (3, 6), gold + [
         entry("minecraft:shield", 4), entry("minecraft:prismarine_shard", 6, 2, 6), entry("minecraft:heart_of_the_sea", 1),
-        entry("minecraft:book", 4, enchant=True), entry("minecraft:emerald", 4, 1, 3),
+        entry("minecraft:book", 4, enchant=True), entry("minecraft:emerald", 4, 1, 3), entry(f"{NS}:necklace_of_harmonia", 1),
     ])
     chest("cyclops_cave", (3, 6), [
         entry("minecraft:white_wool", 8, 2, 6), entry("minecraft:mutton", 8, 2, 5), entry("minecraft:iron_ingot", 6, 2, 5),
@@ -951,6 +952,13 @@ def recipes():
         "pattern": [" D ", "G G", " G "], "key": {"D": {"item": "minecraft:diamond"}, "G": {"item": "minecraft:gold_ingot"}},
         "result": {"id": f"{NS}:wedding_ring", "count": 1},
     })
+    write_json(data("recipe", "horn_of_themiscyra.json"), {
+        "type": "minecraft:crafting_shapeless", "category": "misc",
+        "ingredients": [{"item": "minecraft:goat_horn"}, {"item": "minecraft:gold_ingot"}, {"item": "minecraft:leather"}],
+        "result": {"id": f"{NS}:horn_of_themiscyra", "count": 1},
+    })
+    write_json(data("tags", "worldgen", "structure", "amazon_homes.json"),
+               {"replace": False, "values": [f"{NS}:amazon_camp", f"{NS}:themiscyra"]})
     write_json(data("recipe", "greek_journal.json"), {
         "type": "minecraft:crafting_shapeless", "category": "misc",
         "ingredients": [{"item": "minecraft:book"}, {"item": "minecraft:feather"}, {"item": "minecraft:gold_nugget"}],
@@ -984,6 +992,7 @@ def add_tag(kind, name, values, namespace="minecraft"):
 ITEMS = ["promethean_torch", "ambrosia", "harpy_feather", "minotaur_horn", "hydra_scale", "cerberus_fang",
          "nemean_pelt", "cyclops_eye", "medusa_head", "nemean_claw", "nemean_claw_dagger", "harpe", "hydra_egg",
          "olives", "pomegranate", "wings_of_daedalus", "karkinos_claw", "girdle_of_hippolyta", "wedding_ring",
+         "necklace_of_harmonia", "horn_of_themiscyra",
          "greek_journal", "greek_journal_complete"]
 HANDHELD = {"promethean_torch", "nemean_claw_dagger", "harpe"}
 MOBS = ["satyr", "harpy", "spartoi", "shade", "pegasus", "golden_hind", "hydra_hatchling", "greek_merchant",
@@ -1103,7 +1112,13 @@ LANG = {
     "item.mythsofworlds.wings_of_daedalus.melting": ("Солнце растапливает воск ваших крыльев!", "The sun is melting the wax of your wings!"),
     "item.mythsofworlds.karkinos_claw": ("Клешня Каркина", "Claw of Karkinos"),
     "item.mythsofworlds.girdle_of_hippolyta": ("Пояс Ипполиты", "Girdle of Hippolyta"),
-    "item.mythsofworlds.girdle_of_hippolyta.desc": ("Надевается вместо поножей: сила и стойкость", "Worn in the legs slot: strength and resistance"),
+    "item.mythsofworlds.girdle_of_hippolyta.desc": ("Надевается вместо поножей: сила II, стойкость II, скорость и регенерация",
+                                                    "Worn in the legs slot: Strength II, Resistance II, Speed and Regeneration"),
+    "item.mythsofworlds.necklace_of_harmonia": ("Ожерелье Гармонии", "Necklace of Harmonia"),
+    "item.mythsofworlds.horn_of_themiscyra": ("Горн Фемискиры", "Horn of Themiscyra"),
+    "item.mythsofworlds.horn_of_themiscyra.desc": ("ПКМ: амазонки вокруг возвращаются в свой лагерь",
+                                                   "Right-click: the amazons around go back to their camp"),
+    "item.mythsofworlds.horn_of_themiscyra.called": ("Горн трубит. Возвращаются домой: %s", "The horn sounds. Going home: %s"),
     "item.mythsofworlds.wedding_ring": ("Обручальное кольцо", "Wedding Ring"),
     "item.mythsofworlds.greek_journal": ("Журнал героя Эллады", "Hero's Journal of Hellas"),
     "item.mythsofworlds.greek_journal_complete": ("Полный журнал героя Эллады", "Complete Hero's Journal of Hellas"),
@@ -1253,14 +1268,19 @@ AMAZON_TEXT = {
     "child": ("%1$s прячется за маму.", "%1$s hides behind her mother."),
     "angry": ("%1$s в ярости и не желает с вами говорить!", "%1$s is furious and will not talk to you!"),
     "stay": ("%1$s: «Я подожду здесь».", "%1$s: \"I will wait here.\""),
+    "wander": ("%1$s: «Я погуляю тут неподалёку».", "%1$s: \"I will look around here.\""),
+    "necklace": ("%1$s не может отвести глаз от ожерелья Гармонии. Она влюблена!",
+                 "%1$s cannot take her eyes off the necklace of Harmonia. She is in love!"),
+    "necklace_already": ("%1$s: «Моё сердце и так твоё. Оставь ожерелье себе».",
+                         "%1$s: \"My heart is already yours. Keep the necklace.\""),
     "follow": ("%1$s: «Я иду с тобой».", "%1$s: \"I am coming with you.\""),
     "busy": ("%1$s ещё любуется прошлым подарком. Подождите немного.", "%1$s is still admiring your last gift. Wait a little."),
     "gift": ("%1$s принимает подарок. Симпатия: %2$s/%3$s", "%1$s accepts the gift. Affection: %2$s/%3$s"),
     "gift_favourite": ("%1$s в восторге: это её любимое! Симпатия: %2$s/%3$s", "%1$s is delighted: her favourite! Affection: %2$s/%3$s"),
     "in_love": ("%1$s смотрит на вас с нежностью. Подарите ей обручальное кольцо!",
                 "%1$s looks at you tenderly. Give her a wedding ring!"),
-    "wife": ("%1$s, ваша жена, улыбается. Подарите ей торт, и родится дочь. Shift+ПКМ: ждать или идти за вами.",
-             "%1$s, your wife, smiles. Give her a cake and a daughter is born. Shift + right-click: stay or follow."),
+    "wife": ("%1$s, ваша жена, улыбается. Подарите ей торт, и родится дочь. Shift+ПКМ: идти за вами, ждать или гулять.",
+             "%1$s, your wife, smiles. Give her a cake and a daughter is born. Shift + right-click: follow, stay or wander."),
     "grown_daughter": ("%1$s, ваша дочь, готова сражаться рядом с вами.", "%1$s, your daughter, is ready to fight at your side."),
     "talk": ("%1$s: «Чем ты удивишь амазонку?» Больше всего она любит %2$s. Симпатия: %3$s/%4$s",
              "%1$s: \"What can you offer an amazon?\" She likes %2$s best. Affection: %3$s/%4$s"),
@@ -1289,13 +1309,14 @@ HIPPOLYTA_TEXT = dict(AMAZON_TEXT, **{
     "unworthy": ("%1$s: «Я слушаю только того, кто победил меня в бою».", "%1$s: \"I listen only to the one who beat me in battle.\""),
     "scorn": ("%1$s отвергает подарок: «Это недостойно царицы». Симпатия: %2$s/%3$s",
               "%1$s scorns the gift: \"This is not fit for a queen.\" Affection: %2$s/%3$s"),
-    "already": ("%1$s: «Такой дар у меня уже есть».", "%1$s: \"I already have such a gift.\""),
+    "gift_again": ("%1$s: «Такой дар у меня уже есть, но он мне по-прежнему приятен». Симпатия: %2$s/%3$s",
+                   "%1$s: \"I already have such a gift, but it still pleases me.\" Affection: %2$s/%3$s"),
     "gift": ("%1$s благосклонно принимает дар. Симпатия: %2$s/%3$s", "%1$s graciously accepts the gift. Affection: %2$s/%3$s"),
     "talk": ("%1$s: «Принеси трофеи великих чудовищ, амброзию или сокровища, каких нет ни у кого». Симпатия: %2$s/%3$s",
              "%1$s: \"Bring me trophies of the great monsters, ambrosia or treasures no one else has.\" Affection: %2$s/%3$s"),
     "in_love": ("%1$s: «Ты достоин стать мужем царицы. Где твоё кольцо?»", "%1$s: \"You are worthy to wed a queen. Where is your ring?\""),
-    "wife": ("%1$s, царица амазонок и ваша жена. Амброзия, и, может быть, родится царевна. Shift+ПКМ: ждать или идти.",
-             "%1$s, queen of the Amazons and your wife. Ambrosia, and perhaps a princess is born. Shift + right-click: stay or follow."),
+    "wife": ("%1$s, царица амазонок и ваша жена. Амброзия, и, может быть, родится царевна. Shift+ПКМ: идти, ждать или гулять.",
+             "%1$s, queen of the Amazons and your wife. Ambrosia, and perhaps a princess is born. Shift + right-click: follow, stay or wander."),
     "you_are_married": ("Царица не делит мужа ни с кем!", "A queen shares her husband with no one!"),
     "married": ("%1$s надевает кольцо. Царица амазонок - ваша жена!", "%1$s puts on the ring. The queen of the Amazons is your wife!"),
     "tired": ("%1$s: «Царице нужен отдых. Приходи через три дня».", "%1$s: \"A queen needs her rest. Come back in three days.\""),

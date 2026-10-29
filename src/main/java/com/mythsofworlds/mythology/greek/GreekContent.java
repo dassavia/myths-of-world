@@ -7,6 +7,7 @@ import com.mythsofworlds.journal.JournalItem;
 import com.mythsofworlds.mythology.greek.block.CloudBlock;
 import com.mythsofworlds.mythology.greek.block.FruitLeavesBlock;
 import com.mythsofworlds.mythology.greek.item.GirdleItem;
+import com.mythsofworlds.mythology.greek.item.HornOfThemiscyraItem;
 import com.mythsofworlds.mythology.greek.item.WingsItem;
 import com.mythsofworlds.mythology.greek.portal.BrazierBlock;
 import com.mythsofworlds.mythology.greek.portal.PoolPortalBlock;
@@ -250,6 +251,12 @@ public final class GreekContent {
     /** Give it to an amazon who loves you to marry her. */
     public static final DeferredItem<Item> WEDDING_RING = ITEMS.registerSimpleItem("wedding_ring",
             new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
+    /** The necklace Hephaestus made for Harmonia: any amazon who receives it falls in love at once. Found, never made. */
+    public static final DeferredItem<Item> NECKLACE_OF_HARMONIA = ITEMS.registerSimpleItem("necklace_of_harmonia",
+            new Item.Properties().stacksTo(1).rarity(Rarity.EPIC));
+    /** Blown near a camp, it calls the amazons who strayed back to their camp or city. */
+    public static final DeferredItem<HornOfThemiscyraItem> HORN_OF_THEMISCYRA = ITEMS.register("horn_of_themiscyra",
+            () -> new HornOfThemiscyraItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
     /** Medusa's head still petrifies: right-click to freeze the creatures in front of you. */
     public static final DeferredItem<MedusaHeadItem> MEDUSA_HEAD = ITEMS.register("medusa_head",
             () -> new MedusaHeadItem(new Item.Properties().durability(32).rarity(Rarity.EPIC)));
