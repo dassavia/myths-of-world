@@ -2,13 +2,16 @@ package com.mythsofworlds.mythology.greek.feature;
 
 import com.mojang.serialization.Codec;
 import com.mythsofworlds.mythology.greek.GreekContent;
+import com.mythsofworlds.mythology.greek.portal.BrazierBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DecoratedPotBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -16,7 +19,8 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 
 /**
  * Remains of the old temples scattered over Hellas: a row of broken columns with one fallen on the grass,
- * a small altar, or the stump of a statue. Each piece sits on the ground where it lands.
+ * a small altar, the stump of a statue, a cluster of amphorae, a herm (a pillar with the head of Hermes) at the
+ * roadside, or a little round shrine (tholos). Each piece sits on the ground where it lands.
  */
 public class MarbleRuinFeature extends Feature<NoneFeatureConfiguration> {
     public MarbleRuinFeature(Codec<NoneFeatureConfiguration> codec) {
@@ -31,9 +35,12 @@ public class MarbleRuinFeature extends Feature<NoneFeatureConfiguration> {
         if (origin == null) {
             return false;
         }
-        switch (random.nextInt(3)) {
+        switch (random.nextInt(6)) {
             case 0 -> colonnade(level, random, origin);
             case 1 -> altar(level, random, origin);
+            case 2 -> amphorae(level, random, origin);
+            case 3 -> herm(level, random, origin);
+            case 4 -> tholos(level, random, origin);
             default -> statue(level, random, origin);
         }
         return true;
@@ -116,5 +123,49 @@ public class MarbleRuinFeature extends Feature<NoneFeatureConfiguration> {
                 setBlock(level, head, Blocks.CHISELED_QUARTZ_BLOCK.defaultBlockState());
             }
         }
+    }
+
+    private void amphorae(WorldGenLevel level, RandomSource random, BlockPos origin) {
+        for (int i = 0; i < 3 + random.nextInt(4); i++) {
+            BlockPos pos = ground(level, origin.offset(random.nextInt(5) - 2, 0, random.nextInt(5) - 2));
+            if (pos != null && level.getBlockState(pos).isAir()) {
+                setBlock(level, pos, Blocks.DECORATED_POT.defaultBlockState()
+                        .setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.Plane.HORIZONTAL.getRandomDirection(random))
+                        .setValue(DecoratedPotBlock.CRACKED, random.nextInt(3) == 0));
+            }
+        }
+    }
+
+    private void herm(WorldGenLevel level, RandomSource random, BlockPos origin) {
+        setBlock(level, origin.below(), GreekContent.MARBLE_BRICKS.get().defaultBlockState());
+        setBlock(level, origin, GreekContent.MARBLE_PILLAR.get().defaultBlockState());
+        setBlock(level, origin.above(), GreekContent.MARBLE_PILLAR.get().defaultBlockState());
+        setBlock(level, origin.above(2), Blocks.CHISELED_QUARTZ_BLOCK.defaultBlockState());
+        BlockPos flowers = ground(level, origin.relative(Direction.Plane.HORIZONTAL.getRandomDirection(random)));
+        if (flowers != null && level.getBlockState(flowers).isAir()) {
+            setBlock(level, flowers, Blocks.DECORATED_POT.defaultBlockState());
+        }
+    }
+
+    private void tholos(WorldGenLevel level, RandomSource random, BlockPos origin) {
+        BlockState pillar = GreekContent.MARBLE_PILLAR.get().defaultBlockState();
+        for (int dx = -2; dx <= 2; dx++) {
+            for (int dz = -2; dz <= 2; dz++) {
+                if (dx * dx + dz * dz <= 5) {
+                    setBlock(level, origin.offset(dx, -1, dz), weathered(random));
+                }
+            }
+        }
+        int[][] ring = {{2, 0}, {1, 2}, {-1, 2}, {-2, 0}, {-1, -2}, {1, -2}};
+        for (int[] p : ring) {
+            int height = random.nextInt(4) == 0 ? 1 + random.nextInt(2) : 3;
+            for (int y = 0; y < height; y++) {
+                setBlock(level, origin.offset(p[0], y, p[1]), pillar);
+            }
+            if (height == 3) {
+                setBlock(level, origin.offset(p[0], 3, p[1]), Blocks.SMOOTH_QUARTZ_SLAB.defaultBlockState());
+            }
+        }
+        setBlock(level, origin, GreekContent.BRAZIER.get().defaultBlockState().setValue(BrazierBlock.LIT, random.nextBoolean()));
     }
 }

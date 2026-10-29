@@ -2,7 +2,7 @@
   "type": "mythsofworlds:hellas",
   "generator": {
     "type": "minecraft:noise",
-    "settings": "minecraft:overworld",
+    "settings": "mythsofworlds:hellas",
     "biome_source": {
       "type": "minecraft:multi_noise",
       "biomes": [
@@ -73,6 +73,18 @@
             "humidity": -0.2,
             "continentalness": -0.1,
             "erosion": 0.3,
+            "weirdness": 0.0,
+            "depth": 0.0,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "mythsofworlds:nemean_forest",
+          "parameters": {
+            "temperature": 0.45,
+            "humidity": 0.15,
+            "continentalness": 0.45,
+            "erosion": 0.0,
             "weirdness": 0.0,
             "depth": 0.0,
             "offset": 0.0

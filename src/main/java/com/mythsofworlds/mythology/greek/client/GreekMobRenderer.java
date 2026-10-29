@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Mob;
 
-/** Renders any mob with one texture (textures/entity/&lt;name&gt;.png), optionally scaled up. */
+/** Renders any mob with one texture (textures/entity/&lt;name&gt;.png), optionally scaled up; babies at half size. */
 public class GreekMobRenderer<T extends Mob, M extends EntityModel<T>> extends MobRenderer<T, M> {
     private final ResourceLocation texture;
     private final float scale;
@@ -26,6 +26,7 @@ public class GreekMobRenderer<T extends Mob, M extends EntityModel<T>> extends M
 
     @Override
     protected void scale(T entity, PoseStack poseStack, float partialTick) {
-        poseStack.scale(scale, scale, scale);
+        float size = entity.isBaby() ? scale * 0.5F : scale;
+        poseStack.scale(size, size, size);
     }
 }

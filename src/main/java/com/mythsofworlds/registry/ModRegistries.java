@@ -10,7 +10,9 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 /**
  * Shared registers. Each mythology (see the {@code mythology} package) adds its own blocks, items and mobs here.
@@ -25,6 +27,9 @@ public final class ModRegistries {
             DeferredRegister.create(Registries.SOUND_EVENT, MythsOfWorlds.MODID);
     public static final DeferredRegister<Feature<?>> FEATURES =
             DeferredRegister.create(Registries.FEATURE, MythsOfWorlds.MODID);
+    /** Data the mod keeps on players (journal entries, spouse); see {@link com.mythsofworlds.core.PlayerData}. */
+    public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES =
+            DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, MythsOfWorlds.MODID);
     public static final DeferredRegister<CreativeModeTab> TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MythsOfWorlds.MODID);
 
@@ -46,6 +51,7 @@ public final class ModRegistries {
         ENTITY_TYPES.register(modBus);
         SOUNDS.register(modBus);
         FEATURES.register(modBus);
+        ATTACHMENT_TYPES.register(modBus);
         TABS.register(modBus);
     }
 }

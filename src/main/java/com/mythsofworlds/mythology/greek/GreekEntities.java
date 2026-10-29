@@ -1,13 +1,17 @@
 package com.mythsofworlds.mythology.greek;
 
 import com.mythsofworlds.MythsOfWorlds;
+import com.mythsofworlds.mythology.greek.entity.Amazon;
 import com.mythsofworlds.mythology.greek.entity.Cerberus;
 import com.mythsofworlds.mythology.greek.entity.Cyclops;
 import com.mythsofworlds.mythology.greek.entity.GoldenHind;
 import com.mythsofworlds.mythology.greek.entity.GreekMerchant;
 import com.mythsofworlds.mythology.greek.entity.Harpy;
+import com.mythsofworlds.mythology.greek.entity.Hippolyta;
 import com.mythsofworlds.mythology.greek.entity.Hydra;
 import com.mythsofworlds.mythology.greek.entity.HydraHatchling;
+import com.mythsofworlds.mythology.greek.entity.Karkinos;
+import com.mythsofworlds.mythology.greek.entity.Lion;
 import com.mythsofworlds.mythology.greek.entity.Medusa;
 import com.mythsofworlds.mythology.greek.entity.Minotaur;
 import com.mythsofworlds.mythology.greek.entity.NemeanLion;
@@ -65,6 +69,13 @@ public final class GreekEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<GreekMerchant>> GREEK_MERCHANT = register("greek_merchant",
             EntityType.Builder.of(GreekMerchant::new, MobCategory.CREATURE).sized(0.6F, 1.95F).eyeHeight(1.62F)
                     .clientTrackingRange(10));
+    /** Lion of the pride of the Nemean Forest: hunts game, fights only if the pride is attacked. */
+    public static final DeferredHolder<EntityType<?>, EntityType<Lion>> LION = register("lion",
+            EntityType.Builder.of(Lion::new, MobCategory.CREATURE).sized(1.2F, 1.3F).eyeHeight(1.1F));
+    /** Warrior woman of Themiscyra; can be courted and married. */
+    public static final DeferredHolder<EntityType<?>, EntityType<Amazon>> AMAZON = register("amazon",
+            EntityType.Builder.of(Amazon::new, MobCategory.CREATURE).sized(0.6F, 1.9F).eyeHeight(1.65F)
+                    .clientTrackingRange(10));
 
     // ---- Mini-bosses ----
     public static final DeferredHolder<EntityType<?>, EntityType<Cyclops>> CYCLOPS = register("cyclops",
@@ -75,6 +86,10 @@ public final class GreekEntities {
                     .clientTrackingRange(10));
     public static final DeferredHolder<EntityType<?>, EntityType<NemeanLion>> NEMEAN_LION = register("nemean_lion",
             EntityType.Builder.of(NemeanLion::new, MobCategory.MONSTER).sized(1.4F, 1.6F).eyeHeight(1.3F)
+                    .clientTrackingRange(10));
+    /** The giant crab of Hera, in the Hydra's lair. */
+    public static final DeferredHolder<EntityType<?>, EntityType<Karkinos>> KARKINOS = register("karkinos",
+            EntityType.Builder.of(Karkinos::new, MobCategory.MONSTER).sized(2.0F, 1.2F).eyeHeight(1.0F)
                     .clientTrackingRange(10));
 
     // ---- Bosses ----
@@ -87,6 +102,10 @@ public final class GreekEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<Cerberus>> CERBERUS = register("cerberus",
             EntityType.Builder.of(Cerberus::new, MobCategory.MONSTER).sized(1.8F, 2.2F).eyeHeight(1.9F)
                     .fireImmune().clientTrackingRange(10));
+    /** Queen of the Amazons, in Themiscyra. */
+    public static final DeferredHolder<EntityType<?>, EntityType<Hippolyta>> HIPPOLYTA = register("hippolyta",
+            EntityType.Builder.of(Hippolyta::new, MobCategory.CREATURE).sized(0.6F, 1.95F).eyeHeight(1.7F)
+                    .clientTrackingRange(10));
 
     // ---- Spawn eggs (creative tab) ----
     public static final DeferredItem<DeferredSpawnEggItem> SATYR_SPAWN_EGG = egg("satyr", SATYR, 0x7A5230, 0xD9B77E);
@@ -103,10 +122,15 @@ public final class GreekEntities {
     public static final DeferredItem<DeferredSpawnEggItem> MINOTAUR_SPAWN_EGG = egg("minotaur", MINOTAUR, 0x4A2E1E, 0xE8DCC0);
     public static final DeferredItem<DeferredSpawnEggItem> HYDRA_SPAWN_EGG = egg("hydra", HYDRA, 0x2F5D3A, 0x8BC34A);
     public static final DeferredItem<DeferredSpawnEggItem> CERBERUS_SPAWN_EGG = egg("cerberus", CERBERUS, 0x1E1A1A, 0xE5501F);
+    public static final DeferredItem<DeferredSpawnEggItem> LION_SPAWN_EGG = egg("lion", LION, 0xC4914A, 0x6B4420);
+    public static final DeferredItem<DeferredSpawnEggItem> AMAZON_SPAWN_EGG = egg("amazon", AMAZON, 0xB0703A, 0xC9A23A);
+    public static final DeferredItem<DeferredSpawnEggItem> KARKINOS_SPAWN_EGG = egg("karkinos", KARKINOS, 0xB3361E, 0xE8B07A);
+    public static final DeferredItem<DeferredSpawnEggItem> HIPPOLYTA_SPAWN_EGG = egg("hippolyta", HIPPOLYTA, 0x8A1E2A, 0xE2B33C);
 
     /** Every mob of Hellas, used by the tests. */
     public static List<DeferredHolder<EntityType<?>, ? extends EntityType<? extends Mob>>> all() {
-        return List.of(SATYR, HARPY, SPARTOI, SHADE, PEGASUS, GOLDEN_HIND, HYDRA_HATCHLING, GREEK_MERCHANT, CYCLOPS, MEDUSA, NEMEAN_LION, MINOTAUR, HYDRA, CERBERUS);
+        return List.of(SATYR, HARPY, SPARTOI, SHADE, PEGASUS, GOLDEN_HIND, HYDRA_HATCHLING, GREEK_MERCHANT, LION, AMAZON, CYCLOPS, MEDUSA, NEMEAN_LION,
+                KARKINOS, MINOTAUR, HYDRA, CERBERUS, HIPPOLYTA);
     }
 
     private GreekEntities() {
@@ -142,6 +166,10 @@ public final class GreekEntities {
         event.put(MINOTAUR.get(), Minotaur.createAttributes().build());
         event.put(HYDRA.get(), Hydra.createAttributes().build());
         event.put(CERBERUS.get(), Cerberus.createAttributes().build());
+        event.put(LION.get(), Lion.createAttributes().build());
+        event.put(AMAZON.get(), Amazon.createAttributes().build());
+        event.put(KARKINOS.get(), Karkinos.createAttributes().build());
+        event.put(HIPPOLYTA.get(), Hippolyta.createAttributes().build());
     }
 
     /** Rules for natural spawning; the biomes decide where and how often. */
@@ -155,5 +183,6 @@ public final class GreekEntities {
         event.register(SHADE.get(), SpawnPlacementTypes.ON_GROUND, ground, Monster::checkMonsterSpawnRules, replace);
         event.register(PEGASUS.get(), SpawnPlacementTypes.ON_GROUND, ground, Animal::checkAnimalSpawnRules, replace);
         event.register(GOLDEN_HIND.get(), SpawnPlacementTypes.ON_GROUND, ground, Animal::checkAnimalSpawnRules, replace);
+        event.register(LION.get(), SpawnPlacementTypes.ON_GROUND, ground, Animal::checkAnimalSpawnRules, replace);
     }
 }

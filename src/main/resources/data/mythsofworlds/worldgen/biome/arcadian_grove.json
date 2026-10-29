@@ -141,8 +141,10 @@
     [
       "minecraft:glow_lichen",
       "mythsofworlds:olive_tree",
+      "mythsofworlds:olive_grove",
       "mythsofworlds:cypress_tree",
       "mythsofworlds:laurel_bush",
+      "mythsofworlds:maquis",
       "minecraft:flower_default",
       "minecraft:patch_grass_forest",
       "minecraft:patch_tall_grass_2",

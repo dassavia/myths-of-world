@@ -1,0 +1,201 @@
+{
+  "entries": [
+    {
+      "id": "greek.portal",
+      "category": "intro",
+      "pages": 2
+    },
+    {
+      "id": "greek.satyr",
+      "category": "creature",
+      "pages": 2,
+      "entity": "mythsofworlds:satyr"
+    },
+    {
+      "id": "greek.harpy",
+      "category": "creature",
+      "pages": 2,
+      "entity": "mythsofworlds:harpy"
+    },
+    {
+      "id": "greek.spartoi",
+      "category": "creature",
+      "pages": 2,
+      "entity": "mythsofworlds:spartoi"
+    },
+    {
+      "id": "greek.shade",
+      "category": "creature",
+      "pages": 2,
+      "entity": "mythsofworlds:shade"
+    },
+    {
+      "id": "greek.pegasus",
+      "category": "creature",
+      "pages": 2,
+      "entity": "mythsofworlds:pegasus"
+    },
+    {
+      "id": "greek.golden_hind",
+      "category": "creature",
+      "pages": 2,
+      "entity": "mythsofworlds:golden_hind"
+    },
+    {
+      "id": "greek.hydra_hatchling",
+      "category": "creature",
+      "pages": 2,
+      "entity": "mythsofworlds:hydra_hatchling"
+    },
+    {
+      "id": "greek.greek_merchant",
+      "category": "creature",
+      "pages": 2,
+      "entity": "mythsofworlds:greek_merchant"
+    },
+    {
+      "id": "greek.lion",
+      "category": "creature",
+      "pages": 2,
+      "entity": "mythsofworlds:lion"
+    },
+    {
+      "id": "greek.amazon",
+      "category": "creature",
+      "pages": 4,
+      "entity": "mythsofworlds:amazon"
+    },
+    {
+      "id": "greek.cyclops",
+      "category": "boss",
+      "pages": 2,
+      "entity": "mythsofworlds:cyclops"
+    },
+    {
+      "id": "greek.medusa",
+      "category": "boss",
+      "pages": 3,
+      "entity": "mythsofworlds:medusa"
+    },
+    {
+      "id": "greek.nemean_lion",
+      "category": "boss",
+      "pages": 3,
+      "entity": "mythsofworlds:nemean_lion"
+    },
+    {
+      "id": "greek.karkinos",
+      "category": "boss",
+      "pages": 2,
+      "entity": "mythsofworlds:karkinos"
+    },
+    {
+      "id": "greek.minotaur",
+      "category": "boss",
+      "pages": 3,
+      "entity": "mythsofworlds:minotaur"
+    },
+    {
+      "id": "greek.hydra",
+      "category": "boss",
+      "pages": 3,
+      "entity": "mythsofworlds:hydra"
+    },
+    {
+      "id": "greek.cerberus",
+      "category": "boss",
+      "pages": 3,
+      "entity": "mythsofworlds:cerberus"
+    },
+    {
+      "id": "greek.hippolyta",
+      "category": "boss",
+      "pages": 4,
+      "entity": "mythsofworlds:hippolyta"
+    },
+    {
+      "id": "greek.greek_temple",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:greek_temple"
+    },
+    {
+      "id": "greek.oracle_of_delphi",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:oracle_of_delphi"
+    },
+    {
+      "id": "greek.labyrinth",
+      "category": "place",
+      "pages": 2,
+      "structure": "mythsofworlds:labyrinth"
+    },
+    {
+      "id": "greek.gates_of_hades",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:gates_of_hades"
+    },
+    {
+      "id": "greek.hydra_lair",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:hydra_lair"
+    },
+    {
+      "id": "greek.medusa_lair",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:medusa_lair"
+    },
+    {
+      "id": "greek.cyclops_cave",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:cyclops_cave"
+    },
+    {
+      "id": "greek.nemean_lion_den",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:nemean_lion_den"
+    },
+    {
+      "id": "greek.agora",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:agora"
+    },
+    {
+      "id": "greek.ship_of_theseus",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:ship_of_theseus"
+    },
+    {
+      "id": "greek.perseus_refuge",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:perseus_refuge"
+    },
+    {
+      "id": "greek.amazon_camp",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:amazon_camp"
+    },
+    {
+      "id": "greek.themiscyra",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:themiscyra"
+    },
+    {
+      "id": "greek.greek_farmstead",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:greek_farmstead"
+    }
+  ]
+}

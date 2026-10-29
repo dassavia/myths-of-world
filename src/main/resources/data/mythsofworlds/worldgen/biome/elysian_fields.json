@@ -26,10 +26,6 @@
       "min_delay": 6000,
       "max_delay": 18000,
       "replace_current_music": false
-    },
-    "additions_sound": {
-      "sound": "mythsofworlds:ambient.hellas.chimes",
-      "tick_chance": 0.004
     }
   },
   "spawners": {
@@ -131,6 +127,8 @@
       "minecraft:glow_lichen",
       "mythsofworlds:golden_apple_tree",
       "mythsofworlds:olive_tree",
+      "mythsofworlds:olive_grove",
+      "mythsofworlds:pomegranate_tree",
       "mythsofworlds:elysian_flowers",
       "minecraft:flower_meadow",
       "minecraft:patch_sunflower",
