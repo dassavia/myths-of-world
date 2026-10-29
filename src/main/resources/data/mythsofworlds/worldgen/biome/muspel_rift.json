@@ -103,7 +103,9 @@
       "minecraft:ore_lapis",
       "minecraft:ore_lapis_buried",
       "minecraft:ore_copper",
-      "mythsofworlds:muspel_magma"
+      "mythsofworlds:muspel_magma",
+      "mythsofworlds:ore_dark_iron",
+      "mythsofworlds:ore_muspel_ember"
     ],
     [],
     [

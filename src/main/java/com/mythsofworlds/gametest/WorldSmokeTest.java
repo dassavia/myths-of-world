@@ -14,6 +14,7 @@ import com.mythsofworlds.mythology.norse.entity.Garm;
 import com.mythsofworlds.mythology.norse.entity.NorseMerchant;
 import com.mythsofworlds.mythology.norse.entity.Surtr;
 import com.mythsofworlds.mythology.norse.entity.Thrym;
+import com.mythsofworlds.mythology.norse.entity.Valkyrie;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -124,7 +125,8 @@ public final class WorldSmokeTest {
             Map.entry("utgard", Thrym.class),
             Map.entry("fenrir_island", Fenrir.class),
             Map.entry("muspel_fortress", Surtr.class),
-            Map.entry("helgrind", Garm.class));
+            Map.entry("helgrind", Garm.class),
+            Map.entry("valkyrie_hall", Valkyrie.class));
 
     @SubscribeEvent
     public static void onServerStarted(ServerStartedEvent event) {

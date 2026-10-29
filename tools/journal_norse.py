@@ -43,6 +43,18 @@ ENTRIES = [
       "Somewhere Idunn's orchard blooms: her apples of youth ripen on the leaves like fruit. The nights are long, "
       "and by day the sun drives the trolls under the earth."]),
 
+    ("dark_iron", "intro", None,
+     ["Тёмное железо и угли",
+      "Глубоко в камне Йотунхейма лежит руда тёмного железа двергов. Нужна железная кирка; переплавьте сырьё "
+      "в слитки. Из них куют самое прочное оружие, инструменты и броню.",
+      "В разломе Муспельхейма в камне тлеют угли Муспельхейма. В печи они горят втрое дольше угля, а "
+      "валькирии ценят их как трофей."],
+     ["Dark Iron and Embers",
+      "Deep in the stone of Jotunheim lies the dwarves' dark iron ore. It needs an iron pickaxe; smelt the raw "
+      "metal into ingots. They make the toughest weapons, tools and armour.",
+      "In the rift of Muspelheim, embers smoulder in the stone. In a furnace they burn three times as long as "
+      "coal, and valkyries prize them as trophies."]),
+
     # ---------------------------------------------------------------- creatures
     ("draugr", "creature", mob("draugr"),
      ["Драугр",
@@ -121,6 +133,22 @@ ENTRIES = [
       "The dwarven smith trades trophies for diamond gear.",
       "The dwarf also sells Gleipnir, the fetter for Fenrir. The volva sells Idunn's apples, the Rune Igniter, "
       "potions and carved runestones."]),
+
+    ("valkyrie", "creature", mob("valkyrie"),
+     ["Валькирия",
+      "Дева щита Одина. Живёт в чертогах валькирий на фьордах, в тайге и пустошах. Бьёт чудовищ, а за "
+      "обиду отвечает вместе с сёстрами.",
+      "Как амазонке, дарите ей подарки раз в 20 секунд: золото, оружие и щиты, трофеи чудовищ Севера или "
+      "пир (мёд, мясо, яблоки Идунн). ПКМ пустой рукой: она скажет, что любит больше всего.",
+      "При симпатии 100 наденьте ей обручальное кольцо. Жена-валькирия идёт за вами в бой. Поднесите ей "
+      "мёд, и раз в день родится дочь, которая вырастет в валькирию."],
+     ["Valkyrie",
+      "A shield-maiden of Odin. She lives in the halls of the valkyries in the fjords, the taiga and the wastes. "
+      "She fights monsters and answers an insult together with her sisters.",
+      "As with an amazon, give her gifts once every 20 seconds: gold, weapons and shields, trophies of the "
+      "North or a feast (mead, meat, Idunn's apples). Right-click with an empty hand: she says what she likes.",
+      "At affection 100 give her a wedding ring. Your valkyrie wife follows you into battle. Give her mead and "
+      "once a day a daughter is born, who grows up a valkyrie."]),
 
     # ---------------------------------------------------------------- bosses
     ("draugr_chieftain", "boss", mob("draugr_chieftain"),
@@ -254,6 +282,13 @@ ENTRIES = [
       "Мастерская в скале, где дверги куют оружие. Здесь продают Глейпнир и алмазное снаряжение."],
      ["Dwarven Forge",
       "A workshop in the rock where dwarves forge weapons. Gleipnir and diamond gear are sold here."]),
+    ("valkyrie_hall", "place", place("valkyrie_hall"),
+     ["Чертог валькирий",
+      "Длинный зал, увешанный щитами, с конюшней белых коней и площадкой для учебного боя. Здесь живут "
+      "валькирии, на которых можно жениться."],
+     ["Hall of the Valkyries",
+      "A long hall hung with shields, with a stable of white horses and a training ground. The valkyries live "
+      "here, and they can be wed."]),
     ("rune_circle", "place", place("rune_circle"),
      ["Рунный круг",
       "Кольцо стоячих камней с горящими рунами. Здесь живут вороны, а в центре лежит сундук с подношениями."],

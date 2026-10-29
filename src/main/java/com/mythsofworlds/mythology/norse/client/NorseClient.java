@@ -1,6 +1,7 @@
 package com.mythsofworlds.mythology.norse.client;
 
 import com.mythsofworlds.MythsOfWorlds;
+import com.mythsofworlds.mythology.greek.client.AmazonRenderer;
 import com.mythsofworlds.mythology.greek.client.BeastModel;
 import com.mythsofworlds.mythology.greek.client.GreekClient;
 import com.mythsofworlds.mythology.greek.client.GreekHumanoidRenderer;
@@ -56,5 +57,6 @@ public final class NorseClient {
                         "garm", 1.6F));
         event.registerEntityRenderer(NorseEntities.RAVEN.get(), RavenRenderer::new);
         event.registerEntityRenderer(NorseEntities.NORSE_MERCHANT.get(), NorseMerchantRenderer::new);
+        event.registerEntityRenderer(NorseEntities.VALKYRIE.get(), AmazonRenderer::new);
     }
 }

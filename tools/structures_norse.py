@@ -613,6 +613,53 @@ def dwarf_forge():
     return t
 
 
+# ---------------------------------------------------------------- hall of the valkyries
+
+def valkyrie_hall():
+    """Vingolf, a hall of the valkyries: a long hall hung with shields, a stable of white horses, a training ground
+    with straw targets, and the shield-maidens themselves."""
+    sx, sz = 31, 25
+    t = Template(sx, 12, sz)
+    rng = random.Random(77)
+    t.fill(0, 1, 0, sx - 1, 11, sz - 1, AIR)
+    for x in range(sx):
+        for z in range(sz):
+            t.set(x, 0, z, pick(rng, EARTH))
+    longhouse(t, 4, 2, 21, 11, rng, chest="valkyrie_hall")
+    # A gilded high seat at the end of the hall, under a golden shield.
+    t.set(6, 1, 7, "minecraft:spruce_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]")
+    t.set(5, 2, 7, "minecraft:yellow_wall_banner[facing=east]")
+    t.set(5, 1, 6, "minecraft:gold_block")
+    t.set(5, 1, 8, "minecraft:gold_block")
+    for x, z in ((9.5, 5.5), (14.5, 9.5), (19.5, 5.5), (12.5, 7.5)):
+        t.entity(x, 1.0, z, f"{NS}:valkyrie")
+    # The stable: a roof on posts, hay and two white horses.
+    for x in range(5, 15):
+        for z in range(16, 22):
+            t.set(x, 0, z, pick(rng, [("minecraft:coarse_dirt", 60), ("minecraft:podzol", 40)]))
+            if x in (5, 14) or z in (16, 21):
+                t.set(x, 1, z, FENCE)
+            t.set(x, 4, z, "minecraft:spruce_slab[type=bottom]")
+    for x, z in ((5, 16), (14, 16), (5, 21), (14, 21)):
+        t.fill(x, 1, z, x, 3, z, "minecraft:spruce_log[axis=y]")
+    t.set(9, 1, 16, "minecraft:spruce_fence_gate[facing=north,in_wall=false,open=false,powered=false]")
+    t.set(6, 1, 20, "minecraft:hay_block[axis=y]")
+    t.set(7, 1, 20, "minecraft:hay_block[axis=x]")
+    t.set(13, 1, 17, "minecraft:water_cauldron[level=3]")
+    for x, z in ((8.5, 18.5), (11.5, 19.5)):
+        t.entity(x, 1.0, z, "minecraft:horse", {"Variant": 0, "Tame": nbt.Byte(1)})
+    # Training ground with straw targets and a weapon rack.
+    for x, z in ((19, 17), (22, 19), (25, 17)):
+        t.set(x, 1, z, "minecraft:hay_block[axis=y]")
+        t.set(x, 2, z, "minecraft:target")
+    t.fill(18, 1, 22, 26, 1, 22, FENCE)
+    t.set(27, 1, 20, "minecraft:spruce_fence")
+    t.set(27, 2, 20, STANDING_LANTERN)
+    t.entity(22.5, 1.0, 20.5, f"{NS}:valkyrie")
+    standing_stone(t, 28, 3, 3, rng)
+    return t
+
+
 # ---------------------------------------------------------------- rune circle
 
 def rune_circle():
@@ -648,4 +695,5 @@ STRUCTURES = {
     "helgrind": helgrind,
     "dwarf_forge": dwarf_forge,
     "rune_circle": rune_circle,
+    "valkyrie_hall": valkyrie_hall,
 }

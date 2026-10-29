@@ -9,11 +9,13 @@ import com.mythsofworlds.mythology.greek.block.FruitLeavesBlock;
 import com.mythsofworlds.mythology.norse.item.GleipnirItem;
 import com.mythsofworlds.mythology.norse.item.MjolnirItem;
 import com.mythsofworlds.mythology.norse.item.SurtrSwordItem;
+import com.mythsofworlds.registry.MetalSet;
 import java.util.List;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
@@ -26,6 +28,7 @@ import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
@@ -53,7 +56,7 @@ public final class NorseContent {
             "muspel_rift", "niflheim_mists", "idunn_orchard");
     /** Structures of Jotunheim (data/mythsofworlds/worldgen/structure, templates in data/mythsofworlds/structure/norse). */
     public static final List<String> STRUCTURES = List.of("viking_village", "longship", "naglfar", "barrow", "utgard",
-            "fenrir_island", "muspel_fortress", "helgrind", "dwarf_forge", "rune_circle");
+            "fenrir_island", "muspel_fortress", "helgrind", "dwarf_forge", "rune_circle", "valkyrie_hall");
 
     // ---- Blocks ----
 
@@ -120,6 +123,17 @@ public final class NorseContent {
     /** Leaves of the apple trees of Idunn; the golden apples that keep the gods young ripen on them. */
     public static final DeferredBlock<FruitLeavesBlock> IDUNN_LEAVES = BLOCKS.register("idunn_leaves",
             () -> new FruitLeavesBlock(NorseContent.IDUNN_APPLE, leaves(MapColor.PLANT).lightLevel(state -> 3)));
+
+    // ---- Metals and fuel ----
+
+    /** Dark iron of the dwarves of Svartalfheim, deep in the stone of Jotunheim: the toughest of the metals. */
+    public static final MetalSet DARK_IRON = new MetalSet("dark_iron", MapColor.COLOR_GRAY, new MetalSet.Stats(
+            1900, 7.0F, 3.5F, 12, new int[]{3, 8, 6, 3}, 37, 2.5F, 0.05F, SoundEvents.ARMOR_EQUIP_NETHERITE));
+    /** Embers of Muspelheim locked in the stone of the fire rift: they burn three times as long as coal. */
+    public static final DeferredBlock<DropExperienceBlock> MUSPEL_EMBER_ORE = BLOCKS.registerBlock("muspel_ember_ore",
+            props -> new DropExperienceBlock(UniformInt.of(2, 4), props), BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_RED).strength(3.0F, 3.0F).requiresCorrectToolForDrops().lightLevel(state -> 7));
+    public static final DeferredItem<BlockItem> MUSPEL_EMBER_ORE_ITEM = ITEMS.registerSimpleBlockItem(MUSPEL_EMBER_ORE);
 
     // ---- Items ----
 

@@ -68,6 +68,11 @@ public class Hippolyta extends Amazon {
                 .add(Attributes.FOLLOW_RANGE, 32.0);
     }
 
+    @Override
+    public String textureName() {
+        return "hippolyta";
+    }
+
     /** The queen's name hangs over her head, always in English. */
     @Override
     protected Component getTypeName() {

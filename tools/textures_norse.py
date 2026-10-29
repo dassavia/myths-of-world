@@ -3,7 +3,7 @@ import math
 
 from PIL import Image
 
-from textures import (band, beast, box_faces, face, fill_rect, greek_merchant, humanoid, item, jitter, leaves, rgb, save,
+from textures import (amazon, band, beast, box_faces, face, fill_rect, greek_merchant, humanoid, item, jitter, leaves, rgb, save,
                       scale, shade_parts, side_faces, speckle, stone_bricks)
 
 __all__ = ["BLOCKS", "ITEMS", "ENTITIES", "item", "save"]
@@ -315,7 +315,30 @@ def norse_merchant(rng, robe, trim, skin=0xE2B490, hair=0xC9962E, beard=True, ap
     return img
 
 
+# Valkyries: the amazon skin (textures.amazon) in a mail shirt over a long dress, most with a winged helmet.
+VALKYRIES = [
+    dict(skin=0xF6DCCC, hair=0xF0D890, dress=0x3A5A9A, trim=0xC8CCD4, eyes=0x4A8AE8, style="braid", helm=0xC8CCD4,
+         belt=0x6B4A2B),
+    dict(skin=0xF8E0D0, hair=0xB8401E, dress=0x2E6A4A, trim=0xE2B33C, eyes=0x3E9A4E, style="long", helm=0xB8BCC8,
+         belt=0xE2B33C),
+    dict(skin=0xF2D2BC, hair=0x5A3A22, dress=0x8A1E2A, trim=0xF4F1EA, eyes=0x6A4A2A, style="twin", belt=0x3A2A1A,
+         band=0xC8CCD4),
+    dict(skin=0xFBE6DA, hair=0xF4ECD8, dress=0xE8E4DA, trim=0x5A8AC8, eyes=0x6AA8F0, style="wavy", helm=0xE2B33C,
+         belt=0x5A8AC8),
+    dict(skin=0xE8C0A0, hair=0x2A1A14, dress=0x4A3A6A, trim=0xC8CCD4, eyes=0x5A3A6A, style="ponytail", helm=0x9AA2B4,
+         belt=0x2A2A2A),
+    dict(skin=0xF6D8C4, hair=0xD8A050, dress=0x7A5030, trim=0xE8E0D0, eyes=0x4A7A3A, style="braid", belt=0x4A3220,
+         flower=0x6AA8F0),
+    dict(skin=0xF4D4C0, hair=0x8A6A4A, dress=0x2A4A6A, trim=0xE2B33C, eyes=0x3A6AB8, style="long", helm=0xC8CCD4,
+         belt=0xE2B33C),
+    dict(skin=0xFAE2D4, hair=0xE8C070, dress=0xA8282E, trim=0xC8CCD4, eyes=0x3A7AD8, style="wavy", helm=0xE2B33C,
+         belt=0x6B4A2B),
+]
+
+
 ENTITIES = {
+    **{f"valkyrie_{i}": (lambda spec: lambda rng: amazon(rng, outfit="valkyrie", **spec))(spec)
+       for i, spec in enumerate(VALKYRIES)},
     "draugr": draugr,
     "draugr_chieftain": lambda rng: draugr(rng, chief=True),
     "troll": troll,

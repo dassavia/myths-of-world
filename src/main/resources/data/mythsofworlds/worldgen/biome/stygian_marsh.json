@@ -106,7 +106,9 @@
       "minecraft:ore_lapis",
       "minecraft:ore_lapis_buried",
       "minecraft:ore_copper",
-      "minecraft:disk_clay"
+      "minecraft:disk_clay",
+      "mythsofworlds:ore_orichalcum",
+      "mythsofworlds:ore_hephaestus_coal"
     ],
     [],
     [

@@ -112,8 +112,11 @@ python3 tools/gen_greek_assets.py --textures  # плюс перерисоват�
 Скрипт берёт помощники из греческого, поэтому запускайте оба по порядку:
 
 ```bash
-python3 tools/gen_greek_assets.py && python3 tools/gen_norse_assets.py   # --textures, чтобы перерисовать PNG
+python3 tools/gen_greek_assets.py && python3 tools/gen_norse_assets.py && python3 tools/gen_metals.py   # --textures, чтобы перерисовать PNG
 ```
+
+Металлы (руда, слитки, инструменты, броня) объявляются одной строкой `new MetalSet(...)` (`registry/MetalSet.java`),
+а данные для них делает `tools/gen_metals.py`: добавьте металл в `METALS` и id его руды в список фич биомов.
 
 Теги (`minecraft:leaves`, `mineable/*`) и переводы скрипты дописывают, а не затирают.
 

@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "mythsofworlds:orichalcum_helmet",
+    "mythsofworlds:orichalcum_chestplate",
+    "mythsofworlds:orichalcum_leggings",
+    "mythsofworlds:orichalcum_boots",
+    "mythsofworlds:dark_iron_helmet",
+    "mythsofworlds:dark_iron_chestplate",
+    "mythsofworlds:dark_iron_leggings",
+    "mythsofworlds:dark_iron_boots"
+  ]
+}

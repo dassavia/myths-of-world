@@ -3,6 +3,8 @@ package com.mythsofworlds.gametest;
 import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.core.PlayerData;
 import com.mythsofworlds.journal.Journal;
+import com.mythsofworlds.mythology.greek.GreekContent;
+import com.mythsofworlds.mythology.greek.entity.Amazon;
 import com.mythsofworlds.mythology.norse.NorseContent;
 import com.mythsofworlds.mythology.norse.NorseEntities;
 import com.mythsofworlds.mythology.norse.entity.Draugr;
@@ -12,7 +14,9 @@ import com.mythsofworlds.mythology.norse.entity.NorseMerchant;
 import com.mythsofworlds.mythology.norse.entity.Surtr;
 import com.mythsofworlds.mythology.norse.entity.Thrym;
 import com.mythsofworlds.mythology.norse.entity.Troll;
+import com.mythsofworlds.mythology.norse.entity.Valkyrie;
 import com.mythsofworlds.mythology.norse.item.MjolnirItem;
+import com.mythsofworlds.registry.MetalSet;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +40,12 @@ import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.FeatureSorter;
@@ -241,5 +249,61 @@ public class NorseTests {
         mob.invulnerableTime = 0;
         mob.hurt(source, amount);
         return mob.getMaxHealth() - mob.getHealth();
+    }
+
+    /** A valkyrie is courted like an amazon, with northern gifts, and mead brings a valkyrie daughter. */
+    @GameTest(template = "empty")
+    public static void valkyrieMarriesAndHasADaughter(GameTestHelper helper) {
+        Valkyrie valkyrie = helper.spawn(NorseEntities.VALKYRIE.get(), new BlockPos(1, 2, 1));
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.POPPY));
+        valkyrie.mobInteract(player, InteractionHand.MAIN_HAND);
+        helper.assertTrue(valkyrie.affection(player) == 0 && !player.getMainHandItem().isEmpty(), "flowers leave a valkyrie cold");
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(NorseContent.FENRIR_FANG.get()));
+        valkyrie.mobInteract(player, InteractionHand.MAIN_HAND);
+        helper.assertTrue(valkyrie.affection(player) >= 25, "Fenrir's fang should win her, affection " + valkyrie.affection(player));
+        valkyrie.setAffection(player, Amazon.LOVE);
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(GreekContent.WEDDING_RING.get()));
+        valkyrie.mobInteract(player, InteractionHand.MAIN_HAND);
+        helper.assertTrue(valkyrie.bond() == Amazon.Bond.WIFE && valkyrie.isFamily(player), "she should accept the ring");
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(NorseContent.MEAD.get()));
+        valkyrie.mobInteract(player, InteractionHand.MAIN_HAND);
+        var daughters = helper.getLevel().getEntitiesOfClass(Valkyrie.class, valkyrie.getBoundingBox().inflate(3.0),
+                v -> v.isBaby() && v.bond() == Amazon.Bond.DAUGHTER && v.isFamily(player));
+        helper.assertTrue(daughters.size() == 1, "mead should bring one valkyrie daughter, got " + daughters.size());
+        helper.assertTrue(daughters.get(0).textureName().startsWith("valkyrie_"), "the daughter should look like a valkyrie");
+        PlayerData.setSpouse(player, java.util.Optional.empty());
+        daughters.forEach(Valkyrie::discard);
+        valkyrie.discard();
+        helper.succeed();
+    }
+
+    /** Orichalcum and dark iron: ores in the worlds, ingots from the furnace, gear better than iron; the new fuels. */
+    @GameTest(template = "empty")
+    public static void metalsAndFuels(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var placed = level.registryAccess().registryOrThrow(Registries.PLACED_FEATURE);
+        for (String feature : List.of("ore_orichalcum", "ore_hephaestus_coal", "ore_dark_iron", "ore_muspel_ember")) {
+            helper.assertTrue(placed.containsKey(MythsOfWorlds.id(feature)), "placed feature " + feature + " did not load");
+        }
+        for (MetalSet metal : List.of(GreekContent.ORICHALCUM, NorseContent.DARK_IRON)) {
+            helper.assertTrue(metal.ore.get().defaultBlockState().requiresCorrectToolForDrops(), metal.name + " ore needs a pickaxe");
+            ItemStack ingot = level.getRecipeManager()
+                    .getRecipeFor(RecipeType.SMELTING, new SingleRecipeInput(new ItemStack(metal.raw.get())), level)
+                    .map(recipe -> recipe.value().getResultItem(level.registryAccess())).orElse(ItemStack.EMPTY);
+            helper.assertTrue(ingot.is(metal.ingot.get()), "raw " + metal.name + " should smelt into an ingot, got " + ingot);
+            helper.assertTrue(metal.tier.getUses() > Tiers.IRON.getUses() && metal.tier.getSpeed() >= Tiers.IRON.getSpeed(),
+                    metal.name + " tools should beat iron");
+            int chest = metal.material.value().getDefense(ArmorItem.Type.CHESTPLATE);
+            helper.assertTrue(chest > 6, metal.name + " chestplate gives only " + chest);
+            helper.assertTrue(new ItemStack(metal.chestplate.get()).getMaxDamage() > new ItemStack(Items.IRON_CHESTPLATE).getMaxDamage(),
+                    metal.name + " armour should outlast iron");
+        }
+        int coal = new ItemStack(Items.COAL).getBurnTime(RecipeType.SMELTING);
+        int hephaestus = new ItemStack(GreekContent.HEPHAESTUS_COAL.get()).getBurnTime(RecipeType.SMELTING);
+        int ember = new ItemStack(NorseContent.MUSPEL_EMBER.get()).getBurnTime(RecipeType.SMELTING);
+        helper.assertTrue(hephaestus == coal * 2 && ember == coal * 3, "burn times: coal " + coal + ", Hephaestus coal "
+                + hephaestus + ", Muspel ember " + ember);
+        helper.succeed();
     }
 }

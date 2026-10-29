@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "ingredient": {
+    "item": "mythsofworlds:hephaestus_coal_ore"
+  },
+  "result": {
+    "id": "mythsofworlds:hephaestus_coal"
+  },
+  "experience": 0.2,
+  "cookingtime": 200
+}

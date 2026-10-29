@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "ingredient": {
+    "item": "mythsofworlds:muspel_ember_ore"
+  },
+  "result": {
+    "id": "mythsofworlds:muspel_ember"
+  },
+  "experience": 0.3,
+  "cookingtime": 100
+}

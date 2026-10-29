@@ -12,6 +12,7 @@ import com.mythsofworlds.mythology.norse.entity.Raven;
 import com.mythsofworlds.mythology.norse.entity.Surtr;
 import com.mythsofworlds.mythology.norse.entity.Thrym;
 import com.mythsofworlds.mythology.norse.entity.Troll;
+import com.mythsofworlds.mythology.norse.entity.Valkyrie;
 import com.mythsofworlds.mythology.norse.entity.Warg;
 import java.util.List;
 import net.minecraft.world.entity.Entity;
@@ -77,6 +78,11 @@ public final class NorseEntities {
 
     // ---- Spawn eggs (creative tab) ----
     public static final DeferredItem<DeferredSpawnEggItem> DRAUGR_SPAWN_EGG = egg("draugr", DRAUGR, 0x5E7A82, 0xBFD9E0);
+    /** Shield-maiden of Odin in the halls of the valkyries; can be courted and married, like an amazon. */
+    public static final DeferredHolder<EntityType<?>, EntityType<Valkyrie>> VALKYRIE = register("valkyrie",
+            EntityType.Builder.of(Valkyrie::new, MobCategory.CREATURE).sized(0.6F, 1.9F).eyeHeight(1.65F)
+                    .clientTrackingRange(10));
+    public static final DeferredItem<DeferredSpawnEggItem> VALKYRIE_SPAWN_EGG = egg("valkyrie", VALKYRIE, 0xC8CCD4, 0xE8C060);
     public static final DeferredItem<DeferredSpawnEggItem> WARG_SPAWN_EGG = egg("warg", WARG, 0x5A5A5E, 0xC9C2B4);
     public static final DeferredItem<DeferredSpawnEggItem> TROLL_SPAWN_EGG = egg("troll", TROLL, 0x6E7A52, 0x8A7356);
     public static final DeferredItem<DeferredSpawnEggItem> FROST_GIANT_SPAWN_EGG = egg("frost_giant", FROST_GIANT, 0x9FC4D8, 0xE8F4FA);
@@ -91,7 +97,7 @@ public final class NorseEntities {
 
     /** Every mob of Jotunheim, used by the tests. */
     public static List<DeferredHolder<EntityType<?>, ? extends EntityType<? extends Mob>>> all() {
-        return List.of(DRAUGR, WARG, TROLL, FROST_GIANT, FIRE_GIANT, RAVEN, NORSE_MERCHANT, DRAUGR_CHIEFTAIN, GARM,
+        return List.of(DRAUGR, WARG, TROLL, FROST_GIANT, FIRE_GIANT, RAVEN, NORSE_MERCHANT, VALKYRIE, DRAUGR_CHIEFTAIN, GARM,
                 THRYM, FENRIR, SURTR);
     }
 
@@ -126,6 +132,7 @@ public final class NorseEntities {
         event.put(THRYM.get(), Thrym.createAttributes().build());
         event.put(FENRIR.get(), Fenrir.createAttributes().build());
         event.put(SURTR.get(), Surtr.createAttributes().build());
+        event.put(VALKYRIE.get(), Valkyrie.createAttributes().build());
     }
 
     /** Rules for natural spawning; the biomes decide where and how often. */

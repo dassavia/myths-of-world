@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "mythsofworlds:item/dark_iron_pickaxe"
+  }
+}

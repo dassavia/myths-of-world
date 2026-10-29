@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "mythsofworlds:dark_iron_block"
+    }
+  ],
+  "result": {
+    "id": "mythsofworlds:dark_iron_ingot",
+    "count": 9
+  }
+}

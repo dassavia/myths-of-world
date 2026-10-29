@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "MMM",
+    "MMM",
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "item": "mythsofworlds:dark_iron_ingot"
+    }
+  },
+  "result": {
+    "id": "mythsofworlds:dark_iron_block",
+    "count": 1
+  }
+}

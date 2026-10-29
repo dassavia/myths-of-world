@@ -1,0 +1,10 @@
+{
+  "values": {
+    "mythsofworlds:hephaestus_coal": {
+      "burn_time": 3200
+    },
+    "mythsofworlds:muspel_ember": {
+      "burn_time": 4800
+    }
+  }
+}

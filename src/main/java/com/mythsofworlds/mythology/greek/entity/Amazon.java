@@ -154,9 +154,9 @@ public class Amazon extends AgeableMob {
     /** Looks, name, taste and weapons, chosen the first time she ticks (also for amazons placed by structures). */
     protected void initialize() {
         if (getVariant() == 0) {
-            setVariant(commonVariant(random));
+            setVariant(randomVariant());
         }
-        setCustomName(Component.literal(NAMES[random.nextInt(NAMES.length)]));
+        setCustomName(Component.literal(randomName()));
         favourite = random.nextInt(KINDS);
         if (!isBaby()) {
             arm();
@@ -190,6 +190,31 @@ public class Amazon extends AgeableMob {
 
     protected String messages() {
         return "entity.mythsofworlds.amazon.";
+    }
+
+    /** Her texture, textures/entity/&lt;name&gt;.png. */
+    public String textureName() {
+        return "amazon_" + Math.floorMod(getVariant(), VARIANTS);
+    }
+
+    protected String randomName() {
+        return NAMES[random.nextInt(NAMES.length)];
+    }
+
+    protected int randomVariant() {
+        return commonVariant(random);
+    }
+
+    /** A new daughter of her kind. */
+    @Nullable
+    protected Amazon newChild() {
+        return GreekEntities.AMAZON.get().create(level());
+    }
+
+    /** What a gift is worth to her people, or null if it is no gift. */
+    @Nullable
+    protected Gift giftFor(ItemStack stack) {
+        return gift(stack);
     }
 
     protected void say(Player player, String key, Object... args) {
@@ -377,7 +402,7 @@ public class Amazon extends AgeableMob {
             haveChild(player, stack);
             return InteractionResult.SUCCESS;
         }
-        Gift gift = gift(stack);
+        Gift gift = giftFor(stack);
         if (gift != null) {
             if (giftCooldown > 0) {
                 say(player, "busy");
@@ -444,7 +469,7 @@ public class Amazon extends AgeableMob {
             say(player, "not_tonight");
             return;
         }
-        Amazon child = GreekEntities.AMAZON.get().create(level());
+        Amazon child = newChild();
         if (child == null) {
             return;
         }
@@ -452,7 +477,7 @@ public class Amazon extends AgeableMob {
         child.setAge(-GROW_UP_TICKS);
         child.setVariant(childVariant());
         child.initialized = true;
-        child.setCustomName(Component.literal(NAMES[random.nextInt(NAMES.length)]));
+        child.setCustomName(Component.literal(randomName()));
         child.favourite = random.nextInt(KINDS);
         child.bond = Bond.DAUGHTER;
         child.family = player.getUUID();

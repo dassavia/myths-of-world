@@ -72,7 +72,7 @@ FEATURE_ORDER = [
     ["minecraft:monster_room", "minecraft:monster_room_deep"],
     ["minecraft:ice_spike", "minecraft:ice_patch", f"{NS}:menhir", f"{NS}:basalt_spire"],
     [],
-    g.COMMON_ORES + [f"{NS}:muspel_magma", f"{NS}:niflheim_frost"] + g.DISKS,
+    g.COMMON_ORES + [f"{NS}:muspel_magma", f"{NS}:niflheim_frost"] + g.DISKS + [f"{NS}:ore_dark_iron", f"{NS}:ore_muspel_ember"],
     [],
     ["minecraft:spring_water", "minecraft:spring_lava"],
     ["minecraft:glow_lichen", f"{NS}:ironwood_tree", f"{NS}:ironwood_bush", f"{NS}:idunn_tree", f"{NS}:fjord_spruce",
@@ -82,7 +82,8 @@ FEATURE_ORDER = [
      "minecraft:patch_dead_bush", "minecraft:kelp_cold", "minecraft:seagrass_cold"],
     ["minecraft:freeze_top_layer"],
 ]
-COMMON = g.COMMON
+# The dwarves' dark iron lies under all of Jotunheim (see gen_metals.py); embers only under the fire rift.
+COMMON = g.COMMON + [f"{NS}:ore_dark_iron"]
 
 
 def music(name):
@@ -166,7 +167,7 @@ BIOMES = {
         "sky": 0xB04A2A, "fog": 0x6A2A1A, "water": 0xE0602A, "water_fog": 0x601A0A, "grass": 0x8A5A2A, "foliage": 0x6A3A1A,
         "particle": ("minecraft:ash", 0.02), "music": ("minecraft:music.nether.basalt_deltas", 12000, 24000),
         "additions": ("minecraft:ambient.basalt_deltas.additions", 0.0111),
-        "features": COMMON + ["minecraft:lake_lava_surface", "minecraft:lake_lava_underground", f"{NS}:muspel_magma",
+        "features": COMMON + [f"{NS}:ore_muspel_ember", "minecraft:lake_lava_surface", "minecraft:lake_lava_underground", f"{NS}:muspel_magma",
                               f"{NS}:basalt_spire", "minecraft:patch_dead_bush"],
         "spawners": {
             "monster": [spawn(f"{NS}:fire_giant", 40, 1, 2), spawn("minecraft:magma_cube", 60, 1, 3), spawn("minecraft:blaze", 15, 1, 2)],
@@ -276,6 +277,8 @@ STRUCTURES = {
     "dwarf_forge": (["giants_taiga", "frost_wastes", "ironwood"], 40, 14, 2450204, "WORLD_SURFACE_WG", 0, "beard_thin"),
     "rune_circle": (["giants_taiga", "fjords", "frost_wastes", "idunn_orchard", "ironwood", "niflheim_mists"], 22, 8, 2450205,
                     "WORLD_SURFACE_WG", 0, "beard_thin"),
+    "valkyrie_hall": (["fjords", "giants_taiga", "idunn_orchard", "frost_wastes"], 36, 14, 2450206, "WORLD_SURFACE_WG", 0,
+                      "beard_thin"),
 }
 LAIRS = {"structures": {"utgard": 3, "fenrir_island": 3, "muspel_fortress": 3, "helgrind": 3, "barrow": 4},
          "spacing": 56, "separation": 36, "salt": 2450300}
@@ -291,6 +294,7 @@ STRUCTURE_NAMES = {
     "helgrind": ("Врата Хель", "Gates of Hel"),
     "dwarf_forge": ("Кузня двергов", "Dwarven Forge"),
     "rune_circle": ("Рунный круг", "Rune Circle"),
+    "valkyrie_hall": ("Чертог валькирий", "Hall of the Valkyries"),
 }
 
 
@@ -412,6 +416,11 @@ def loot():
         entry("minecraft:iron_pickaxe", 4, enchant=True), entry("minecraft:anvil", 1), entry("minecraft:raw_gold", 6, 1, 4),
         entry(f"{NS}:runestone", 6, 2, 8),
     ])
+    chest("valkyrie_hall", (3, 6), gold + [
+        entry(f"{NS}:mead", 8, 1, 3), entry("minecraft:iron_sword", 5, enchant=True), entry("minecraft:shield", 4),
+        entry(f"{NS}:dark_iron_ingot", 4, 1, 3), entry("minecraft:golden_apple", 2), entry(f"{NS}:raven_feather", 5, 1, 3),
+        entry("minecraft:saddle", 3), entry("minecraft:golden_horse_armor", 1), entry(f"{NS}:idunn_apple", 2),
+    ])
     chest("rune_circle", (2, 4), [
         entry(f"{NS}:raven_feather", 8, 1, 4), entry("minecraft:lapis_lazuli", 8, 2, 6), entry("minecraft:amethyst_shard", 6, 1, 3),
         entry(f"{NS}:carved_runestone", 4, 1, 2), entry(f"{NS}:idunn_apple", 2), entry("minecraft:book", 3, enchant=True),
@@ -426,6 +435,7 @@ def loot():
     mob("fire_giant", [(f"{NS}:muspel_ember", 1, 1, 0.35), ("minecraft:blaze_powder", 0, 2, None), ("minecraft:magma_cream", 0, 2, None)])
     mob("raven", [(f"{NS}:raven_feather", 0, 2, None)])
     mob("norse_merchant", [])
+    mob("valkyrie", [])
     mob("draugr_chieftain", [(f"{NS}:barrow_crown", 1, 1, None), ("minecraft:gold_ingot", 3, 8, None), ("minecraft:emerald", 2, 6, None)])
     mob("garm", [(f"{NS}:garm_fang", 1, 1, None), ("minecraft:bone", 3, 8, None), ("minecraft:diamond", 1, 2, None)])
     mob("thrym", [(f"{NS}:mjolnir", 1, 1, None), (f"{NS}:frost_heart", 2, 4, None), ("minecraft:diamond", 2, 4, None),
@@ -469,7 +479,7 @@ def recipes():
 ITEMS = ["norse_journal", "norse_journal_complete", "idunn_apple", "mead", "raven_feather", "frost_heart", "muspel_ember",
          "troll_tusk", "fenrir_fang", "garm_fang", "barrow_crown", "mjolnir", "gleipnir", "surtr_sword"]
 HANDHELD = {"mjolnir", "surtr_sword"}
-MOBS = ["draugr", "warg", "troll", "frost_giant", "fire_giant", "raven", "norse_merchant", "draugr_chieftain", "garm",
+MOBS = ["draugr", "warg", "troll", "frost_giant", "fire_giant", "raven", "norse_merchant", "valkyrie", "draugr_chieftain", "garm",
         "thrym", "fenrir", "surtr"]
 
 
@@ -544,15 +554,34 @@ LANG = {
     "entity.mythsofworlds.fire_giant": ("Огненный великан", "Fire Giant"),
     "entity.mythsofworlds.raven": ("Ворон", "Raven"),
     "entity.mythsofworlds.norse_merchant": ("Торговец викингов", "Viking Trader"),
+    "entity.mythsofworlds.valkyrie": ("Валькирия", "Valkyrie"),
     "entity.mythsofworlds.draugr_chieftain": ("Курганный король", "Barrow-King"),
     "entity.mythsofworlds.garm": ("Гарм", "Garm"),
     "entity.mythsofworlds.thrym": ("Трюм, король ётунов", "Thrym, King of the Jotnar"),
     "entity.mythsofworlds.fenrir": ("Фенрир", "Fenrir"),
     "entity.mythsofworlds.surtr": ("Сурт", "Surtr"),
 }
+# What valkyries say: the amazons' lines (gen_greek_assets.AMAZON_TEXT) in the words of the North.
+VALKYRIE_TEXT = dict(g.AMAZON_TEXT, **{
+    "daughter": ("%1$s тянет вас за руку: «Отец, научи меня держать щит!»", "%1$s tugs at your hand: \"Father, teach me to hold a shield!\""),
+    "talk": ("%1$s: «Чем ты удивишь деву щита?» Больше всего она любит %2$s. Симпатия: %3$s/%4$s",
+             "%1$s: \"What can you offer a shield-maiden?\" She likes %2$s best. Affection: %3$s/%4$s"),
+    "likes.0": ("золото и драгоценности", "gold and jewels"),
+    "likes.1": ("оружие и щиты", "weapons and shields"),
+    "likes.2": ("трофеи чудовищ Севера", "trophies of the monsters of the North"),
+    "likes.3": ("пир: мёд и мясо", "a feast: mead and meat"),
+    "wife": ("%1$s, ваша жена, улыбается. Поднесите ей мёд, и родится дочь. Shift+ПКМ: идти за вами, ждать или гулять.",
+             "%1$s, your wife, smiles. Give her mead and a daughter is born. Shift + right-click: follow, stay or wander."),
+    "you_are_married": ("Вы уже женаты. Валькирия не станет второй женой.", "You are already married. A valkyrie will not be a second wife."),
+    "taken": ("%1$s обручена с другим героем.", "%1$s is pledged to another hero."),
+    "married": ("%1$s принимает кольцо! Валькирия теперь ваша жена.", "%1$s takes the ring! The valkyrie is your wife now."),
+    "in_love": ("%1$s: «Ты достоин Вальхаллы. Где твоё кольцо?»", "%1$s: \"You are worthy of Valhalla. Where is your ring?\""),
+    "grown_daughter": ("%1$s, ваша дочь, готова лететь в бой рядом с вами.", "%1$s, your daughter, is ready to ride into battle at your side."),
+    "died": ("Ваша жена %1$s пала в бою и ушла в Вальхаллу...", "Your wife %1$s fell in battle and went to Valhalla..."),
+})
 MOB_NAMES_RU = {
     "draugr": "драугра", "warg": "варга", "troll": "тролля", "frost_giant": "инеистого великана",
-    "fire_giant": "огненного великана", "raven": "ворона", "norse_merchant": "торговца викингов",
+    "fire_giant": "огненного великана", "raven": "ворона", "norse_merchant": "торговца викингов", "valkyrie": "валькирии",
     "draugr_chieftain": "курганного короля", "garm": "Гарма", "thrym": "Трюма", "fenrir": "Фенрира", "surtr": "Сурта",
 }
 
@@ -566,6 +595,8 @@ def lang():
         entries[f"item.{NS}.{name}_spawn_egg"] = (f"Яйцо призыва {MOB_NAMES_RU[name]}", f"{en} Spawn Egg")
     for name, spec in BIOMES.items():
         entries[f"biome.{NS}.{name}"] = (spec["ru"], spec["en"])
+    for key, values in VALKYRIE_TEXT.items():
+        entries[f"entity.{NS}.valkyrie.{key}"] = values
     for index, code in ((0, "ru_ru"), (1, "en_us")):
         path = assets("lang", f"{code}.json")
         with open(path, encoding="utf-8") as f:

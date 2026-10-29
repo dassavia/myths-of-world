@@ -34,6 +34,18 @@ ENTRIES = [
       "Light every brazier with the Promethean Torch (flint, gold, Olympian marble and a torch). The water turns "
       "gold: stand in it for 3 seconds. A brazier put out or broken closes the portal."]),
 
+    ("orichalcum", "intro", None,
+     ["Орихалк и уголь Гефеста",
+      "Глубоко в камне Эллады лежит орихалк, красное золото Атлантиды. Добывайте железной киркой. "
+      "Снаряжение из орихалка прочнее железного и легко зачаровывается.",
+      "Выше в горах встречается уголь Гефеста из подземных кузниц бога. В печи он горит вдвое дольше "
+      "обычного угля."],
+     ["Orichalcum and Hephaestus Coal",
+      "Deep in the stone of Hellas lies orichalcum, the red gold of Atlantis. It needs an iron pickaxe; smelt "
+      "the raw metal into ingots. Orichalcum gear is stronger than iron and takes enchantments well.",
+      "Higher in the mountains you find Hephaestus coal from the god's forges under the earth. In a furnace it "
+      "burns twice as long as ordinary coal."]),
+
     # ---------------------------------------------------------------- creatures
     ("satyr", "creature", mob("satyr"),
      ["Сатир",

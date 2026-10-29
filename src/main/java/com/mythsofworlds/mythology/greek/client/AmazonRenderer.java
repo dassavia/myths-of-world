@@ -4,6 +4,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.mythology.greek.entity.Amazon;
 import com.mythsofworlds.mythology.greek.entity.Hippolyta;
+import java.util.HashMap;
+import java.util.Map;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -11,19 +13,12 @@ import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 /**
- * Amazons and Hippolyta: the classic wide player model (with its hair and dress overlay layers) and a texture per
- * look, textures/entity/amazon_&lt;variant&gt;.png, 0 to 15 (4 is the royal look of Hippolyta's daughters) and
- * hippolyta.png. Every amazon is a little taller or shorter than the next.
+ * Amazons, Hippolyta and the valkyries of Jotunheim: the classic wide player model (with its hair and dress overlay
+ * layers) and the texture {@link Amazon#textureName()} names: amazon_0 to amazon_15 (4 is the royal look of
+ * Hippolyta's daughters), hippolyta, valkyrie_0 to valkyrie_7. Every one is a little taller or shorter than the next.
  */
 public class AmazonRenderer extends HumanoidMobRenderer<Amazon, PlayerModel<Amazon>> {
-    private static final ResourceLocation[] TEXTURES = new ResourceLocation[Amazon.VARIANTS];
-    private static final ResourceLocation HIPPOLYTA = MythsOfWorlds.id("textures/entity/hippolyta.png");
-
-    static {
-        for (int variant = 0; variant < Amazon.VARIANTS; variant++) {
-            TEXTURES[variant] = MythsOfWorlds.id("textures/entity/amazon_" + variant + ".png");
-        }
-    }
+    private static final Map<String, ResourceLocation> TEXTURES = new HashMap<>();
 
     public AmazonRenderer(EntityRendererProvider.Context context) {
         super(context, new PlayerModel<>(context.bakeLayer(ModelLayers.PLAYER), false), 0.5F);
@@ -31,10 +26,7 @@ public class AmazonRenderer extends HumanoidMobRenderer<Amazon, PlayerModel<Amaz
 
     @Override
     public ResourceLocation getTextureLocation(Amazon entity) {
-        if (entity instanceof Hippolyta) {
-            return HIPPOLYTA;
-        }
-        return TEXTURES[Math.floorMod(entity.getVariant(), TEXTURES.length)];
+        return TEXTURES.computeIfAbsent(entity.textureName(), name -> MythsOfWorlds.id("textures/entity/" + name + ".png"));
     }
 
     @Override

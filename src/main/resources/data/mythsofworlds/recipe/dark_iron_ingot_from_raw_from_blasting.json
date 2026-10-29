@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "ingredient": {
+    "item": "mythsofworlds:raw_dark_iron"
+  },
+  "result": {
+    "id": "mythsofworlds:dark_iron_ingot"
+  },
+  "experience": 1.0,
+  "cookingtime": 100
+}
