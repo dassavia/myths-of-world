@@ -383,9 +383,10 @@ public class GreekTests {
     public static void hornCallsAmazonsHome(GameTestHelper helper) {
         Amazon amazon = helper.spawn(GreekEntities.AMAZON.get(), new BlockPos(1, 2, 1));
         helper.runAfterDelay(2, () -> {
-            BlockPos home = amazon.home();
-            helper.assertTrue(home != null, "an amazon should remember her camp");
-            amazon.teleportTo(home.getX() + 52.5, home.getY(), home.getZ() + 0.5);
+            helper.assertTrue(amazon.home() != null, "an amazon should remember her camp");
+            // Pretend her camp is far away: she has strayed 52 blocks from it.
+            BlockPos home = amazon.blockPosition().offset(52, 0, 0);
+            amazon.setHome(home, Amazon.HOME_RADIUS);
             Player player = helper.makeMockPlayer(GameType.SURVIVAL);
             player.moveTo(amazon.getX(), amazon.getY(), amazon.getZ());
             int called = HornOfThemiscyraItem.callAmazons(helper.getLevel(), player);
