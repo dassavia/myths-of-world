@@ -269,6 +269,7 @@ STRUCTURES = {
     "fenrir_island": (["ironwood"], 0, 0, 0, "WORLD_SURFACE_WG", 0, "beard_thin"),
     "muspel_fortress": (["muspel_rift"], 0, 0, 0, "WORLD_SURFACE_WG", 0, "beard_thin"),
     "helgrind": (["niflheim_mists"], 0, 0, 0, "WORLD_SURFACE_WG", 0, "beard_thin"),
+    "himinbjorg": (["fjords", "giants_taiga", "frost_wastes"], 0, 0, 0, "WORLD_SURFACE_WG", 0, "beard_thin"),
     "barrow": (["giants_taiga", "fjords", "frost_wastes", "idunn_orchard"], 0, 0, 0, "WORLD_SURFACE_WG", -1, "beard_thin"),
     # Villages, ships and shrines.
     "viking_village": (["fjords", "giants_taiga", "idunn_orchard"], 32, 12, 2450201, "WORLD_SURFACE_WG", 0, "beard_thin"),
@@ -280,7 +281,7 @@ STRUCTURES = {
     "valkyrie_hall": (["fjords", "giants_taiga", "idunn_orchard", "frost_wastes"], 36, 14, 2450206, "WORLD_SURFACE_WG", 0,
                       "beard_thin"),
 }
-LAIRS = {"structures": {"utgard": 3, "fenrir_island": 3, "muspel_fortress": 3, "helgrind": 3, "barrow": 4},
+LAIRS = {"structures": {"utgard": 3, "fenrir_island": 3, "muspel_fortress": 3, "helgrind": 3, "himinbjorg": 3, "barrow": 4},
          "spacing": 56, "separation": 36, "salt": 2450300}
 
 STRUCTURE_NAMES = {
@@ -295,6 +296,7 @@ STRUCTURE_NAMES = {
     "dwarf_forge": ("Кузня двергов", "Dwarven Forge"),
     "rune_circle": ("Рунный круг", "Rune Circle"),
     "valkyrie_hall": ("Чертог валькирий", "Hall of the Valkyries"),
+    "himinbjorg": ("Химинбьёрг", "Himinbjorg"),
 }
 
 
@@ -421,6 +423,11 @@ def loot():
         entry(f"{NS}:dark_iron_ingot", 4, 1, 3), entry("minecraft:golden_apple", 2), entry(f"{NS}:raven_feather", 5, 1, 3),
         entry("minecraft:saddle", 3), entry("minecraft:golden_horse_armor", 1), entry(f"{NS}:idunn_apple", 2),
     ])
+    chest("himinbjorg", (4, 7), gold + [
+        entry("minecraft:gold_ingot", 6, 2, 6), entry("minecraft:golden_apple", 4), entry(f"{NS}:mead", 6, 1, 3),
+        entry("minecraft:spyglass", 3), entry("minecraft:goat_horn", 2), entry("minecraft:diamond", 3, 1, 2),
+        entry("minecraft:golden_helmet", 3, enchant=True), entry(f"{NS}:idunn_apple", 3, 1, 2),
+    ])
     chest("rune_circle", (2, 4), [
         entry(f"{NS}:raven_feather", 8, 1, 4), entry("minecraft:lapis_lazuli", 8, 2, 6), entry("minecraft:amethyst_shard", 6, 1, 3),
         entry(f"{NS}:carved_runestone", 4, 1, 2), entry(f"{NS}:idunn_apple", 2), entry("minecraft:book", 3, enchant=True),
@@ -440,6 +447,7 @@ def loot():
     mob("garm", [(f"{NS}:garm_fang", 1, 1, None), ("minecraft:bone", 3, 8, None), ("minecraft:diamond", 1, 2, None)])
     mob("thrym", [(f"{NS}:mjolnir", 1, 1, None), (f"{NS}:frost_heart", 2, 4, None), ("minecraft:diamond", 2, 4, None),
                   ("minecraft:gold_ingot", 4, 10, None)])
+    mob("heimdall", [(f"{NS}:heimdall_eye", 1, 1, None), ("minecraft:gold_ingot", 4, 10, None), ("minecraft:diamond", 1, 3, None)])
     mob("fenrir", [(f"{NS}:fenrir_fang", 1, 2, None), ("minecraft:leather", 4, 8, None), ("minecraft:diamond", 2, 4, None)])
     mob("surtr", [(f"{NS}:surtr_sword", 1, 1, None), (f"{NS}:muspel_ember", 2, 4, None), ("minecraft:netherite_scrap", 1, 2, None),
                   ("minecraft:diamond", 2, 4, None)])
@@ -480,7 +488,7 @@ ITEMS = ["norse_journal", "norse_journal_complete", "idunn_apple", "mead", "rave
          "troll_tusk", "fenrir_fang", "garm_fang", "barrow_crown", "mjolnir", "gleipnir", "surtr_sword"]
 HANDHELD = {"mjolnir", "surtr_sword"}
 MOBS = ["draugr", "warg", "troll", "frost_giant", "fire_giant", "raven", "norse_merchant", "valkyrie", "draugr_chieftain", "garm",
-        "thrym", "fenrir", "surtr"]
+        "thrym", "fenrir", "surtr", "heimdall"]
 
 
 def models():
@@ -560,6 +568,7 @@ LANG = {
     "entity.mythsofworlds.thrym": ("Трюм, король ётунов", "Thrym, King of the Jotnar"),
     "entity.mythsofworlds.fenrir": ("Фенрир", "Fenrir"),
     "entity.mythsofworlds.surtr": ("Сурт", "Surtr"),
+    "entity.mythsofworlds.heimdall": ("Хеймдалль, страж богов", "Heimdall, Watchman of the Gods"),
 }
 # What valkyries say: the amazons' lines (gen_greek_assets.AMAZON_TEXT) in the words of the North.
 VALKYRIE_TEXT = dict(g.AMAZON_TEXT, **{
@@ -572,7 +581,9 @@ VALKYRIE_TEXT = dict(g.AMAZON_TEXT, **{
     "likes.3": ("пир: мёд и мясо", "a feast: mead and meat"),
     "wife": ("%1$s, ваша жена, улыбается. Поднесите ей мёд, и родится дочь. Shift+ПКМ: идти за вами, ждать или гулять.",
              "%1$s, your wife, smiles. Give her mead and a daughter is born. Shift + right-click: follow, stay or wander."),
-    "you_are_married": ("Вы уже женаты. Валькирия не станет второй женой.", "You are already married. A valkyrie will not be a second wife."),
+    "rivals": ("%1$s вызывает вашу жену %2$s на хольмганг! Они сражаются за вас.",
+               "%1$s challenges your wife %2$s to a holmgang! They are fighting for you."),
+    "rival_won": ("%1$s победила на хольмганге и стала вашей женой!", "%1$s won the holmgang and is your wife now!"),
     "taken": ("%1$s обручена с другим героем.", "%1$s is pledged to another hero."),
     "married": ("%1$s принимает кольцо! Валькирия теперь ваша жена.", "%1$s takes the ring! The valkyrie is your wife now."),
     "in_love": ("%1$s: «Ты достоин Вальхаллы. Где твоё кольцо?»", "%1$s: \"You are worthy of Valhalla. Where is your ring?\""),
@@ -583,6 +594,7 @@ MOB_NAMES_RU = {
     "draugr": "драугра", "warg": "варга", "troll": "тролля", "frost_giant": "инеистого великана",
     "fire_giant": "огненного великана", "raven": "ворона", "norse_merchant": "торговца викингов", "valkyrie": "валькирии",
     "draugr_chieftain": "курганного короля", "garm": "Гарма", "thrym": "Трюма", "fenrir": "Фенрира", "surtr": "Сурта",
+    "heimdall": "Хеймдалля",
 }
 
 

@@ -101,6 +101,14 @@ public class Amazon extends AgeableMob {
     @Nullable
     private BlockPos home;
     private boolean initialized;
+    // A duel with another amazon over a husband: not saved, the fight simply ends if the world unloads.
+    @Nullable
+    private Amazon rival;
+    @Nullable
+    private Player duelFor;
+    private int duelTicks;
+    private static final int DUEL_TICKS = 1200;
+    private static final double DUEL_RANGE = 48.0;
 
     public Amazon(EntityType<? extends AgeableMob> type, Level level) {
         super(type, level);
@@ -441,21 +449,95 @@ public class Amazon extends AgeableMob {
             say(player, "is_daughter");
         } else if (bond == Bond.WIFE) {
             say(player, isFamily(player) ? "already_yours" : "taken");
-        } else if (PlayerData.spouse(player).isPresent()) {
-            say(player, "you_are_married");
         } else if (!canMarry(player)) {
             say(player, "unworthy");
         } else if (affection(player) < LOVE) {
             say(player, "not_yet", affection(player), LOVE);
+        } else if (PlayerData.spouse(player).isPresent()) {
+            challenge(player);
         } else {
-            bond = Bond.WIFE;
-            family = player.getUUID();
-            setMode(Mode.FOLLOW);
-            PlayerData.setSpouse(player, Optional.of(getUUID()));
             ring.consume(1, player);
-            particles(ParticleTypes.HEART, 20);
-            playSound(SoundEvents.PLAYER_LEVELUP, 1.0F, 1.0F);
+            wed(player);
             say(player, "married");
+        }
+    }
+
+    private void wed(Player player) {
+        bond = Bond.WIFE;
+        family = player.getUUID();
+        setMode(Mode.FOLLOW);
+        PlayerData.setSpouse(player, Optional.of(getUUID()));
+        particles(ParticleTypes.HEART, 20);
+        playSound(SoundEvents.PLAYER_LEVELUP, 1.0F, 1.0F);
+    }
+
+    // ---- Rivals: a second proposal makes her fight the wife for the husband ----
+
+    @Nullable
+    public Amazon rival() {
+        return rival;
+    }
+
+    private void challenge(Player player) {
+        if (rival != null) {
+            return;
+        }
+        UUID wifeId = PlayerData.spouse(player).orElseThrow();
+        Amazon wife = null;
+        if (level() instanceof ServerLevel server && server.getEntity(wifeId) instanceof Amazon found && found.isAlive()
+                && found.distanceToSqr(this) < DUEL_RANGE * DUEL_RANGE) {
+            wife = found;
+        }
+        if (wife == null || wife.rival != null) {
+            say(player, "rival_far");
+            return;
+        }
+        rival = wife;
+        wife.rival = this;
+        duelFor = player;
+        wife.duelFor = player;
+        duelTicks = DUEL_TICKS;
+        wife.duelTicks = DUEL_TICKS;
+        setTarget(wife);
+        wife.setTarget(this);
+        particles(ParticleTypes.ANGRY_VILLAGER, 6);
+        wife.particles(ParticleTypes.ANGRY_VILLAGER, 6);
+        say(player, "rivals", wife.getDisplayName());
+    }
+
+    private void endDuel() {
+        rival = null;
+        duelFor = null;
+        duelTicks = 0;
+        setTarget(null);
+        setLastHurtByMob(null);
+    }
+
+    /** Beaten by her rival: she lowers her weapon, and the winner keeps (or takes) the husband. */
+    private void loseDuel() {
+        Amazon winner = rival;
+        Player husband = duelFor;
+        endDuel();
+        if (winner != null) {
+            winner.endDuel();
+        }
+        particles(ParticleTypes.SMOKE, 10);
+        if (husband == null || winner == null) {
+            return;
+        }
+        say(husband, "rival_yields", winner.getDisplayName());
+        if (bond == Bond.WIFE && isFamily(husband)) {
+            bond = Bond.NONE;
+            family = null;
+            mode = Mode.FOLLOW;
+            setHome(blockPosition(), HOME_RADIUS);
+            setAffection(husband, LOVE / 2);
+            PlayerData.setSpouse(husband, Optional.empty());
+            winner.wed(husband);
+            winner.say(husband, "rival_won");
+        } else {
+            setAffection(husband, LOVE / 2);
+            winner.say(husband, "rival_kept");
         }
     }
 
@@ -518,6 +600,17 @@ public class Amazon extends AgeableMob {
         if (childCooldown > 0) {
             childCooldown--;
         }
+        if (rival != null) {
+            if (!rival.isAlive() || rival.rival != this || --duelTicks <= 0 || distanceToSqr(rival) > DUEL_RANGE * DUEL_RANGE) {
+                if (rival.rival == this) {
+                    rival.endDuel();
+                }
+                endDuel();
+            } else if (getTarget() != rival) {
+                setTarget(rival);
+            }
+            return;
+        }
         // Defend the family: go for whatever hurts them or whatever they fight.
         if (family != null && tickCount % 10 == 0 && !isBaby()) {
             Player owner = level().getPlayerByUUID(family);
@@ -547,11 +640,19 @@ public class Amazon extends AgeableMob {
         if (target instanceof Player player && isFamily(player)) {
             return;
         }
+        // A duel is between the two of them: no one else joins in, and they fight nothing else meanwhile.
+        if (rival != null ? target != null && target != rival : target instanceof Amazon other && other.rival != null) {
+            return;
+        }
         super.setTarget(target);
     }
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
+        if (!level().isClientSide && rival != null && source.getEntity() == rival && getHealth() - amount < getMaxHealth() * 0.3F) {
+            loseDuel();
+            return false;
+        }
         boolean hurt = super.hurt(source, amount);
         if (hurt && !level().isClientSide && source.getEntity() instanceof Player player && !isFamily(player)) {
             setAffection(player, affection(player) - 40);

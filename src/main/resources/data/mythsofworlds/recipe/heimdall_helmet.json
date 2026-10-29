@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "GEG",
+    "GHG"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "E": {
+      "item": "mythsofworlds:heimdall_eye"
+    },
+    "H": {
+      "item": "mythsofworlds:dark_iron_helmet"
+    }
+  },
+  "result": {
+    "id": "mythsofworlds:heimdall_helmet",
+    "count": 1
+  }
+}

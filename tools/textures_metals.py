@@ -70,15 +70,56 @@ def icon(draw, rng):
     return item(draw, rng)
 
 
-def _handle(d, top, wood=0x7A5230, dark=0x4A3220):
-    """A wooden haft from the bottom left up to the head at top (x, y)."""
-    x1, y1 = top
-    d.line([(2, 13), (x1, y1)], fill=rgb(wood))
-    d.line([(3, 13), (x1 + 1, y1)], fill=rgb(dark))
+GOLD, GOLD_DARK, RED = 0xE2B33C, 0x9A6E1E, 0xC0262E
+OLIVE_WOOD, OLIVE_DARK = 0x8A6440, 0x5A3E26
+LEATHER, LEATHER_LIGHT = 0x4A2E1A, 0x7A5432
+RUNE = 0x7AD8FF
+
+
+def _blade(img, start, length, light, mid, dark, widen=()):
+    """A blade along the diagonal from start (bottom left) up to the top right; widen: steps where it is broader."""
+    x, y = start
+    for i in range(length):
+        cx, cy = x + i, y - i
+        img.putpixel((cx, cy), mid)
+        if i < length - 1:
+            img.putpixel((cx + 1, cy), light)
+            img.putpixel((cx, cy + 1), dark)
+        if i in widen:
+            img.putpixel((cx + 1, cy + 1), mid)
+            if cx + 2 < 16:
+                img.putpixel((cx + 2, cy + 1), light)
+            img.putpixel((cx + 1, cy + 2), dark)
+
+
+def _grip(img, base, length, colours):
+    """A grip down and left from base, its colours repeating (wood grain or a leather wrap)."""
+    x, y = base
+    for i in range(length):
+        img.putpixel((x - i, y + i), rgb(colours[i % len(colours)]))
+
+
+def _haft(img, top, length, style):
+    """A tool's haft running down and left from top: olive wood with gold rings, or ash wrapped in leather."""
+    x, y = top
+    for i in range(length):
+        px, py = x - i, y + i
+        if style == "greek":
+            c = GOLD if i in (2, length - 2) else (OLIVE_WOOD if i % 3 else OLIVE_DARK)
+        else:
+            c = LEATHER_LIGHT if i >= length - 4 and i % 2 else LEATHER if i >= length - 4 else 0x8A6A4A
+        img.putpixel((px, py), rgb(c))
+        if py + 1 < 16:
+            img.putpixel((px, py + 1), scale(rgb(c), 0.7))
 
 
 def metal_items(colours, style):
+    """Item icons. Greek: a leaf-bladed xiphos, a double labrys, olive wood with gold rings, a crested helmet, a muscle
+    cuirass with leather strips, greaves and sandals. Norse: a broad sword with a lobed pommel, a bearded axe, ash
+    wrapped in leather with glowing runes, a spectacled helmet, a mail shirt, fur-topped boots."""
     light, mid, dark = (rgb(c) for c in colours)
+    greek = style == "greek"
+    accent = rgb(GOLD if greek else RUNE)
 
     def raw(img, d, rng):
         d.polygon([(4, 5), (8, 3), (12, 5), (13, 9), (10, 13), (5, 12), (3, 9)], fill=mid)
@@ -90,78 +131,155 @@ def metal_items(colours, style):
         d.polygon([(2, 10), (6, 6), (14, 6), (10, 10)], fill=light)
         d.polygon([(2, 10), (10, 10), (10, 12), (2, 12)], fill=mid)
         d.polygon([(10, 10), (14, 6), (14, 8), (10, 12)], fill=dark)
+        if greek:
+            for x in (4, 6, 8):
+                img.putpixel((x, 11), dark)
+        else:
+            img.putpixel((5, 11), accent)
+            img.putpixel((6, 11), accent)
 
     def sword(img, d, rng):
-        d.polygon([(6, 9), (13, 2), (14, 2), (14, 3), (7, 10)], fill=mid)
-        d.line([(6, 9), (13, 2)], fill=light)
-        d.line([(3, 8), (7, 12)], fill=dark if style == "norse" else light)
-        d.line([(2, 13), (5, 10)], fill=rgb(0x5A3A20))
-        img.putpixel((1, 14), dark)
+        if greek:   # xiphos: a short leaf-shaped blade, a gold crossbar, a wooden grip, a round pommel
+            _blade(img, (5, 10), 9, light, mid, dark, widen=(4, 5, 6))
+            for dx, dy in ((-2, -2), (-1, -1), (1, 1), (2, 2)):
+                img.putpixel((4 + dx + 1, 11 + dy - 1), rgb(GOLD))
+            img.putpixel((4, 11), rgb(GOLD_DARK))
+            _grip(img, (3, 12), 2, (OLIVE_WOOD, OLIVE_DARK))
+            img.putpixel((1, 14), rgb(GOLD))
+            img.putpixel((0, 15), rgb(GOLD_DARK))
+            img.putpixel((1, 15), rgb(GOLD_DARK))
+        else:       # broad Viking sword: a long blade with a fuller, a straight guard, a leather grip, a lobed pommel
+            _blade(img, (5, 10), 10, light, mid, dark)
+            for i in range(1, 8):
+                img.putpixel((5 + i, 10 - i), scale(mid, 0.75))
+            for dx, dy in ((-2, -2), (-1, -1), (0, 0), (1, 1), (2, 2)):
+                img.putpixel((4 + dx + 1, 11 + dy - 1), dark if dx else mid)
+            _grip(img, (3, 12), 2, (LEATHER_LIGHT, LEATHER))
+            for x, y in ((1, 13), (2, 14), (0, 14), (1, 15)):
+                img.putpixel((x, y), mid)
+            img.putpixel((1, 14), light)
 
     def pickaxe(img, d, rng):
-        _handle(d, (10, 5))
-        d.line([(4, 3), (7, 1), (11, 1), (14, 4), (14, 8)], fill=mid, width=1)
-        d.line([(4, 2), (7, 0), (11, 0), (15, 4)], fill=light)
-        d.line([(9, 2), (12, 5)], fill=dark)
+        _haft(img, (10, 5), 9, style)
+        if greek:   # a bronze pick with gold-capped points
+            d.line([(5, 2), (8, 1), (11, 1), (14, 4), (14, 9)], fill=mid)
+            d.line([(5, 1), (8, 0), (11, 0), (15, 4)], fill=light)
+            img.putpixel((4, 2), rgb(GOLD))
+            img.putpixel((14, 10), rgb(GOLD))
+        else:       # a heavy iron pick with a rune on the head
+            d.line([(3, 4), (6, 1), (11, 1), (14, 4), (14, 10)], fill=mid, width=2)
+            d.line([(4, 2), (7, 0), (11, 0), (15, 4)], fill=light)
+            img.putpixel((10, 3), accent)
+            img.putpixel((11, 2), accent)
 
     def axe(img, d, rng):
-        _handle(d, (11, 4))
-        d.polygon([(8, 3), (11, 0), (14, 2), (15, 6), (12, 7)], fill=mid)
-        d.line([(11, 0), (15, 4)], fill=light)
-        d.line([(9, 4), (11, 6)], fill=dark)
+        _haft(img, (10, 5), 9, style)
+        if greek:   # labrys: the double axe of Crete, two crescent blades
+            d.polygon([(10, 4), (9, 0), (7, 0), (6, 2), (6, 4)], fill=mid)       # upper-left wing
+            d.polygon([(11, 5), (15, 6), (15, 8), (13, 9), (11, 9)], fill=mid)  # lower-right wing
+            d.line([(7, 0), (6, 2), (6, 4)], fill=light)
+            d.line([(15, 6), (15, 8), (13, 9)], fill=dark)
+            img.putpixel((10, 5), rgb(GOLD))
+            img.putpixel((11, 4), rgb(GOLD))
+        else:       # bearded axe: a long blade hanging below the head
+            d.polygon([(10, 2), (12, 1), (15, 1), (15, 6), (13, 9), (12, 6), (10, 5)], fill=mid)
+            d.line([(15, 1), (15, 6), (13, 9)], fill=light)
+            d.line([(10, 2), (12, 1)], fill=dark)
+            img.putpixel((12, 3), accent)
 
     def shovel(img, d, rng):
-        _handle(d, (10, 5))
-        d.polygon([(9, 4), (12, 1), (15, 2), (14, 6), (11, 7)], fill=mid)
-        d.line([(12, 1), (15, 2)], fill=light)
-        d.line([(11, 6), (14, 5)], fill=dark)
+        _haft(img, (10, 5), 9, style)
+        if greek:
+            d.polygon([(10, 3), (12, 1), (15, 1), (15, 4), (13, 6)], fill=mid)
+            d.line([(12, 1), (15, 1)], fill=light)
+            img.putpixel((10, 4), rgb(GOLD))
+        else:
+            d.polygon([(9, 4), (12, 0), (15, 1), (15, 4), (11, 7)], fill=mid)
+            d.line([(12, 0), (15, 1)], fill=light)
+            img.putpixel((13, 3), accent)
 
     def hoe(img, d, rng):
-        _handle(d, (11, 4))
-        d.polygon([(8, 2), (12, 2), (14, 4), (12, 4)], fill=mid)
-        d.line([(8, 2), (12, 2)], fill=light)
-        img.putpixel((13, 4), dark)
+        _haft(img, (11, 4), 10, style)
+        if greek:   # a sickle-shaped blade
+            d.line([(8, 1), (11, 0), (13, 1), (14, 3)], fill=mid)
+            d.line([(8, 2), (11, 1)], fill=light)
+            img.putpixel((11, 3), rgb(GOLD))
+        else:
+            d.polygon([(8, 2), (13, 2), (15, 4), (12, 4)], fill=mid)
+            d.line([(8, 2), (13, 2)], fill=light)
+            img.putpixel((12, 3), accent)
 
     def helmet(img, d, rng):
-        d.rectangle([3, 3, 12, 9], fill=mid)
-        d.rectangle([3, 3, 12, 4], fill=light)
-        if style == "greek":   # a crest and a T-shaped opening
-            d.rectangle([5, 0, 10, 2], fill=rgb(0xC0262E))
-            d.rectangle([5, 6, 6, 11], fill=(0, 0, 0, 0))
-            d.rectangle([9, 6, 10, 11], fill=(0, 0, 0, 0))
-            d.rectangle([3, 10, 4, 12], fill=mid)
-            d.rectangle([11, 10, 12, 12], fill=mid)
-        else:                  # a rounded cap with a nose guard
-            d.rectangle([4, 2, 11, 2], fill=light)
-            d.rectangle([3, 8, 12, 10], fill=mid)
-            d.rectangle([5, 7, 6, 8], fill=(0, 0, 0, 0))
-            d.rectangle([9, 7, 10, 8], fill=(0, 0, 0, 0))
-            d.rectangle([7, 7, 8, 11], fill=dark)
+        if greek:   # Corinthian helmet with a tall red horsehair crest
+            d.rectangle([3, 4, 12, 12], fill=mid)
+            d.rectangle([3, 4, 12, 5], fill=light)
+            d.rectangle([4, 0, 11, 3], fill=rgb(RED))
+            d.line([(4, 0), (11, 0)], fill=rgb(0xE85A5A))
+            d.rectangle([5, 7, 10, 8], fill=(0, 0, 0, 0))
+            d.rectangle([7, 9, 8, 12], fill=(0, 0, 0, 0))
+            d.line([(3, 12), (12, 12)], fill=dark)
+        else:       # spectacled helmet: a round cap, eye rings and a mail curtain
+            d.ellipse([3, 1, 12, 10], fill=mid)
+            d.line([(5, 2), (10, 2)], fill=light)
+            d.line([(7, 1), (7, 7)], fill=light)
+            d.rectangle([3, 7, 12, 8], fill=dark)
+            d.rectangle([4, 8, 6, 9], fill=(0, 0, 0, 0))
+            d.rectangle([9, 8, 11, 9], fill=(0, 0, 0, 0))
+            for x in range(3, 13):
+                for y in range(10, 13):
+                    if (x + y) % 2 == 0:
+                        img.putpixel((x, y), scale(mid, 0.8))
 
     def chestplate(img, d, rng):
-        d.polygon([(2, 3), (6, 2), (9, 2), (13, 3), (13, 7), (11, 7), (11, 14), (4, 14), (4, 7), (2, 7)], fill=mid)
-        d.line([(6, 2), (7, 4), (8, 4), (9, 2)], fill=dark)
-        d.line([(5, 5), (5, 12)], fill=light)
-        if style == "greek":
-            d.line([(6, 8), (9, 8)], fill=dark)
-            d.line([(6, 11), (9, 11)], fill=dark)
-        else:
-            for y in range(6, 14, 2):
-                d.line([(5, y), (10, y)], fill=dark)
+        if greek:   # muscle cuirass with leather strips (pteruges) below
+            d.polygon([(2, 2), (6, 2), (7, 4), (8, 4), (9, 2), (13, 2), (13, 6), (11, 6), (11, 11), (4, 11), (4, 6), (2, 6)], fill=mid)
+            for px, py in ((5, 5), (6, 6), (9, 5), (10, 6), (7, 8), (8, 8), (7, 10), (8, 10)):
+                img.putpixel((px, py), light)
+            for x in range(4, 12):
+                c = rgb(0x8A5A30) if x % 2 else rgb(0x6A4024)
+                for y in range(12, 15):
+                    img.putpixel((x, y), c)
+                img.putpixel((x, 11), rgb(GOLD))
+        else:       # mail shirt with a leather belt
+            d.polygon([(2, 3), (6, 2), (9, 2), (13, 3), (13, 8), (11, 8), (11, 14), (4, 14), (4, 8), (2, 8)], fill=mid)
+            for y in range(4, 14, 2):
+                for x in range(3, 13):
+                    if img.getpixel((x, y))[3] and (x + y // 2) % 2:
+                        img.putpixel((x, y), dark)
+            d.line([(4, 10), (11, 10)], fill=rgb(LEATHER))
+            img.putpixel((7, 10), rgb(0xC0C0C8))
+            d.line([(6, 2), (9, 2)], fill=rgb(0x9A8070))
 
     def leggings(img, d, rng):
-        d.polygon([(4, 2), (11, 2), (12, 14), (9, 14), (8, 6), (7, 6), (6, 14), (3, 14)], fill=mid)
-        d.line([(4, 2), (11, 2)], fill=light)
-        d.line([(4, 3), (11, 3)], fill=dark)
-        d.line([(4, 5), (3, 13)], fill=light)
+        if greek:   # bronze greaves with a knee boss
+            for x0 in (3, 9):
+                d.rectangle([x0, 2, x0 + 3, 14], fill=mid)
+                d.line([(x0, 2), (x0, 14)], fill=light)
+                img.putpixel((x0 + 1, 6), light)
+                img.putpixel((x0 + 2, 6), light)
+                d.line([(x0, 14), (x0 + 3, 14)], fill=dark)
+        else:       # padded trousers with iron bands
+            d.polygon([(4, 2), (11, 2), (12, 14), (9, 14), (8, 6), (7, 6), (6, 14), (3, 14)], fill=mid)
+            d.line([(4, 2), (11, 2)], fill=rgb(LEATHER))
+            for y in (6, 9, 12):
+                d.line([(3, y), (6, y)], fill=dark)
+                d.line([(9, y), (12, y)], fill=dark)
 
     def boots(img, d, rng):
-        d.polygon([(3, 5), (6, 5), (6, 12), (2, 12), (2, 10), (3, 10)], fill=mid)
-        d.polygon([(9, 5), (12, 5), (12, 10), (13, 10), (13, 12), (9, 12)], fill=mid)
-        d.line([(3, 5), (6, 5)], fill=light)
-        d.line([(9, 5), (12, 5)], fill=light)
-        d.line([(2, 12), (6, 12)], fill=dark)
-        d.line([(9, 12), (13, 12)], fill=dark)
+        if greek:   # sandals laced up the shin
+            for x0 in (2, 9):
+                d.rectangle([x0 + 1, 4, x0 + 3, 11], fill=mid)
+                for y in range(5, 11, 2):
+                    d.line([(x0 + 1, y), (x0 + 3, y)], fill=rgb(0x8A5A30))
+                d.line([(x0, 12), (x0 + 4, 12)], fill=dark)
+                img.putpixel((x0 + 2, 4), light)
+        else:       # boots with a fur top
+            d.polygon([(3, 5), (6, 5), (6, 12), (2, 12), (2, 10), (3, 10)], fill=mid)
+            d.polygon([(9, 5), (12, 5), (12, 10), (13, 10), (13, 12), (9, 12)], fill=mid)
+            d.rectangle([2, 3, 6, 5], fill=rgb(0xD8C8B0))
+            d.rectangle([9, 3, 13, 5], fill=rgb(0xD8C8B0))
+            d.line([(2, 12), (6, 12)], fill=dark)
+            d.line([(9, 12), (13, 12)], fill=dark)
 
     return {"raw": raw, "ingot": ingot, "sword": sword, "pickaxe": pickaxe, "axe": axe, "shovel": shovel, "hoe": hoe,
             "helmet": helmet, "chestplate": chestplate, "leggings": leggings, "boots": boots}
@@ -221,20 +339,31 @@ def armour_layers(rng, colours, style):
         if name in ("top", "bottom"):
             continue
         x, y, w, h = rect
-        _plate(one, (x, y, w, 10), light, mid, dark, rng)
-        if style == "greek" and name == "front":   # a muscled cuirass
-            for px, py in ((2, 3), (5, 3), (3, 6), (4, 6)):
-                one.putpixel((x + px, y + py), light)
-        elif name in ("front", "back"):             # mail rings
-            for j in range(2, 10, 2):
+        if style == "greek":   # a muscled cuirass over a skirt of leather strips (pteruges) with gold tips
+            _plate(one, (x, y, w, 9), light, mid, dark, rng)
+            if name == "front":
+                for px, py in ((2, 3), (5, 3), (3, 6), (4, 6)):
+                    one.putpixel((x + px, y + py), light)
+            for i in range(w):
+                c = rgb(0x8A5A30) if i % 2 == 0 else rgb(0x6A4024)
+                fill_rect(one, x + i, y + 9, 1, 2, c, rng, 4)
+                one.putpixel((x + i, y + 11), rgb(GOLD) if i % 2 == 0 else (0, 0, 0, 0))
+        else:                  # a long mail shirt with a leather belt
+            _plate(one, (x, y, w, 12), light, mid, dark, rng)
+            for j in range(1, 12, 2):
                 for i in range(j % 4 // 2, w, 2):
                     one.putpixel((x + i, y + j), dark)
+            fill_rect(one, x, y + 7, w, 1, rgb(LEATHER), rng, 4)
     arm = box_faces(40, 16, 4, 12, 4)
     for name, rect in arm.items():
         if name == "bottom":
             continue
         x, y, w, h = rect
         _plate(one, (x, y, w, min(h, 5)), light, mid, dark, rng)
+        if style == "norse" and name != "top":       # a fur collar over the shoulders
+            fill_rect(one, x, y, w, 1, rgb(0xD8C8B0), rng, 8)
+        elif style == "norse":
+            fill_rect(one, x, y, w, h, rgb(0xD8C8B0), rng, 8)
     leg = box_faces(0, 16, 4, 12, 4)
     for name, rect in leg.items():
         x, y, w, h = rect
@@ -243,7 +372,14 @@ def armour_layers(rng, colours, style):
         if name == "bottom":
             fill_rect(one, x, y, w, h, dark, rng, 4)
             continue
-        _plate(one, (x, y + h - 4, w, 4), light, mid, dark, rng)
+        if style == "greek":   # sandals: straps laced up the shin
+            for j in range(4):
+                if j % 2 == 0:
+                    fill_rect(one, x, y + h - 4 + j, w, 1, rgb(0x8A5A30), rng, 4)
+            fill_rect(one, x, y + h - 1, w, 1, mid, rng, 4)
+        else:                  # boots with a fur top
+            _plate(one, (x, y + h - 4, w, 4), light, mid, dark, rng)
+            fill_rect(one, x, y + h - 4, w, 1, rgb(0xD8C8B0), rng, 8)
     two = Image.new("RGBA", (64, 32), (0, 0, 0, 0))
     for name, rect in body.items():
         if name in ("top", "bottom"):

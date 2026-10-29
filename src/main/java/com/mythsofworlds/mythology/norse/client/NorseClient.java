@@ -48,6 +48,8 @@ public final class NorseClient {
                 ctx -> new GreekHumanoidRenderer<>(ctx, new HumanoidModel<>(ctx.bakeLayer(humanoid)), "thrym", 2.6F, false));
         event.registerEntityRenderer(NorseEntities.SURTR.get(),
                 ctx -> new GreekHumanoidRenderer<>(ctx, new HumanoidModel<>(ctx.bakeLayer(humanoid)), "surtr", 2.6F, false));
+        event.registerEntityRenderer(NorseEntities.HEIMDALL.get(),
+                ctx -> new GreekHumanoidRenderer<>(ctx, new HumanoidModel<>(ctx.bakeLayer(humanoid)), "heimdall", 1.3F, false));
         event.registerEntityRenderer(NorseEntities.WARG.get(),
                 ctx -> new GreekMobRenderer<Warg, BeastModel<Warg>>(ctx, new BeastModel<>(ctx.bakeLayer(WOLF), 1), "warg", 1.0F));
         event.registerEntityRenderer(NorseEntities.FENRIR.get(),

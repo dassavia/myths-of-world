@@ -660,6 +660,78 @@ def valkyrie_hall():
     return t
 
 
+# ---------------------------------------------------------------- Himinbjorg, Heimdall's hall at the end of the Bifrost
+
+RAINBOW = ["red", "orange", "yellow", "lime", "light_blue", "purple"]
+
+
+def himinbjorg():
+    """Himinbjorg, where Heimdall keeps watch: a stone hall with a watchtower on a high terrace, and the rainbow bridge
+    Bifrost running down from his gate. Heimdall stands at the head of the bridge; his treasure is by his seat."""
+    sx, sy, sz = 21, 22, 34
+    t = Template(sx, sy, sz)
+    rng = random.Random(1010)
+    t.fill(0, 0, 0, sx - 1, sy - 1, sz - 1, AIR)
+    # The terrace.
+    for x in range(sx):
+        for z in range(20):
+            for y in range(5):
+                t.set(x, y, z, pick(rng, [("minecraft:deepslate_bricks", 70), ("minecraft:cracked_deepslate_bricks", 15),
+                                          ("minecraft:deepslate_tiles", 15)]))
+            t.set(x, 5, z, "minecraft:smooth_stone")
+            if (x in (0, sx - 1) or z in (0, 19)) and not (7 <= x <= 12 and z == 19):
+                t.set(x, 6, z, "minecraft:deepslate_brick_wall")
+    for x, z in ((0, 0), (sx - 1, 0), (0, 19), (sx - 1, 19)):
+        t.set(x, 6, z, "minecraft:gold_block")
+        t.set(x, 7, z, STANDING_LANTERN)
+    # The hall: stone walls, golden corner pillars, a flat roof with crenels.
+    x0, x1, z0, z1, top = 4, 16, 2, 14, 11
+    for x in range(x0, x1 + 1):
+        for z in range(z0, z1 + 1):
+            edge = x in (x0, x1) or z in (z0, z1)
+            for y in range(6, top + 1):
+                if edge:
+                    corner = x in (x0, x1) and z in (z0, z1)
+                    t.set(x, y, z, "minecraft:gold_block" if corner else pick(rng, [("minecraft:stone_bricks", 80),
+                                                                                   ("minecraft:mossy_stone_bricks", 20)]))
+            t.set(x, top + 1, z, "minecraft:deepslate_tiles")
+            if edge and (x + z) % 2 == 0:
+                t.set(x, top + 2, z, "minecraft:deepslate_tile_wall")
+    for z in range(z0 + 2, z1 - 1, 3):                      # windows
+        for x in (x0, x1):
+            t.set(x, 8, z, "minecraft:yellow_stained_glass_pane")
+            t.set(x, 9, z, "minecraft:yellow_stained_glass_pane")
+    t.fill(9, 6, z1, 11, 8, z1, AIR)                        # the gate
+    # The watchtower rises over the back of the roof, a beacon of gold on top.
+    for x in range(8, 13):
+        for z in range(z0, z0 + 5):
+            for y in range(top + 2, top + 9):
+                if x in (8, 12) or z in (z0, z0 + 4):
+                    t.set(x, y, z, "minecraft:stone_bricks" if y % 3 else "minecraft:gold_block")
+    t.fill(9, top + 9, z0 + 1, 11, top + 9, z0 + 3, "minecraft:deepslate_tiles")
+    t.set(10, top + 10, z0 + 2, "minecraft:glowstone")
+    # Inside: the watchman's seat, his treasure, the great horn's bell, lanterns.
+    t.set(10, 6, 4, "minecraft:quartz_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]")
+    t.set(9, 6, 4, "minecraft:gold_block")
+    t.set(11, 6, 4, "minecraft:gold_block")
+    t.chest(7, 6, 3, "himinbjorg", facing="south")
+    t.chest(13, 6, 3, "himinbjorg", facing="south")
+    t.set(10, 6, 9, "minecraft:bell[attachment=floor,facing=south,powered=false]")
+    for x, z in ((6, 6), (14, 6), (6, 12), (14, 12)):
+        t.set(x, 6, z, STANDING_LANTERN)
+    for z in range(6, 14):
+        t.set(10, 5, z, "minecraft:polished_deepslate")
+    # Bifrost: six bands of colour running down from the gate to the ground.
+    for z in range(19, sz):
+        y = max(0, 5 - (z - 19) * 5 // (sz - 20))
+        for i, colour in enumerate(RAINBOW):
+            t.set(7 + i, y, z, f"minecraft:{colour}_concrete")
+            if y > 0:
+                t.set(7 + i, y - 1, z, f"minecraft:{colour}_stained_glass")
+    t.entity(10.5, 6.0, 17.5, f"{NS}:heimdall")
+    return t
+
+
 # ---------------------------------------------------------------- rune circle
 
 def rune_circle():
@@ -696,4 +768,5 @@ STRUCTURES = {
     "dwarf_forge": dwarf_forge,
     "rune_circle": rune_circle,
     "valkyrie_hall": valkyrie_hall,
+    "himinbjorg": himinbjorg,
 }

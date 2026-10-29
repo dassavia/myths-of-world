@@ -112,7 +112,7 @@ python3 tools/gen_greek_assets.py --textures  # плюс перерисоват�
 Скрипт берёт помощники из греческого, поэтому запускайте оба по порядку:
 
 ```bash
-python3 tools/gen_greek_assets.py && python3 tools/gen_norse_assets.py && python3 tools/gen_metals.py   # --textures, чтобы перерисовать PNG
+python3 tools/gen_greek_assets.py && python3 tools/gen_norse_assets.py && python3 tools/gen_metals.py && python3 tools/gen_relics.py   # --textures, чтобы перерисовать PNG
 ```
 
 Металлы (руда, слитки, инструменты, броня) объявляются одной строкой `new MetalSet(...)` (`registry/MetalSet.java`),

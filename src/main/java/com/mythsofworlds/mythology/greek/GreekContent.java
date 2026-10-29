@@ -6,6 +6,7 @@ import com.mythsofworlds.mythology.greek.item.MedusaHeadItem;
 import com.mythsofworlds.journal.JournalItem;
 import com.mythsofworlds.mythology.greek.block.CloudBlock;
 import com.mythsofworlds.mythology.greek.block.FruitLeavesBlock;
+import com.mythsofworlds.mythology.greek.item.BidentOfHadesItem;
 import com.mythsofworlds.mythology.greek.item.GirdleItem;
 import com.mythsofworlds.mythology.greek.item.GrowthPotionItem;
 import com.mythsofworlds.mythology.greek.item.HornOfThemiscyraItem;
@@ -13,6 +14,9 @@ import com.mythsofworlds.mythology.greek.item.WingsItem;
 import com.mythsofworlds.mythology.greek.portal.BrazierBlock;
 import com.mythsofworlds.mythology.greek.portal.PoolPortalBlock;
 import com.mythsofworlds.mythology.greek.portal.PrometheanTorchItem;
+import com.mythsofworlds.mythology.Mythology;
+import com.mythsofworlds.mythology.relic.RelicArmorItem;
+import com.mythsofworlds.mythology.relic.Relics;
 import com.mythsofworlds.registry.MetalSet;
 import java.util.EnumMap;
 import java.util.List;
@@ -296,6 +300,23 @@ public final class GreekContent {
     /** Medusa's head still petrifies: right-click to freeze the creatures in front of you. */
     public static final DeferredItem<MedusaHeadItem> MEDUSA_HEAD = ITEMS.register("medusa_head",
             () -> new MedusaHeadItem(new Item.Properties().durability(32).rarity(Rarity.EPIC)));
+
+    /** Bident of Hades, lost in the Nether: calls Cerberus back to the underworld in one blow, then it is gone. */
+    public static final DeferredItem<BidentOfHadesItem> BIDENT_OF_HADES = ITEMS.register("bident_of_hades",
+            () -> new BidentOfHadesItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    /** Winged sandals of Hermes: speed, high jumps and no fall damage. */
+    public static final DeferredHolder<ArmorMaterial, ArmorMaterial> TALARIA_MATERIAL = RelicArmorItem.material("talaria",
+            ArmorItem.Type.BOOTS, 3, 25, SoundEvents.ARMOR_EQUIP_GOLD, () -> Ingredient.of(HARPY_FEATHER.get()), 1.0F, 0.0F);
+    public static final DeferredItem<RelicArmorItem> TALARIA = ITEMS.register("talaria",
+            () -> new RelicArmorItem(TALARIA_MATERIAL, ArmorItem.Type.BOOTS, Mythology.GREEK, Relics::talaria,
+                    new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(30)).rarity(Rarity.EPIC)));
+    /** Breastplate forged for the Titans who held up the sky: strength, resistance and a firm stance. */
+    public static final DeferredHolder<ArmorMaterial, ArmorMaterial> TITAN_MATERIAL = RelicArmorItem.material("titan_breastplate",
+            ArmorItem.Type.CHESTPLATE, 9, 15, SoundEvents.ARMOR_EQUIP_NETHERITE, () -> Ingredient.of(ORICHALCUM.ingot.get()),
+            3.0F, 0.3F);
+    public static final DeferredItem<RelicArmorItem> TITAN_BREASTPLATE = ITEMS.register("titan_breastplate",
+            () -> new RelicArmorItem(TITAN_MATERIAL, ArmorItem.Type.CHESTPLATE, Mythology.GREEK, Relics::titan,
+                    new Item.Properties().durability(ArmorItem.Type.CHESTPLATE.getDurability(40)).rarity(Rarity.EPIC).fireResistant()));
 
     private GreekContent() {
     }

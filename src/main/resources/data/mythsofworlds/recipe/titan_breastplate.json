@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "OEO",
+    "OCO",
+    "OHO"
+  ],
+  "key": {
+    "O": {
+      "item": "mythsofworlds:orichalcum_ingot"
+    },
+    "E": {
+      "item": "mythsofworlds:cyclops_eye"
+    },
+    "C": {
+      "item": "mythsofworlds:orichalcum_chestplate"
+    },
+    "H": {
+      "item": "mythsofworlds:hydra_scale"
+    }
+  },
+  "result": {
+    "id": "mythsofworlds:titan_breastplate",
+    "count": 1
+  }
+}

@@ -5,10 +5,13 @@ import com.mythsofworlds.core.portal.MythPortalBlock;
 import com.mythsofworlds.core.portal.PortalIgniterItem;
 import com.mythsofworlds.core.portal.PortalSettings;
 import com.mythsofworlds.journal.JournalItem;
+import com.mythsofworlds.mythology.Mythology;
 import com.mythsofworlds.mythology.greek.block.FruitLeavesBlock;
 import com.mythsofworlds.mythology.norse.item.GleipnirItem;
 import com.mythsofworlds.mythology.norse.item.MjolnirItem;
 import com.mythsofworlds.mythology.norse.item.SurtrSwordItem;
+import com.mythsofworlds.mythology.relic.RelicArmorItem;
+import com.mythsofworlds.mythology.relic.Relics;
 import com.mythsofworlds.registry.MetalSet;
 import java.util.List;
 import net.minecraft.core.particles.ParticleTypes;
@@ -19,6 +22,8 @@ import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.HoneyBottleItem;
 import net.minecraft.world.item.Item;
@@ -26,6 +31,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DropExperienceBlock;
@@ -37,6 +43,7 @@ import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 
 import static com.mythsofworlds.registry.ModRegistries.BLOCKS;
@@ -56,7 +63,7 @@ public final class NorseContent {
             "muspel_rift", "niflheim_mists", "idunn_orchard");
     /** Structures of Jotunheim (data/mythsofworlds/worldgen/structure, templates in data/mythsofworlds/structure/norse). */
     public static final List<String> STRUCTURES = List.of("viking_village", "longship", "naglfar", "barrow", "utgard",
-            "fenrir_island", "muspel_fortress", "helgrind", "dwarf_forge", "rune_circle", "valkyrie_hall");
+            "fenrir_island", "muspel_fortress", "helgrind", "dwarf_forge", "rune_circle", "valkyrie_hall", "himinbjorg");
 
     // ---- Blocks ----
 
@@ -123,6 +130,11 @@ public final class NorseContent {
     /** Leaves of the apple trees of Idunn; the golden apples that keep the gods young ripen on them. */
     public static final DeferredBlock<FruitLeavesBlock> IDUNN_LEAVES = BLOCKS.register("idunn_leaves",
             () -> new FruitLeavesBlock(NorseContent.IDUNN_APPLE, leaves(MapColor.PLANT).lightLevel(state -> 3)));
+
+    /** Earth charred by Thor's lightning: where Mjolnir strikes, grass and soil burn black (and sand melts to glass). */
+    public static final DeferredBlock<Block> SCORCHED_EARTH = BLOCKS.registerSimpleBlock("scorched_earth",
+            BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).strength(0.6F).sound(SoundType.GRAVEL));
+    public static final DeferredItem<BlockItem> SCORCHED_EARTH_ITEM = ITEMS.registerSimpleBlockItem(SCORCHED_EARTH);
 
     // ---- Metals and fuel ----
 
@@ -206,6 +218,16 @@ public final class NorseContent {
     public static final DeferredItem<SurtrSwordItem> SURTR_SWORD = ITEMS.register("surtr_sword",
             () -> new SurtrSwordItem(new Item.Properties().rarity(Rarity.EPIC).fireResistant()
                     .attributes(SwordItem.createAttributes(Tiers.NETHERITE, 4, -2.4F))));
+
+    /** Eye of Heimdall, watchman of the gods, who sees a hundred leagues by night and day. Dropped by Heimdall. */
+    public static final DeferredItem<Item> HEIMDALL_EYE = ITEMS.registerSimpleItem("heimdall_eye",
+            new Item.Properties().stacksTo(1).rarity(Rarity.EPIC));
+    /** Golden helmet set with the eye of Heimdall: night vision, and every monster nearby glows through the walls. */
+    public static final DeferredHolder<ArmorMaterial, ArmorMaterial> HEIMDALL_MATERIAL = RelicArmorItem.material("heimdall_helmet",
+            ArmorItem.Type.HELMET, 4, 20, SoundEvents.ARMOR_EQUIP_GOLD, () -> Ingredient.of(Items.GOLD_INGOT), 2.5F, 0.1F);
+    public static final DeferredItem<RelicArmorItem> HEIMDALL_HELMET = ITEMS.register("heimdall_helmet",
+            () -> new RelicArmorItem(HEIMDALL_MATERIAL, ArmorItem.Type.HELMET, Mythology.NORSE, Relics::heimdall,
+                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(38)).rarity(Rarity.EPIC)));
 
     private NorseContent() {
     }

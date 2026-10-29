@@ -55,6 +55,10 @@ ENTRIES = [
       "In the rift of Muspelheim, embers smoulder in the stone. In a furnace they burn three times as long as "
       "coal, and valkyries prize them as trophies."]),
 
+    ("god_sets", "intro", None,
+     ['Сеты богов', 'Броня из разных мифологий складывается в сет. Эллада: орихалк, пояс Ипполиты, таларии, нагрудник титана. Йотунхейм: тёмное железо, шлем Хеймдалля.', 'Союз пантеонов (обе мифологии): 2 вещи дают спешку, 3 - ещё огнестойкость, 4 - ещё регенерацию. Две и две - ещё и стойкость.', 'Только Эллада, 4 вещи: скорость и прыжок. Только Йотунхейм, 4 вещи: сила и стойкость.'],
+     ['Sets of the Gods', "Armour of different mythologies adds up to a set. Hellas: orichalcum, the girdle of Hippolyta, the talaria, the Titan's breastplate. Jotunheim: dark iron, the helmet of Heimdall.", 'Union of the pantheons (both mythologies): 2 pieces give Haste, 3 also Fire Resistance, 4 also Regeneration. Two and two also give Resistance.', 'Hellas only, 4 pieces: Speed and Jump Boost. Jotunheim only, 4 pieces: Strength and Resistance.']),
+
     # ---------------------------------------------------------------- creatures
     ("draugr", "creature", mob("draugr"),
      ["Драугр",
@@ -184,14 +188,18 @@ ENTRIES = [
       "Разгневанный, зовёт двух инеистых великанов. Огонь вдвое сильнее против него, не стойте прямо перед "
       "ним. Роняет Мьёльнир.",
       "Тор был погибелью великанов: Мьёльнир бьёт любого великана и тролля вдвое сильнее, а Трима, "
-      "укравшего молот, - втрое. Отобранный молот пригодится в Муспельхейме."],
+      "укравшего молот, - втрое. Отобранный молот пригодится в Муспельхейме.",
+      "Молния Мьёльнира плавит песок в стекло, а траву и землю вокруг обугливает: остаётся чёрная "
+      "обугленная земля."],
      ["Thrym, King of Giants",
       "The lord of Utgard, who stole Thor's hammer. He breathes frost ahead of him and stamps so hard that "
       "everything around flies off.",
       "Enraged, he calls two frost giants. Fire hurts him twice as much; do not stand right in front of him. "
       "Drops Mjolnir.",
       "Thor was the bane of giants: Mjolnir strikes every giant and troll twice as hard, and Thrym, who stole "
-      "it, three times as hard. Take it back and carry it to Muspelheim."]),
+      "it, three times as hard. Take it back and carry it to Muspelheim.",
+      "Mjolnir's lightning melts sand into glass and chars the grass and soil around it into black "
+      "scorched earth."]),
     ("fenrir", "boss", mob("fenrir"),
      ["Фенрир",
       "Чудовищный волк, сын Локи, на острове Люнгви. Его укус иссушает, а свободный Фенрир быстро залечивает "
@@ -207,6 +215,21 @@ ENTRIES = [
       "again as much damage. Then the fetter snaps.",
       "While the wolf is free, the weapons of men barely wound him: every blow does only a quarter of its "
       "damage. Without Gleipnir he cannot be beaten - buy the fetter from the dwarf."]),
+    ("heimdall", "boss", mob("heimdall"),
+     ["Хеймдалль",
+      "Страж богов у моста Биврёст в Химинбьёрге, 320 здоровья. Видит за сто миль и слышит, как растёт трава: "
+      "стрелы ранят его втрое слабее.",
+      "Трубит в Гьяллархорн: всех рядом отбрасывает, замедляет и оглушает. На половине здоровья трубит вдвое чаще. "
+      "Бейтесь вблизи, отходите, когда он поднимает рог.",
+      "Роняет око Хеймдалля. Око, золото и тёмножелезный шлем дают шлем Хеймдалля: ночное зрение, и все "
+      "чудовища вокруг светятся сквозь стены."],
+     ["Heimdall",
+      "Watchman of the gods at the Bifrost bridge in Himinbjorg, 320 health. He sees a hundred leagues and hears "
+      "the grass grow: arrows hurt him only a third as much.",
+      "He blows the Gjallarhorn: everyone near is thrown back, slowed and stunned. At half health he blows it twice "
+      "as often. Fight up close and step back when he raises the horn.",
+      "Drops the eye of Heimdall. The eye, gold and a dark iron helmet make the helmet of Heimdall: night vision, "
+      "and every monster around glows through the walls."]),
     ("surtr", "boss", mob("surtr"),
      ["Сурт",
       "Огненный великан с пылающим мечом, владыка Муспельхейма. Мечет огненные шары, разжигает вокруг "
@@ -282,6 +305,13 @@ ENTRIES = [
       "Мастерская в скале, где дверги куют оружие. Здесь продают Глейпнир и алмазное снаряжение."],
      ["Dwarven Forge",
       "A workshop in the rock where dwarves forge weapons. Gleipnir and diamond gear are sold here."]),
+    ("himinbjorg", "place", place("himinbjorg"),
+     ["Химинбьёрг",
+      "Чертог Хеймдалля на высокой террасе, со сторожевой башней. От ворот вниз сбегает радужный мост Биврёст, "
+      "у его начала стоит сам страж богов."],
+     ["Himinbjorg",
+      "Heimdall's hall on a high terrace, with a watchtower. The rainbow bridge Bifrost runs down from the gate, "
+      "and the watchman of the gods stands at its head."]),
     ("valkyrie_hall", "place", place("valkyrie_hall"),
      ["Чертог валькирий",
       "Длинный зал, увешанный щитами, с конюшней белых коней и площадкой для учебного боя. Здесь живут "

@@ -16,6 +16,11 @@
       "pages": 2
     },
     {
+      "id": "norse.god_sets",
+      "category": "intro",
+      "pages": 3
+    },
+    {
       "id": "norse.draugr",
       "category": "creature",
       "pages": 2,
@@ -78,7 +83,7 @@
     {
       "id": "norse.thrym",
       "category": "boss",
-      "pages": 3,
+      "pages": 4,
       "entity": "mythsofworlds:thrym"
     },
     {
@@ -86,6 +91,12 @@
       "category": "boss",
       "pages": 3,
       "entity": "mythsofworlds:fenrir"
+    },
+    {
+      "id": "norse.heimdall",
+      "category": "boss",
+      "pages": 3,
+      "entity": "mythsofworlds:heimdall"
     },
     {
       "id": "norse.surtr",
@@ -146,6 +157,12 @@
       "category": "place",
       "pages": 1,
       "structure": "mythsofworlds:dwarf_forge"
+    },
+    {
+      "id": "norse.himinbjorg",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:himinbjorg"
     },
     {
       "id": "norse.valkyrie_hall",

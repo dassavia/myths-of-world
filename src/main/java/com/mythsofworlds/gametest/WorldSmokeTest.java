@@ -11,6 +11,7 @@ import com.mythsofworlds.mythology.norse.NorseContent;
 import com.mythsofworlds.mythology.norse.entity.DraugrChieftain;
 import com.mythsofworlds.mythology.norse.entity.Fenrir;
 import com.mythsofworlds.mythology.norse.entity.Garm;
+import com.mythsofworlds.mythology.norse.entity.Heimdall;
 import com.mythsofworlds.mythology.norse.entity.NorseMerchant;
 import com.mythsofworlds.mythology.norse.entity.Surtr;
 import com.mythsofworlds.mythology.norse.entity.Thrym;
@@ -123,6 +124,7 @@ public final class WorldSmokeTest {
             Map.entry("dwarf_forge", NorseMerchant.class),
             Map.entry("barrow", DraugrChieftain.class),
             Map.entry("utgard", Thrym.class),
+            Map.entry("himinbjorg", Heimdall.class),
             Map.entry("fenrir_island", Fenrir.class),
             Map.entry("muspel_fortress", Surtr.class),
             Map.entry("helgrind", Garm.class),

@@ -9,6 +9,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -23,10 +25,13 @@ import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Thor's hammer: a heavy weapon, and right-click calls lightning down on the creature or block you point at
@@ -78,6 +83,42 @@ public class MjolnirItem extends SwordItem {
             bolt.setCause(cause);
             level.addFreshEntity(bolt);
         }
+        scorch(level, pos);
+    }
+
+    /** Where the hammer's lightning lands, sand melts into glass and grass and soil are charred black. */
+    public static void scorch(ServerLevel level, BlockPos centre) {
+        RandomSource random = level.getRandom();
+        for (BlockPos pos : BlockPos.betweenClosed(centre.offset(-2, -2, -2), centre.offset(2, 1, 2))) {
+            int dx = pos.getX() - centre.getX();
+            int dz = pos.getZ() - centre.getZ();
+            int distance = dx * dx + dz * dz;
+            if (distance > 5 || distance > 2 && random.nextInt(3) == 0) {
+                continue;
+            }
+            BlockState above = level.getBlockState(pos.above());
+            if (!above.isAir() && !above.canBeReplaced()) {
+                continue;
+            }
+            BlockState charred = charred(level.getBlockState(pos));
+            if (charred != null) {
+                level.setBlockAndUpdate(pos, charred);
+            }
+        }
+    }
+
+    @Nullable
+    private static BlockState charred(BlockState state) {
+        if (state.is(Blocks.SAND) || state.is(Blocks.SUSPICIOUS_SAND)) {
+            return Blocks.GLASS.defaultBlockState();
+        }
+        if (state.is(Blocks.RED_SAND)) {
+            return Blocks.ORANGE_STAINED_GLASS.defaultBlockState();
+        }
+        if (state.is(BlockTags.DIRT) || state.is(Blocks.DIRT_PATH) || state.is(Blocks.FARMLAND)) {
+            return state.is(NorseContent.SCORCHED_EARTH.get()) ? null : NorseContent.SCORCHED_EARTH.get().defaultBlockState();
+        }
+        return null;
     }
 
     @Override

@@ -776,7 +776,7 @@ def loot():
     chest("greek_temple", (3, 6), gold + [
         entry(f"{NS}:ambrosia", 6, 1, 2), entry("minecraft:golden_apple", 5), entry("minecraft:enchanted_golden_apple", 1),
         entry(f"{NS}:olympian_marble", 6, 2, 6), entry("minecraft:book", 4, enchant=True), entry("minecraft:golden_sword", 3, enchant=True),
-        entry(f"{NS}:promethean_torch", 2), entry(f"{NS}:necklace_of_harmonia", 1),
+        entry(f"{NS}:promethean_torch", 2), entry(f"{NS}:necklace_of_harmonia", 1), entry(f"{NS}:talaria", 1),
     ])
     chest("oracle_of_delphi", (2, 5), [
         entry("minecraft:glass_bottle", 6, 1, 3), entry("minecraft:glowstone_dust", 6, 1, 4), entry("minecraft:amethyst_shard", 6, 1, 4),
@@ -786,7 +786,7 @@ def loot():
     chest("labyrinth", (4, 8), gold + [
         entry("minecraft:iron_ingot", 8, 2, 6), entry("minecraft:diamond", 3, 1, 2), entry("minecraft:string", 6, 4, 12),
         entry("minecraft:iron_sword", 3, enchant=True), entry("minecraft:golden_apple", 3), entry(f"{NS}:ambrosia", 2),
-        entry(f"{NS}:necklace_of_harmonia", 1),
+        entry(f"{NS}:necklace_of_harmonia", 1), entry(f"{NS}:titan_breastplate", 1),
     ])
     chest("gates_of_hades", (4, 7), [
         entry("minecraft:soul_lantern", 4, 1, 3), entry("minecraft:obsidian", 6, 2, 6), entry("minecraft:diamond", 4, 1, 3),
@@ -804,6 +804,7 @@ def loot():
     chest("cyclops_cave", (3, 6), [
         entry("minecraft:white_wool", 8, 2, 6), entry("minecraft:mutton", 8, 2, 5), entry("minecraft:iron_ingot", 6, 2, 5),
         entry("minecraft:anvil", 1), entry("minecraft:iron_axe", 3, enchant=True), entry("minecraft:gold_ingot", 4, 1, 4),
+        entry(f"{NS}:titan_breastplate", 1),
     ])
     chest("nemean_lion_den", (2, 5), [
         entry("minecraft:bone", 10, 2, 6), entry("minecraft:leather", 8, 1, 4), entry("minecraft:gold_ingot", 5, 1, 4),
@@ -832,7 +833,7 @@ def loot():
     chest("cloud_shrine", (3, 6), gold + [
         entry(f"{NS}:ambrosia", 6, 1, 3), entry("minecraft:golden_apple", 4), entry("minecraft:enchanted_golden_apple", 1),
         entry("minecraft:feather", 6, 2, 6), entry(f"{NS}:harpy_feather", 4, 1, 3), entry("minecraft:book", 4, enchant=True),
-        entry(f"{NS}:cloud", 5, 4, 12),
+        entry(f"{NS}:cloud", 5, 4, 12), entry(f"{NS}:talaria", 2),
     ])
     chest("agora_house", (3, 6), [
         entry("minecraft:bread", 10, 1, 4), entry("minecraft:wheat", 8, 2, 6), entry("minecraft:honey_bottle", 4),
@@ -1304,7 +1305,13 @@ AMAZON_TEXT = {
     "is_daughter": ("%1$s - ваша дочь!", "%1$s is your daughter!"),
     "already_yours": ("%1$s уже ваша жена.", "%1$s is already your wife."),
     "taken": ("%1$s замужем за другим героем.", "%1$s is married to another hero."),
-    "you_are_married": ("Вы уже женаты. Амазонки не делят мужей.", "You are already married. Amazons do not share husbands."),
+    "rivals": ("%1$s вызывает вашу жену %2$s на поединок! Амазонки сражаются за вас.",
+               "%1$s challenges your wife %2$s to a duel! The amazons are fighting for you."),
+    "rival_far": ("%1$s: «Приведи сюда свою жену. Пусть оружие решит, кто из нас достойнее тебя».",
+                  "%1$s: \"Bring your wife here. Let weapons decide which of us deserves you.\""),
+    "rival_yields": ("%1$s опускает оружие: «Ты сильнее, %2$s. Он твой».", "%1$s lowers her weapon: \"You are stronger, %2$s. He is yours.\""),
+    "rival_won": ("%1$s победила в поединке и стала вашей женой!", "%1$s won the duel and is your wife now!"),
+    "rival_kept": ("%1$s отстояла своего мужа.", "%1$s has kept her husband."),
     "unworthy": ("%1$s не примет кольцо от вас.", "%1$s will not take a ring from you."),
     "not_yet": ("%1$s смеётся: «Сначала завоюй моё сердце». Симпатия: %2$s/%3$s",
                 "%1$s laughs: \"Win my heart first.\" Affection: %2$s/%3$s"),
@@ -1330,7 +1337,9 @@ HIPPOLYTA_TEXT = dict(AMAZON_TEXT, **{
     "in_love": ("%1$s: «Ты достоин стать мужем царицы. Где твоё кольцо?»", "%1$s: \"You are worthy to wed a queen. Where is your ring?\""),
     "wife": ("%1$s, царица амазонок и ваша жена. Амброзия, и, может быть, родится царевна. Shift+ПКМ: идти, ждать или гулять.",
              "%1$s, queen of the Amazons and your wife. Ambrosia, and perhaps a princess is born. Shift + right-click: follow, stay or wander."),
-    "you_are_married": ("Царица не делит мужа ни с кем!", "A queen shares her husband with no one!"),
+    "rivals": ("%1$s, царица амазонок, вызывает %2$s на поединок за вас!", "%1$s, queen of the Amazons, challenges %2$s to a duel for you!"),
+    "rival_won": ("Царица победила! %1$s - ваша жена.", "The queen has won! %1$s is your wife."),
+    "rival_kept": ("%1$s: «Царица не отдаёт своего мужа никому».", "%1$s: \"A queen gives her husband up to no one.\""),
     "married": ("%1$s надевает кольцо. Царица амазонок - ваша жена!", "%1$s puts on the ring. The queen of the Amazons is your wife!"),
     "tired": ("%1$s: «Царице нужен отдых. Приходи через три дня».", "%1$s: \"A queen needs her rest. Come back in three days.\""),
     "not_tonight": ("%1$s: «Не сегодня, мой царь».", "%1$s: \"Not tonight, my king.\""),

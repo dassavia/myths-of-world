@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "mythsofworlds:cloud"
+    "mythsofworlds:cloud",
+    "mythsofworlds:scorched_earth"
   ]
 }
