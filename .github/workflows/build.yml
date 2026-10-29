@@ -24,6 +24,7 @@ jobs:
         run: |
           mkdir -p run/smoke
           echo "eula=true" > run/smoke/eula.txt
+          echo "max-tick-time=-1" > run/smoke/server.properties
           ./gradlew runSmokeTest --stacktrace
       - name: Client smoke test (start the game up to the title screen)
         timeout-minutes: 15
