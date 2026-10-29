@@ -2,9 +2,12 @@ package com.mythsofworlds.gametest;
 
 import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.core.PlayerData;
+import com.mythsofworlds.core.back.BackSlot;
+import com.mythsofworlds.core.family.FamilyWhistleItem;
 import com.mythsofworlds.journal.Journal;
 import com.mythsofworlds.mythology.greek.GreekContent;
 import com.mythsofworlds.mythology.greek.entity.Amazon;
+import com.mythsofworlds.mythology.greek.item.HornOfThemiscyraItem;
 import com.mythsofworlds.mythology.norse.NorseContent;
 import com.mythsofworlds.mythology.norse.NorseEntities;
 import com.mythsofworlds.mythology.norse.entity.Draugr;
@@ -46,6 +49,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Arrow;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -365,6 +369,88 @@ public class NorseTests {
                 && player.hasEffect(MobEffects.DAMAGE_RESISTANCE), "two and two give the full union of the pantheons");
         int[] counts = ArmourSets.count(player);
         helper.assertTrue(counts[0] == 2 && counts[1] == 2, "counted " + counts[0] + " Greek and " + counts[1] + " Norse");
+        helper.succeed();
+    }
+
+    /** The whole hide of the Nemean lion gives strength, and projectiles glance off it. */
+    @GameTest(template = "empty")
+    public static void nemeanHideStopsArrows(GameTestHelper helper) {
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        player.setItemSlot(EquipmentSlot.HEAD, new ItemStack(GreekContent.NEMEAN_HELMET.get()));
+        player.setItemSlot(EquipmentSlot.CHEST, new ItemStack(GreekContent.NEMEAN_CHESTPLATE.get()));
+        player.setItemSlot(EquipmentSlot.LEGS, new ItemStack(GreekContent.NEMEAN_LEGGINGS.get()));
+        player.setItemSlot(EquipmentSlot.FEET, new ItemStack(GreekContent.NEMEAN_BOOTS.get()));
+        helper.assertTrue(ArmourSets.wearsNemean(player), "four Nemean pieces are the whole hide");
+        ArmourSets.apply(player);
+        helper.assertTrue(player.hasEffect(MobEffects.DAMAGE_BOOST), "the hide of the lion gives strength");
+        float health = player.getHealth();
+        player.hurt(helper.getLevel().damageSources().thrown(null, null), 6.0F);
+        helper.assertTrue(player.getHealth() == health, "a projectile should not wound the wearer of the hide");
+        player.setItemSlot(EquipmentSlot.FEET, ItemStack.EMPTY);
+        helper.assertTrue(!ArmourSets.wearsNemean(player), "three pieces are not the whole hide");
+        helper.succeed();
+    }
+
+    /** An elytra on the back flies over a chestplate, and the back slot is in the inventory menu. */
+    @GameTest(template = "empty")
+    public static void elytraOnTheBack(GameTestHelper helper) {
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        ItemStack chestplate = new ItemStack(Items.DIAMOND_CHESTPLATE);
+        player.setItemSlot(EquipmentSlot.CHEST, chestplate);
+        helper.assertTrue(player.inventoryMenu.slots.size() == 47
+                && player.inventoryMenu.slots.get(46) instanceof BackSlot.BackSlotUI, "the inventory should have a back slot");
+        Slot back = player.inventoryMenu.slots.get(46);
+        helper.assertTrue(!back.mayPlace(new ItemStack(Items.DIAMOND)) && back.mayPlace(new ItemStack(Items.ELYTRA))
+                && back.mayPlace(new ItemStack(GreekContent.WINGS_OF_DAEDALUS.get())), "only wings go on the back");
+        helper.assertTrue(BackSlot.flyingStack(player, chestplate) == chestplate, "nothing on the back: the chest decides");
+        back.set(new ItemStack(Items.ELYTRA));
+        helper.assertTrue(BackSlot.get(player).is(Items.ELYTRA), "the slot keeps the elytra");
+        helper.assertTrue(BackSlot.flyingStack(player, chestplate).is(Items.ELYTRA), "the elytra on the back should fly");
+        helper.succeed();
+    }
+
+    /** Brisingamen wins a valkyrie's heart, and the horn of Vingolf calls valkyries but not amazons. */
+    @GameTest(template = "empty", timeoutTicks = 40)
+    public static void brisingamenAndTheHornOfVingolf(GameTestHelper helper) {
+        Valkyrie valkyrie = helper.spawn(NorseEntities.VALKYRIE.get(), new BlockPos(1, 2, 1));
+        Amazon amazon = helper.spawn(com.mythsofworlds.mythology.greek.GreekEntities.AMAZON.get(), new BlockPos(3, 2, 1));
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(GreekContent.NECKLACE_OF_HARMONIA.get()));
+        valkyrie.mobInteract(player, InteractionHand.MAIN_HAND);
+        helper.assertTrue(valkyrie.affection(player) < Amazon.LOVE, "the necklace of Harmonia is not for valkyries");
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(NorseContent.BRISINGAMEN.get()));
+        valkyrie.mobInteract(player, InteractionHand.MAIN_HAND);
+        helper.assertTrue(valkyrie.affection(player) >= Amazon.LOVE, "Brisingamen should win her heart");
+        helper.runAfterDelay(2, () -> {
+            BlockPos home = valkyrie.blockPosition().offset(52, 0, 0);
+            valkyrie.setHome(home, Amazon.HOME_RADIUS);
+            BlockPos amazonHome = amazon.blockPosition().offset(52, 0, 0);
+            amazon.setHome(amazonHome, Amazon.HOME_RADIUS);
+            player.moveTo(valkyrie.getX(), valkyrie.getY(), valkyrie.getZ());
+            int called = HornOfThemiscyraItem.call(helper.getLevel(), player, NorseContent.HORN_OF_VINGOLF.get());
+            helper.assertTrue(called == 1, "the horn of Vingolf should call only the valkyrie, called " + called);
+            valkyrie.discard();
+            amazon.discard();
+            helper.succeed();
+        });
+    }
+
+    /** The family whistle brings your wife to you at once. */
+    @GameTest(template = "empty")
+    public static void familyWhistleBringsTheWife(GameTestHelper helper) {
+        Valkyrie valkyrie = helper.spawn(NorseEntities.VALKYRIE.get(), new BlockPos(1, 2, 1));
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        valkyrie.setAffection(player, Amazon.LOVE);
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(GreekContent.WEDDING_RING.get()));
+        valkyrie.mobInteract(player, InteractionHand.MAIN_HAND);
+        helper.assertTrue(valkyrie.bond() == Amazon.Bond.WIFE, "she should be your wife");
+        valkyrie.teleportTo(valkyrie.getX() + 24, valkyrie.getY(), valkyrie.getZ());
+        BlockPos here = helper.absolutePos(new BlockPos(3, 2, 1));
+        player.moveTo(here.getX() + 0.5, here.getY(), here.getZ() + 0.5);
+        int came = FamilyWhistleItem.call(player);
+        helper.assertTrue(came == 1 && valkyrie.distanceToSqr(player) < 4.0, "the wife should come at once, came " + came);
+        com.mythsofworlds.core.family.FamilyRegistry.get(helper.getLevel().getServer()).remove(valkyrie.getUUID());
+        valkyrie.discard();
         helper.succeed();
     }
 }

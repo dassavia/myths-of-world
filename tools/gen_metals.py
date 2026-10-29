@@ -16,10 +16,10 @@ from gen_greek_assets import NS, assets, data, write_json  # noqa: E402
 # name: (ru, en, colours light/mid/dark, ore count per chunk, vein size, lowest and highest y)
 METALS = {
     "orichalcum": {"ru": "Орихалк", "ru_gen": "орихалка", "en": "Orichalcum",
-                   "light": 0xF6B06A, "mid": 0xD9783A, "dark": 0x8A3E1E, "count": 6, "size": 6, "y": (-40, 56),
+                   "light": 0xF6B06A, "mid": 0xD9783A, "dark": 0x8A3E1E, "count": 8, "size": 7, "y": (-48, 64),
                    "style": "greek"},
     "dark_iron": {"ru": "Тёмное железо", "ru_gen": "тёмного железа", "en": "Dark Iron",
-                  "light": 0x9AA2B4, "mid": 0x5A6074, "dark": 0x2A2C38, "count": 7, "size": 5, "y": (-50, 48),
+                  "light": 0x9AA2B4, "mid": 0x5A6074, "dark": 0x2A2C38, "count": 9, "size": 6, "y": (-56, 56),
                   "style": "norse"},
 }
 # Fuels: the item, its ore, burn time in ticks (coal burns 1600), ore count, vein size, heights.

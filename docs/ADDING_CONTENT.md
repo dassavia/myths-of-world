@@ -128,6 +128,13 @@ python3 tools/gen_greek_assets.py && python3 tools/gen_norse_assets.py && python
 страница помещается в книгу. Открытые записи хранятся у игрока (`core/PlayerData`) и переживают смерть.
 Новый том для другой мифологии: свой JSON, два `JournalItem` (обычный и полный) и строка в `JournalEvents.VOLUMES`.
 
+## Слот за спиной, сеть и миксины
+
+- Слот за спиной (`core/back/BackSlot.java`) хранится во вложении игрока `back`. Его добавляет в инвентарь миксин `mixin/InventoryMenuMixin`, а элитры на спине летают через `mixin/LivingEntityMixin`, `PlayerMixin` и клиентский `LocalPlayerMixin` (список в `src/main/resources/mythsofworlds.mixins.json`). Какие предметы можно надеть, решает `BackSlot.canWear`.
+- Свои пакеты регистрирует `core/ModNetwork.java`: `BackPayload` (что у игрока на спине, для отрисовки) и `DoubleJumpPayload` (двойной прыжок талариев).
+- Жёны и дочери записываются в `core/family/FamilyRegistry` (данные мира), по нему их находит семейный свисток.
+- Страницы журнала о рудах и снаряжении собирает `tools/journal_gear.py`; цифры в нём держите такими же, как в Java.
+
 ## Новый моб
 
 1. Класс в `mythology/greek/entity/` (обычный монстр — по образцу `Satyr`, босс — наследник `GreekBoss`, как `Minotaur`).

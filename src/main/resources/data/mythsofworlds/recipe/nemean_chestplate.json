@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "L L",
+    "LPL",
+    "LGL"
+  ],
+  "key": {
+    "P": {
+      "item": "mythsofworlds:nemean_pelt"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "result": {
+    "id": "mythsofworlds:nemean_chestplate",
+    "count": 1
+  }
+}

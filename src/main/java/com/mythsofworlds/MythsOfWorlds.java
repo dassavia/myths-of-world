@@ -1,6 +1,7 @@
 package com.mythsofworlds;
 
 import com.mythsofworlds.core.PlayerData;
+import com.mythsofworlds.core.back.BackSlot;
 import com.mythsofworlds.mythology.egyptian.EgyptianContent;
 import com.mythsofworlds.mythology.greek.GreekContent;
 import com.mythsofworlds.mythology.greek.GreekEntities;
@@ -23,6 +24,7 @@ public final class MythsOfWorlds {
     public MythsOfWorlds(IEventBus modBus) {
         // One line per mythology (see mythology/Mythology.java for the list).
         PlayerData.init();
+        BackSlot.init();
         GreekContent.init();
         GreekSounds.init();
         GreekFeatures.init();

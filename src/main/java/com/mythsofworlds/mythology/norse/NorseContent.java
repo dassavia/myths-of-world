@@ -7,6 +7,7 @@ import com.mythsofworlds.core.portal.PortalSettings;
 import com.mythsofworlds.journal.JournalItem;
 import com.mythsofworlds.mythology.Mythology;
 import com.mythsofworlds.mythology.greek.block.FruitLeavesBlock;
+import com.mythsofworlds.mythology.greek.item.HornOfThemiscyraItem;
 import com.mythsofworlds.mythology.norse.item.GleipnirItem;
 import com.mythsofworlds.mythology.norse.item.MjolnirItem;
 import com.mythsofworlds.mythology.norse.item.SurtrSwordItem;
@@ -228,6 +229,14 @@ public final class NorseContent {
     public static final DeferredItem<RelicArmorItem> HEIMDALL_HELMET = ITEMS.register("heimdall_helmet",
             () -> new RelicArmorItem(HEIMDALL_MATERIAL, ArmorItem.Type.HELMET, Mythology.NORSE, Relics::heimdall,
                     new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(38)).rarity(Rarity.EPIC)));
+
+    /** Brisingamen, the necklace four dwarves forged for Freyja: any valkyrie who receives it falls in love at once. */
+    public static final DeferredItem<Item> BRISINGAMEN = ITEMS.registerSimpleItem("brisingamen",
+            new Item.Properties().stacksTo(1).rarity(Rarity.EPIC));
+    /** Blown near a hall of the valkyries, it calls the valkyries who strayed back home. */
+    public static final DeferredItem<HornOfThemiscyraItem> HORN_OF_VINGOLF = ITEMS.register("horn_of_vingolf",
+            () -> new HornOfThemiscyraItem(HornOfThemiscyraItem.VALKYRIE_HOMES,
+                    new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
 
     private NorseContent() {
     }

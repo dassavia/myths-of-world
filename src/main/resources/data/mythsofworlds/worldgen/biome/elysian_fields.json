@@ -39,12 +39,6 @@
     ],
     "creature": [
       {
-        "type": "mythsofworlds:pegasus",
-        "weight": 6,
-        "minCount": 1,
-        "maxCount": 3
-      },
-      {
         "type": "mythsofworlds:golden_hind",
         "weight": 2,
         "minCount": 1,

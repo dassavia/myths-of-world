@@ -616,7 +616,7 @@ def dwarf_forge():
 # ---------------------------------------------------------------- hall of the valkyries
 
 def valkyrie_hall():
-    """Vingolf, a hall of the valkyries: a long hall hung with shields, a stable of white horses, a training ground
+    """Vingolf, a hall of the valkyries: a long hall hung with shields, a stable of winged horses, a training ground
     with straw targets, and the shield-maidens themselves."""
     sx, sz = 31, 25
     t = Template(sx, 12, sz)
@@ -633,7 +633,7 @@ def valkyrie_hall():
     t.set(5, 1, 8, "minecraft:gold_block")
     for x, z in ((9.5, 5.5), (14.5, 9.5), (19.5, 5.5), (12.5, 7.5)):
         t.entity(x, 1.0, z, f"{NS}:valkyrie")
-    # The stable: a roof on posts, hay and two white horses.
+    # The stable: a roof on posts, hay and two pegasi, the winged steeds of the valkyries.
     for x in range(5, 15):
         for z in range(16, 22):
             t.set(x, 0, z, pick(rng, [("minecraft:coarse_dirt", 60), ("minecraft:podzol", 40)]))
@@ -647,7 +647,7 @@ def valkyrie_hall():
     t.set(7, 1, 20, "minecraft:hay_block[axis=x]")
     t.set(13, 1, 17, "minecraft:water_cauldron[level=3]")
     for x, z in ((8.5, 18.5), (11.5, 19.5)):
-        t.entity(x, 1.0, z, "minecraft:horse", {"Variant": 0, "Tame": nbt.Byte(1)})
+        t.entity(x, 1.0, z, f"{NS}:pegasus", {"Tame": nbt.Byte(1)})
     # Training ground with straw targets and a weapon rack.
     for x, z in ((19, 17), (22, 19), (25, 17)):
         t.set(x, 1, z, "minecraft:hay_block[axis=y]")

@@ -27,13 +27,17 @@ public final class Relics {
         }
     }
 
+    /** How far the helmet of Heimdall sees, in blocks. */
+    public static final double HEIMDALL_RANGE = 100.0;
+
     /** Helmet set with the eye of Heimdall, who sees a hundred leagues by night and day: night vision, and every
-     *  creature within 32 blocks glows through the walls. */
+     *  creature within {@value #HEIMDALL_RANGE} blocks glows through the walls. */
+
     public static void heimdall(Player player) {
         if (player.tickCount % 20 == 0) {
             RelicArmorItem.keep(player, MobEffects.NIGHT_VISION, 0);
-            for (Mob mob : player.level().getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(32.0),
-                    Mob::isAlive)) {
+            for (Mob mob : player.level().getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(HEIMDALL_RANGE),
+                    mob -> mob.isAlive() && mob.distanceToSqr(player) < HEIMDALL_RANGE * HEIMDALL_RANGE)) {
                 mob.addEffect(new MobEffectInstance(MobEffects.GLOWING, 40, 0, true, false));
             }
         }

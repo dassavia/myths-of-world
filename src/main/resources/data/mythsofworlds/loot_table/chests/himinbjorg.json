@@ -137,6 +137,11 @@
               }
             }
           ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "mythsofworlds:brisingamen",
+          "weight": 2
         }
       ]
     }

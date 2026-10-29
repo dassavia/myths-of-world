@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 
 /** Draws the wings of Daedalus on the back of whoever wears them, with the elytra model and a feather texture. */
 public class WingsLayer<T extends LivingEntity, M extends EntityModel<T>> extends ElytraLayer<T, M> {
-    private static final ResourceLocation TEXTURE = MythsOfWorlds.id("textures/entity/wings_of_daedalus.png");
+    public static final ResourceLocation TEXTURE = MythsOfWorlds.id("textures/entity/wings_of_daedalus.png");
 
     public WingsLayer(RenderLayerParent<T, M> renderer, EntityModelSet models) {
         super(renderer, models);

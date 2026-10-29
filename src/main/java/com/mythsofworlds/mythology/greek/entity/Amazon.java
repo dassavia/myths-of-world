@@ -1,6 +1,7 @@
 package com.mythsofworlds.mythology.greek.entity;
 
 import com.mythsofworlds.core.PlayerData;
+import com.mythsofworlds.core.family.FamilyRegistry;
 import com.mythsofworlds.mythology.greek.GreekContent;
 import com.mythsofworlds.mythology.greek.GreekEntities;
 import java.util.EnumSet;
@@ -45,6 +46,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -120,10 +122,12 @@ public class Amazon extends AgeableMob {
 
     public static AttributeSupplier.Builder createAttributes() {
         return AgeableMob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 30.0)
-                .add(Attributes.ATTACK_DAMAGE, 5.0)
+                .add(Attributes.MAX_HEALTH, 40.0)
+                .add(Attributes.ATTACK_DAMAGE, 8.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.32)
-                .add(Attributes.ARMOR, 4.0)
+                .add(Attributes.ARMOR, 10.0)
+                .add(Attributes.ARMOR_TOUGHNESS, 4.0)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 0.3)
                 .add(Attributes.FOLLOW_RANGE, 24.0);
     }
 
@@ -185,6 +189,12 @@ public class Amazon extends AgeableMob {
 
     public Bond bond() {
         return bond;
+    }
+
+    /** Called by the family whistle when she arrives by her family: she follows again. */
+    public void answerWhistle() {
+        getNavigation().stop();
+        setMode(Mode.FOLLOW);
     }
 
     public boolean isFamily(Player player) {
@@ -365,6 +375,16 @@ public class Amazon extends AgeableMob {
         return true;
     }
 
+    /** The horn she answers: the horn of Themiscyra for amazons. */
+    public Item horn() {
+        return GreekContent.HORN_OF_THEMISCYRA.get();
+    }
+
+    /** The jewel that wins her heart at once: the necklace of Harmonia for amazons. */
+    protected boolean isLoveCharm(ItemStack stack) {
+        return stack.is(GreekContent.NECKLACE_OF_HARMONIA.get());
+    }
+
     /** Whether the necklace of Harmonia wins her heart (Hippolyta listens only to her victor). */
     protected boolean acceptsNecklace(Player player) {
         return true;
@@ -391,7 +411,7 @@ public class Amazon extends AgeableMob {
             say(player, mode.name().toLowerCase(java.util.Locale.ROOT));
             return InteractionResult.SUCCESS;
         }
-        if (stack.is(GreekContent.NECKLACE_OF_HARMONIA.get())) {
+        if (isLoveCharm(stack)) {
             if (!acceptsNecklace(player)) {
                 say(player, "unworthy");
             } else if (affection(player) >= LOVE) {
@@ -468,6 +488,9 @@ public class Amazon extends AgeableMob {
     private void wed(Player player) {
         bond = Bond.WIFE;
         family = player.getUUID();
+        if (level().getServer() != null) {
+            FamilyRegistry.get(level().getServer()).update(this, family);
+        }
         setMode(Mode.FOLLOW);
         PlayerData.setSpouse(player, Optional.of(getUUID()));
         particles(ParticleTypes.HEART, 20);
@@ -532,6 +555,9 @@ public class Amazon extends AgeableMob {
         if (bond == Bond.WIFE && isFamily(husband)) {
             bond = Bond.NONE;
             family = null;
+            if (level().getServer() != null) {
+                FamilyRegistry.get(level().getServer()).remove(getUUID());
+            }
             mode = Mode.FOLLOW;
             setHome(blockPosition(), HOME_RADIUS);
             setAffection(husband, LOVE / 2);
@@ -614,6 +640,9 @@ public class Amazon extends AgeableMob {
             }
             return;
         }
+        if (family != null && tickCount % 100 == 0 && level().getServer() != null) {
+            FamilyRegistry.get(level().getServer()).update(this, family);
+        }
         // Defend the family: go for whatever hurts them or whatever they fight.
         if (family != null && tickCount % 10 == 0 && !isBaby()) {
             Player owner = level().getPlayerByUUID(family);
@@ -665,6 +694,9 @@ public class Amazon extends AgeableMob {
 
     @Override
     public void die(DamageSource source) {
+        if (!level().isClientSide && level().getServer() != null) {
+            FamilyRegistry.get(level().getServer()).remove(getUUID());
+        }
         if (!level().isClientSide && bond == Bond.WIFE && family != null && level().getServer() != null) {
             Player husband = level().getServer().getPlayerList().getPlayer(family);
             if (husband != null) {

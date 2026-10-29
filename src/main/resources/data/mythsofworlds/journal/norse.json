@@ -21,6 +21,26 @@
       "pages": 3
     },
     {
+      "id": "norse.ores",
+      "category": "intro",
+      "pages": 2
+    },
+    {
+      "id": "norse.dark_iron_tools",
+      "category": "intro",
+      "pages": 2
+    },
+    {
+      "id": "norse.dark_iron_armour",
+      "category": "intro",
+      "pages": 2
+    },
+    {
+      "id": "norse.gods_gear",
+      "category": "intro",
+      "pages": 4
+    },
+    {
       "id": "norse.draugr",
       "category": "creature",
       "pages": 2,
@@ -65,8 +85,14 @@
     {
       "id": "norse.valkyrie",
       "category": "creature",
-      "pages": 3,
+      "pages": 5,
       "entity": "mythsofworlds:valkyrie"
+    },
+    {
+      "id": "norse.pegasus",
+      "category": "creature",
+      "pages": 2,
+      "entity": "mythsofworlds:pegasus"
     },
     {
       "id": "norse.draugr_chieftain",
