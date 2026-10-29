@@ -3,8 +3,11 @@ package com.mythsofworlds.mythology.greek;
 import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.mythology.greek.entity.Cerberus;
 import com.mythsofworlds.mythology.greek.entity.Cyclops;
+import com.mythsofworlds.mythology.greek.entity.GoldenHind;
+import com.mythsofworlds.mythology.greek.entity.GreekMerchant;
 import com.mythsofworlds.mythology.greek.entity.Harpy;
 import com.mythsofworlds.mythology.greek.entity.Hydra;
+import com.mythsofworlds.mythology.greek.entity.HydraHatchling;
 import com.mythsofworlds.mythology.greek.entity.Medusa;
 import com.mythsofworlds.mythology.greek.entity.Minotaur;
 import com.mythsofworlds.mythology.greek.entity.NemeanLion;
@@ -18,6 +21,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacementTypes;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.Item;
@@ -50,6 +54,17 @@ public final class GreekEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<Pegasus>> PEGASUS = register("pegasus",
             EntityType.Builder.of(Pegasus::new, MobCategory.CREATURE).sized(1.3964844F, 1.6F).eyeHeight(1.52F)
                     .clientTrackingRange(10));
+    /** The Ceryneian Hind of Artemis: golden antlers, bronze hooves, tamed and ridden like a horse. */
+    public static final DeferredHolder<EntityType<?>, EntityType<GoldenHind>> GOLDEN_HIND = register("golden_hind",
+            EntityType.Builder.of(GoldenHind::new, MobCategory.CREATURE).sized(1.2F, 1.6F).eyeHeight(1.5F)
+                    .clientTrackingRange(10));
+    /** Hatched from a Hydra egg; a loyal pet. */
+    public static final DeferredHolder<EntityType<?>, EntityType<HydraHatchling>> HYDRA_HATCHLING = register("hydra_hatchling",
+            EntityType.Builder.of(HydraHatchling::new, MobCategory.CREATURE).sized(0.9F, 0.9F).eyeHeight(0.75F));
+    /** Merchant of the agora who buys trophies of the monsters of Hellas. */
+    public static final DeferredHolder<EntityType<?>, EntityType<GreekMerchant>> GREEK_MERCHANT = register("greek_merchant",
+            EntityType.Builder.of(GreekMerchant::new, MobCategory.CREATURE).sized(0.6F, 1.95F).eyeHeight(1.62F)
+                    .clientTrackingRange(10));
 
     // ---- Mini-bosses ----
     public static final DeferredHolder<EntityType<?>, EntityType<Cyclops>> CYCLOPS = register("cyclops",
@@ -79,6 +94,9 @@ public final class GreekEntities {
     public static final DeferredItem<DeferredSpawnEggItem> SPARTOI_SPAWN_EGG = egg("spartoi", SPARTOI, 0xD8D3C4, 0xD4A93A);
     public static final DeferredItem<DeferredSpawnEggItem> SHADE_SPAWN_EGG = egg("shade", SHADE, 0x5E6B78, 0xBFD6E3);
     public static final DeferredItem<DeferredSpawnEggItem> PEGASUS_SPAWN_EGG = egg("pegasus", PEGASUS, 0xF4F1EA, 0xE6C35C);
+    public static final DeferredItem<DeferredSpawnEggItem> GOLDEN_HIND_SPAWN_EGG = egg("golden_hind", GOLDEN_HIND, 0xC9A23A, 0xFFF1A8);
+    public static final DeferredItem<DeferredSpawnEggItem> HYDRA_HATCHLING_SPAWN_EGG = egg("hydra_hatchling", HYDRA_HATCHLING, 0x5E9C4A, 0xD7E88A);
+    public static final DeferredItem<DeferredSpawnEggItem> GREEK_MERCHANT_SPAWN_EGG = egg("greek_merchant", GREEK_MERCHANT, 0xE9E1CC, 0x2E5FA8);
     public static final DeferredItem<DeferredSpawnEggItem> CYCLOPS_SPAWN_EGG = egg("cyclops", CYCLOPS, 0x9C7F5F, 0x4E3B2A);
     public static final DeferredItem<DeferredSpawnEggItem> MEDUSA_SPAWN_EGG = egg("medusa", MEDUSA, 0x4F7A3A, 0xB3D16A);
     public static final DeferredItem<DeferredSpawnEggItem> NEMEAN_LION_SPAWN_EGG = egg("nemean_lion", NEMEAN_LION, 0xC9962E, 0x7A4E14);
@@ -88,7 +106,7 @@ public final class GreekEntities {
 
     /** Every mob of Hellas, used by the tests. */
     public static List<DeferredHolder<EntityType<?>, ? extends EntityType<? extends Mob>>> all() {
-        return List.of(SATYR, HARPY, SPARTOI, SHADE, PEGASUS, CYCLOPS, MEDUSA, NEMEAN_LION, MINOTAUR, HYDRA, CERBERUS);
+        return List.of(SATYR, HARPY, SPARTOI, SHADE, PEGASUS, GOLDEN_HIND, HYDRA_HATCHLING, GREEK_MERCHANT, CYCLOPS, MEDUSA, NEMEAN_LION, MINOTAUR, HYDRA, CERBERUS);
     }
 
     private GreekEntities() {
@@ -115,6 +133,9 @@ public final class GreekEntities {
         event.put(SPARTOI.get(), Spartoi.createAttributes().build());
         event.put(SHADE.get(), Shade.createAttributes().build());
         event.put(PEGASUS.get(), Pegasus.createAttributes().build());
+        event.put(GOLDEN_HIND.get(), GoldenHind.createAttributes().build());
+        event.put(HYDRA_HATCHLING.get(), HydraHatchling.createAttributes().build());
+        event.put(GREEK_MERCHANT.get(), Mob.createMobAttributes().add(Attributes.MOVEMENT_SPEED, 0.5).build());
         event.put(CYCLOPS.get(), Cyclops.createAttributes().build());
         event.put(MEDUSA.get(), Medusa.createAttributes().build());
         event.put(NEMEAN_LION.get(), NemeanLion.createAttributes().build());
@@ -133,5 +154,6 @@ public final class GreekEntities {
         event.register(SPARTOI.get(), SpawnPlacementTypes.ON_GROUND, ground, Monster::checkMonsterSpawnRules, replace);
         event.register(SHADE.get(), SpawnPlacementTypes.ON_GROUND, ground, Monster::checkMonsterSpawnRules, replace);
         event.register(PEGASUS.get(), SpawnPlacementTypes.ON_GROUND, ground, Animal::checkAnimalSpawnRules, replace);
+        event.register(GOLDEN_HIND.get(), SpawnPlacementTypes.ON_GROUND, ground, Animal::checkAnimalSpawnRules, replace);
     }
 }

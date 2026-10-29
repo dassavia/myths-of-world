@@ -1,9 +1,14 @@
 package com.mythsofworlds.mythology.greek.entity;
 
+import com.mythsofworlds.mythology.greek.GreekSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -17,8 +22,14 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
-/** Goat-legged wild man of the groves of Arcadia, follower of Pan and Dionysus. Fast, rowdy and weak. Spawns by day too. */
+/**
+ * Goat-legged wild man of the groves of Arcadia, follower of Pan and Dionysus. By day it only plays its pan flute;
+ * at night, drunk on Dionysus' wine, it attacks travellers. In a fight its flute rallies nearby satyrs (Speed),
+ * and its headbutt leaves you dizzy (Nausea).
+ */
 public class Satyr extends Monster {
+    private int fluteCooldown = 100;
+
     public Satyr(EntityType<? extends Monster> type, Level level) {
         super(type, level);
     }
@@ -40,12 +51,40 @@ public class Satyr extends Monster {
         goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
         goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         targetSelector.addGoal(1, new HurtByTargetGoal(this).setAlertOthers());
-        targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, p -> !level().isDay()));
+    }
+
+    @Override
+    protected void customServerAiStep() {
+        super.customServerAiStep();
+        if (--fluteCooldown > 0) {
+            return;
+        }
+        LivingEntity target = getTarget();
+        fluteCooldown = target != null ? 160 : 400 + random.nextInt(400);
+        playSound(GreekSounds.PAN_FLUTE.get(), 1.5F, 0.9F + random.nextFloat() * 0.2F);
+        if (target != null) {
+            for (Satyr satyr : level().getEntitiesOfClass(Satyr.class, getBoundingBox().inflate(12.0))) {
+                satyr.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 120, 1));
+                if (satyr.getTarget() == null) {
+                    satyr.setTarget(target);
+                }
+            }
+        }
+    }
+
+    @Override
+    public boolean doHurtTarget(Entity target) {
+        boolean hit = super.doHurtTarget(target);
+        if (hit && target instanceof LivingEntity living && random.nextInt(3) == 0) {
+            living.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 140, 0), this);
+        }
+        return hit;
     }
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.GOAT_AMBIENT;
+        return GreekSounds.SATYR_AMBIENT.get();
     }
 
     @Override

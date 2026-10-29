@@ -1,0 +1,382 @@
+{
+  "entity.satyr.pan_flute": {
+    "subtitle": "subtitles.mythsofworlds.entity.satyr.pan_flute",
+    "sounds": [
+      "mythsofworlds:satyr/pan_flute1",
+      "mythsofworlds:satyr/pan_flute2",
+      "mythsofworlds:satyr/pan_flute3"
+    ]
+  },
+  "entity.satyr.ambient": {
+    "subtitle": "subtitles.mythsofworlds.entity.satyr.ambient",
+    "sounds": [
+      {
+        "name": "minecraft:entity.goat.ambient",
+        "type": "event",
+        "pitch": 1.3
+      },
+      {
+        "name": "minecraft:entity.goat.screaming.ambient",
+        "type": "event",
+        "pitch": 1.4
+      }
+    ]
+  },
+  "entity.harpy.ambient": {
+    "subtitle": "subtitles.mythsofworlds.entity.harpy.ambient",
+    "sounds": [
+      {
+        "name": "minecraft:entity.parrot.ambient",
+        "type": "event",
+        "pitch": 0.55
+      },
+      {
+        "name": "minecraft:entity.phantom.ambient",
+        "type": "event",
+        "pitch": 1.4
+      }
+    ]
+  },
+  "entity.harpy.hurt": {
+    "subtitle": "subtitles.mythsofworlds.entity.harpy.hurt",
+    "sounds": [
+      {
+        "name": "minecraft:entity.parrot.hurt",
+        "type": "event",
+        "pitch": 0.6
+      }
+    ]
+  },
+  "entity.harpy.death": {
+    "subtitle": "subtitles.mythsofworlds.entity.harpy.death",
+    "sounds": [
+      {
+        "name": "minecraft:entity.phantom.death",
+        "type": "event",
+        "pitch": 1.3
+      }
+    ]
+  },
+  "entity.shade.ambient": {
+    "subtitle": "subtitles.mythsofworlds.entity.shade.ambient",
+    "sounds": [
+      {
+        "name": "minecraft:entity.vex.ambient",
+        "type": "event",
+        "pitch": 0.55
+      },
+      {
+        "name": "minecraft:particle.soul_escape",
+        "type": "event",
+        "pitch": 0.8,
+        "volume": 2.0
+      }
+    ]
+  },
+  "entity.shade.hurt": {
+    "subtitle": "subtitles.mythsofworlds.entity.shade.hurt",
+    "sounds": [
+      {
+        "name": "minecraft:entity.vex.hurt",
+        "type": "event",
+        "pitch": 0.6
+      }
+    ]
+  },
+  "entity.shade.death": {
+    "subtitle": "subtitles.mythsofworlds.entity.shade.death",
+    "sounds": [
+      {
+        "name": "minecraft:entity.vex.death",
+        "type": "event",
+        "pitch": 0.5
+      }
+    ]
+  },
+  "entity.shade.teleport": {
+    "subtitle": "subtitles.mythsofworlds.entity.shade.teleport",
+    "sounds": [
+      "mythsofworlds:shade/blink"
+    ]
+  },
+  "entity.minotaur.ambient": {
+    "subtitle": "subtitles.mythsofworlds.entity.minotaur.ambient",
+    "sounds": [
+      {
+        "name": "minecraft:entity.ravager.ambient",
+        "type": "event",
+        "pitch": 0.75
+      },
+      {
+        "name": "minecraft:entity.cow.ambient",
+        "type": "event",
+        "pitch": 0.45
+      }
+    ]
+  },
+  "entity.minotaur.roar": {
+    "subtitle": "subtitles.mythsofworlds.entity.minotaur.roar",
+    "sounds": [
+      {
+        "name": "minecraft:entity.ravager.roar",
+        "type": "event",
+        "pitch": 0.7
+      }
+    ]
+  },
+  "entity.minotaur.hurt": {
+    "subtitle": "subtitles.mythsofworlds.entity.minotaur.hurt",
+    "sounds": [
+      {
+        "name": "minecraft:entity.ravager.hurt",
+        "type": "event",
+        "pitch": 0.8
+      }
+    ]
+  },
+  "entity.minotaur.death": {
+    "subtitle": "subtitles.mythsofworlds.entity.minotaur.death",
+    "sounds": [
+      {
+        "name": "minecraft:entity.ravager.death",
+        "type": "event",
+        "pitch": 0.7
+      }
+    ]
+  },
+  "entity.hydra.ambient": {
+    "subtitle": "subtitles.mythsofworlds.entity.hydra.ambient",
+    "sounds": [
+      {
+        "name": "minecraft:entity.hoglin.ambient",
+        "type": "event",
+        "pitch": 0.6
+      },
+      "mythsofworlds:hydra/hiss1",
+      "mythsofworlds:hydra/hiss2"
+    ]
+  },
+  "entity.hydra.spit": {
+    "subtitle": "subtitles.mythsofworlds.entity.hydra.spit",
+    "sounds": [
+      "mythsofworlds:hydra/spit1",
+      "mythsofworlds:hydra/spit2"
+    ]
+  },
+  "entity.hydra.hurt": {
+    "subtitle": "subtitles.mythsofworlds.entity.hydra.hurt",
+    "sounds": [
+      {
+        "name": "minecraft:entity.hoglin.hurt",
+        "type": "event",
+        "pitch": 0.7
+      }
+    ]
+  },
+  "entity.hydra.death": {
+    "subtitle": "subtitles.mythsofworlds.entity.hydra.death",
+    "sounds": [
+      {
+        "name": "minecraft:entity.ender_dragon.growl",
+        "type": "event",
+        "pitch": 1.2
+      }
+    ]
+  },
+  "entity.cerberus.ambient": {
+    "subtitle": "subtitles.mythsofworlds.entity.cerberus.ambient",
+    "sounds": [
+      {
+        "name": "minecraft:entity.wolf.growl",
+        "type": "event",
+        "pitch": 0.5
+      }
+    ]
+  },
+  "entity.cerberus.breath": {
+    "subtitle": "subtitles.mythsofworlds.entity.cerberus.breath",
+    "sounds": [
+      {
+        "name": "minecraft:entity.blaze.shoot",
+        "type": "event",
+        "pitch": 0.7
+      },
+      {
+        "name": "minecraft:item.firecharge.use",
+        "type": "event",
+        "pitch": 0.6
+      }
+    ]
+  },
+  "entity.cerberus.hurt": {
+    "subtitle": "subtitles.mythsofworlds.entity.cerberus.hurt",
+    "sounds": [
+      {
+        "name": "minecraft:entity.wolf.hurt",
+        "type": "event",
+        "pitch": 0.5
+      }
+    ]
+  },
+  "entity.cerberus.death": {
+    "subtitle": "subtitles.mythsofworlds.entity.cerberus.death",
+    "sounds": [
+      {
+        "name": "minecraft:entity.wolf.death",
+        "type": "event",
+        "pitch": 0.5
+      }
+    ]
+  },
+  "entity.cyclops.ambient": {
+    "subtitle": "subtitles.mythsofworlds.entity.cyclops.ambient",
+    "sounds": [
+      {
+        "name": "minecraft:entity.ravager.ambient",
+        "type": "event",
+        "pitch": 0.55
+      }
+    ]
+  },
+  "entity.cyclops.stomp": {
+    "subtitle": "subtitles.mythsofworlds.entity.cyclops.stomp",
+    "sounds": [
+      "mythsofworlds:cyclops/stomp1",
+      "mythsofworlds:cyclops/stomp2"
+    ]
+  },
+  "entity.cyclops.hurt": {
+    "subtitle": "subtitles.mythsofworlds.entity.cyclops.hurt",
+    "sounds": [
+      {
+        "name": "minecraft:entity.iron_golem.hurt",
+        "type": "event",
+        "pitch": 0.6
+      }
+    ]
+  },
+  "entity.cyclops.death": {
+    "subtitle": "subtitles.mythsofworlds.entity.cyclops.death",
+    "sounds": [
+      {
+        "name": "minecraft:entity.iron_golem.death",
+        "type": "event",
+        "pitch": 0.6
+      }
+    ]
+  },
+  "entity.medusa.ambient": {
+    "subtitle": "subtitles.mythsofworlds.entity.medusa.ambient",
+    "sounds": [
+      "mythsofworlds:medusa/hiss1",
+      "mythsofworlds:medusa/hiss2",
+      {
+        "name": "minecraft:entity.cat.hiss",
+        "type": "event",
+        "pitch": 0.7
+      }
+    ]
+  },
+  "entity.medusa.gaze": {
+    "subtitle": "subtitles.mythsofworlds.entity.medusa.gaze",
+    "sounds": [
+      "mythsofworlds:medusa/gaze"
+    ]
+  },
+  "entity.medusa.hurt": {
+    "subtitle": "subtitles.mythsofworlds.entity.medusa.hurt",
+    "sounds": [
+      {
+        "name": "minecraft:entity.witch.hurt",
+        "type": "event",
+        "pitch": 0.8
+      }
+    ]
+  },
+  "entity.medusa.death": {
+    "subtitle": "subtitles.mythsofworlds.entity.medusa.death",
+    "sounds": [
+      {
+        "name": "minecraft:entity.witch.death",
+        "type": "event",
+        "pitch": 0.8
+      }
+    ]
+  },
+  "entity.nemean_lion.ambient": {
+    "subtitle": "subtitles.mythsofworlds.entity.nemean_lion.ambient",
+    "sounds": [
+      {
+        "name": "minecraft:entity.polar_bear.warning",
+        "type": "event",
+        "pitch": 0.6
+      }
+    ]
+  },
+  "entity.nemean_lion.hurt": {
+    "subtitle": "subtitles.mythsofworlds.entity.nemean_lion.hurt",
+    "sounds": [
+      {
+        "name": "minecraft:entity.polar_bear.hurt",
+        "type": "event",
+        "pitch": 0.7
+      }
+    ]
+  },
+  "entity.nemean_lion.death": {
+    "subtitle": "subtitles.mythsofworlds.entity.nemean_lion.death",
+    "sounds": [
+      {
+        "name": "minecraft:entity.polar_bear.death",
+        "type": "event",
+        "pitch": 0.6
+      }
+    ]
+  },
+  "entity.greek_merchant.greet": {
+    "subtitle": "subtitles.mythsofworlds.entity.greek_merchant.greet",
+    "sounds": [
+      "mythsofworlds:greek_merchant/lyre1",
+      "mythsofworlds:greek_merchant/lyre2"
+    ]
+  },
+  "block.brazier.ignite": {
+    "subtitle": "subtitles.mythsofworlds.block.brazier.ignite",
+    "sounds": [
+      "mythsofworlds:block/brazier_ignite"
+    ]
+  },
+  "ambient.hellas.chimes": {
+    "subtitle": "subtitles.mythsofworlds.ambient.hellas.chimes",
+    "sounds": [
+      {
+        "name": "mythsofworlds:ambient/chimes1",
+        "volume": 0.5
+      },
+      {
+        "name": "mythsofworlds:ambient/chimes2",
+        "volume": 0.5
+      },
+      {
+        "name": "mythsofworlds:ambient/chimes3",
+        "volume": 0.5
+      }
+    ]
+  },
+  "music.hellas.elysium": {
+    "sounds": [
+      {
+        "name": "mythsofworlds:music/elysium",
+        "stream": true
+      }
+    ]
+  },
+  "music.hellas.underworld": {
+    "sounds": [
+      {
+        "name": "mythsofworlds:music/underworld",
+        "stream": true
+      }
+    ]
+  }
+}

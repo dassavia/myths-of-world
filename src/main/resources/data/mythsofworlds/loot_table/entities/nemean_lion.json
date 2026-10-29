@@ -16,6 +16,26 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "name": "mythsofworlds:nemean_claw",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
           "name": "minecraft:leather",
           "weight": 1,
           "functions": [

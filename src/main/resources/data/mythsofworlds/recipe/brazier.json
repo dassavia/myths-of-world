@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "C C",
+    "CCC",
+    " M "
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "M": {
+      "item": "mythsofworlds:olympian_marble"
+    }
+  },
+  "result": {
+    "id": "mythsofworlds:brazier",
+    "count": 1
+  }
+}

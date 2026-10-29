@@ -1,11 +1,13 @@
 package com.mythsofworlds.mythology.greek.entity;
 
+import com.mythsofworlds.MythsOfWorlds;
+import com.mythsofworlds.mythology.greek.GreekSounds;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
@@ -14,11 +16,14 @@ import net.minecraft.world.phys.Vec3;
 
 /**
  * Boss of the Labyrinth. Besides normal blows it charges: lowers its horns and rushes at a player
- * 5-18 blocks away, throwing them back. Hitting a wall ends the charge.
+ * 5-18 blocks away, throwing them back. Hitting a wall ends the charge. Below half health it is enraged:
+ * faster, and it charges twice as often.
  */
 public class Minotaur extends GreekBoss {
     private static final int CHARGE_TICKS = 20;
     private static final int CHARGE_COOLDOWN = 120;
+    private static final AttributeModifier ENRAGED_SPEED = new AttributeModifier(MythsOfWorlds.id("enraged"), 0.3,
+            AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
 
     private int chargeCooldown = 60;
     private int chargeTicks;
@@ -46,6 +51,10 @@ public class Minotaur extends GreekBoss {
     @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
+        if (enraged() && !getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(ENRAGED_SPEED.id())) {
+            getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(ENRAGED_SPEED);
+            playSound(GreekSounds.MINOTAUR_ROAR.get(), 3.0F, 0.7F);
+        }
         LivingEntity target = getTarget();
         if (chargeTicks > 0) {
             chargeTicks--;
@@ -65,9 +74,9 @@ public class Minotaur extends GreekBoss {
                 if (distance > 5.0 && distance < 18.0) {
                     chargeDirection = new Vec3(target.getX() - getX(), 0.0, target.getZ() - getZ()).normalize();
                     chargeTicks = CHARGE_TICKS;
-                    chargeCooldown = CHARGE_COOLDOWN;
+                    chargeCooldown = enraged() ? CHARGE_COOLDOWN / 2 : CHARGE_COOLDOWN;
                     getNavigation().stop();
-                    playSound(SoundEvents.RAVAGER_ROAR, 2.0F, 0.8F);
+                    playSound(GreekSounds.MINOTAUR_ROAR.get(), 2.0F, 1.0F);
                 }
             }
         }
@@ -75,16 +84,16 @@ public class Minotaur extends GreekBoss {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.RAVAGER_AMBIENT;
+        return GreekSounds.MINOTAUR_AMBIENT.get();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.RAVAGER_HURT;
+        return GreekSounds.MINOTAUR_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.RAVAGER_DEATH;
+        return GreekSounds.MINOTAUR_DEATH.get();
     }
 }

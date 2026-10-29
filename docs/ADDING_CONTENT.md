@@ -14,16 +14,22 @@ src/main/java/com/mythsofworlds/
 │   └── PortalIgniterItem.java  «зажигалка» для порталов
 ├── mythology/Mythology.java    список шести мифологий и их измерений
 ├── mythology/greek/            всё греческое (полный пример)
-│   ├── GreekContent.java       блоки, предметы, портал, Факел Прометея, списки биомов и структур
+│   ├── GreekContent.java       блоки, предметы, Факел Прометея, списки биомов и структур
 │   ├── GreekEntities.java      мобы: типы, характеристики, яйца призыва, правила спавна
-│   ├── entity/                 поведение мобов; GreekBoss — общая основа боссов (шкала здоровья, без деспавна)
+│   ├── GreekTrades.java        сделки торговцев агоры (скупщик, кузнец, жрица)
+│   ├── GreekSounds.java        звуки; что в них звучит — assets/mythsofworlds/sounds.json
+│   ├── portal/                 священный водоём: чаша, блок портала, проверка водоёма, факел
+│   ├── entity/                 поведение мобов; GreekBoss — общая основа боссов (шкала здоровья, без деспавна,
+│   │                           hostile() для нейтральных, enraged() ниже половины здоровья)
 │   ├── client/                 модели и рендеры мобов (только клиент)
-│   └── item/MedusaHeadItem.java
+│   └── item/                   голова Медузы, яйцо гидры
 ├── mythology/norse/NorseContent.java   всё скандинавское: блоки, предметы, измерение
 ├── mythology/slavic|oceanic|egyptian|indian/   заготовки: только ключ измерения
 └── gametest/                   автотесты (./gradlew runGameTestServer) и WorldSmokeTest (./gradlew runSmokeTest)
 
-tools/gen_greek_assets.py       генератор греческих JSON, шаблонов структур (.nbt) и временных текстур
+tools/gen_greek_assets.py       генератор греческих JSON, шаблонов структур (.nbt, сами постройки в tools/structures.py)
+                                и текстур (--textures, рисунки в tools/textures.py)
+tools/gen_greek_sounds.py       sounds.json, субтитры и синтез своих звуков в .ogg (--ogg, нужны numpy и ffmpeg)
 
 src/main/resources/
 ├── assets/mythsofworlds/       то, что видит игрок: текстуры, модели, переводы
@@ -107,9 +113,23 @@ python3 tools/gen_greek_assets.py --textures  # плюс перерисоват�
 4. Текстура `textures/entity/<имя>.png`, лут `loot_table/entities/<имя>.json`, перевод `entity.mythsofworlds.<имя>`,
    модель яйца `models/item/<имя>_spawn_egg.json`. Где спавнится — в `spawners` нужных биомов.
 
+## Новая сделка у торговцев агоры
+
+В `GreekTrades.java` добавьте строку в нужный список: `sell(предмет, сколько, изумрудов)` — торговец покупает,
+`buy(изумрудов, () -> new ItemStack(...), сколько раз)` — продаёт, `swap(трофей, изумрудов, () -> результат)` — обмен.
+Сделки создаются заново для каждого нового торговца; у уже живущих в мире торговцев остаются старые.
+
+## Новый звук
+
+1. В `GreekSounds.java`: `sound("entity.<моб>.<что>")`.
+2. В `tools/gen_greek_sounds.py` добавьте строку в `SOUNDS`: ванильный звук через `event(...)` с нужной высотой
+   или свой файл через `own(...)` (свой .ogg положите в `assets/mythsofworlds/sounds/` или синтезируйте в `SYNTHS`).
+3. `python3 tools/gen_greek_sounds.py` (с `--ogg`, чтобы пересоздать файлы).
+
 ## Как развить заготовку мифологии
 
-Например, славянскую: в `SlavicContent` добавьте блок рамки, `MythPortalBlock` и зажигалку по образцу `GreekContent`,
+Например, славянскую: в `SlavicContent` добавьте блок рамки, `MythPortalBlock` и зажигалку по образцу `NorseContent`
+(или портал своей формы, как священный водоём в `mythology/greek/portal`),
 поставьте `true` у `SLAVIC` в `Mythology.java`, замените ванильные биомы в `dimension/nav.json` своими.
 
 ## Измерения: что можно менять без кода

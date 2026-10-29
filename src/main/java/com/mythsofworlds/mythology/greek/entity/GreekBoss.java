@@ -43,7 +43,19 @@ public abstract class GreekBoss extends Monster {
         goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 16.0F));
         goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         targetSelector.addGoal(1, new HurtByTargetGoal(this));
-        targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        if (hostile()) {
+            targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        }
+    }
+
+    /** False for neutral bosses, which only fight back once attacked. */
+    protected boolean hostile() {
+        return true;
+    }
+
+    /** Below half health most bosses fight harder. */
+    protected boolean enraged() {
+        return getHealth() < getMaxHealth() / 2.0F;
     }
 
     @Override

@@ -1,9 +1,9 @@
 package com.mythsofworlds.mythology.greek.entity;
 
+import com.mythsofworlds.mythology.greek.GreekSounds;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -15,7 +15,8 @@ import net.minecraft.world.level.Level;
 
 /**
  * A one-eyed giant shepherd like Polyphemus, mini-boss of the mountains and coast.
- * Hits very hard, and when a player comes close it stomps the ground, hurting and tossing everyone nearby.
+ * Neutral: it tends its sheep and ignores travellers until someone attacks it. Then it hits very hard,
+ * and stomps the ground, hurting and tossing everyone nearby.
  */
 public class Cyclops extends GreekBoss {
     private static final double STOMP_RADIUS = 5.0;
@@ -36,6 +37,11 @@ public class Cyclops extends GreekBoss {
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1.0)
                 .add(Attributes.FOLLOW_RANGE, 24.0)
                 .add(Attributes.STEP_HEIGHT, 1.5);
+    }
+
+    @Override
+    protected boolean hostile() {
+        return false;
     }
 
     @Override
@@ -61,26 +67,22 @@ public class Cyclops extends GreekBoss {
         if (level() instanceof ServerLevel server) {
             server.sendParticles(ParticleTypes.EXPLOSION, getX(), getY() + 0.2, getZ(), 8, 2.0, 0.2, 2.0, 0.0);
         }
-        playSound(SoundEvents.ANVIL_LAND, 2.0F, 0.5F);
+        playSound(GreekSounds.CYCLOPS_STOMP.get(), 2.0F, 1.0F);
     }
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.RAVAGER_AMBIENT;
+        return GreekSounds.CYCLOPS_AMBIENT.get();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.IRON_GOLEM_HURT;
+        return GreekSounds.CYCLOPS_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.IRON_GOLEM_DEATH;
+        return GreekSounds.CYCLOPS_DEATH.get();
     }
 
-    @Override
-    public float getVoicePitch() {
-        return 0.6F;
-    }
 }

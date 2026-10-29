@@ -3,12 +3,12 @@
   "temperature": 0.8,
   "downfall": 0.5,
   "effects": {
-    "sky_color": 6990591,
-    "fog_color": 12638463,
-    "water_color": 3133893,
+    "sky_color": 6993151,
+    "fog_color": 13691135,
+    "water_color": 3135696,
     "water_fog_color": 340282,
     "grass_color": 11125338,
-    "foliage_color": 10137674,
+    "foliage_color": 9413242,
     "mood_sound": {
       "sound": "minecraft:ambient.cave",
       "tick_delay": 6000,
@@ -28,9 +28,9 @@
     "water_creature": [
       {
         "type": "minecraft:dolphin",
-        "weight": 2,
+        "weight": 4,
         "minCount": 1,
-        "maxCount": 2
+        "maxCount": 3
       },
       {
         "type": "minecraft:squid",

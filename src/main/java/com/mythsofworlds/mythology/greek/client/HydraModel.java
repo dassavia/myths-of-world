@@ -1,6 +1,5 @@
 package com.mythsofworlds.mythology.greek.client;
 
-import com.mythsofworlds.mythology.greek.entity.Hydra;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -9,9 +8,13 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 
-/** Squat reptile body with five long swaying necks. Texture 128x64; layout mirrored in tools/gen_greek_assets.py. */
-public class HydraModel extends HierarchicalModel<Hydra> {
+/**
+ * Squat reptile body with five long swaying necks, for the Hydra and its hatchlings.
+ * Texture 128x64; layout mirrored in tools/gen_greek_assets.py.
+ */
+public class HydraModel<T extends Entity> extends HierarchicalModel<T> {
     public static final int HEADS = 5;
 
     private final ModelPart root;
@@ -64,7 +67,7 @@ public class HydraModel extends HierarchicalModel<Hydra> {
     }
 
     @Override
-    public void setupAnim(Hydra entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         for (int i = 0; i < HEADS; i++) {
             necks[i].zRot = (i - 2) * 0.28F + Mth.sin(ageInTicks * 0.08F + i * 1.3F) * 0.08F;
             necks[i].xRot = -0.35F + Mth.cos(ageInTicks * 0.06F + i) * 0.1F;

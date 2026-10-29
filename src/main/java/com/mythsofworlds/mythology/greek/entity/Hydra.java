@@ -1,7 +1,7 @@
 package com.mythsofworlds.mythology.greek.entity;
 
+import com.mythsofworlds.mythology.greek.GreekSounds;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -21,7 +21,8 @@ import net.minecraft.world.level.Level;
 /**
  * The Lernaean Hydra, boss of the Stygian Marsh. Five heads spit poison, and its wounds close by themselves
  * unless they are burned: like Heracles, use fire (flaming swords, fire aspect, flame arrows, lava) to stop
- * the regeneration for 10 seconds. Fire also hurts it twice as much.
+ * the regeneration for 10 seconds. Fire also hurts it twice as much. Below half health it spits twice as often.
+ * Drops a Hydra Egg, from which a tame little hydra hatches.
  */
 public class Hydra extends GreekBoss {
     /** How long after a fire hit the hydra cannot regenerate. */
@@ -68,7 +69,7 @@ public class Hydra extends GreekBoss {
             spitCooldown = 20;
             if (target != null && distanceToSqr(target) > 16.0 && distanceToSqr(target) < 400.0 && hasLineOfSight(target)) {
                 spitPoison(target);
-                spitCooldown = 60;
+                spitCooldown = enraged() ? 30 : 60;
             }
         }
     }
@@ -83,7 +84,7 @@ public class Hydra extends GreekBoss {
         potion.setPos(getX(), getEyeY(), getZ());
         potion.shoot(dx, dy + horizontal * 0.2, dz, 0.9F, 6.0F);
         level().addFreshEntity(potion);
-        playSound(SoundEvents.LLAMA_SPIT, 1.5F, 0.6F);
+        playSound(GreekSounds.HYDRA_SPIT.get(), 1.5F, 1.0F);
     }
 
     /** Its own venom does not harm it. */
@@ -94,16 +95,16 @@ public class Hydra extends GreekBoss {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.HOGLIN_AMBIENT;
+        return GreekSounds.HYDRA_AMBIENT.get();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.HOGLIN_HURT;
+        return GreekSounds.HYDRA_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ENDER_DRAGON_GROWL;
+        return GreekSounds.HYDRA_DEATH.get();
     }
 }

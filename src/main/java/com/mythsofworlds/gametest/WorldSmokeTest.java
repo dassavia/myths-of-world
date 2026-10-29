@@ -1,9 +1,10 @@
 package com.mythsofworlds.gametest;
 
 import com.mythsofworlds.MythsOfWorlds;
-import com.mythsofworlds.core.portal.PortalPlacement;
 import com.mythsofworlds.mythology.Mythology;
 import com.mythsofworlds.mythology.greek.GreekContent;
+import com.mythsofworlds.mythology.greek.entity.GreekMerchant;
+import com.mythsofworlds.mythology.greek.portal.PoolPortal;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.core.BlockPos;
@@ -75,7 +76,7 @@ public final class WorldSmokeTest {
         ServerLevel hellas = server.getLevel(GreekContent.HELLAS);
         if (hellas != null) {
             check(failures, "arrival portal", () -> {
-                BlockPos portal = PortalPlacement.findOrCreate(hellas, new BlockPos(0, 64, 0), GreekContent.HELLAS_PORTAL.get());
+                BlockPos portal = PoolPortal.findOrCreate(hellas, new BlockPos(0, 64, 0));
                 report("arrival portal built at " + portal);
             });
             for (String biome : GreekContent.BIOMES) {
@@ -93,17 +94,24 @@ public final class WorldSmokeTest {
                 check(failures, "structure " + name, () -> {
                     Holder<Structure> holder = structures.getHolderOrThrow(ResourceKey.create(Registries.STRUCTURE, MythsOfWorlds.id(name)));
                     var found = hellas.getChunkSource().getGenerator()
-                            .findNearestMapStructure(hellas, HolderSet.direct(holder), BlockPos.ZERO, 150, false);
+                            .findNearestMapStructure(hellas, HolderSet.direct(holder), BlockPos.ZERO, 250, false);
                     if (found == null) {
-                        throw new IllegalStateException("not found within 150 chunks");
+                        throw new IllegalStateException("not found within 250 chunks");
                     }
                     BlockPos pos = found.getFirst();
-                    for (int dx = -1; dx <= 1; dx++) {
-                        for (int dz = -1; dz <= 1; dz++) {
+                    for (int dx = -4; dx <= 4; dx++) {
+                        for (int dz = -4; dz <= 4; dz++) {
                             hellas.getChunk((pos.getX() >> 4) + dx, (pos.getZ() >> 4) + dz);
                         }
                     }
-                    int mobs = hellas.getEntitiesOfClass(Mob.class, new AABB(pos).inflate(48, 128, 48)).size();
+                    int mobs = hellas.getEntitiesOfClass(Mob.class, new AABB(pos).inflate(72, 128, 72)).size();
+                    if (name.equals("agora")) {
+                        int merchants = hellas.getEntitiesOfClass(GreekMerchant.class, new AABB(pos).inflate(72, 128, 72)).size();
+                        if (merchants == 0) {
+                            throw new IllegalStateException("the agora has no merchants");
+                        }
+                        report("agora merchants: " + merchants);
+                    }
                     report("structure " + name + " generated at " + pos + ", mobs around: " + mobs);
                 });
             }

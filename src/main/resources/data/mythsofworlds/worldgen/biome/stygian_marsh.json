@@ -3,12 +3,12 @@
   "temperature": 0.6,
   "downfall": 0.9,
   "effects": {
-    "sky_color": 7044971,
-    "fog_color": 6188638,
-    "water_color": 3885615,
-    "water_fog_color": 1449488,
-    "grass_color": 5008186,
-    "foliage_color": 4086318,
+    "sky_color": 5134930,
+    "fog_color": 4082242,
+    "water_color": 1976868,
+    "water_fog_color": 659468,
+    "grass_color": 5005376,
+    "foliage_color": 3820080,
     "mood_sound": {
       "sound": "minecraft:ambient.cave",
       "tick_delay": 6000,
@@ -17,34 +17,38 @@
     },
     "particle": {
       "options": {
-        "type": "minecraft:mycelium"
+        "type": "minecraft:soul_fire_flame"
       },
-      "probability": 0.01
+      "probability": 0.002
+    },
+    "music": {
+      "sound": "mythsofworlds:music.hellas.underworld",
+      "min_delay": 6000,
+      "max_delay": 18000,
+      "replace_current_music": false
+    },
+    "additions_sound": {
+      "sound": "minecraft:ambient.basalt_deltas.additions",
+      "tick_chance": 0.0111
     }
   },
   "spawners": {
     "monster": [
       {
         "type": "mythsofworlds:shade",
-        "weight": 60,
+        "weight": 80,
         "minCount": 1,
         "maxCount": 2
       },
       {
-        "type": "minecraft:zombie",
-        "weight": 50,
-        "minCount": 2,
-        "maxCount": 3
+        "type": "minecraft:drowned",
+        "weight": 30,
+        "minCount": 1,
+        "maxCount": 2
       },
       {
         "type": "minecraft:witch",
         "weight": 5,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "minecraft:slime",
-        "weight": 1,
         "minCount": 1,
         "maxCount": 1
       }
@@ -111,11 +115,10 @@
     ],
     [
       "minecraft:glow_lichen",
+      "mythsofworlds:stygian_mud",
+      "mythsofworlds:dead_trunk",
       "minecraft:trees_swamp",
-      "minecraft:flower_swamp",
       "minecraft:brown_mushroom_swamp",
-      "minecraft:red_mushroom_swamp",
-      "minecraft:patch_sugar_cane_swamp",
       "minecraft:patch_waterlily",
       "minecraft:seagrass_swamp"
     ],

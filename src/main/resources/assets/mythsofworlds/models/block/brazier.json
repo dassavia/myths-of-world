@@ -1,0 +1,71 @@
+{
+  "textures": {
+    "particle": "mythsofworlds:block/brazier_side",
+    "foot": "mythsofworlds:block/marble_pillar",
+    "side": "mythsofworlds:block/brazier_side",
+    "top": "mythsofworlds:block/brazier_top"
+  },
+  "elements": [
+    {
+      "from": [
+        5,
+        0,
+        5
+      ],
+      "to": [
+        11,
+        6,
+        11
+      ],
+      "faces": {
+        "north": {
+          "texture": "#foot"
+        },
+        "south": {
+          "texture": "#foot"
+        },
+        "east": {
+          "texture": "#foot"
+        },
+        "west": {
+          "texture": "#foot"
+        },
+        "down": {
+          "texture": "#foot"
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        6,
+        2
+      ],
+      "to": [
+        14,
+        10,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#side"
+        },
+        "south": {
+          "texture": "#side"
+        },
+        "east": {
+          "texture": "#side"
+        },
+        "west": {
+          "texture": "#side"
+        },
+        "down": {
+          "texture": "#side"
+        },
+        "up": {
+          "texture": "#top"
+        }
+      }
+    }
+  ]
+}
