@@ -1,0 +1,146 @@
+{
+  "entries": [
+    {
+      "id": "norse.portal",
+      "category": "intro",
+      "pages": 2
+    },
+    {
+      "id": "norse.lands",
+      "category": "intro",
+      "pages": 2
+    },
+    {
+      "id": "norse.draugr",
+      "category": "creature",
+      "pages": 2,
+      "entity": "mythsofworlds:draugr"
+    },
+    {
+      "id": "norse.warg",
+      "category": "creature",
+      "pages": 2,
+      "entity": "mythsofworlds:warg"
+    },
+    {
+      "id": "norse.troll",
+      "category": "creature",
+      "pages": 2,
+      "entity": "mythsofworlds:troll"
+    },
+    {
+      "id": "norse.frost_giant",
+      "category": "creature",
+      "pages": 2,
+      "entity": "mythsofworlds:frost_giant"
+    },
+    {
+      "id": "norse.fire_giant",
+      "category": "creature",
+      "pages": 2,
+      "entity": "mythsofworlds:fire_giant"
+    },
+    {
+      "id": "norse.raven",
+      "category": "creature",
+      "pages": 2,
+      "entity": "mythsofworlds:raven"
+    },
+    {
+      "id": "norse.norse_merchant",
+      "category": "creature",
+      "pages": 2,
+      "entity": "mythsofworlds:norse_merchant"
+    },
+    {
+      "id": "norse.draugr_chieftain",
+      "category": "boss",
+      "pages": 2,
+      "entity": "mythsofworlds:draugr_chieftain"
+    },
+    {
+      "id": "norse.garm",
+      "category": "boss",
+      "pages": 2,
+      "entity": "mythsofworlds:garm"
+    },
+    {
+      "id": "norse.thrym",
+      "category": "boss",
+      "pages": 2,
+      "entity": "mythsofworlds:thrym"
+    },
+    {
+      "id": "norse.fenrir",
+      "category": "boss",
+      "pages": 2,
+      "entity": "mythsofworlds:fenrir"
+    },
+    {
+      "id": "norse.surtr",
+      "category": "boss",
+      "pages": 2,
+      "entity": "mythsofworlds:surtr"
+    },
+    {
+      "id": "norse.viking_village",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:viking_village"
+    },
+    {
+      "id": "norse.longship",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:longship"
+    },
+    {
+      "id": "norse.naglfar",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:naglfar"
+    },
+    {
+      "id": "norse.barrow",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:barrow"
+    },
+    {
+      "id": "norse.utgard",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:utgard"
+    },
+    {
+      "id": "norse.fenrir_island",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:fenrir_island"
+    },
+    {
+      "id": "norse.muspel_fortress",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:muspel_fortress"
+    },
+    {
+      "id": "norse.helgrind",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:helgrind"
+    },
+    {
+      "id": "norse.dwarf_forge",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:dwarf_forge"
+    },
+    {
+      "id": "norse.rune_circle",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:rune_circle"
+    }
+  ]
+}

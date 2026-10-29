@@ -2,16 +2,16 @@
   "type": "mythsofworlds:jotunheim",
   "generator": {
     "type": "minecraft:noise",
-    "settings": "minecraft:amplified",
+    "settings": "mythsofworlds:jotunheim",
     "biome_source": {
       "type": "minecraft:multi_noise",
       "biomes": [
         {
           "biome": "mythsofworlds:frost_wastes",
           "parameters": {
-            "temperature": 0.0,
-            "humidity": -0.4,
-            "continentalness": 0.0,
+            "temperature": -0.8,
+            "humidity": -0.3,
+            "continentalness": 0.4,
             "erosion": 0.0,
             "weirdness": 0.0,
             "depth": 0.0,
@@ -21,10 +21,82 @@
         {
           "biome": "mythsofworlds:giants_taiga",
           "parameters": {
-            "temperature": 0.0,
-            "humidity": 0.4,
-            "continentalness": 0.0,
+            "temperature": -0.3,
+            "humidity": 0.3,
+            "continentalness": 0.4,
             "erosion": 0.0,
+            "weirdness": 0.0,
+            "depth": 0.0,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "mythsofworlds:ironwood",
+          "parameters": {
+            "temperature": -0.1,
+            "humidity": 0.7,
+            "continentalness": 0.6,
+            "erosion": 0.0,
+            "weirdness": 0.3,
+            "depth": 0.0,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "mythsofworlds:fjords",
+          "parameters": {
+            "temperature": -0.3,
+            "humidity": 0.0,
+            "continentalness": -0.05,
+            "erosion": 0.3,
+            "weirdness": 0.0,
+            "depth": 0.0,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "mythsofworlds:norse_sea",
+          "parameters": {
+            "temperature": -0.2,
+            "humidity": 0.0,
+            "continentalness": -0.6,
+            "erosion": 0.0,
+            "weirdness": 0.0,
+            "depth": 0.0,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "mythsofworlds:muspel_rift",
+          "parameters": {
+            "temperature": 0.7,
+            "humidity": -0.7,
+            "continentalness": 0.7,
+            "erosion": 0.0,
+            "weirdness": -0.5,
+            "depth": 0.0,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "mythsofworlds:niflheim_mists",
+          "parameters": {
+            "temperature": -0.9,
+            "humidity": 0.6,
+            "continentalness": 0.5,
+            "erosion": 0.0,
+            "weirdness": 0.6,
+            "depth": 0.0,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "mythsofworlds:idunn_orchard",
+          "parameters": {
+            "temperature": 0.4,
+            "humidity": 0.0,
+            "continentalness": 0.3,
+            "erosion": 0.5,
             "weirdness": 0.0,
             "depth": 0.0,
             "offset": 0.0

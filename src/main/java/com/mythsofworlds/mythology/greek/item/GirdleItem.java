@@ -21,7 +21,7 @@ import net.minecraft.world.level.Level;
 
 /**
  * The war girdle Ares gave Hippolyta, queen of the Amazons, which Heracles was sent to bring back. Worn in the legs
- * slot it gives strength and resistance. Hippolyta hands it over when she is defeated.
+ * slot it gives Strength II, Resistance II, Speed and Regeneration. Hippolyta hands it over when she is defeated.
  */
 public class GirdleItem extends Item implements Equipable {
     public GirdleItem(Properties properties) {
@@ -50,8 +50,10 @@ public class GirdleItem extends Item implements Equipable {
     /** Called every tick on the server for a player wearing the girdle (see GreekEvents). */
     public static void wornTick(Player player) {
         if (player.tickCount % 20 == 0) {
-            player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 60, 0, true, false, true));
-            player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 60, 0, true, false, true));
+            player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 60, 1, true, false, true));
+            player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 60, 1, true, false, true));
+            player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 60, 0, true, false, true));
+            player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 60, 0, true, false, true));
         }
     }
 

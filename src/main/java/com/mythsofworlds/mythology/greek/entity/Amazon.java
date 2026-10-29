@@ -9,10 +9,12 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -35,6 +37,7 @@ import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
@@ -53,19 +56,28 @@ import org.jetbrains.annotations.Nullable;
  * She can be courted. Gifts (flowers, gold and jewels, weapons and trophies, good food) raise her affection for the
  * giver, twice as much if it is what she likes best (ask her by right-clicking with an empty hand); one gift every
  * 20 seconds. Hurting her or her sisters costs a lot of it. At {@value #LOVE} affection, give her a wedding ring to
- * marry her: your wife follows you, fights at your side, and stays or follows on shift + right-click. Give your wife a
- * cake and a daughter is born (once a day); she grows up into an amazon loyal to your family.
+ * marry her: your wife follows you and fights at your side; shift + right-click switches her between following,
+ * waiting on the spot and walking freely around where she is. Give your wife a cake and a daughter is born (once a
+ * day); she grows up into an amazon loyal to your family. The necklace of Harmonia wins any amazon's heart at once.
+ * <p>
+ * Amazons keep near the camp or city they were found in ({@link #HOME_RADIUS} blocks); the horn of Themiscyra calls
+ * strays back home.
  */
 public class Amazon extends AgeableMob {
-    /** Number of common looks; {@link #ROYAL} is the look of Hippolyta's daughters. */
-    public static final int VARIANTS = 4;
+    /** Looks 0 to {@code VARIANTS - 1}; {@link #ROYAL} among them is the look of Hippolyta's daughters only. */
+    public static final int VARIANTS = 10;
     public static final int ROYAL = 4;
+    public static final int HOME_RADIUS = 32;
+    private static final int WANDER_RADIUS = 16;
     public static final int LOVE = 100;
     private static final int MAX_AFFECTION = 150;
     private static final int GIFT_COOLDOWN = 400;
     private static final int GROW_UP_TICKS = 24000;
 
     public enum Bond { NONE, WIFE, DAUGHTER }
+
+    /** What a wife or daughter does when not fighting: shift + right-click goes to the next one. */
+    public enum Mode { FOLLOW, STAY, WANDER }
 
     /** What a gift is: 0 flowers, 1 gold and jewels, 2 weapons and trophies, 3 food. */
     public record Gift(int kind, int points) {
@@ -85,7 +97,9 @@ public class Amazon extends AgeableMob {
     private int favourite;
     private int giftCooldown;
     private int childCooldown;
-    private boolean staying;
+    private Mode mode = Mode.FOLLOW;
+    @Nullable
+    private BlockPos home;
     private boolean initialized;
 
     public Amazon(EntityType<? extends AgeableMob> type, Level level) {
@@ -121,7 +135,13 @@ public class Amazon extends AgeableMob {
         goalSelector.addGoal(0, new FloatGoal(this));
         goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.15, true));
         goalSelector.addGoal(4, new FollowFamilyGoal());
-        goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 0.7));
+        goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(this, 1.0));
+        goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 0.7) {
+            @Override
+            public boolean canUse() {
+                return mode != Mode.STAY && super.canUse();
+            }
+        });
         goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
         goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         targetSelector.addGoal(1, new HurtByTargetGoal(this).setAlertOthers());
@@ -134,7 +154,7 @@ public class Amazon extends AgeableMob {
     /** Looks, name, taste and weapons, chosen the first time she ticks (also for amazons placed by structures). */
     protected void initialize() {
         if (getVariant() == 0) {
-            setVariant(random.nextInt(VARIANTS));
+            setVariant(commonVariant(random));
         }
         setCustomName(Component.literal(NAMES[random.nextInt(NAMES.length)]));
         favourite = random.nextInt(KINDS);
@@ -265,7 +285,53 @@ public class Amazon extends AgeableMob {
     }
 
     protected int childVariant() {
-        return random.nextBoolean() ? getVariant() : random.nextInt(VARIANTS);
+        return random.nextBoolean() && getVariant() != ROYAL ? getVariant() : commonVariant(random);
+    }
+
+    /** Any look but the royal one. */
+    public static int commonVariant(net.minecraft.util.RandomSource random) {
+        int variant = random.nextInt(VARIANTS - 1);
+        return variant >= ROYAL ? variant + 1 : variant;
+    }
+
+    public Mode mode() {
+        return mode;
+    }
+
+    @Nullable
+    public BlockPos home() {
+        return home;
+    }
+
+    /** Where she keeps to when she is free: her camp, or the spot her husband left her to wander. */
+    public void setHome(@Nullable BlockPos pos, int radius) {
+        home = pos;
+        if (pos == null) {
+            clearRestriction();
+        } else {
+            restrictTo(pos, radius);
+        }
+    }
+
+    /** Called by the horn of Themiscyra: walk back home, or come at once if far away. */
+    public boolean callHome() {
+        if (home == null || family != null || isBaby()) {
+            return false;
+        }
+        setTarget(null);
+        if (distanceToSqr(home.getX() + 0.5, home.getY(), home.getZ() + 0.5) > 48 * 48) {
+            particles(ParticleTypes.CLOUD, 10);
+            teleportTo(home.getX() + 0.5, home.getY(), home.getZ() + 0.5);
+            getNavigation().stop();
+        } else {
+            getNavigation().moveTo(home.getX() + 0.5, home.getY(), home.getZ() + 0.5, 1.2);
+        }
+        return true;
+    }
+
+    /** Whether the necklace of Harmonia wins her heart (Hippolyta listens only to her victor). */
+    protected boolean acceptsNecklace(Player player) {
+        return true;
     }
 
     @Override
@@ -284,9 +350,23 @@ public class Amazon extends AgeableMob {
             return InteractionResult.SUCCESS;
         }
         if (isFamily(player) && player.isShiftKeyDown()) {
-            staying = !staying;
+            setMode(Mode.values()[(mode.ordinal() + 1) % Mode.values().length]);
             getNavigation().stop();
-            say(player, staying ? "stay" : "follow");
+            say(player, mode.name().toLowerCase(java.util.Locale.ROOT));
+            return InteractionResult.SUCCESS;
+        }
+        if (stack.is(GreekContent.NECKLACE_OF_HARMONIA.get())) {
+            if (!acceptsNecklace(player)) {
+                say(player, "unworthy");
+            } else if (affection(player) >= LOVE) {
+                say(player, "necklace_already");
+            } else {
+                setAffection(player, Math.max(affection(player), 0) + LOVE);
+                stack.consume(1, player);
+                particles(ParticleTypes.HEART, 20);
+                playSound(SoundEvents.AMETHYST_BLOCK_RESONATE, 1.0F, 1.2F);
+                say(player, "necklace");
+            }
             return InteractionResult.SUCCESS;
         }
         if (stack.is(GreekContent.WEDDING_RING.get())) {
@@ -345,7 +425,7 @@ public class Amazon extends AgeableMob {
         } else {
             bond = Bond.WIFE;
             family = player.getUUID();
-            staying = false;
+            setMode(Mode.FOLLOW);
             PlayerData.setSpouse(player, Optional.of(getUUID()));
             ring.consume(1, player);
             particles(ParticleTypes.HEART, 20);
@@ -384,6 +464,12 @@ public class Amazon extends AgeableMob {
         say(player, "daughter_born", child.getDisplayName());
     }
 
+    private void setMode(Mode next) {
+        mode = next;
+        // Following ignores any home; waiting or wandering keeps her around the spot where she was told to.
+        setHome(next == Mode.FOLLOW ? null : blockPosition(), next == Mode.STAY ? 2 : WANDER_RADIUS);
+    }
+
     // ---- Life ----
 
     @Override
@@ -392,6 +478,9 @@ public class Amazon extends AgeableMob {
         if (!level().isClientSide && !initialized) {
             initialized = true;
             initialize();
+            if (family == null) {
+                setHome(blockPosition(), HOME_RADIUS);
+            }
         }
     }
 
@@ -502,7 +591,10 @@ public class Amazon extends AgeableMob {
         tag.putInt("Favourite", favourite);
         tag.putInt("GiftCooldown", giftCooldown);
         tag.putInt("ChildCooldown", childCooldown);
-        tag.putBoolean("Staying", staying);
+        tag.putString("Mode", mode.name());
+        if (home != null) {
+            tag.put("Home", NbtUtils.writeBlockPos(home));
+        }
         tag.putBoolean("Initialized", initialized);
         ListTag list = new ListTag();
         affection.forEach((uuid, value) -> {
@@ -527,7 +619,13 @@ public class Amazon extends AgeableMob {
         favourite = tag.getInt("Favourite");
         giftCooldown = tag.getInt("GiftCooldown");
         childCooldown = tag.getInt("ChildCooldown");
-        staying = tag.getBoolean("Staying");
+        try {
+            mode = tag.contains("Mode") ? Mode.valueOf(tag.getString("Mode")) : tag.getBoolean("Staying") ? Mode.STAY : Mode.FOLLOW;
+        } catch (IllegalArgumentException e) {
+            mode = Mode.FOLLOW;
+        }
+        BlockPos savedHome = NbtUtils.readBlockPos(tag, "Home").orElse(null);
+        setHome(savedHome, family == null ? HOME_RADIUS : mode == Mode.STAY ? 2 : WANDER_RADIUS);
         initialized = tag.getBoolean("Initialized");
         affection.clear();
         for (Tag element : tag.getList("Affection", Tag.TAG_COMPOUND)) {
@@ -547,7 +645,7 @@ public class Amazon extends AgeableMob {
 
         @Override
         public boolean canUse() {
-            if (family == null || staying || getTarget() != null) {
+            if (family == null || mode != Mode.FOLLOW || getTarget() != null) {
                 return false;
             }
             owner = level().getPlayerByUUID(family);
@@ -556,7 +654,7 @@ public class Amazon extends AgeableMob {
 
         @Override
         public boolean canContinueToUse() {
-            return owner != null && owner.isAlive() && !staying && getTarget() == null && distanceToSqr(owner) > 9.0;
+            return owner != null && owner.isAlive() && mode == Mode.FOLLOW && getTarget() == null && distanceToSqr(owner) > 9.0;
         }
 
         @Override

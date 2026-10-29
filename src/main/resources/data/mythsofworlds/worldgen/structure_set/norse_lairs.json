@@ -1,0 +1,30 @@
+{
+  "structures": [
+    {
+      "structure": "mythsofworlds:utgard",
+      "weight": 3
+    },
+    {
+      "structure": "mythsofworlds:fenrir_island",
+      "weight": 3
+    },
+    {
+      "structure": "mythsofworlds:muspel_fortress",
+      "weight": 3
+    },
+    {
+      "structure": "mythsofworlds:helgrind",
+      "weight": 3
+    },
+    {
+      "structure": "mythsofworlds:barrow",
+      "weight": 4
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 56,
+    "separation": 36,
+    "salt": 2450300
+  }
+}

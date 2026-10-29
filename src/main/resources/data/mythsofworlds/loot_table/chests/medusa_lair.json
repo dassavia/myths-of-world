@@ -87,6 +87,11 @@
               }
             }
           ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "mythsofworlds:necklace_of_harmonia",
+          "weight": 1
         }
       ]
     }

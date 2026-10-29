@@ -81,7 +81,7 @@ public final class GreekClient {
         event.registerEntityRenderer(GreekEntities.LION.get(),
                 ctx -> new GreekMobRenderer<Lion, BeastModel<Lion>>(ctx, new BeastModel<>(ctx.bakeLayer(NEMEAN_LION), 1), "lion", 0.85F));
         event.registerEntityRenderer(GreekEntities.KARKINOS.get(),
-                ctx -> new GreekMobRenderer<Karkinos, CrabModel<Karkinos>>(ctx, new CrabModel<>(ctx.bakeLayer(KARKINOS)), "karkinos", 1.3F));
+                ctx -> new GreekMobRenderer<Karkinos, CrabModel<Karkinos>>(ctx, new CrabModel<>(ctx.bakeLayer(KARKINOS)), "karkinos", 0.65F));
         event.registerEntityRenderer(GreekEntities.AMAZON.get(), AmazonRenderer::new);
         event.registerEntityRenderer(GreekEntities.HIPPOLYTA.get(), AmazonRenderer::new);
         event.registerEntityRenderer(GreekEntities.CERBERUS.get(),

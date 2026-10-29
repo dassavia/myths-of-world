@@ -15,6 +15,7 @@ import com.mythsofworlds.mythology.greek.entity.HydraHatchling;
 import com.mythsofworlds.mythology.greek.entity.Medusa;
 import com.mythsofworlds.mythology.greek.entity.NemeanLion;
 import com.mythsofworlds.mythology.greek.entity.Spartoi;
+import com.mythsofworlds.mythology.greek.item.HornOfThemiscyraItem;
 import com.mythsofworlds.mythology.greek.portal.BrazierBlock;
 import com.mythsofworlds.mythology.greek.portal.PoolPortal;
 import java.io.InputStream;
@@ -331,6 +332,90 @@ public class GreekTests {
         helper.assertTrue(queen.affection(player) > 0, "a worthy trophy should please her");
         girdles.forEach(ItemEntity::discard);
         queen.discard();
+        helper.succeed();
+    }
+
+    /** The necklace of Harmonia wins an amazon's heart at once; Hippolyta takes it only from her victor. */
+    @GameTest(template = "empty")
+    public static void necklaceOfHarmoniaWinsAmazons(GameTestHelper helper) {
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        Amazon amazon = helper.spawn(GreekEntities.AMAZON.get(), new BlockPos(1, 2, 1));
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(GreekContent.NECKLACE_OF_HARMONIA.get()));
+        amazon.mobInteract(player, InteractionHand.MAIN_HAND);
+        helper.assertTrue(amazon.affection(player) >= Amazon.LOVE, "the necklace should make her fall in love");
+        helper.assertTrue(player.getMainHandItem().isEmpty(), "the necklace should be given away");
+        Hippolyta queen = helper.spawn(GreekEntities.HIPPOLYTA.get(), new BlockPos(1, 2, 1));
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(GreekContent.NECKLACE_OF_HARMONIA.get()));
+        queen.mobInteract(player, InteractionHand.MAIN_HAND);
+        helper.assertTrue(queen.affection(player) == 0, "the queen ignores it from someone who has not beaten her");
+        amazon.discard();
+        queen.discard();
+        helper.succeed();
+    }
+
+    /** Beating Hippolyta does not ruin the courtship, and the same kind of treasure can be given again. */
+    @GameTest(template = "empty")
+    public static void hippolytaCanBeWon(GameTestHelper helper) {
+        Hippolyta queen = helper.spawn(GreekEntities.HIPPOLYTA.get(), new BlockPos(1, 2, 1));
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        var sources = helper.getLevel().damageSources();
+        for (int i = 0; i < 5; i++) {
+            queen.invulnerableTime = 0;
+            queen.hurt(sources.playerAttack(player), 10.0F);
+        }
+        queen.invulnerableTime = 0;
+        queen.hurt(sources.playerAttack(player), 1000.0F);
+        helper.assertTrue(queen.hasYielded() && queen.affection(player) >= 0, "the duel should be forgiven, affection "
+                + queen.affection(player));
+        for (int i = 0; i < 9; i++) {
+            player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.NETHERITE_INGOT));
+            queen.mobInteract(player, InteractionHand.MAIN_HAND);
+        }
+        helper.assertTrue(queen.affection(player) >= Amazon.LOVE, "repeated treasures should win her in the end, affection "
+                + queen.affection(player));
+        helper.getLevel().getEntitiesOfClass(ItemEntity.class, queen.getBoundingBox().inflate(4.0)).forEach(ItemEntity::discard);
+        queen.discard();
+        helper.succeed();
+    }
+
+    /** An amazon keeps to her camp, and the horn of Themiscyra sends a stray back. */
+    @GameTest(template = "empty", timeoutTicks = 40)
+    public static void hornCallsAmazonsHome(GameTestHelper helper) {
+        Amazon amazon = helper.spawn(GreekEntities.AMAZON.get(), new BlockPos(1, 2, 1));
+        helper.runAfterDelay(2, () -> {
+            helper.assertTrue(amazon.home() != null, "an amazon should remember her camp");
+            // Pretend her camp is far away: she has strayed 52 blocks from it.
+            BlockPos home = amazon.blockPosition().offset(52, 0, 0);
+            amazon.setHome(home, Amazon.HOME_RADIUS);
+            Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+            player.moveTo(amazon.getX(), amazon.getY(), amazon.getZ());
+            int called = HornOfThemiscyraItem.callAmazons(helper.getLevel(), player);
+            helper.assertTrue(called == 1, "the horn should call her, called " + called);
+            helper.assertTrue(amazon.distanceToSqr(home.getX() + 0.5, home.getY(), home.getZ() + 0.5) < 4.0,
+                    "a far stray should come home at once");
+            amazon.discard();
+            helper.succeed();
+        });
+    }
+
+    /** A wife follows, waits, or walks freely, in turn on shift + right-click. */
+    @GameTest(template = "empty")
+    public static void wifeCanWanderFreely(GameTestHelper helper) {
+        Amazon amazon = helper.spawn(GreekEntities.AMAZON.get(), new BlockPos(1, 2, 1));
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        amazon.setAffection(player, Amazon.LOVE);
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(GreekContent.WEDDING_RING.get()));
+        amazon.mobInteract(player, InteractionHand.MAIN_HAND);
+        helper.assertTrue(amazon.mode() == Amazon.Mode.FOLLOW && amazon.home() == null, "a new wife follows her husband");
+        player.setShiftKeyDown(true);
+        amazon.mobInteract(player, InteractionHand.MAIN_HAND);
+        helper.assertTrue(amazon.mode() == Amazon.Mode.STAY, "first she waits");
+        amazon.mobInteract(player, InteractionHand.MAIN_HAND);
+        helper.assertTrue(amazon.mode() == Amazon.Mode.WANDER && amazon.home() != null, "then she walks freely around here");
+        amazon.mobInteract(player, InteractionHand.MAIN_HAND);
+        helper.assertTrue(amazon.mode() == Amazon.Mode.FOLLOW, "then she follows again");
+        PlayerData.setSpouse(player, java.util.Optional.empty());
+        amazon.discard();
         helper.succeed();
     }
 

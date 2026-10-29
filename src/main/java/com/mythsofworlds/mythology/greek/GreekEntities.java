@@ -89,7 +89,7 @@ public final class GreekEntities {
                     .clientTrackingRange(10));
     /** The giant crab of Hera, in the Hydra's lair. */
     public static final DeferredHolder<EntityType<?>, EntityType<Karkinos>> KARKINOS = register("karkinos",
-            EntityType.Builder.of(Karkinos::new, MobCategory.MONSTER).sized(2.0F, 1.2F).eyeHeight(1.0F)
+            EntityType.Builder.of(Karkinos::new, MobCategory.MONSTER).sized(1.0F, 0.6F).eyeHeight(0.5F)
                     .clientTrackingRange(10));
 
     // ---- Bosses ----

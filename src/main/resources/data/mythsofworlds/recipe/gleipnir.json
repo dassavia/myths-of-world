@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "minecraft:rabbit_foot"
+    },
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "minecraft:hanging_roots"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:pufferfish"
+    },
+    {
+      "item": "mythsofworlds:raven_feather"
+    }
+  ],
+  "result": {
+    "id": "mythsofworlds:gleipnir",
+    "count": 1
+  }
+}

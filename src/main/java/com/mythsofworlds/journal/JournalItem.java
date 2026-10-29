@@ -4,6 +4,7 @@ import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundOpenBookPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -37,9 +38,10 @@ public class JournalItem extends Item {
         ItemStack stack = player.getItemInHand(hand);
         if (player instanceof ServerPlayer serverPlayer) {
             stack.set(DataComponents.WRITTEN_BOOK_CONTENT, Journal.book(volume, player, complete));
-            // Send the freshly written pages before the packet that opens the book.
+            // Send the freshly written pages before the packet that opens the book. ServerPlayer.openItemGui only
+            // sends that packet for vanilla written books, so send it ourselves.
             serverPlayer.containerMenu.broadcastChanges();
-            serverPlayer.openItemGui(stack, hand);
+            serverPlayer.connection.send(new ClientboundOpenBookPacket(hand));
             player.awardStat(Stats.ITEM_USED.get(this));
         }
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
