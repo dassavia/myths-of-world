@@ -5,6 +5,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -30,6 +31,8 @@ public final class ModRegistries {
     /** Data the mod keeps on players (journal entries, spouse); see {@link com.mythsofworlds.core.PlayerData}. */
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES =
             DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, MythsOfWorlds.MODID);
+    public static final DeferredRegister<ArmorMaterial> ARMOR_MATERIALS =
+            DeferredRegister.create(Registries.ARMOR_MATERIAL, MythsOfWorlds.MODID);
     public static final DeferredRegister<CreativeModeTab> TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MythsOfWorlds.MODID);
 
@@ -52,6 +55,7 @@ public final class ModRegistries {
         SOUNDS.register(modBus);
         FEATURES.register(modBus);
         ATTACHMENT_TYPES.register(modBus);
+        ARMOR_MATERIALS.register(modBus);
         TABS.register(modBus);
     }
 }

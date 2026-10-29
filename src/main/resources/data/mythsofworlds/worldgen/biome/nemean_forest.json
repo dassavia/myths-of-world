@@ -118,7 +118,9 @@
       "minecraft:ore_lapis",
       "minecraft:ore_lapis_buried",
       "minecraft:ore_copper",
-      "mythsofworlds:ore_marble"
+      "mythsofworlds:ore_marble",
+      "mythsofworlds:ore_orichalcum",
+      "mythsofworlds:ore_hephaestus_coal"
     ],
     [],
     [

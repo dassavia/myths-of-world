@@ -212,7 +212,8 @@ FEATURE_ORDER = [
      "minecraft:ore_gold_lower", "minecraft:ore_redstone", "minecraft:ore_redstone_lower", "minecraft:ore_diamond",
      "minecraft:ore_diamond_medium", "minecraft:ore_diamond_large", "minecraft:ore_diamond_buried",
      "minecraft:ore_lapis", "minecraft:ore_lapis_buried", "minecraft:ore_copper", "minecraft:ore_emerald",
-     f"{NS}:ore_marble", f"{NS}:olympus_marble", f"{NS}:olympus_calcite", f"{NS}:white_cliffs", "minecraft:disk_sand", "minecraft:disk_clay", "minecraft:disk_gravel"],
+     f"{NS}:ore_marble", f"{NS}:olympus_marble", f"{NS}:olympus_calcite", f"{NS}:white_cliffs", "minecraft:disk_sand", "minecraft:disk_clay", "minecraft:disk_gravel",
+     f"{NS}:ore_orichalcum", f"{NS}:ore_hephaestus_coal"],
     [],
     ["minecraft:spring_water", "minecraft:spring_lava"],
     ["minecraft:glow_lichen", f"{NS}:asphodel_ash", f"{NS}:stygian_mud", f"{NS}:golden_apple_tree", f"{NS}:olive_tree", f"{NS}:olive_grove", f"{NS}:pomegranate_tree",
@@ -239,6 +240,8 @@ COMMON_ORES = [
 COMMON = ["minecraft:monster_room", "minecraft:monster_room_deep", "minecraft:spring_water", "minecraft:spring_lava",
           "minecraft:glow_lichen", "minecraft:freeze_top_layer"] + COMMON_ORES
 DISKS = ["minecraft:disk_sand", "minecraft:disk_clay", "minecraft:disk_gravel"]
+# The metal and coal of Hellas, in every biome (see gen_metals.py).
+GREEK_ORES = [f"{NS}:ore_orichalcum", f"{NS}:ore_hephaestus_coal"]
 
 
 def spawn(entity, weight, min_count, max_count):
@@ -257,7 +260,7 @@ BIOMES = {
         "temperature": 0.3, "downfall": 0.4,
         "sky": 0xB4DCFF, "fog": 0xFFF6E2, "water": 0x55C8F0, "water_fog": 0x0A3A5A, "grass": 0xA8C98A, "foliage": 0x8FA27A,
         "particle": ("minecraft:end_rod", 0.0008), "music": OLYMPUS_MUSIC,
-        "features": COMMON + [f"{NS}:marble_ruin", f"{NS}:cloud_island", f"{NS}:ore_marble", f"{NS}:olympus_marble",
+        "features": COMMON + GREEK_ORES + [f"{NS}:marble_ruin", f"{NS}:cloud_island", f"{NS}:ore_marble", f"{NS}:olympus_marble",
                               f"{NS}:olympus_calcite", "minecraft:ore_emerald", f"{NS}:laurel_bush", f"{NS}:cypress_tree",
                               "minecraft:flower_meadow", "minecraft:patch_grass_plain"],
         "spawners": {
@@ -271,7 +274,7 @@ BIOMES = {
         "temperature": 0.8, "downfall": 0.4,
         "sky": 0xFFE09A, "fog": 0xFFF1C9, "water": 0x7FE9FF, "water_fog": 0x0A4A5A, "grass": 0xE6CC5A, "foliage": 0xD9B84A,
         "particle": ("minecraft:end_rod", 0.003), "music": OLYMPUS_MUSIC,
-        "features": COMMON + [f"{NS}:marble_ruin", f"{NS}:cloud_island", f"{NS}:golden_apple_tree", f"{NS}:olive_tree", f"{NS}:olive_grove", f"{NS}:pomegranate_tree",
+        "features": COMMON + GREEK_ORES + [f"{NS}:marble_ruin", f"{NS}:cloud_island", f"{NS}:golden_apple_tree", f"{NS}:olive_tree", f"{NS}:olive_grove", f"{NS}:pomegranate_tree",
                               f"{NS}:elysian_flowers", "minecraft:flower_meadow", "minecraft:patch_sunflower",
                               "minecraft:patch_grass_plain", "minecraft:patch_sugar_cane"],
         "spawners": {
@@ -286,7 +289,7 @@ BIOMES = {
         "temperature": 0.7, "downfall": 0.8,
         "sky": 0x8ECFFF, "fog": 0xCFE6FF, "water": 0x3FA0E4, "water_fog": 0x050533, "grass": 0x7FBF4A, "foliage": 0x8AA36A,
         "particle": ("minecraft:spore_blossom_air", 0.002),
-        "features": COMMON + ["minecraft:amethyst_geode", "minecraft:forest_rock", f"{NS}:marble_ruin", f"{NS}:ore_marble",
+        "features": COMMON + GREEK_ORES + ["minecraft:amethyst_geode", "minecraft:forest_rock", f"{NS}:marble_ruin", f"{NS}:ore_marble",
                               f"{NS}:olive_tree", f"{NS}:olive_grove", f"{NS}:cypress_tree", f"{NS}:laurel_bush", f"{NS}:maquis",
                               "minecraft:flower_default", "minecraft:patch_grass_forest", "minecraft:patch_tall_grass_2",
                               "minecraft:patch_pumpkin"],
@@ -303,7 +306,7 @@ BIOMES = {
         "sky": 0x5E636C, "fog": 0x6C7078, "water": 0x4A5A6A, "water_fog": 0x10181E, "grass": 0x8A9088, "foliage": 0x6E746C,
         "particle": ("minecraft:soul", 0.004), "music": UNDERWORLD_MUSIC,
         "additions": ("minecraft:ambient.soul_sand_valley.additions", 0.0111),
-        "features": COMMON + ["minecraft:lake_lava_underground", f"{NS}:asphodel_ash", f"{NS}:pomegranate_tree", f"{NS}:dead_trunk",
+        "features": COMMON + GREEK_ORES + ["minecraft:lake_lava_underground", f"{NS}:asphodel_ash", f"{NS}:pomegranate_tree", f"{NS}:dead_trunk",
                               f"{NS}:patch_asphodel", "minecraft:patch_dead_bush"],
         "spawners": {
             "monster": [spawn(f"{NS}:shade", 100, 1, 3), spawn(f"{NS}:spartoi", 60, 1, 3), spawn("minecraft:skeleton", 20, 1, 2)],
@@ -317,7 +320,7 @@ BIOMES = {
         "sky": 0x4E5A52, "fog": 0x3E4A42, "water": 0x1E2A24, "water_fog": 0x0A100C, "grass": 0x4C6040, "foliage": 0x3A4A30,
         "particle": ("minecraft:soul_fire_flame", 0.002), "music": UNDERWORLD_MUSIC,
         "additions": ("minecraft:ambient.basalt_deltas.additions", 0.0111),
-        "features": COMMON + ["minecraft:disk_clay", f"{NS}:stygian_mud", f"{NS}:dead_trunk", "minecraft:trees_swamp",
+        "features": COMMON + GREEK_ORES + ["minecraft:disk_clay", f"{NS}:stygian_mud", f"{NS}:dead_trunk", "minecraft:trees_swamp",
                               "minecraft:brown_mushroom_swamp", "minecraft:patch_waterlily", "minecraft:seagrass_swamp"],
         "spawners": {
             "monster": [spawn(f"{NS}:shade", 80, 1, 2), spawn("minecraft:drowned", 30, 1, 2), spawn("minecraft:witch", 5, 1, 1)],
@@ -329,7 +332,7 @@ BIOMES = {
         "point": {"c": -0.1, "e": 0.3, "t": 0.5, "h": -0.2},
         "temperature": 0.9, "downfall": 0.3,
         "sky": 0x78C0FF, "fog": 0xD8EEFF, "water": 0x2FD8D0, "water_fog": 0x05313A, "grass": 0xA9C25A, "foliage": 0x8FA27A,
-        "features": COMMON + DISKS + [f"{NS}:marble_ruin", f"{NS}:white_cliffs", f"{NS}:olive_tree", f"{NS}:olive_grove",
+        "features": COMMON + GREEK_ORES + DISKS + [f"{NS}:marble_ruin", f"{NS}:white_cliffs", f"{NS}:olive_tree", f"{NS}:olive_grove",
                                       f"{NS}:cypress_tree", f"{NS}:maquis", "minecraft:flower_default", "minecraft:patch_grass_plain", "minecraft:patch_dead_bush",
                                       "minecraft:patch_sugar_cane", "minecraft:seagrass_warm", "minecraft:sea_pickle"],
         "spawners": {
@@ -347,7 +350,7 @@ BIOMES = {
         "temperature": 1.2, "downfall": 0.2, "precipitation": False,
         "sky": 0x8CC8FF, "fog": 0xE8DDB8, "water": 0x3FA0C4, "water_fog": 0x05313A, "grass": 0xC4B04A, "foliage": 0x9AA048,
         "particle": ("minecraft:white_ash", 0.0015),
-        "features": COMMON + ["minecraft:forest_rock", f"{NS}:marble_ruin", f"{NS}:ore_marble", f"{NS}:olive_tree",
+        "features": COMMON + GREEK_ORES + ["minecraft:forest_rock", f"{NS}:marble_ruin", f"{NS}:ore_marble", f"{NS}:olive_tree",
                               f"{NS}:olive_grove", f"{NS}:cypress_tree", f"{NS}:maquis", "minecraft:trees_savanna",
                               "minecraft:trees_birch_and_oak", "minecraft:flower_default", "minecraft:patch_grass_forest",
                               "minecraft:patch_tall_grass_2", "minecraft:patch_dead_bush"],
@@ -362,7 +365,7 @@ BIOMES = {
         "point": {"c": -0.6, "t": 0.5},
         "temperature": 0.8, "downfall": 0.5,
         "sky": 0x6AB4FF, "fog": 0xD0E8FF, "water": 0x2FD8D0, "water_fog": 0x05313A, "grass": 0xA9C25A, "foliage": 0x8FA27A,
-        "features": COMMON + DISKS + ["minecraft:seagrass_warm", "minecraft:sea_pickle", "minecraft:warm_ocean_vegetation"],
+        "features": COMMON + GREEK_ORES + DISKS + ["minecraft:seagrass_warm", "minecraft:sea_pickle", "minecraft:warm_ocean_vegetation"],
         "spawners": {
             "monster": [spawn("minecraft:drowned", 100, 1, 3)],
             "water_creature": [spawn("minecraft:dolphin", 4, 1, 3), spawn("minecraft:squid", 4, 1, 4)],

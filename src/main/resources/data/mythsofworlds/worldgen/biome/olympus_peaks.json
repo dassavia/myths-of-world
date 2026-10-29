@@ -108,7 +108,9 @@
       "minecraft:ore_emerald",
       "mythsofworlds:ore_marble",
       "mythsofworlds:olympus_marble",
-      "mythsofworlds:olympus_calcite"
+      "mythsofworlds:olympus_calcite",
+      "mythsofworlds:ore_orichalcum",
+      "mythsofworlds:ore_hephaestus_coal"
     ],
     [],
     [

@@ -13,19 +13,27 @@ import com.mythsofworlds.mythology.greek.item.WingsItem;
 import com.mythsofworlds.mythology.greek.portal.BrazierBlock;
 import com.mythsofworlds.mythology.greek.portal.PoolPortalBlock;
 import com.mythsofworlds.mythology.greek.portal.PrometheanTorchItem;
+import com.mythsofworlds.registry.MetalSet;
+import java.util.EnumMap;
 import java.util.List;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
@@ -34,8 +42,10 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 
+import static com.mythsofworlds.registry.ModRegistries.ARMOR_MATERIALS;
 import static com.mythsofworlds.registry.ModRegistries.BLOCKS;
 import static com.mythsofworlds.registry.ModRegistries.ITEMS;
 
@@ -168,6 +178,19 @@ public final class GreekContent {
     public static final DeferredBlock<FruitLeavesBlock> POMEGRANATE_LEAVES = BLOCKS.register("pomegranate_leaves",
             () -> new FruitLeavesBlock(GreekContent.POMEGRANATE, fruitLeaves(MapColor.COLOR_GREEN)));
 
+    // ---- Metals and fuel ----
+
+    /** Orichalcum, the red-gold metal of Atlantis: deep in the stone of Hellas. Between iron and diamond, and it takes
+     * enchantments as well as gold. */
+    public static final MetalSet ORICHALCUM = new MetalSet("orichalcum", MapColor.COLOR_ORANGE, new MetalSet.Stats(
+            1100, 9.0F, 3.0F, 22, new int[]{3, 7, 6, 3}, 28, 1.0F, 0.0F, SoundEvents.ARMOR_EQUIP_GOLD));
+    /** Coal from the forges of Hephaestus under the mountains of Hellas: burns twice as long as coal. */
+    public static final DeferredBlock<DropExperienceBlock> HEPHAESTUS_COAL_ORE = BLOCKS.registerBlock("hephaestus_coal_ore",
+            props -> new DropExperienceBlock(UniformInt.of(1, 3), props), BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.STONE).strength(3.0F, 3.0F).requiresCorrectToolForDrops());
+    public static final DeferredItem<BlockItem> HEPHAESTUS_COAL_ORE_ITEM = ITEMS.registerSimpleBlockItem(HEPHAESTUS_COAL_ORE);
+    public static final DeferredItem<Item> HEPHAESTUS_COAL = ITEMS.registerSimpleItem("hephaestus_coal");
+
     // ---- Items ----
 
     public static final DeferredItem<BlockItem> MARBLE_ITEM = ITEMS.registerSimpleBlockItem(MARBLE);
@@ -247,8 +270,17 @@ public final class GreekContent {
     public static final DeferredItem<Item> KARKINOS_CLAW = ITEMS.registerSimpleItem("karkinos_claw",
             new Item.Properties().rarity(Rarity.UNCOMMON));
     /** War girdle of Hippolyta, queen of the Amazons: strength and resistance when worn. */
+    public static final DeferredHolder<ArmorMaterial, ArmorMaterial> GIRDLE_MATERIAL = ARMOR_MATERIALS.register(
+            "girdle_of_hippolyta", () -> {
+                EnumMap<ArmorItem.Type, Integer> defense = new EnumMap<>(ArmorItem.Type.class);
+                for (ArmorItem.Type type : ArmorItem.Type.values()) {
+                    defense.put(type, type == ArmorItem.Type.LEGGINGS ? 3 : 0);
+                }
+                return new ArmorMaterial(defense, 25, SoundEvents.ARMOR_EQUIP_GOLD, () -> Ingredient.EMPTY,
+                        List.of(new ArmorMaterial.Layer(MythsOfWorlds.id("girdle_of_hippolyta"))), 0.0F, 0.0F);
+            });
     public static final DeferredItem<GirdleItem> GIRDLE_OF_HIPPOLYTA = ITEMS.register("girdle_of_hippolyta",
-            () -> new GirdleItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
+            () -> new GirdleItem(GIRDLE_MATERIAL, new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
     /** Give it to an amazon who loves you to marry her. */
     public static final DeferredItem<Item> WEDDING_RING = ITEMS.registerSimpleItem("wedding_ring",
             new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));

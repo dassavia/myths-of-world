@@ -5,42 +5,23 @@ import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Equipable;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 
 /**
  * The war girdle Ares gave Hippolyta, queen of the Amazons, which Heracles was sent to bring back. Worn in the legs
- * slot it gives Strength II, Resistance II, Speed and Regeneration. Hippolyta hands it over when she is defeated.
+ * slot it gives Strength II, Resistance II, Speed and Regeneration, and others see a golden belt on the wearer
+ * (textures/models/armor/girdle_of_hippolyta_layer_2.png). Hippolyta hands it over when she is defeated.
  */
-public class GirdleItem extends Item implements Equipable {
-    public GirdleItem(Properties properties) {
-        super(properties);
-    }
-
-    @Override
-    public EquipmentSlot getEquipmentSlot() {
-        return EquipmentSlot.LEGS;
-    }
-
-    @Override
-    public Holder<SoundEvent> getEquipSound() {
-        return SoundEvents.ARMOR_EQUIP_GOLD;
-    }
-
-    @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-        return swapWithEquipmentSlot(this, level, player, hand);
+public class GirdleItem extends ArmorItem {
+    public GirdleItem(Holder<ArmorMaterial> material, Properties properties) {
+        super(material, Type.LEGGINGS, properties);
     }
 
     public static boolean isWorn(Player player) {

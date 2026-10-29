@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "ingredient": {
+    "item": "mythsofworlds:dark_iron_ore"
+  },
+  "result": {
+    "id": "mythsofworlds:dark_iron_ingot"
+  },
+  "experience": 1.0,
+  "cookingtime": 200
+}

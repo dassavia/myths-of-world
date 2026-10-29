@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "ingredient": {
+    "item": "mythsofworlds:orichalcum_ore"
+  },
+  "result": {
+    "id": "mythsofworlds:orichalcum_ingot"
+  },
+  "experience": 1.0,
+  "cookingtime": 200
+}

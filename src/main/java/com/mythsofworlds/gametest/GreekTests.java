@@ -478,4 +478,16 @@ public class GreekTests {
         zombie.discard();
         helper.succeed();
     }
+
+    /** The girdle is worn as armour on the legs, so others see it on the wearer. */
+    @GameTest(template = "empty")
+    public static void girdleIsWornArmour(GameTestHelper helper) {
+        var girdle = GreekContent.GIRDLE_OF_HIPPOLYTA.get();
+        helper.assertTrue(girdle.getEquipmentSlot() == EquipmentSlot.LEGS, "the girdle goes in the legs slot");
+        helper.assertTrue(!girdle.getMaterial().value().layers().isEmpty(), "the girdle needs an armour layer to be seen");
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        player.setItemSlot(EquipmentSlot.LEGS, new ItemStack(girdle));
+        helper.assertTrue(com.mythsofworlds.mythology.greek.item.GirdleItem.isWorn(player), "the girdle should count as worn");
+        helper.succeed();
+    }
 }

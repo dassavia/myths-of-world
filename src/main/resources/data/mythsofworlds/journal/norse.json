@@ -11,6 +11,11 @@
       "pages": 2
     },
     {
+      "id": "norse.dark_iron",
+      "category": "intro",
+      "pages": 2
+    },
+    {
       "id": "norse.draugr",
       "category": "creature",
       "pages": 2,
@@ -51,6 +56,12 @@
       "category": "creature",
       "pages": 2,
       "entity": "mythsofworlds:norse_merchant"
+    },
+    {
+      "id": "norse.valkyrie",
+      "category": "creature",
+      "pages": 3,
+      "entity": "mythsofworlds:valkyrie"
     },
     {
       "id": "norse.draugr_chieftain",
@@ -135,6 +146,12 @@
       "category": "place",
       "pages": 1,
       "structure": "mythsofworlds:dwarf_forge"
+    },
+    {
+      "id": "norse.valkyrie_hall",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:valkyrie_hall"
     },
     {
       "id": "norse.rune_circle",

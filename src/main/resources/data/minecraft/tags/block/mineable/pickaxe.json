@@ -7,6 +7,12 @@
     "mythsofworlds:marble_pillar",
     "mythsofworlds:olympian_marble",
     "mythsofworlds:brazier",
-    "mythsofworlds:carved_runestone"
+    "mythsofworlds:carved_runestone",
+    "mythsofworlds:orichalcum_ore",
+    "mythsofworlds:dark_iron_ore",
+    "mythsofworlds:hephaestus_coal_ore",
+    "mythsofworlds:muspel_ember_ore",
+    "mythsofworlds:orichalcum_block",
+    "mythsofworlds:dark_iron_block"
   ]
 }

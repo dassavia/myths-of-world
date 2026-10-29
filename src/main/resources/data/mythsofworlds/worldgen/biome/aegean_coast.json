@@ -117,7 +117,9 @@
       "mythsofworlds:white_cliffs",
       "minecraft:disk_sand",
       "minecraft:disk_clay",
-      "minecraft:disk_gravel"
+      "minecraft:disk_gravel",
+      "mythsofworlds:ore_orichalcum",
+      "mythsofworlds:ore_hephaestus_coal"
     ],
     [],
     [

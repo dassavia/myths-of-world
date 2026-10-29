@@ -1222,10 +1222,11 @@ FACES = ("front", "back", "right", "left")
 
 
 def amazon(rng, skin, hair, dress, trim, eyes=0x4A3320, outfit="chiton", style="long", belt=None, crown=None,
-           girdle=None, flower=None, band=None, lips=0xD87A84, bronze=0xC9963E):
+           girdle=None, flower=None, band=None, lips=0xD87A84, bronze=0xC9963E, helm=None):
     """A young amazon: big eyes, long hair that frames the face and falls over the shoulders, a dress or tunic.
 
-    style: long, wavy, braid, twin or ponytail. outfit: chiton, peplos, huntress or cuirass.
+    style: long, wavy, braid, twin or ponytail. outfit: chiton, peplos, huntress, cuirass or valkyrie (a mail shirt
+    over a long dress, with fur on the shoulders). helm: the colour of a valkyrie's winged helmet.
     """
     img = Image.new("RGBA", (64, 64), (0, 0, 0, 0))
     lay = skin_layout()
@@ -1308,6 +1309,22 @@ def amazon(rng, skin, hair, dress, trim, eyes=0x4A3320, outfit="chiton", style="
             cx, cy, cw, ch = hat[name]
             fill_rect(img, cx, cy + 1, cw, 1, rgb(band), rng, 4)
         fill_rect(img, fx, fy + 1, fw, 1, rgb(band), rng, 4)
+    if helm:                                          # a winged helmet over the hair
+        for name in FACES:
+            cx, cy, cw, ch = hat[name]
+            fill_rect(img, cx, cy, cw, 2, rgb(helm), rng, 5)
+            fill_rect(img, cx, cy + 2, cw, 1, scale(rgb(helm), 0.8), rng, 4)
+        tx_, ty_, tw_, th_ = hat["top"]
+        fill_rect(img, tx_, ty_, tw_, th_, rgb(helm), rng, 5)
+        fill_rect(img, tx_ + 3, ty_, 2, th_, scale(rgb(helm), 1.2), rng, 4)
+        for name in ("right", "left"):                # white feathered wings on both sides
+            cx, cy, cw, ch = hat[name]
+            for i in range(2, 7):
+                for j in range(0, 7 - i):
+                    c = rgb(0xF4F1EA) if (i + j) % 2 else rgb(0xD8D4CC)
+                    img.putpixel((cx + (cw - 1 - i if name == "right" else i), cy + j), c)
+        img.putpixel((fx + 3, fy + 1), scale(rgb(helm), 0.7))   # nose guard
+        img.putpixel((fx + 4, fy + 1), scale(rgb(helm), 0.7))
     if flower:
         rx, ry, rw, rh = hat["left"]
         for dx, dy in ((5, 1), (6, 2), (5, 3), (4, 2)):
@@ -1322,7 +1339,7 @@ def amazon(rng, skin, hair, dress, trim, eyes=0x4A3320, outfit="chiton", style="
     img.putpixel((bx + 4, by + 1), s)
     for px_ in (2, 5):                                           # the bust is shaded under
         img.putpixel((bx + px_, by + 4), scale(d_c, 0.85))
-    waist = 6 if outfit in ("huntress", "cuirass") else 5
+    waist = 6 if outfit in ("huntress", "cuirass", "valkyrie") else 5
     for name in FACES:
         fx_, fy_, fw_, fh_ = body[name]
         fill_rect(img, fx_, fy_ + waist, fw_, 1, b_c, rng, 4)    # belt at the waist
@@ -1336,6 +1353,19 @@ def amazon(rng, skin, hair, dress, trim, eyes=0x4A3320, outfit="chiton", style="
         img.putpixel((bx + 5, by + 3), scale(rgb(bronze), 1.25))
         img.putpixel((bx + 3, by + 1), s)
         img.putpixel((bx + 4, by + 1), s)
+    if outfit == "valkyrie":                                     # mail shirt, fur over the shoulders
+        mail = rgb(0xA8ACB8)
+        for name in FACES:
+            fx_, fy_, fw_, fh_ = body[name]
+            for i in range(fw_):
+                for j in range(1, waist):
+                    img.putpixel((fx_ + i, fy_ + j), jitter(mail if (i + j) % 2 else scale(mail, 0.78), rng, 4))
+        fill_rect(img, bx + 2, by + 1, 4, 1, s, rng, 2)
+        img.putpixel((bx + 3, by + 2), s)
+        img.putpixel((bx + 4, by + 2), s)
+        for name in FACES:
+            fx_, fy_, fw_, fh_ = body[name]
+            fill_rect(img, fx_, fy_ + waist, fw_, 1, b_c, rng, 4)
     if girdle:
         img.putpixel((bx + 3, by + waist), rgb(0xC0262E))
         img.putpixel((bx + 4, by + waist), rgb(0xFFE08A))
@@ -1348,18 +1378,21 @@ def amazon(rng, skin, hair, dress, trim, eyes=0x4A3320, outfit="chiton", style="
         for rect in side_faces(parts[arm]):
             ax, ay, aw, ah = rect
             fill_rect(img, ax, ay, aw, 3 if outfit != "cuirass" else 2, d_c, rng, 5)
-            if outfit == "huntress":
+            if outfit == "valkyrie":
+                fill_rect(img, ax, ay, aw, 4, rgb(0xA8ACB8), rng, 6)
+                fill_rect(img, ax, ay + 8, aw, 3, rgb(0x6B4A2B), rng, 5)
+            elif outfit == "huntress":
                 fill_rect(img, ax, ay + 8, aw, 3, rgb(0x6B4A2B), rng, 5)
             else:
                 fill_rect(img, ax, ay + 8, aw, 1, rgb(bronze), rng, 4)
     # --- legs: under the skirt, sandals or boots ---
-    skirt = 9 if outfit in ("chiton", "peplos") else 4
+    skirt = 9 if outfit in ("chiton", "peplos", "valkyrie") else 4
     for leg in ("right_leg", "left_leg"):
         parts[leg] = paint_box(img, *lay[leg], s, rng, 2, shaded=False)
         for rect in side_faces(parts[leg]):
             lx, ly, lw, lh = rect
             fill_rect(img, lx, ly, lw, skirt, d_c if outfit != "huntress" else t_c, rng, 5)
-            if outfit == "huntress":
+            if outfit in ("huntress", "valkyrie"):
                 fill_rect(img, lx, ly + 7, lw, 5, rgb(0x6B4A2B), rng, 5)
                 fill_rect(img, lx, ly + 7, lw, 1, rgb(0x8A6A44), rng, 5)
             else:
@@ -1371,7 +1404,7 @@ def amazon(rng, skin, hair, dress, trim, eyes=0x4A3320, outfit="chiton", style="
         pf = box_faces(*lay[pants])
         for name in FACES:
             px, py, pw, ph = pf[name]
-            length = 10 if outfit in ("chiton", "peplos") else 4
+            length = 10 if outfit in ("chiton", "peplos") else 8 if outfit == "valkyrie" else 4
             colour = d_c if outfit != "huntress" else t_c
             if outfit == "cuirass":
                 colour = t_c
@@ -1386,6 +1419,11 @@ def amazon(rng, skin, hair, dress, trim, eyes=0x4A3320, outfit="chiton", style="
             jx, jy, jw, jh = jacket[name]
             for i in range(jw):
                 img.putpixel((jx + i, jy + 4), t_c if i % 2 == 0 else scale(t_c, 0.7))
+    if outfit == "valkyrie":
+        for name in FACES:
+            jx, jy, jw, jh = jacket[name]
+            for i in range(jw):
+                img.putpixel((jx + i, jy), jitter(rgb(0xE8E0D0) if i % 2 else rgb(0xC8BCA8), rng, 6))
     jx, jy, jw, jh = jacket["back"]
     fx_, fy_, fw_, fh_ = jacket["front"]
     if style in ("long", "wavy"):
