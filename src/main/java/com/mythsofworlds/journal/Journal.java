@@ -41,6 +41,8 @@ public final class Journal {
         }
     }
 
+    /** A written book holds at most 100 pages. */
+    private static final int MAX_PAGES = 100;
     private static final Map<String, List<Entry>> VOLUMES = new LinkedHashMap<>();
 
     private Journal() {
@@ -111,7 +113,7 @@ public final class Journal {
                     }
                     text.append(Component.translatable("journal.mythsofworlds." + entry.id() + ".page" + page));
                     pages.add(Filterable.passThrough(text));
-                    if (pages.size() >= WrittenBookContent.MAX_PAGES) {
+                    if (pages.size() >= MAX_PAGES) {
                         break;
                     }
                 }

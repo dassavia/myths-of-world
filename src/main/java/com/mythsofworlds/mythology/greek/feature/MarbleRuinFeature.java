@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DecoratedPotBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -129,7 +130,7 @@ public class MarbleRuinFeature extends Feature<NoneFeatureConfiguration> {
             BlockPos pos = ground(level, origin.offset(random.nextInt(5) - 2, 0, random.nextInt(5) - 2));
             if (pos != null && level.getBlockState(pos).isAir()) {
                 setBlock(level, pos, Blocks.DECORATED_POT.defaultBlockState()
-                        .setValue(DecoratedPotBlock.HORIZONTAL_FACING, Direction.Plane.HORIZONTAL.getRandomDirection(random))
+                        .setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.Plane.HORIZONTAL.getRandomDirection(random))
                         .setValue(DecoratedPotBlock.CRACKED, random.nextInt(3) == 0));
             }
         }
