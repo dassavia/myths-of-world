@@ -2,6 +2,7 @@ package com.mythsofworlds.mythology.norse.entity;
 
 import com.mythsofworlds.mythology.greek.entity.GreekBoss;
 import com.mythsofworlds.mythology.norse.NorseEntities;
+import com.mythsofworlds.mythology.norse.item.MjolnirItem;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -23,7 +24,7 @@ import net.minecraft.world.phys.Vec3;
 /**
  * Thrym, king of the frost giants, on his throne in Utgard. He stole Thor's hammer and keeps it until someone takes it
  * back. Breathes a cone of frost that freezes everyone in front of him, stamps the ice, and at half health calls two
- * frost giants of his court. Fire hurts him twice as much.
+ * frost giants of his court. Fire hurts him twice as much, and the hammer he stole three times.
  */
 public class Thrym extends GreekBoss {
     public static final double BREATH_RANGE = 10.0;
@@ -62,6 +63,9 @@ public class Thrym extends GreekBoss {
     public boolean hurt(DamageSource source, float amount) {
         if (source.is(DamageTypeTags.IS_FIRE)) {
             amount *= 2.0F;
+        }
+        if (MjolnirItem.struckWith(source)) {
+            amount *= 3.0F;
         }
         return super.hurt(source, amount);
     }

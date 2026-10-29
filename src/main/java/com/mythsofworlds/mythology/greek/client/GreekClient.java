@@ -9,6 +9,7 @@ import com.mythsofworlds.mythology.greek.entity.Hydra;
 import com.mythsofworlds.mythology.greek.entity.HydraHatchling;
 import com.mythsofworlds.mythology.greek.entity.NemeanLion;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -49,7 +50,7 @@ public final class GreekClient {
         event.registerLayerDefinition(CERBERUS, () -> BeastModel.createBodyLayer(3, false));
         event.registerLayerDefinition(HYDRA, HydraModel::createBodyLayer);
         event.registerLayerDefinition(GOLDEN_HIND, HindModel::createBodyLayer);
-        event.registerLayerDefinition(KARKINOS, CrabModel::createBodyLayer);
+        event.registerLayerDefinition(KARKINOS, CrayfishModel::createBodyLayer);
     }
 
     @SubscribeEvent
@@ -59,6 +60,7 @@ public final class GreekClient {
         event.registerEntityRenderer(GreekEntities.HARPY.get(),
                 ctx -> new GreekHumanoidRenderer<>(ctx, new HarpyModel(ctx.bakeLayer(HARPY)), "harpy", 0.9F, false));
         event.registerEntityRenderer(GreekEntities.SPARTOI.get(), SpartoiRenderer::new);
+        event.registerEntityRenderer(GreekEntities.GROWTH_POTION.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(GreekEntities.SHADE.get(),
                 ctx -> new GreekHumanoidRenderer<>(ctx, new ZombieArmsModel<>(ctx.bakeLayer(HUMANOID)), "shade", 1.0F, true));
         event.registerEntityRenderer(GreekEntities.PEGASUS.get(), PegasusRenderer::new);
@@ -81,7 +83,7 @@ public final class GreekClient {
         event.registerEntityRenderer(GreekEntities.LION.get(),
                 ctx -> new GreekMobRenderer<Lion, BeastModel<Lion>>(ctx, new BeastModel<>(ctx.bakeLayer(NEMEAN_LION), 1), "lion", 0.85F));
         event.registerEntityRenderer(GreekEntities.KARKINOS.get(),
-                ctx -> new GreekMobRenderer<Karkinos, CrabModel<Karkinos>>(ctx, new CrabModel<>(ctx.bakeLayer(KARKINOS)), "karkinos", 0.65F));
+                ctx -> new GreekMobRenderer<Karkinos, CrayfishModel<Karkinos>>(ctx, new CrayfishModel<>(ctx.bakeLayer(KARKINOS)), "karkinos", 0.65F));
         event.registerEntityRenderer(GreekEntities.AMAZON.get(), AmazonRenderer::new);
         event.registerEntityRenderer(GreekEntities.HIPPOLYTA.get(), AmazonRenderer::new);
         event.registerEntityRenderer(GreekEntities.CERBERUS.get(),

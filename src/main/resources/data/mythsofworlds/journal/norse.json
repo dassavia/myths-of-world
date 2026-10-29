@@ -61,25 +61,25 @@
     {
       "id": "norse.garm",
       "category": "boss",
-      "pages": 2,
+      "pages": 3,
       "entity": "mythsofworlds:garm"
     },
     {
       "id": "norse.thrym",
       "category": "boss",
-      "pages": 2,
+      "pages": 3,
       "entity": "mythsofworlds:thrym"
     },
     {
       "id": "norse.fenrir",
       "category": "boss",
-      "pages": 2,
+      "pages": 3,
       "entity": "mythsofworlds:fenrir"
     },
     {
       "id": "norse.surtr",
       "category": "boss",
-      "pages": 2,
+      "pages": 3,
       "entity": "mythsofworlds:surtr"
     },
     {

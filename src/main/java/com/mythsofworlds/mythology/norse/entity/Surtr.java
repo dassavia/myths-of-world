@@ -36,7 +36,8 @@ import org.jetbrains.annotations.Nullable;
  * Surtr, lord of Muspelheim, in his fortress over the lava. His flaming sword burns, he hurls fire, and every few
  * seconds the ground around him bursts into flame. Below half health fire rains from the sky on his foes. Like all
  * of Muspel's sons he fears water and snow: snowballs hurt him, rain and water burn him, and Thor's lightning
- * strikes him twice as hard.
+ * strikes him twice as hard. His heat blunts every blade and arrow, which bite him only half as deep, unless the
+ * fighter holds a frost heart in the other hand.
  */
 public class Surtr extends GreekBoss {
     public static final int FIRE_RING_RADIUS = 4;
@@ -107,6 +108,9 @@ public class Surtr extends GreekBoss {
         }
         if (source.getDirectEntity() instanceof LightningBolt) {
             amount *= 2.0F;
+        } else if (source.getEntity() instanceof LivingEntity attacker && !(source.getDirectEntity() instanceof Snowball)
+                && !attacker.getOffhandItem().is(NorseContent.FROST_HEART.get())) {
+            amount *= 0.5F;
         }
         return super.hurt(source, amount);
     }

@@ -658,7 +658,7 @@ STRUCTURES = {
     "perseus_refuge": (["aegean_coast", "olympus_peaks"], 44, 14, 1450211, "WORLD_SURFACE_WG", 0, "beard_thin"),
     "amazon_camp": (["elysian_fields", "arcadian_grove", "aegean_coast", "nemean_forest"], 36, 14, 1450212,
                     "WORLD_SURFACE_WG", 0, "beard_thin"),
-    "greek_farmstead": (["elysian_fields", "arcadian_grove", "aegean_coast", "nemean_forest"], 14, 5, 1450213,
+    "greek_farmstead": (["elysian_fields", "arcadian_grove", "nemean_forest"], 14, 5, 1450213,
                         "WORLD_SURFACE_WG", 0, "beard_thin"),
 }
 LAIRS = {"structures": {"labyrinth": 3, "gates_of_hades": 3, "hydra_lair": 3, "medusa_lair": 3, "cyclops_cave": 3,
@@ -957,6 +957,12 @@ def recipes():
         "ingredients": [{"item": "minecraft:goat_horn"}, {"item": "minecraft:gold_ingot"}, {"item": "minecraft:leather"}],
         "result": {"id": f"{NS}:horn_of_themiscyra", "count": 1},
     })
+    write_json(data("recipe", "growth_potion.json"), {
+        "type": "minecraft:crafting_shapeless", "category": "misc",
+        "ingredients": [{"item": "minecraft:glass_bottle"}, {"item": "minecraft:bone_meal"},
+                        {"item": "minecraft:golden_carrot"}, {"item": "minecraft:gunpowder"}],
+        "result": {"id": f"{NS}:growth_potion", "count": 1},
+    })
     write_json(data("tags", "worldgen", "structure", "amazon_homes.json"),
                {"replace": False, "values": [f"{NS}:amazon_camp", f"{NS}:themiscyra"]})
     write_json(data("recipe", "greek_journal.json"), {
@@ -992,7 +998,7 @@ def add_tag(kind, name, values, namespace="minecraft"):
 ITEMS = ["promethean_torch", "ambrosia", "harpy_feather", "minotaur_horn", "hydra_scale", "cerberus_fang",
          "nemean_pelt", "cyclops_eye", "medusa_head", "nemean_claw", "nemean_claw_dagger", "harpe", "hydra_egg",
          "olives", "pomegranate", "wings_of_daedalus", "karkinos_claw", "girdle_of_hippolyta", "wedding_ring",
-         "necklace_of_harmonia", "horn_of_themiscyra",
+         "necklace_of_harmonia", "horn_of_themiscyra", "growth_potion",
          "greek_journal", "greek_journal_complete"]
 HANDHELD = {"promethean_torch", "nemean_claw_dagger", "harpe"}
 MOBS = ["satyr", "harpy", "spartoi", "shade", "pegasus", "golden_hind", "hydra_hatchling", "greek_merchant",
@@ -1116,6 +1122,10 @@ LANG = {
                                                     "Worn in the legs slot: Strength II, Resistance II, Speed and Regeneration"),
     "item.mythsofworlds.necklace_of_harmonia": ("Ожерелье Гармонии", "Necklace of Harmonia"),
     "item.mythsofworlds.horn_of_themiscyra": ("Горн Фемискиры", "Horn of Themiscyra"),
+    "item.mythsofworlds.growth_potion": ("Взрывное зелье роста", "Splash Potion of Growth"),
+    "item.mythsofworlds.growth_potion.desc": ("Бросьте: малыши вокруг (и маленькие амазонки) сразу вырастают",
+                                              "Throw it: the young around (little amazons too) grow up at once"),
+    "entity.mythsofworlds.growth_potion": ("Зелье роста", "Potion of Growth"),
     "item.mythsofworlds.horn_of_themiscyra.desc": ("ПКМ: амазонки вокруг возвращаются в свой лагерь",
                                                    "Right-click: the amazons around go back to their camp"),
     "item.mythsofworlds.horn_of_themiscyra.called": ("Горн трубит. Возвращаются домой: %s", "The horn sounds. Going home: %s"),
@@ -1255,7 +1265,7 @@ def journal(volume, intro, entries):
 JOURNAL_UI = {
     "journal.mythsofworlds.progress": ("Записей: %s из %s", "Entries: %s of %s"),
     "journal.mythsofworlds.new_entry": ("Новая запись в журнале: %s", "New journal entry: %s"),
-    "journal.mythsofworlds.given": ("В вашей сумке появился %s. Записи в нём будут появляться сами.",
+    "journal.mythsofworlds.given": ("В сумке у вас теперь лежит книга «%s». Записи в ней будут появляться сами.",
                                     "You find %s in your pack. Its entries will write themselves."),
     "journal.mythsofworlds.category.intro": ("Введение", "Introduction"),
     "journal.mythsofworlds.category.creature": ("Существа", "Creatures"),

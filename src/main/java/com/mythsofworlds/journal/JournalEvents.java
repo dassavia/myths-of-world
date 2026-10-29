@@ -107,10 +107,12 @@ public final class JournalEvents {
         Player player = event.getEntity();
         if (volume != null && PlayerData.addEntry(player, volume.id() + "._given")) {
             ItemStack journal = new ItemStack(volume.journal().get());
+            // Take the name first: adding the book to the inventory empties this stack (its name would read "Air").
+            Component name = journal.getHoverName();
             if (!player.getInventory().add(journal)) {
                 player.drop(journal, false);
             }
-            player.displayClientMessage(Component.translatable("journal.mythsofworlds.given", journal.getHoverName())
+            player.displayClientMessage(Component.translatable("journal.mythsofworlds.given", name)
                     .withStyle(ChatFormatting.GOLD), false);
         }
     }

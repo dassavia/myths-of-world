@@ -115,7 +115,7 @@ ENTRIES = [
      ["Амазонка",
       "Воительница Фемискиры, живёт в лагерях и в городе. Бьёт чудовищ, а если её задеть, отвечает вместе с сёстрами.",
       "Ухаживание: дарите цветы, золото, оружие, трофеи или еду, раз в 20 секунд. ПКМ пустой рукой: она скажет, что "
-      "любит больше всего, и такой подарок ценится вдвое.",
+      "любит больше всего. Любимый подарок даёт вдвое больше симпатии.",
       "При симпатии 100 подарите обручальное кольцо (алмаз над тремя слитками золота). Жена идёт за вами и сражается "
       "рядом. Shift+ПКМ: идти за вами, ждать или гулять рядом.",
       "Торт жене: родится дочь, раз в день. Она вырастет за 20 минут в амазонку, верную вашей семье. Удар по амазонке "
@@ -123,7 +123,9 @@ ENTRIES = [
       "Больше всего на свете амазонки любят ожерелье Гармонии: подарите его, и она сразу влюбится (симпатия 100). "
       "Его не скрафтить, оно лежит в сокровищницах храмов, лабиринта и логов чудовищ.",
       "Амазонки держатся своего лагеря. Если они разбрелись, протрубите в горн Фемискиры (козий рог, золото и кожа): "
-      "все вокруг вернутся домой."],
+      "все вокруг вернутся домой.",
+      "Не хотите ждать, пока дочь подрастёт? Бросьте в неё взрывное зелье роста (пузырёк, костная мука, золотая "
+      "морковь и порох): она сразу станет взрослой. Зелье растит и любых других малышей."],
      ["Amazon",
       "Warrior woman of Themiscyra, in the camps and the city. She fights monsters, and if you hurt her she answers "
       "together with her sisters.",
@@ -136,7 +138,9 @@ ENTRIES = [
       "Above all, amazons love the necklace of Harmonia: give it and she falls in love at once (affection 100). It "
       "cannot be crafted; it lies in the treasuries of temples, the labyrinth and the monsters' lairs.",
       "Amazons keep to their camp. If they have wandered off, blow the horn of Themiscyra (a goat horn, gold and "
-      "leather): everyone around goes back home."]),
+      "leather): everyone around goes back home.",
+      "Cannot wait for your daughter to grow up? Throw a splash potion of growth at her (a glass bottle, bone meal, "
+      "a golden carrot and gunpowder): she is grown at once. The potion grows up any other young creature too."]),
 
     # ---------------------------------------------------------------- bosses
     ("cyclops", "boss", mob("cyclops"),

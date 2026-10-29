@@ -126,7 +126,7 @@
   "entity.mythsofworlds.hippolyta": "Ипполита",
   "journal.mythsofworlds.progress": "Записей: %s из %s",
   "journal.mythsofworlds.new_entry": "Новая запись в журнале: %s",
-  "journal.mythsofworlds.given": "В вашей сумке появился %s. Записи в нём будут появляться сами.",
+  "journal.mythsofworlds.given": "В сумке у вас теперь лежит книга «%s». Записи в ней будут появляться сами.",
   "journal.mythsofworlds.category.intro": "Введение",
   "journal.mythsofworlds.category.creature": "Существа",
   "journal.mythsofworlds.category.boss": "Боссы",
@@ -165,7 +165,7 @@
   "journal.mythsofworlds.greek.lion.page2": "Осторожно: если ранить одного, на вас бросится весь прайд. Размножаются на сырой говядине. Роняют кожу и мясо.",
   "journal.mythsofworlds.greek.amazon.title": "Амазонка",
   "journal.mythsofworlds.greek.amazon.page1": "Воительница Фемискиры, живёт в лагерях и в городе. Бьёт чудовищ, а если её задеть, отвечает вместе с сёстрами.",
-  "journal.mythsofworlds.greek.amazon.page2": "Ухаживание: дарите цветы, золото, оружие, трофеи или еду, раз в 20 секунд. ПКМ пустой рукой: она скажет, что любит больше всего, и такой подарок ценится вдвое.",
+  "journal.mythsofworlds.greek.amazon.page2": "Ухаживание: дарите цветы, золото, оружие, трофеи или еду, раз в 20 секунд. ПКМ пустой рукой: она скажет, что любит больше всего. Любимый подарок даёт вдвое больше симпатии.",
   "journal.mythsofworlds.greek.amazon.page3": "При симпатии 100 подарите обручальное кольцо (алмаз над тремя слитками золота). Жена идёт за вами и сражается рядом. Shift+ПКМ: идти за вами, ждать или гулять рядом.",
   "journal.mythsofworlds.greek.amazon.page4": "Торт жене: родится дочь, раз в день. Она вырастет за 20 минут в амазонку, верную вашей семье. Удар по амазонке сильно снижает симпатию.",
   "journal.mythsofworlds.greek.cyclops.title": "Циклоп",
@@ -420,5 +420,13 @@
   "entity.mythsofworlds.hippolyta.wander": "%1$s: «Я погуляю тут неподалёку».",
   "entity.mythsofworlds.hippolyta.necklace": "%1$s не может отвести глаз от ожерелья Гармонии. Она влюблена!",
   "entity.mythsofworlds.hippolyta.necklace_already": "%1$s: «Моё сердце и так твоё. Оставь ожерелье себе».",
-  "entity.mythsofworlds.hippolyta.gift_again": "%1$s: «Такой дар у меня уже есть, но он мне по-прежнему приятен». Симпатия: %2$s/%3$s"
+  "entity.mythsofworlds.hippolyta.gift_again": "%1$s: «Такой дар у меня уже есть, но он мне по-прежнему приятен». Симпатия: %2$s/%3$s",
+  "item.mythsofworlds.growth_potion": "Взрывное зелье роста",
+  "item.mythsofworlds.growth_potion.desc": "Бросьте: малыши вокруг (и маленькие амазонки) сразу вырастают",
+  "entity.mythsofworlds.growth_potion": "Зелье роста",
+  "journal.mythsofworlds.greek.amazon.page7": "Не хотите ждать, пока дочь подрастёт? Бросьте в неё взрывное зелье роста (пузырёк, костная мука, золотая морковь и порох): она сразу станет взрослой. Зелье растит и любых других малышей.",
+  "journal.mythsofworlds.norse.garm.page3": "Пёс холодных туманов боится огня: пока Гарм горит, любой удар ранит его вдвое сильнее. Берите меч с заговором огня или горящие стрелы.",
+  "journal.mythsofworlds.norse.thrym.page3": "Тор был погибелью великанов: Мьёльнир бьёт любого великана и тролля вдвое сильнее, а Трима, укравшего молот, - втрое. Отобранный молот пригодится в Муспельхейме.",
+  "journal.mythsofworlds.norse.fenrir.page3": "Пока волк свободен, оружие людей почти не ранит его: любой удар наносит лишь четверть урона. Без Глейпнира его не одолеть - купите путы у дверга.",
+  "journal.mythsofworlds.norse.surtr.page3": "Жар Сурта притупляет клинки и стрелы: они ранят его вдвое слабее. Держите во второй руке сердце инея, добытое у инеистых великанов, - и оружие бьёт в полную силу."
 }
