@@ -94,7 +94,9 @@ public final class WorldSmokeTest {
                         level.getChunk((pos.getX() >> 4) + dx, (pos.getZ() >> 4) + dz);
                     }
                 }
-                AABB around = new AABB(pos).inflate(72, 128, 72);
+                // The located position sits at y=0; in Jotunheim's amplified mountains a lair can stand far above that.
+                AABB around = new AABB(pos.getX() - 72, level.getMinBuildHeight(), pos.getZ() - 72,
+                        pos.getX() + 72, level.getMaxBuildHeight(), pos.getZ() + 72);
                 int mobs = level.getEntitiesOfClass(Mob.class, around).size();
                 Class<? extends Mob> resident = RESIDENTS.get(name);
                 if (resident != null && level.getEntitiesOfClass(resident, around).isEmpty()) {
@@ -105,7 +107,8 @@ public final class WorldSmokeTest {
                     var start = level.structureManager().getStructureWithPieceAt(pos.atY(surface - 18), holder.value());
                     report("labyrinth: surface y=" + surface + ", maze below the surface: " + start.isValid());
                 }
-                report("structure " + name + " generated at " + pos + ", mobs around: " + mobs);
+                report("structure " + name + " generated at " + pos + " (surface y="
+                        + level.getHeight(Heightmap.Types.WORLD_SURFACE_WG, pos.getX(), pos.getZ()) + "), mobs around: " + mobs);
             });
         }
     }
