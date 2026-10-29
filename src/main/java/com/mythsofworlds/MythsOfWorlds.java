@@ -8,6 +8,7 @@ import com.mythsofworlds.mythology.greek.GreekFeatures;
 import com.mythsofworlds.mythology.greek.GreekSounds;
 import com.mythsofworlds.mythology.indian.IndianContent;
 import com.mythsofworlds.mythology.norse.NorseContent;
+import com.mythsofworlds.mythology.norse.NorseEntities;
 import com.mythsofworlds.mythology.oceanic.OceanicContent;
 import com.mythsofworlds.mythology.slavic.SlavicContent;
 import com.mythsofworlds.registry.ModRegistries;
@@ -27,6 +28,7 @@ public final class MythsOfWorlds {
         GreekFeatures.init();
         GreekEntities.init(modBus);
         NorseContent.init();
+        NorseEntities.init(modBus);
         SlavicContent.init();
         OceanicContent.init();
         EgyptianContent.init();

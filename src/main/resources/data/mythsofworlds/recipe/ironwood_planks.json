@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "mythsofworlds:ironwood_log"
+    }
+  ],
+  "result": {
+    "id": "mythsofworlds:ironwood_planks",
+    "count": 4
+  }
+}

@@ -1,78 +1,90 @@
 {
   "has_precipitation": true,
-  "temperature": -0.5,
-  "downfall": 0.5,
+  "temperature": -0.3,
+  "downfall": 0.8,
   "effects": {
-    "sky_color": 8233727,
-    "fog_color": 11053224,
+    "sky_color": 8364484,
+    "fog_color": 11123915,
     "water_color": 4020182,
     "water_fog_color": 329011,
-    "grass_color": 8434839,
-    "foliage_color": 6396257,
-    "particle": {
-      "options": {
-        "type": "minecraft:snowflake"
-      },
-      "probability": 0.015
-    },
+    "grass_color": 8828803,
+    "foliage_color": 6857828,
     "mood_sound": {
       "sound": "minecraft:ambient.cave",
       "tick_delay": 6000,
       "block_search_extent": 8,
       "offset": 2.0
+    },
+    "music": {
+      "sound": "minecraft:music.overworld.old_growth_taiga",
+      "min_delay": 12000,
+      "max_delay": 24000,
+      "replace_current_music": false
     }
   },
   "spawners": {
     "monster": [
       {
-        "type": "minecraft:stray",
-        "weight": 100,
+        "type": "mythsofworlds:troll",
+        "weight": 25,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "mythsofworlds:warg",
+        "weight": 30,
         "minCount": 2,
         "maxCount": 4
       },
       {
-        "type": "minecraft:zombie",
-        "weight": 60,
-        "minCount": 2,
-        "maxCount": 4
+        "type": "mythsofworlds:draugr",
+        "weight": 40,
+        "minCount": 1,
+        "maxCount": 3
       },
       {
         "type": "minecraft:skeleton",
-        "weight": 20,
+        "weight": 40,
         "minCount": 1,
         "maxCount": 3
       },
       {
         "type": "minecraft:spider",
-        "weight": 60,
-        "minCount": 2,
-        "maxCount": 4
+        "weight": 40,
+        "minCount": 1,
+        "maxCount": 2
       },
       {
         "type": "minecraft:creeper",
-        "weight": 60,
+        "weight": 30,
         "minCount": 1,
-        "maxCount": 3
+        "maxCount": 2
       }
     ],
     "creature": [
       {
-        "type": "minecraft:wolf",
+        "type": "mythsofworlds:raven",
         "weight": 8,
-        "minCount": 3,
-        "maxCount": 6
+        "minCount": 1,
+        "maxCount": 3
+      },
+      {
+        "type": "minecraft:wolf",
+        "weight": 6,
+        "minCount": 2,
+        "maxCount": 4
+      },
+      {
+        "type": "minecraft:fox",
+        "weight": 6,
+        "minCount": 1,
+        "maxCount": 3
       },
       {
         "type": "minecraft:rabbit",
         "weight": 4,
         "minCount": 2,
         "maxCount": 3
-      },
-      {
-        "type": "minecraft:polar_bear",
-        "weight": 2,
-        "minCount": 1,
-        "maxCount": 2
       }
     ]
   },
@@ -90,19 +102,40 @@
     [
       "minecraft:forest_rock"
     ],
-    [],
-    [],
+    [
+      "minecraft:monster_room",
+      "minecraft:monster_room_deep"
+    ],
+    [
+      "mythsofworlds:menhir"
+    ],
     [],
     [
+      "minecraft:ore_dirt",
+      "minecraft:ore_gravel",
+      "minecraft:ore_granite_upper",
+      "minecraft:ore_granite_lower",
+      "minecraft:ore_diorite_upper",
+      "minecraft:ore_diorite_lower",
+      "minecraft:ore_andesite_upper",
+      "minecraft:ore_andesite_lower",
+      "minecraft:ore_tuff",
       "minecraft:ore_coal_upper",
       "minecraft:ore_coal_lower",
       "minecraft:ore_iron_upper",
       "minecraft:ore_iron_middle",
       "minecraft:ore_iron_small",
       "minecraft:ore_gold",
+      "minecraft:ore_gold_lower",
       "minecraft:ore_redstone",
+      "minecraft:ore_redstone_lower",
       "minecraft:ore_diamond",
-      "minecraft:ore_lapis"
+      "minecraft:ore_diamond_medium",
+      "minecraft:ore_diamond_large",
+      "minecraft:ore_diamond_buried",
+      "minecraft:ore_lapis",
+      "minecraft:ore_lapis_buried",
+      "minecraft:ore_copper"
     ],
     [],
     [
@@ -110,7 +143,13 @@
       "minecraft:spring_lava"
     ],
     [
-      "minecraft:trees_taiga"
+      "minecraft:glow_lichen",
+      "minecraft:trees_old_growth_spruce_taiga",
+      "minecraft:patch_large_fern",
+      "minecraft:patch_grass_taiga",
+      "minecraft:patch_berry_common",
+      "minecraft:brown_mushroom_taiga",
+      "minecraft:red_mushroom_taiga"
     ],
     [
       "minecraft:freeze_top_layer"

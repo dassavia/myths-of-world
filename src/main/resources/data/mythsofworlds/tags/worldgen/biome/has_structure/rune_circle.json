@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "mythsofworlds:giants_taiga",
+    "mythsofworlds:fjords",
+    "mythsofworlds:frost_wastes",
+    "mythsofworlds:idunn_orchard",
+    "mythsofworlds:ironwood",
+    "mythsofworlds:niflheim_mists"
+  ]
+}

@@ -7,8 +7,16 @@ import com.mythsofworlds.mythology.greek.entity.Amazon;
 import com.mythsofworlds.mythology.greek.entity.GreekMerchant;
 import com.mythsofworlds.mythology.greek.entity.Hippolyta;
 import com.mythsofworlds.mythology.greek.portal.PoolPortal;
+import com.mythsofworlds.mythology.norse.NorseContent;
+import com.mythsofworlds.mythology.norse.entity.DraugrChieftain;
+import com.mythsofworlds.mythology.norse.entity.Fenrir;
+import com.mythsofworlds.mythology.norse.entity.Garm;
+import com.mythsofworlds.mythology.norse.entity.NorseMerchant;
+import com.mythsofworlds.mythology.norse.entity.Surtr;
+import com.mythsofworlds.mythology.norse.entity.Thrym;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -28,7 +36,7 @@ import net.neoforged.neoforge.event.server.ServerStartedEvent;
 /**
  * The game-test server only creates vanilla levels, so this check runs on a real dedicated server instead:
  * {@code ./gradlew runSmokeTest} (needs eula=true in run/smoke/eula.txt). It loads every mythology's dimension,
- * generates terrain, finds every biome and structure of Hellas, generates them, then exits with code 0 or 1.
+ * generates terrain, finds every biome and structure of Hellas and Jotunheim, generates them, then exits with code 0 or 1.
  * It does nothing unless the system property {@value #PROPERTY} is set.
  */
 @EventBusSubscriber(modid = MythsOfWorlds.MODID)
@@ -57,6 +65,64 @@ public final class WorldSmokeTest {
         System.out.flush();
     }
 
+    /** Finds every biome and structure of one world, generates the structures and checks who lives in them. */
+    private static void checkWorld(MinecraftServer server, List<String> failures, ServerLevel level, List<String> biomes,
+                                   List<String> structureNames) {
+        String world = level.dimension().location().getPath();
+        for (String biome : biomes) {
+            check(failures, world + " biome " + biome, () -> {
+                ResourceKey<Biome> key = ResourceKey.create(Registries.BIOME, MythsOfWorlds.id(biome));
+                var found = level.findClosestBiome3d(holder -> holder.is(key), new BlockPos(0, 80, 0), 6400, 32, 64);
+                if (found == null) {
+                    throw new IllegalStateException("not found within 6400 blocks");
+                }
+                report("biome " + biome + " at " + found.getFirst());
+            });
+        }
+        var structures = server.registryAccess().registryOrThrow(Registries.STRUCTURE);
+        for (String name : structureNames) {
+            check(failures, world + " structure " + name, () -> {
+                Holder<Structure> holder = structures.getHolderOrThrow(ResourceKey.create(Registries.STRUCTURE, MythsOfWorlds.id(name)));
+                var found = level.getChunkSource().getGenerator()
+                        .findNearestMapStructure(level, HolderSet.direct(holder), BlockPos.ZERO, 250, false);
+                if (found == null) {
+                    throw new IllegalStateException("not found within 250 chunks");
+                }
+                BlockPos pos = found.getFirst();
+                for (int dx = -4; dx <= 4; dx++) {
+                    for (int dz = -4; dz <= 4; dz++) {
+                        level.getChunk((pos.getX() >> 4) + dx, (pos.getZ() >> 4) + dz);
+                    }
+                }
+                AABB around = new AABB(pos).inflate(72, 128, 72);
+                int mobs = level.getEntitiesOfClass(Mob.class, around).size();
+                Class<? extends Mob> resident = RESIDENTS.get(name);
+                if (resident != null && level.getEntitiesOfClass(resident, around).isEmpty()) {
+                    throw new IllegalStateException(name + " has no " + resident.getSimpleName());
+                }
+                if (name.equals("labyrinth")) {
+                    int surface = level.getHeight(Heightmap.Types.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
+                    var start = level.structureManager().getStructureWithPieceAt(pos.atY(surface - 18), holder.value());
+                    report("labyrinth: surface y=" + surface + ", maze below the surface: " + start.isValid());
+                }
+                report("structure " + name + " generated at " + pos + ", mobs around: " + mobs);
+            });
+        }
+    }
+
+    /** Structures that must have someone living in them once generated. */
+    private static final Map<String, Class<? extends Mob>> RESIDENTS = Map.ofEntries(
+            Map.entry("agora", GreekMerchant.class),
+            Map.entry("amazon_camp", Amazon.class),
+            Map.entry("themiscyra", Hippolyta.class),
+            Map.entry("viking_village", NorseMerchant.class),
+            Map.entry("dwarf_forge", NorseMerchant.class),
+            Map.entry("barrow", DraugrChieftain.class),
+            Map.entry("utgard", Thrym.class),
+            Map.entry("fenrir_island", Fenrir.class),
+            Map.entry("muspel_fortress", Surtr.class),
+            Map.entry("helgrind", Garm.class));
+
     @SubscribeEvent
     public static void onServerStarted(ServerStartedEvent event) {
         if (!Boolean.getBoolean(PROPERTY)) {
@@ -81,55 +147,15 @@ public final class WorldSmokeTest {
                 BlockPos portal = PoolPortal.findOrCreate(hellas, new BlockPos(0, 64, 0));
                 report("arrival portal built at " + portal);
             });
-            for (String biome : GreekContent.BIOMES) {
-                check(failures, "biome " + biome, () -> {
-                    ResourceKey<Biome> key = ResourceKey.create(Registries.BIOME, MythsOfWorlds.id(biome));
-                    var found = hellas.findClosestBiome3d(holder -> holder.is(key), new BlockPos(0, 80, 0), 6400, 32, 64);
-                    if (found == null) {
-                        throw new IllegalStateException("not found within 6400 blocks");
-                    }
-                    report("biome " + biome + " at " + found.getFirst());
-                });
-            }
-            var structures = server.registryAccess().registryOrThrow(Registries.STRUCTURE);
-            for (String name : GreekContent.STRUCTURES) {
-                check(failures, "structure " + name, () -> {
-                    Holder<Structure> holder = structures.getHolderOrThrow(ResourceKey.create(Registries.STRUCTURE, MythsOfWorlds.id(name)));
-                    var found = hellas.getChunkSource().getGenerator()
-                            .findNearestMapStructure(hellas, HolderSet.direct(holder), BlockPos.ZERO, 250, false);
-                    if (found == null) {
-                        throw new IllegalStateException("not found within 250 chunks");
-                    }
-                    BlockPos pos = found.getFirst();
-                    for (int dx = -4; dx <= 4; dx++) {
-                        for (int dz = -4; dz <= 4; dz++) {
-                            hellas.getChunk((pos.getX() >> 4) + dx, (pos.getZ() >> 4) + dz);
-                        }
-                    }
-                    int mobs = hellas.getEntitiesOfClass(Mob.class, new AABB(pos).inflate(72, 128, 72)).size();
-                    if (name.equals("agora")) {
-                        int merchants = hellas.getEntitiesOfClass(GreekMerchant.class, new AABB(pos).inflate(72, 128, 72)).size();
-                        if (merchants == 0) {
-                            throw new IllegalStateException("the agora has no merchants");
-                        }
-                        report("agora merchants: " + merchants);
-                    }
-                    if (name.equals("amazon_camp") || name.equals("themiscyra")) {
-                        Class<? extends Mob> who = name.equals("themiscyra") ? Hippolyta.class : Amazon.class;
-                        if (hellas.getEntitiesOfClass(who, new AABB(pos).inflate(72, 128, 72)).isEmpty()) {
-                            throw new IllegalStateException(name + " has no " + who.getSimpleName());
-                        }
-                    }
-                    if (name.equals("labyrinth")) {
-                        int surface = hellas.getHeight(Heightmap.Types.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
-                        var start = hellas.structureManager().getStructureWithPieceAt(pos.atY(surface - 18), holder.value());
-                        report("labyrinth: surface y=" + surface + ", maze below the surface: " + start.isValid());
-                    }
-                    report("structure " + name + " generated at " + pos + ", mobs around: " + mobs);
-                });
-            }
+            checkWorld(server, failures, hellas, GreekContent.BIOMES, GreekContent.STRUCTURES);
         } else {
             failures.add("Hellas is not loaded");
+        }
+        ServerLevel jotunheim = server.getLevel(NorseContent.JOTUNHEIM);
+        if (jotunheim != null) {
+            checkWorld(server, failures, jotunheim, NorseContent.BIOMES, NorseContent.STRUCTURES);
+        } else {
+            failures.add("Jotunheim is not loaded");
         }
         report(failures.isEmpty() ? "OK" : "FAILED " + failures.size() + ": " + failures);
         Runtime.getRuntime().halt(failures.isEmpty() ? 0 : 1);

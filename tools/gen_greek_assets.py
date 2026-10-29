@@ -372,9 +372,10 @@ BIOMES = {
 }
 
 
-def biome_json(spec):
+def biome_json(spec, order=None):
+    order = order or FEATURE_ORDER
     used = set(spec["features"])
-    unknown = used - {f for step in FEATURE_ORDER for f in step}
+    unknown = used - {f for step in order for f in step}
     if unknown:
         raise ValueError(f"features missing from FEATURE_ORDER: {unknown}")
     effects = {
@@ -403,7 +404,7 @@ def biome_json(spec):
         "spawners": spec["spawners"],
         "spawn_costs": {},
         "carvers": {"air": ["minecraft:cave", "minecraft:cave_extra_underground", "minecraft:canyon"]},
-        "features": [[f for f in step if f in used] for step in FEATURE_ORDER],
+        "features": [[f for f in step if f in used] for step in order],
     }
 
 
@@ -955,23 +956,27 @@ def recipes():
         "ingredients": [{"item": "minecraft:book"}, {"item": "minecraft:feather"}, {"item": "minecraft:gold_nugget"}],
         "result": {"id": f"{NS}:greek_journal", "count": 1},
     })
-    pickaxe = os.path.join(ROOT, "data", "minecraft", "tags", "block", "mineable", "pickaxe.json")
-    with open(pickaxe, encoding="utf-8") as f:
-        tag = json.load(f)
-    for block in ("marble", "marble_bricks", "marble_pillar", "olympian_marble", "brazier"):
-        if f"{NS}:{block}" not in tag["values"]:
-            tag["values"].append(f"{NS}:{block}")
-    write_json(pickaxe, tag)
+    add_tag("block", "mineable/pickaxe", ["marble", "marble_bricks", "marble_pillar", "olympian_marble", "brazier"])
     fruit_leaves = ["golden_leaves", "olive_leaves", "pomegranate_leaves"]
-    for tag_name, values in (("leaves", fruit_leaves), ("mineable/hoe", fruit_leaves), ("mineable/shovel", ["cloud"])):
-        write_json(os.path.join(ROOT, "data", "minecraft", "tags", "block", f"{tag_name}.json"),
-                   {"replace": False, "values": [f"{NS}:{v}" for v in values]})
-    write_json(os.path.join(ROOT, "data", "minecraft", "tags", "item", "leaves.json"),
-               {"replace": False, "values": [f"{NS}:{v}" for v in fruit_leaves]})
-    write_json(os.path.join(ROOT, "data", "minecraft", "tags", "block", "small_flowers.json"),
-               {"replace": False, "values": [f"{NS}:asphodel"]})
-    write_json(os.path.join(ROOT, "data", "minecraft", "tags", "item", "small_flowers.json"),
-               {"replace": False, "values": [f"{NS}:asphodel"]})
+    add_tag("block", "leaves", fruit_leaves)
+    add_tag("block", "mineable/hoe", fruit_leaves)
+    add_tag("block", "mineable/shovel", ["cloud"])
+    add_tag("item", "leaves", fruit_leaves)
+    add_tag("block", "small_flowers", ["asphodel"])
+    add_tag("item", "small_flowers", ["asphodel"])
+
+
+def add_tag(kind, name, values, namespace="minecraft"):
+    """Adds mod entries to a tag file, keeping what other scripts (gen_norse_assets.py) put there."""
+    path = os.path.join(ROOT, "data", namespace, "tags", kind, f"{name}.json")
+    tag = {"replace": False, "values": []}
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as f:
+            tag = json.load(f)
+    for value in values:
+        if f"{NS}:{value}" not in tag["values"]:
+            tag["values"].append(f"{NS}:{value}")
+    write_json(path, tag)
 
 
 # ====================================================================== models

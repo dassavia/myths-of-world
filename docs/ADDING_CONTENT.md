@@ -105,9 +105,21 @@ python3 tools/gen_greek_assets.py --textures  # плюс перерисоват�
 скрипта их перезапишет. Структуру удобно доработать в игре блоком структуры (`/give @s structure_block`),
 сохранить и положить .nbt в `data/mythsofworlds/structure/greek/`.
 
+### Скандинавские данные
+
+Йотунхейм собирается так же: `tools/gen_norse_assets.py` (биомы, структуры, лут, рецепты, модели, переводы),
+постройки в `tools/structures_norse.py`, текстуры в `tools/textures_norse.py`, сага в `tools/journal_norse.py`.
+Скрипт берёт помощники из греческого, поэтому запускайте оба по порядку:
+
+```bash
+python3 tools/gen_greek_assets.py && python3 tools/gen_norse_assets.py   # --textures, чтобы перерисовать PNG
+```
+
+Теги (`minecraft:leaves`, `mineable/*`) и переводы скрипты дописывают, а не затирают.
+
 ## Журнал
 
-Записи журнала описаны в `tools/journal_greek.py`: `(id, категория, что открывает запись, [русский заголовок, страницы…],
+Записи журнала описаны в `tools/journal_greek.py` (сага Йотунхейма в `tools/journal_norse.py`): `(id, категория, что открывает запись, [русский заголовок, страницы…],
 [английский заголовок, страницы…])`. Запись открывается, когда игрок видит или убивает моба (`entity`) или заходит в
 структуру (`structure`). Скрипт собирает `data/mythsofworlds/journal/greek.json` и переводы, и проверяет, что каждая
 страница помещается в книгу. Открытые записи хранятся у игрока (`core/PlayerData`) и переживают смерть.
