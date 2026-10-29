@@ -72,7 +72,55 @@ class Template:
         tag.update(extra or {})
         self.entities.append((x, y, z, tag))
 
+    # Blocks that fences, walls, panes and bars do not join onto (they have no full side to lean on).
+    NOT_SOLID = ("air", "slab", "stairs", "carpet", "torch", "lantern", "flower", "short_grass", "tall_grass", "fern", "bed", "door",
+                 "trapdoor", "sign", "banner", "button", "pressure_plate", "chain", "water", "lava", "campfire", "fire",
+                 "skull", "head", "pot", "candle", "rail", "vine", "sapling", "bush", "roots", "snow[", "ladder",
+                 "chest", "barrel", "anvil", "cauldron", "hay_block", "target", "bell", "path", "farmland")
+
+    @staticmethod
+    def _family(name):
+        if name.endswith("_fence") or name.endswith("_fence_gate"):
+            return "fence"
+        if name.endswith("_wall") and not name.endswith("_banner"):
+            return "wall"
+        if name.endswith("_pane") or name == "minecraft:iron_bars":
+            return "pane"
+        return None
+
+    def connect(self):
+        """Joins fences, walls, panes and iron bars to their neighbours, as the game would when placing them by hand.
+        Structure blocks are placed as saved, so unjoined states would leave lone posts."""
+        sides = {"north": (0, -1), "south": (0, 1), "west": (-1, 0), "east": (1, 0)}
+        for pos, state in list(self.blocks.items()):
+            name = state.split("[")[0]
+            family = self._family(name)
+            if family is None or name.endswith("_fence_gate"):
+                continue
+            props = parse_state(state).get("Properties", {})
+            x, y, z = pos
+            for side, (dx, dz) in sides.items():
+                other = self.blocks.get((x + dx, y, z + dz))
+                other_name = other.split("[")[0] if other else "minecraft:air"
+                joins = self._family(other_name) == family or (
+                    family == "pane" and self._family(other_name) == "wall") or (
+                    family == "wall" and self._family(other_name) == "pane") or (
+                    other is not None and self._family(other_name) is None
+                    and not any(word in other_name for word in self.NOT_SOLID))
+                if family == "wall":
+                    props[side] = "low" if joins else "none"
+                else:
+                    props[side] = "true" if joins else "false"
+            props.setdefault("waterlogged", "false")
+            if family == "wall":
+                ns = props["north"] != "none" and props["south"] != "none"
+                ew = props["east"] != "none" and props["west"] != "none"
+                one_line = (ns and props["east"] == props["west"] == "none") or (ew and props["north"] == props["south"] == "none")
+                props["up"] = "false" if one_line and self.blocks.get((x, y + 1, z), AIR) == AIR else "true"
+            self.blocks[pos] = name + "[" + ",".join(f"{k}={v}" for k, v in sorted(props.items())) + "]"
+
     def save(self, path):
+        self.connect()
         palette = []
         index = {}
         blocks = []
@@ -808,7 +856,8 @@ def amazon_camp():
     t.set(c, 1, c, "minecraft:campfire[facing=north,lit=true,signal_fire=false,waterlogged=false]")
     for dx, dz in ((-1, -1), (1, -1), (-1, 1), (1, 1), (0, -2), (0, 2), (-2, 0), (2, 0)):
         t.set(c + dx, 1, c + dz, "minecraft:cobblestone_slab[type=bottom,waterlogged=false]")
-    for (cx, cz), colour in zip(((6, 6), (c, 5), (20, 6), (6, 14)), ("minecraft:red_wool", "minecraft:brown_wool",
+    # Tents well inside the palisade (each is 5 x 5 around its centre).
+    for (cx, cz), colour in zip(((7, 8), (c, 6), (19, 8), (6, 13)), ("minecraft:red_wool", "minecraft:brown_wool",
                                                                        "minecraft:red_wool", "minecraft:orange_wool")):
         tent(t, cx, cz, colour, rng)
     # Archery targets and straw dummies on the east side.
@@ -828,8 +877,8 @@ def amazon_camp():
     t.entity(5.5, 1.0, 19.5, "minecraft:horse", {"Variant": 1})
     t.entity(7.5, 1.0, 20.5, "minecraft:horse", {"Variant": 3})
     t.set(8, 1, 21, "minecraft:hay_block[axis=y]")
-    t.chest(c + 1, 1, 4, "amazon_camp", facing="south")
-    t.set(c - 1, 1, 4, "minecraft:barrel[facing=up,open=false]")
+    t.chest(c + 3, 1, 4, "amazon_camp", facing="south")
+    t.set(c - 3, 1, 4, "minecraft:barrel[facing=up,open=false]")
     for x, z in ((c - 2, c + 2), (c + 2, c - 2), (c + 3, c + 3), (c - 3, c - 1), (c + 5, c + 1)):
         t.entity(x + 0.5, 1.0, z + 0.5, "mythsofworlds:amazon")
     return t

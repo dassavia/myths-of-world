@@ -5,6 +5,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -20,7 +21,8 @@ import net.minecraft.world.level.Level;
 
 /**
  * Garm, the blood-stained hound chained before Hel's gate in the mists of Niflheim. Mini-boss. His howl casts the
- * darkness of Hel over everyone nearby, and his bite brings the chill of the dead.
+ * darkness of Hel over everyone nearby, and his bite brings the chill of the dead. A creature of the cold mists, he
+ * dreads fire: while he burns, every blow hurts him twice as much.
  */
 public class Garm extends GreekBoss {
     public static final double HOWL_RANGE = 16.0;
@@ -68,6 +70,14 @@ public class Garm extends GreekBoss {
         }
         server.sendParticles(ParticleTypes.SCULK_SOUL, getX(), getY() + 1.5, getZ(), 20, 1.0, 0.6, 1.0, 0.02);
         playSound(SoundEvents.WOLF_HOWL, 4.0F, 0.4F);
+    }
+
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        if (isOnFire() || source.is(DamageTypeTags.IS_FIRE)) {
+            amount *= 2.0F;
+        }
+        return super.hurt(source, amount);
     }
 
     @Override

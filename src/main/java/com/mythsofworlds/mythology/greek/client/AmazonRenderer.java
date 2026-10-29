@@ -4,19 +4,25 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.mythology.greek.entity.Amazon;
 import com.mythsofworlds.mythology.greek.entity.Hippolyta;
+import java.util.Set;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 /**
  * Amazons and Hippolyta: the slim player model (with its hair and armour overlay layers) and a texture per look,
- * textures/entity/amazon_&lt;variant&gt;.png, 0 to 9 (4 is the royal look of Hippolyta's daughters) and hippolyta.png.
+ * textures/entity/amazon_&lt;variant&gt;.png, 0 to 15 (4 is the royal look of Hippolyta's daughters) and hippolyta.png.
+ * A few warrior looks use the wide player model, and every amazon is a little taller or shorter than the next.
  */
 public class AmazonRenderer extends HumanoidMobRenderer<Amazon, PlayerModel<Amazon>> {
     private static final ResourceLocation[] TEXTURES = new ResourceLocation[Amazon.VARIANTS];
     private static final ResourceLocation HIPPOLYTA = MythsOfWorlds.id("textures/entity/hippolyta.png");
+    private static final Set<Integer> WIDE = Set.of(1, 8, 12, 14);
+    private final PlayerModel<Amazon> slim;
+    private final PlayerModel<Amazon> wide;
 
     static {
         for (int variant = 0; variant < Amazon.VARIANTS; variant++) {
@@ -26,6 +32,14 @@ public class AmazonRenderer extends HumanoidMobRenderer<Amazon, PlayerModel<Amaz
 
     public AmazonRenderer(EntityRendererProvider.Context context) {
         super(context, new PlayerModel<>(context.bakeLayer(ModelLayers.PLAYER_SLIM), true), 0.5F);
+        slim = model;
+        wide = new PlayerModel<>(context.bakeLayer(ModelLayers.PLAYER), false);
+    }
+
+    @Override
+    public void render(Amazon entity, float yaw, float partialTick, PoseStack poseStack, MultiBufferSource buffers, int light) {
+        model = !(entity instanceof Hippolyta) && WIDE.contains(Math.floorMod(entity.getVariant(), TEXTURES.length)) ? wide : slim;
+        super.render(entity, yaw, partialTick, poseStack, buffers, light);
     }
 
     @Override
@@ -38,7 +52,7 @@ public class AmazonRenderer extends HumanoidMobRenderer<Amazon, PlayerModel<Amaz
 
     @Override
     protected void scale(Amazon entity, PoseStack poseStack, float partialTick) {
-        float scale = entity instanceof Hippolyta ? 1.0F : 0.95F;
+        float scale = entity instanceof Hippolyta ? 1.0F : 0.9F + Math.floorMod(entity.getUUID().hashCode(), 5) * 0.025F;
         poseStack.scale(scale, scale, scale);
     }
 }

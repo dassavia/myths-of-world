@@ -1,6 +1,7 @@
 package com.mythsofworlds.mythology.norse.entity;
 
 import com.mythsofworlds.mythology.norse.NorseContent;
+import com.mythsofworlds.mythology.norse.item.MjolnirItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -65,6 +66,9 @@ public class Troll extends Monster {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
+        if (MjolnirItem.struckWith(source)) {
+            amount *= 2.0F;
+        }
         if (source.is(DamageTypeTags.IS_FIRE)) {
             noHealTicks = FIRE_STOPS_HEALING_TICKS;
         }

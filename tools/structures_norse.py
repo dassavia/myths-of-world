@@ -61,8 +61,10 @@ def longhouse(t, x0, z0, length, width, rng, chest=None, merchant=None, hearth=T
         for z in range(z0 + k + 1, z1 - k):
             t.set(x0, y, z, "minecraft:spruce_planks")
             t.set(x1, y, z, "minecraft:spruce_planks")
-    # Crossed dragon-head gable posts.
+    # Crossed dragon-head gable posts, standing on a full block at each end of the ridge (a fence on a bottom slab
+    # would hover half a block above it).
     for x in (x0, x1):
+        t.set(x, wall_top + 1 + half, z0 + half, "minecraft:dark_oak_planks")
         t.set(x, wall_top + half + 2, z0 + half, "minecraft:dark_oak_fence")
     # Doors in the middle of both long sides.
     mx = x0 + length // 2
@@ -244,9 +246,11 @@ def longship(dead=False):
         for x in (c - w, c + w):
             if t.get(x, 4, z) is not None:
                 t.set(x, 5, z, shields[(z // 2) % 2] if z % 2 == 0 else rail)
+    # Oars run out through the hull wherever it reaches the side of the template.
     for z in range(6, length - 6, 3):
-        for x in (0, width - 1):
-            t.set(x, 3, z, "minecraft:spruce_fence")
+        for x, inner in ((0, 1), (width - 1, width - 2)):
+            if t.get(inner, 3, z) not in (None, AIR):
+                t.set(x, 3, z, "minecraft:spruce_fence")
     # The curving prow and stern posts; the dragon head on the prow.
     for k in range(4):
         t.set(c, 5 + k, length - 2 + min(1, k // 2), "minecraft:dark_oak_log[axis=y]")
@@ -265,7 +269,7 @@ def longship(dead=False):
     t.set(c - 1, 5, 4, "minecraft:barrel[facing=up,open=false]")
     t.set(c + 1, 5, 5, "minecraft:barrel[facing=up,open=false]")
     t.set(c, 8, mz - 1, SOUL_LANTERN if dead else STANDING_LANTERN)
-    t.set(c, 7, mz - 1, "minecraft:spruce_fence")
+    t.fill(c, 5, mz - 1, c, 7, mz - 1, "minecraft:spruce_fence")
     if dead:
         for x, z in ((c - 1, 8), (c + 1, 12), (c - 1, 18), (c + 1, 22), (c, 24)):
             t.entity(x + 0.5, 5.0, z + 0.5, f"{NS}:draugr")

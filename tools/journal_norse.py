@@ -139,45 +139,61 @@ ENTRIES = [
       "Пёс, что стережёт врата Хель в туманах Нифльхейма. Его вой окутывает тьмой и замедляет, укус "
       "ослабляет и морозит.",
       "Как победить: возьмите молоко против тьмы и сражайтесь у стен, где он не разгонится. "
-      "Роняет клык Гарма."],
+      "Роняет клык Гарма.",
+      "Пёс холодных туманов боится огня: пока Гарм горит, любой удар ранит его вдвое сильнее. Берите меч "
+      "с заговором огня или горящие стрелы."],
      ["Garm",
       "The hound that guards the gates of Hel in the mists of Niflheim. His howl brings darkness and slows you, "
       "his bite weakens and freezes.",
       "How to beat: bring milk against the darkness and fight near walls where he cannot charge. "
-      "Drops Garm's fang."]),
+      "Drops Garm's fang.",
+      "The hound of the cold mists dreads fire: while Garm burns, every blow hurts him twice as much. Bring a "
+      "Fire Aspect sword or flaming arrows."]),
     ("thrym", "boss", mob("thrym"),
      ["Трим, король великанов",
       "Владыка Утгарда, укравший молот Тора. Дышит морозом перед собой и топает так, что всё вокруг "
       "отлетает.",
       "Разгневанный, зовёт двух инеистых великанов. Огонь вдвое сильнее против него, не стойте прямо перед "
-      "ним. Роняет Мьёльнир."],
+      "ним. Роняет Мьёльнир.",
+      "Тор был погибелью великанов: Мьёльнир бьёт любого великана и тролля вдвое сильнее, а Трима, "
+      "укравшего молот, - втрое. Отобранный молот пригодится в Муспельхейме."],
      ["Thrym, King of Giants",
       "The lord of Utgard, who stole Thor's hammer. He breathes frost ahead of him and stamps so hard that "
       "everything around flies off.",
       "Enraged, he calls two frost giants. Fire hurts him twice as much; do not stand right in front of him. "
-      "Drops Mjolnir."]),
+      "Drops Mjolnir.",
+      "Thor was the bane of giants: Mjolnir strikes every giant and troll twice as hard, and Thrym, who stole "
+      "it, three times as hard. Take it back and carry it to Muspelheim."]),
     ("fenrir", "boss", mob("fenrir"),
      ["Фенрир",
       "Чудовищный волк, сын Локи, на острове Люнгви. Его укус иссушает, а свободный Фенрир быстро залечивает "
       "раны и зовёт варгов.",
       "Свяжите его Глейпниром (ПКМ по волку): на 8 секунд он не может кусать, едва движется и получает в "
-      "полтора раза больше урона. Потом путы рвутся."],
+      "полтора раза больше урона. Потом путы рвутся.",
+      "Пока волк свободен, оружие людей почти не ранит его: любой удар наносит лишь четверть урона. "
+      "Без Глейпнира его не одолеть - купите путы у дверга."],
      ["Fenrir",
       "The monstrous wolf, son of Loki, on the isle of Lyngvi. His bite withers, and a free Fenrir heals his "
       "wounds fast and calls wargs.",
       "Bind him with Gleipnir (use it on the wolf): for 8 seconds he cannot bite, barely moves and takes half "
-      "again as much damage. Then the fetter snaps."]),
+      "again as much damage. Then the fetter snaps.",
+      "While the wolf is free, the weapons of men barely wound him: every blow does only a quarter of its "
+      "damage. Without Gleipnir he cannot be beaten - buy the fetter from the dwarf."]),
     ("surtr", "boss", mob("surtr"),
      ["Сурт",
       "Огненный великан с пылающим мечом, владыка Муспельхейма. Мечет огненные шары, разжигает вокруг "
       "себя кольцо пламени.",
       "Разгневанный, обрушивает огненный дождь. Снежки, вода и молнии Мьёльнира ранят его сильнее. "
-      "Возьмите зелья огнестойкости. Роняет меч Сурта."],
+      "Возьмите зелья огнестойкости. Роняет меч Сурта.",
+      "Жар Сурта притупляет клинки и стрелы: они ранят его вдвое слабее. Держите во второй руке сердце "
+      "инея, добытое у инеистых великанов, - и оружие бьёт в полную силу."],
      ["Surtr",
       "The fire giant with the flaming sword, lord of Muspelheim. He hurls fireballs and kindles a ring of "
       "flame around himself.",
       "Enraged, he brings down a rain of fire. Snowballs, water and Mjolnir's lightning hurt him more. "
-      "Bring fire resistance potions. Drops the Sword of Surtr."]),
+      "Bring fire resistance potions. Drops the Sword of Surtr.",
+      "Surtr's heat blunts blades and arrows: they wound him only half as deep. Hold a frost heart, taken "
+      "from the frost giants, in your other hand and your weapon strikes at full strength."]),
 
     # ---------------------------------------------------------------- places
     ("viking_village", "place", place("viking_village"),

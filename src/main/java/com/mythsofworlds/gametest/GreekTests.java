@@ -15,6 +15,7 @@ import com.mythsofworlds.mythology.greek.entity.HydraHatchling;
 import com.mythsofworlds.mythology.greek.entity.Medusa;
 import com.mythsofworlds.mythology.greek.entity.NemeanLion;
 import com.mythsofworlds.mythology.greek.entity.Spartoi;
+import com.mythsofworlds.mythology.greek.entity.ThrownGrowthPotion;
 import com.mythsofworlds.mythology.greek.item.HornOfThemiscyraItem;
 import com.mythsofworlds.mythology.greek.portal.BrazierBlock;
 import com.mythsofworlds.mythology.greek.portal.PoolPortal;
@@ -456,6 +457,25 @@ public class GreekTests {
                         "unknown structure " + entry.structure().get());
             }
         }
+        helper.succeed();
+    }
+
+    /** The splash potion of growth grows up every young creature where it bursts: a little amazon, a calf, a zombie. */
+    @GameTest(template = "empty")
+    public static void growthPotionGrowsTheYoung(GameTestHelper helper) {
+        Amazon girl = helper.spawn(GreekEntities.AMAZON.get(), new BlockPos(1, 2, 1));
+        girl.setBaby(true);
+        Mob calf = helper.spawn(EntityType.COW, new BlockPos(2, 2, 1));
+        calf.setBaby(true);
+        Mob zombie = helper.spawn(EntityType.ZOMBIE, new BlockPos(1, 2, 2));
+        zombie.setBaby(true);
+        helper.assertTrue(girl.isBaby() && calf.isBaby() && zombie.isBaby(), "they should start young");
+        int grown = ThrownGrowthPotion.burst(helper.getLevel(), Vec3.atCenterOf(helper.absolutePos(new BlockPos(1, 2, 1))));
+        helper.assertTrue(grown == 3, "grew up " + grown + " of 3");
+        helper.assertTrue(!girl.isBaby() && !calf.isBaby() && !zombie.isBaby(), "everyone should be grown");
+        girl.discard();
+        calf.discard();
+        zombie.discard();
         helper.succeed();
     }
 }

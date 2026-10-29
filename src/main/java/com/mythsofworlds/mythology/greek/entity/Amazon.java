@@ -65,7 +65,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public class Amazon extends AgeableMob {
     /** Looks 0 to {@code VARIANTS - 1}; {@link #ROYAL} among them is the look of Hippolyta's daughters only. */
-    public static final int VARIANTS = 10;
+    public static final int VARIANTS = 16;
     public static final int ROYAL = 4;
     public static final int HOME_RADIUS = 32;
     private static final int WANDER_RADIUS = 16;

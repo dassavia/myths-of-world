@@ -420,5 +420,13 @@
   "entity.mythsofworlds.hippolyta.wander": "%1$s: \"I will look around here.\"",
   "entity.mythsofworlds.hippolyta.necklace": "%1$s cannot take her eyes off the necklace of Harmonia. She is in love!",
   "entity.mythsofworlds.hippolyta.necklace_already": "%1$s: \"My heart is already yours. Keep the necklace.\"",
-  "entity.mythsofworlds.hippolyta.gift_again": "%1$s: \"I already have such a gift, but it still pleases me.\" Affection: %2$s/%3$s"
+  "entity.mythsofworlds.hippolyta.gift_again": "%1$s: \"I already have such a gift, but it still pleases me.\" Affection: %2$s/%3$s",
+  "item.mythsofworlds.growth_potion": "Splash Potion of Growth",
+  "item.mythsofworlds.growth_potion.desc": "Throw it: the young around (little amazons too) grow up at once",
+  "entity.mythsofworlds.growth_potion": "Potion of Growth",
+  "journal.mythsofworlds.greek.amazon.page7": "Cannot wait for your daughter to grow up? Throw a splash potion of growth at her (a glass bottle, bone meal, a golden carrot and gunpowder): she is grown at once. The potion grows up any other young creature too.",
+  "journal.mythsofworlds.norse.garm.page3": "The hound of the cold mists dreads fire: while Garm burns, every blow hurts him twice as much. Bring a Fire Aspect sword or flaming arrows.",
+  "journal.mythsofworlds.norse.thrym.page3": "Thor was the bane of giants: Mjolnir strikes every giant and troll twice as hard, and Thrym, who stole it, three times as hard. Take it back and carry it to Muspelheim.",
+  "journal.mythsofworlds.norse.fenrir.page3": "While the wolf is free, the weapons of men barely wound him: every blow does only a quarter of its damage. Without Gleipnir he cannot be beaten - buy the fetter from the dwarf.",
+  "journal.mythsofworlds.norse.surtr.page3": "Surtr's heat blunts blades and arrows: they wound him only half as deep. Hold a frost heart, taken from the frost giants, in your other hand and your weapon strikes at full strength."
 }

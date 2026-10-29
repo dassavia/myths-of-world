@@ -1,5 +1,6 @@
 package com.mythsofworlds.mythology.norse.entity;
 
+import com.mythsofworlds.mythology.norse.item.MjolnirItem;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
@@ -68,6 +69,9 @@ public class FireGiant extends Monster {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
+        if (MjolnirItem.struckWith(source)) {
+            amount *= 2.0F;
+        }
         if (source.getDirectEntity() instanceof Snowball) {
             amount = Math.max(amount, 4.0F);
         }

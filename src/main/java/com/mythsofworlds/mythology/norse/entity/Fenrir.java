@@ -10,6 +10,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -26,12 +27,14 @@ import net.minecraft.world.phys.Vec3;
 
 /**
  * Fenrir, the monstrous wolf of Loki, on his island in the Iron Wood. Fast, leaps at his prey, and his wounds close
- * while he is free. At half health he howls for three wargs of his kin. Only Gleipnir holds him: bound, he cannot
- * move or bite, stops healing and takes half again as much damage, until he tears loose.
+ * while he is free. At half health he howls for three wargs of his kin. While he is free no weapon of men does him
+ * much harm: every wound is a quarter of what it would be. Only Gleipnir holds him: bound, he cannot move or bite,
+ * stops healing and takes half again as much damage, until he tears loose.
  */
 public class Fenrir extends GreekBoss {
     public static final int BOUND_TICKS = 160;
     public static final int REBIND_TICKS = 200;
+    public static final float FREE_DAMAGE = 0.25F;
     private static final EntityDataAccessor<Boolean> BOUND = SynchedEntityData.defineId(Fenrir.class, EntityDataSerializers.BOOLEAN);
 
     private int boundTicks;
@@ -100,6 +103,8 @@ public class Fenrir extends GreekBoss {
     public boolean hurt(DamageSource source, float amount) {
         if (isBound()) {
             amount *= 1.5F;
+        } else if (!source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
+            amount *= FREE_DAMAGE;
         }
         return super.hurt(source, amount);
     }

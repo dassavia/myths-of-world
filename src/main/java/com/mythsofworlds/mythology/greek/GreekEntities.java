@@ -19,6 +19,7 @@ import com.mythsofworlds.mythology.greek.entity.Pegasus;
 import com.mythsofworlds.mythology.greek.entity.Satyr;
 import com.mythsofworlds.mythology.greek.entity.Shade;
 import com.mythsofworlds.mythology.greek.entity.Spartoi;
+import com.mythsofworlds.mythology.greek.entity.ThrownGrowthPotion;
 import java.util.List;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -106,6 +107,11 @@ public final class GreekEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<Hippolyta>> HIPPOLYTA = register("hippolyta",
             EntityType.Builder.of(Hippolyta::new, MobCategory.CREATURE).sized(0.6F, 1.95F).eyeHeight(1.7F)
                     .clientTrackingRange(10));
+
+    // ---- Projectiles ----
+    public static final DeferredHolder<EntityType<?>, EntityType<ThrownGrowthPotion>> GROWTH_POTION = register("growth_potion",
+            EntityType.Builder.<ThrownGrowthPotion>of(ThrownGrowthPotion::new, MobCategory.MISC).sized(0.25F, 0.25F)
+                    .clientTrackingRange(4).updateInterval(10));
 
     // ---- Spawn eggs (creative tab) ----
     public static final DeferredItem<DeferredSpawnEggItem> SATYR_SPAWN_EGG = egg("satyr", SATYR, 0x7A5230, 0xD9B77E);

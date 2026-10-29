@@ -7,7 +7,10 @@ import com.mythsofworlds.mythology.norse.NorseContent;
 import com.mythsofworlds.mythology.norse.NorseEntities;
 import com.mythsofworlds.mythology.norse.entity.Draugr;
 import com.mythsofworlds.mythology.norse.entity.Fenrir;
+import com.mythsofworlds.mythology.norse.entity.Garm;
 import com.mythsofworlds.mythology.norse.entity.NorseMerchant;
+import com.mythsofworlds.mythology.norse.entity.Surtr;
+import com.mythsofworlds.mythology.norse.entity.Thrym;
 import com.mythsofworlds.mythology.norse.entity.Troll;
 import com.mythsofworlds.mythology.norse.item.MjolnirItem;
 import java.io.InputStream;
@@ -27,6 +30,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.Mob;
@@ -193,5 +197,49 @@ public class NorseTests {
             }
         }
         helper.succeed();
+    }
+
+    /** What each lord of the Nine Worlds fears: Gleipnir, Thor's hammer, a frost heart, fire. */
+    @GameTest(template = "empty")
+    public static void norseBossesHaveWeaknesses(GameTestHelper helper) {
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        var sources = helper.getLevel().damageSources();
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
+        Fenrir fenrir = helper.spawn(NorseEntities.FENRIR.get(), new BlockPos(1, 2, 1));
+        float freeLoss = loss(fenrir, sources.playerAttack(player), 40.0F);
+        fenrir.bind();
+        float boundLoss = loss(fenrir, sources.playerAttack(player), 40.0F);
+        helper.assertTrue(boundLoss > freeLoss * 4.0F, "a free Fenrir lost " + freeLoss + ", a bound one " + boundLoss);
+        fenrir.discard();
+
+        Thrym thrym = helper.spawn(NorseEntities.THRYM.get(), new BlockPos(1, 2, 1));
+        float swordLoss = loss(thrym, sources.playerAttack(player), 20.0F);
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(NorseContent.MJOLNIR.get()));
+        float hammerLoss = loss(thrym, sources.playerAttack(player), 20.0F);
+        helper.assertTrue(hammerLoss > swordLoss * 2.5F, "Thrym lost " + swordLoss + " to a sword, " + hammerLoss + " to Mjolnir");
+        thrym.discard();
+
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
+        Surtr surtr = helper.spawn(NorseEntities.SURTR.get(), new BlockPos(1, 2, 1));
+        float bluntLoss = loss(surtr, sources.playerAttack(player), 20.0F);
+        player.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(NorseContent.FROST_HEART.get()));
+        float frostLoss = loss(surtr, sources.playerAttack(player), 20.0F);
+        helper.assertTrue(frostLoss > bluntLoss * 1.5F, "Surtr lost " + bluntLoss + " without a frost heart, " + frostLoss + " with one");
+        surtr.discard();
+
+        Garm garm = helper.spawn(NorseEntities.GARM.get(), new BlockPos(1, 2, 1));
+        float coldLoss = loss(garm, sources.playerAttack(player), 20.0F);
+        garm.igniteForSeconds(10.0F);
+        float burningLoss = loss(garm, sources.playerAttack(player), 20.0F);
+        helper.assertTrue(burningLoss > coldLoss * 1.5F, "Garm lost " + coldLoss + " cold, " + burningLoss + " burning");
+        garm.discard();
+        helper.succeed();
+    }
+
+    private static float loss(Mob mob, DamageSource source, float amount) {
+        mob.setHealth(mob.getMaxHealth());
+        mob.invulnerableTime = 0;
+        mob.hurt(source, amount);
+        return mob.getMaxHealth() - mob.getHealth();
     }
 }

@@ -1,5 +1,6 @@
 package com.mythsofworlds.mythology.norse.item;
 
+import com.mythsofworlds.mythology.norse.NorseContent;
 import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -8,6 +9,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EntityType;
@@ -28,7 +30,8 @@ import net.minecraft.world.phys.Vec3;
 
 /**
  * Thor's hammer: a heavy weapon, and right-click calls lightning down on the creature or block you point at
- * (up to {@link #RANGE} blocks away). Thrym, king of the frost giants, keeps it in Utgard.
+ * (up to {@link #RANGE} blocks away). Thrym, king of the frost giants, keeps it in Utgard. Thor was the bane of the
+ * giants: the hammer strikes every giant and troll twice as hard, and Thrym, who stole it, three times.
  */
 public class MjolnirItem extends SwordItem {
     public static final double RANGE = 40.0;
@@ -60,6 +63,12 @@ public class MjolnirItem extends SwordItem {
         EntityHitResult entity = ProjectileUtil.getEntityHitResult(player.level(), player, eye, reach,
                 new AABB(eye, reach).inflate(1.0), e -> e instanceof LivingEntity && e.isAlive() && !e.isSpectator());
         return entity != null ? entity.getEntity().position() : reach;
+    }
+
+    /** A blow struck with Mjolnir in hand. */
+    public static boolean struckWith(DamageSource source) {
+        ItemStack weapon = source.isDirect() ? source.getWeaponItem() : null;
+        return weapon != null && weapon.is(NorseContent.MJOLNIR.get());
     }
 
     public static void strike(ServerLevel level, BlockPos pos, ServerPlayer cause) {
