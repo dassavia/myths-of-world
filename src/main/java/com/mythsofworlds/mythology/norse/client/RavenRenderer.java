@@ -9,17 +9,25 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.animal.Parrot;
 
-/** The parrot's body and wing flapping, with the black raven texture (textures/entity/raven.png, parrot layout). */
+/**
+ * The parrot's body and wing flapping with one texture in the parrot layout: the black raven (textures/entity/raven.png)
+ * or another bird, such as the Firebird of Nav.
+ */
 public class RavenRenderer extends MobRenderer<Parrot, ParrotModel> {
-    private static final ResourceLocation TEXTURE = MythsOfWorlds.id("textures/entity/raven.png");
+    private final ResourceLocation texture;
 
     public RavenRenderer(EntityRendererProvider.Context context) {
+        this(context, "raven");
+    }
+
+    public RavenRenderer(EntityRendererProvider.Context context, String name) {
         super(context, new ParrotModel(context.bakeLayer(ModelLayers.PARROT)), 0.3F);
+        this.texture = MythsOfWorlds.id("textures/entity/" + name + ".png");
     }
 
     @Override
     public ResourceLocation getTextureLocation(Parrot entity) {
-        return TEXTURE;
+        return texture;
     }
 
     @Override

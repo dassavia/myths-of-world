@@ -4,6 +4,7 @@ import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.core.PlayerData;
 import com.mythsofworlds.mythology.greek.GreekContent;
 import com.mythsofworlds.mythology.norse.NorseContent;
+import com.mythsofworlds.mythology.slavic.SlavicContent;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -34,7 +35,8 @@ public final class JournalEvents {
     /** Which world each volume belongs to, and the journal given on arrival there. */
     private static final Map<ResourceKey<Level>, Volume> VOLUMES = Map.of(
             GreekContent.HELLAS, new Volume("greek", GreekContent.GREEK_JOURNAL),
-            NorseContent.JOTUNHEIM, new Volume("norse", NorseContent.NORSE_JOURNAL));
+            NorseContent.JOTUNHEIM, new Volume("norse", NorseContent.NORSE_JOURNAL),
+            SlavicContent.NAV, new Volume("slavic", SlavicContent.SLAVIC_JOURNAL));
     private static final double SIGHT_RANGE = 20.0;
 
     private record Volume(String id, Supplier<? extends Item> journal) {

@@ -10,24 +10,28 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.CrossedArmsItemLayer;
 import net.minecraft.resources.ResourceLocation;
 
-/** Villager body; each kind of trader has its own texture (textures/entity/norse_merchant_&lt;kind&gt;.png). Dwarves are short. */
+/**
+ * Villager body; each kind of trader has its own texture (textures/entity/&lt;name&gt;_&lt;kind&gt;.png). Kind 1 (the dwarf
+ * smith of Jotunheim, Baba Yaga in Nav) is short.
+ */
 public class NorseMerchantRenderer extends MobRenderer<NorseMerchant, VillagerModel<NorseMerchant>> {
-    private static final ResourceLocation[] TEXTURES = new ResourceLocation[NorseMerchant.KINDS];
-
-    static {
-        for (int kind = 0; kind < NorseMerchant.KINDS; kind++) {
-            TEXTURES[kind] = MythsOfWorlds.id("textures/entity/norse_merchant_" + kind + ".png");
-        }
-    }
+    private final ResourceLocation[] textures = new ResourceLocation[NorseMerchant.KINDS];
 
     public NorseMerchantRenderer(EntityRendererProvider.Context context) {
+        this(context, "norse_merchant");
+    }
+
+    public NorseMerchantRenderer(EntityRendererProvider.Context context, String name) {
         super(context, new VillagerModel<>(context.bakeLayer(ModelLayers.WANDERING_TRADER)), 0.5F);
         addLayer(new CrossedArmsItemLayer<>(this, context.getItemInHandRenderer()));
+        for (int kind = 0; kind < NorseMerchant.KINDS; kind++) {
+            textures[kind] = MythsOfWorlds.id("textures/entity/" + name + "_" + kind + ".png");
+        }
     }
 
     @Override
     public ResourceLocation getTextureLocation(NorseMerchant entity) {
-        return TEXTURES[entity.getKind()];
+        return textures[entity.getKind()];
     }
 
     @Override

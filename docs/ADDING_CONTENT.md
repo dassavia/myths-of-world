@@ -112,8 +112,12 @@ python3 tools/gen_greek_assets.py --textures  # плюс перерисоват�
 Скрипт берёт помощники из греческого, поэтому запускайте оба по порядку:
 
 ```bash
-python3 tools/gen_greek_assets.py && python3 tools/gen_norse_assets.py && python3 tools/gen_metals.py && python3 tools/gen_relics.py   # --textures, чтобы перерисовать PNG
+python3 tools/gen_greek_assets.py && python3 tools/gen_norse_assets.py && python3 tools/gen_metals.py && python3 tools/gen_relics.py && python3 tools/gen_slavic_assets.py   # --textures, чтобы перерисовать PNG
 ```
+
+Навь (славянская мифология) — `tools/gen_slavic_assets.py`, постройки в `tools/structures_slavic.py`, текстуры в
+`tools/textures_slavic.py`, сказы в `tools/journal_slavic.py`. Портал Нави — не рамка, а дерево: `slavic/block/WorldTree.java`
+выращивает дуб с дуплом (`WorldTreeHollowBlock`), когда сажают жёлудь (`WorldTreeAcornItem`).
 
 Металлы (руда, слитки, инструменты, броня) объявляются одной строкой `new MetalSet(...)` (`registry/MetalSet.java`),
 а данные для них делает `tools/gen_metals.py`: добавьте металл в `METALS` и id его руды в список фич биомов.
@@ -158,9 +162,10 @@ python3 tools/gen_greek_assets.py && python3 tools/gen_norse_assets.py && python
 
 ## Как развить заготовку мифологии
 
-Например, славянскую: в `SlavicContent` добавьте блок рамки, `MythPortalBlock` и зажигалку по образцу `NorseContent`
-(или портал своей формы, как священный водоём в `mythology/greek/portal`),
-поставьте `true` у `SLAVIC` в `Mythology.java`, замените ванильные биомы в `dimension/nav.json` своими.
+Например, египетскую: в `EgyptianContent` добавьте блок рамки, `MythPortalBlock` и зажигалку по образцу `NorseContent`
+(или портал своей формы, как священный водоём в `mythology/greek/portal` или Мировое древо в `mythology/slavic/block`),
+поставьте `true` у `EGYPTIAN` в `Mythology.java`, уберите `duat` из `STUB_DIMENSIONS` в `tools/gen_greek_assets.py` и
+напишите свой генератор по образцу `tools/gen_slavic_assets.py`.
 
 ## Измерения: что можно менять без кода
 

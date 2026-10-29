@@ -165,14 +165,8 @@ def dimension(name, biome_source, settings="minecraft:overworld"):
     }
 
 
-# Stub worlds of the other mythologies: vanilla biomes only, no portal yet.
+# Stub worlds of the other mythologies: vanilla biomes only, no portal yet (Nav is written by gen_slavic_assets.py).
 STUB_DIMENSIONS = {
-    # Nav: dark forests under an eternal dusk.
-    "nav": (13000, multi_noise([
-        ("minecraft:dark_forest", {"h": 0.3}),
-        ("minecraft:old_growth_spruce_taiga", {"h": -0.3}),
-        ("minecraft:swamp", {"e": 0.8, "h": 0.6}),
-    ])),
     # Hawaiki: warm sea, beaches and jungle islands.
     "hawaiki": (None, multi_noise([
         ("minecraft:warm_ocean", {"c": -0.6}),
