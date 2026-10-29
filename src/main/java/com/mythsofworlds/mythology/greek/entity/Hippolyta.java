@@ -68,6 +68,17 @@ public class Hippolyta extends Amazon {
                 .add(Attributes.FOLLOW_RANGE, 32.0);
     }
 
+    /** The queen's name hangs over her head, always in English. */
+    @Override
+    protected Component getTypeName() {
+        return Component.literal("Hippolyta");
+    }
+
+    @Override
+    public boolean shouldShowName() {
+        return true;
+    }
+
     @Override
     protected void registerGoals() {
         super.registerGoals();
