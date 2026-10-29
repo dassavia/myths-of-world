@@ -16,8 +16,9 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Winged horse of the gods. Tame and saddle it like a horse; it jumps higher than any horse,
- * glides down instead of falling and never takes fall damage. Breeds only with another pegasus.
+ * Winged horse of the valkyries, who carry fallen heroes to Valhalla on it; it lives in Jotunheim. Tame and saddle it
+ * like a horse; it jumps higher than any horse, glides down instead of falling and never takes fall damage. Breeds
+ * only with another pegasus.
  */
 public class Pegasus extends Horse {
     public Pegasus(EntityType<? extends Horse> type, Level level) {

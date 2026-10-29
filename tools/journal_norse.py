@@ -56,8 +56,8 @@ ENTRIES = [
       "coal, and valkyries prize them as trophies."]),
 
     ("god_sets", "intro", None,
-     ['Сеты богов', 'Броня из разных мифологий складывается в сет. Эллада: орихалк, пояс Ипполиты, таларии, нагрудник титана. Йотунхейм: тёмное железо, шлем Хеймдалля.', 'Союз пантеонов (обе мифологии): 2 вещи дают спешку, 3 - ещё огнестойкость, 4 - ещё регенерацию. Две и две - ещё и стойкость.', 'Только Эллада, 4 вещи: скорость и прыжок. Только Йотунхейм, 4 вещи: сила и стойкость.'],
-     ['Sets of the Gods', "Armour of different mythologies adds up to a set. Hellas: orichalcum, the girdle of Hippolyta, the talaria, the Titan's breastplate. Jotunheim: dark iron, the helmet of Heimdall.", 'Union of the pantheons (both mythologies): 2 pieces give Haste, 3 also Fire Resistance, 4 also Regeneration. Two and two also give Resistance.', 'Hellas only, 4 pieces: Speed and Jump Boost. Jotunheim only, 4 pieces: Strength and Resistance.']),
+     ['Сеты богов', 'Броня из разных мифологий складывается в сет. Эллада: орихалк, сет Немейского льва, пояс Ипполиты, таларии, нагрудник титана. Йотунхейм: тёмное железо, шлем Хеймдалля.', 'Союз пантеонов (обе мифологии): 2 вещи дают спешку, 3 - ещё огнестойкость, 4 - ещё регенерацию. Две и две - ещё и стойкость.', 'Только Эллада, 4 вещи: скорость и прыжок. Только Йотунхейм, 4 вещи: сила и стойкость.'],
+     ['Sets of the Gods', "Armour of different mythologies adds up to a set. Hellas: orichalcum, the Nemean lion set, the girdle of Hippolyta, the talaria, the Titan's breastplate. Jotunheim: dark iron, the helmet of Heimdall.", 'Union of the pantheons (both mythologies): 2 pieces give Haste, 3 also Fire Resistance, 4 also Regeneration. Two and two also give Resistance.', 'Hellas only, 4 pieces: Speed and Jump Boost. Jotunheim only, 4 pieces: Strength and Resistance.']),
 
     # ---------------------------------------------------------------- creatures
     ("draugr", "creature", mob("draugr"),
@@ -140,19 +140,37 @@ ENTRIES = [
 
     ("valkyrie", "creature", mob("valkyrie"),
      ["Валькирия",
-      "Дева щита Одина. Живёт в чертогах валькирий на фьордах, в тайге и пустошах. Бьёт чудовищ, а за "
+      "Дева щита Одина (46 здоровья, урон 9, броня 12). Живёт в чертогах валькирий на фьордах, в тайге и пустошах. Бьёт чудовищ, а за "
       "обиду отвечает вместе с сёстрами.",
       "Как амазонке, дарите ей подарки раз в 20 секунд: золото, оружие и щиты, трофеи чудовищ Севера или "
       "пир (мёд, мясо, яблоки Идунн). ПКМ пустой рукой: она скажет, что любит больше всего.",
       "При симпатии 100 наденьте ей обручальное кольцо. Жена-валькирия идёт за вами в бой. Поднесите ей "
-      "мёд, и раз в день родится дочь, которая вырастет в валькирию."],
+      "мёд, и раз в день родится дочь, которая вырастет в валькирию.",
+      "Брисингамен, ожерелье Фрейи, сразу влюбляет валькирию (симпатия 100). Его не скрафтить: ищите в кузницах "
+      "двергов, в Утгарде и Химинбьёрге.",
+      "Горн Вингольфа (козий рог, золото, перо ворона) зовёт валькирий домой, "
+      "семейный свисток зовёт к вам жён и дочерей из любого мира."],
      ["Valkyrie",
-      "A shield-maiden of Odin. She lives in the halls of the valkyries in the fjords, the taiga and the wastes. "
+      "A shield-maiden of Odin (46 health, damage 9, armour 12). She lives in the halls of the valkyries in the fjords, the taiga and the wastes. "
       "She fights monsters and answers an insult together with her sisters.",
       "As with an amazon, give her gifts once every 20 seconds: gold, weapons and shields, trophies of the "
       "North or a feast (mead, meat, Idunn's apples). Right-click with an empty hand: she says what she likes.",
       "At affection 100 give her a wedding ring. Your valkyrie wife follows you into battle. Give her mead and "
-      "once a day a daughter is born, who grows up a valkyrie."]),
+      "once a day a daughter is born, who grows up a valkyrie.",
+      "Brisingamen, Freyja's necklace, wins a valkyrie's heart at once (affection 100). It cannot be crafted: look in "
+      "the dwarf forges, Utgard and Himinbjorg.",
+      "The horn of Vingolf (goat horn, gold, raven feather) calls the "
+      "valkyries home; the family whistle calls your wives and daughters to you from any world."]),
+    ("pegasus", "creature", mob("pegasus"),
+     ["Пегас валькирий",
+      "Белый крылатый конь, на котором валькирии уносят павших героев в Вальхаллу. Пасётся во фьордах и в "
+      "тайге великанов, двое всегда стоят в конюшне чертога валькирий.",
+      "Приручается как лошадь, конюшенные уже ручные. Высоко прыгает и плавно планирует. Наденьте седло."],
+     ["Pegasus of the Valkyries",
+      "White winged horse on which the valkyries carry fallen heroes to Valhalla. Grazes in the fjords and the "
+      "giants' taiga; two always stand in the stable of a valkyrie hall.",
+      "Tame it like a horse; the stable ones are tame already. It jumps very high and glides gently down. Put a "
+      "saddle on it."]),
 
     # ---------------------------------------------------------------- bosses
     ("draugr_chieftain", "boss", mob("draugr_chieftain"),
@@ -222,14 +240,14 @@ ENTRIES = [
       "Трубит в Гьяллархорн: всех рядом отбрасывает, замедляет и оглушает. На половине здоровья трубит вдвое чаще. "
       "Бейтесь вблизи, отходите, когда он поднимает рог.",
       "Роняет око Хеймдалля. Око, золото и тёмножелезный шлем дают шлем Хеймдалля: ночное зрение, и все "
-      "чудовища вокруг светятся сквозь стены."],
+      "существа в 100 блоках светятся сквозь стены."],
      ["Heimdall",
       "Watchman of the gods at the Bifrost bridge in Himinbjorg, 320 health. He sees a hundred leagues and hears "
       "the grass grow: arrows hurt him only a third as much.",
       "He blows the Gjallarhorn: everyone near is thrown back, slowed and stunned. At half health he blows it twice "
       "as often. Fight up close and step back when he raises the horn.",
       "Drops the eye of Heimdall. The eye, gold and a dark iron helmet make the helmet of Heimdall: night vision, "
-      "and every monster around glows through the walls."]),
+      "and every creature within 100 blocks glows through the walls."]),
     ("surtr", "boss", mob("surtr"),
      ["Сурт",
       "Огненный великан с пылающим мечом, владыка Муспельхейма. Мечет огненные шары, разжигает вокруг "
@@ -314,10 +332,10 @@ ENTRIES = [
       "and the watchman of the gods stands at its head."]),
     ("valkyrie_hall", "place", place("valkyrie_hall"),
      ["Чертог валькирий",
-      "Длинный зал, увешанный щитами, с конюшней белых коней и площадкой для учебного боя. Здесь живут "
+      "Длинный зал, увешанный щитами, с конюшней крылатых коней и площадкой для учебного боя. Здесь живут "
       "валькирии, на которых можно жениться."],
      ["Hall of the Valkyries",
-      "A long hall hung with shields, with a stable of white horses and a training ground. The valkyries live "
+      "A long hall hung with shields, with a stable of winged horses and a training ground. The valkyries live "
       "here, and they can be wed."]),
     ("rune_circle", "place", place("rune_circle"),
      ["Рунный круг",
@@ -326,3 +344,11 @@ ENTRIES = [
       "A ring of standing stones with glowing runes. Ravens live here, and a chest of offerings lies in "
       "the centre."]),
 ]
+
+
+def with_gear():
+    """The entries with the ore and gear pages of journal_gear.py after the introduction pages."""
+    import journal_gear
+    intro = [entry for entry in ENTRIES if entry[1] == "intro"]
+    rest = [entry for entry in ENTRIES if entry[1] != "intro"]
+    return intro + journal_gear.norse() + rest

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "CPC",
+    "L L"
+  ],
+  "key": {
+    "C": {
+      "item": "mythsofworlds:nemean_claw"
+    },
+    "P": {
+      "item": "mythsofworlds:nemean_pelt"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    }
+  },
+  "result": {
+    "id": "mythsofworlds:nemean_helmet",
+    "count": 1
+  }
+}

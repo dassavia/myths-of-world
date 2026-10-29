@@ -117,7 +117,7 @@ BIOMES = {
             "monster": [spawn(f"{NS}:troll", 25, 1, 1), spawn(f"{NS}:warg", 30, 2, 4), spawn(f"{NS}:draugr", 40, 1, 3),
                         spawn("minecraft:skeleton", 40, 1, 3), spawn("minecraft:spider", 40, 1, 2), spawn("minecraft:creeper", 30, 1, 2)],
             "creature": [spawn(f"{NS}:raven", 8, 1, 3), spawn("minecraft:wolf", 6, 2, 4), spawn("minecraft:fox", 6, 1, 3),
-                         spawn("minecraft:rabbit", 4, 2, 3)],
+                         spawn("minecraft:rabbit", 4, 2, 3), spawn(f"{NS}:pegasus", 3, 1, 2)],
         },
     },
     "ironwood": {
@@ -144,7 +144,8 @@ BIOMES = {
         "spawners": {
             "monster": [spawn(f"{NS}:draugr", 60, 1, 3), spawn("minecraft:skeleton", 40, 1, 3), spawn("minecraft:zombie", 40, 1, 3),
                         spawn("minecraft:creeper", 40, 1, 2)],
-            "creature": [spawn(f"{NS}:raven", 6, 1, 3), spawn("minecraft:goat", 6, 1, 3), spawn("minecraft:sheep", 6, 2, 4)],
+            "creature": [spawn(f"{NS}:raven", 6, 1, 3), spawn("minecraft:goat", 6, 1, 3), spawn("minecraft:sheep", 6, 2, 4),
+                         spawn(f"{NS}:pegasus", 4, 1, 2)],
         },
     },
     "norse_sea": {
@@ -399,6 +400,7 @@ def loot():
     chest("utgard", (4, 8), gold + [
         entry("minecraft:diamond", 4, 1, 3), entry("minecraft:blue_ice", 6, 2, 6), entry(f"{NS}:frost_heart", 4, 1, 2),
         entry("minecraft:diamond_axe", 2, enchant=True), entry("minecraft:golden_apple", 3), entry(f"{NS}:idunn_apple", 3, 1, 2),
+        entry(f"{NS}:brisingamen", 2),
     ])
     chest("fenrir_island", (3, 6), gold + [
         entry("minecraft:bone", 10, 2, 8), entry("minecraft:leather", 8, 2, 5), entry("minecraft:chain", 6, 2, 6),
@@ -416,7 +418,7 @@ def loot():
     chest("dwarf_forge", (4, 7), gold + [
         entry("minecraft:iron_ingot", 10, 2, 8), entry("minecraft:gold_ingot", 6, 2, 6), entry("minecraft:diamond", 3, 1, 2),
         entry("minecraft:iron_pickaxe", 4, enchant=True), entry("minecraft:anvil", 1), entry("minecraft:raw_gold", 6, 1, 4),
-        entry(f"{NS}:runestone", 6, 2, 8),
+        entry(f"{NS}:runestone", 6, 2, 8), entry(f"{NS}:brisingamen", 1),
     ])
     chest("valkyrie_hall", (3, 6), gold + [
         entry(f"{NS}:mead", 8, 1, 3), entry("minecraft:iron_sword", 5, enchant=True), entry("minecraft:shield", 4),
@@ -427,6 +429,7 @@ def loot():
         entry("minecraft:gold_ingot", 6, 2, 6), entry("minecraft:golden_apple", 4), entry(f"{NS}:mead", 6, 1, 3),
         entry("minecraft:spyglass", 3), entry("minecraft:goat_horn", 2), entry("minecraft:diamond", 3, 1, 2),
         entry("minecraft:golden_helmet", 3, enchant=True), entry(f"{NS}:idunn_apple", 3, 1, 2),
+        entry(f"{NS}:brisingamen", 2),
     ])
     chest("rune_circle", (2, 4), [
         entry(f"{NS}:raven_feather", 8, 1, 4), entry("minecraft:lapis_lazuli", 8, 2, 6), entry("minecraft:amethyst_shard", 6, 1, 3),
@@ -588,6 +591,10 @@ VALKYRIE_TEXT = dict(g.AMAZON_TEXT, **{
     "married": ("%1$s принимает кольцо! Валькирия теперь ваша жена.", "%1$s takes the ring! The valkyrie is your wife now."),
     "in_love": ("%1$s: «Ты достоин Вальхаллы. Где твоё кольцо?»", "%1$s: \"You are worthy of Valhalla. Where is your ring?\""),
     "grown_daughter": ("%1$s, ваша дочь, готова лететь в бой рядом с вами.", "%1$s, your daughter, is ready to ride into battle at your side."),
+    "necklace": ("%1$s не может отвести глаз от Брисингамена, ожерелья Фрейи. Она влюблена!",
+                 "%1$s cannot take her eyes off Brisingamen, the necklace of Freyja. She is in love!"),
+    "necklace_already": ("%1$s: «Моё сердце и так твоё. Оставь Брисингамен себе».",
+                         "%1$s: \"My heart is already yours. Keep Brisingamen.\""),
     "died": ("Ваша жена %1$s пала в бою и ушла в Вальхаллу...", "Your wife %1$s fell in battle and went to Valhalla..."),
 })
 MOB_NAMES_RU = {
@@ -601,7 +608,7 @@ MOB_NAMES_RU = {
 def lang():
     import journal_norse
     entries = dict(LANG)
-    entries.update(g.journal("norse", journal_norse.INTRO, journal_norse.ENTRIES))
+    entries.update(g.journal("norse", journal_norse.INTRO, journal_norse.with_gear()))
     for name in MOBS:
         en = LANG[f"entity.{NS}.{name}"][1].split(",")[0]
         entries[f"item.{NS}.{name}_spawn_egg"] = (f"Яйцо призыва {MOB_NAMES_RU[name]}", f"{en} Spawn Egg")

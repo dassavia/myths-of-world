@@ -61,6 +61,23 @@ public class RelicArmorItem extends ArmorItem {
         });
     }
 
+    /** An armour material for a whole set of relics: helmet, chestplate, leggings and boots. */
+    public static DeferredHolder<ArmorMaterial, ArmorMaterial> setMaterial(String name, int helmet, int chestplate, int leggings,
+                                                                           int boots, int enchantment, Holder<SoundEvent> sound,
+                                                                           Supplier<Ingredient> repair, float toughness,
+                                                                           float knockbackResistance) {
+        return ARMOR_MATERIALS.register(name, () -> {
+            EnumMap<Type, Integer> defenses = new EnumMap<>(Type.class);
+            defenses.put(Type.HELMET, helmet);
+            defenses.put(Type.CHESTPLATE, chestplate);
+            defenses.put(Type.LEGGINGS, leggings);
+            defenses.put(Type.BOOTS, boots);
+            defenses.put(Type.BODY, chestplate);
+            return new ArmorMaterial(defenses, enchantment, sound, repair,
+                    List.of(new ArmorMaterial.Layer(MythsOfWorlds.id(name))), toughness, knockbackResistance);
+        });
+    }
+
     /**
      * Keeps an effect going without flicker: renewed when it runs low, never over a stronger one. It fades within a
      * few seconds once the armour comes off.

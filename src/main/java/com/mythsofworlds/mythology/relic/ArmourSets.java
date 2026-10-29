@@ -5,24 +5,29 @@ import com.mythsofworlds.mythology.Mythology;
 import com.mythsofworlds.mythology.greek.GreekContent;
 import com.mythsofworlds.mythology.greek.item.GirdleItem;
 import com.mythsofworlds.mythology.norse.NorseContent;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Set bonuses of the armour of the myths. Greek pieces: orichalcum armour, the girdle of Hippolyta, the talaria and the
- * Titan's breastplate. Norse pieces: dark iron armour and the helmet of Heimdall.
+ * Set bonuses of the armour of the myths. Greek pieces: orichalcum armour, the armour of the Nemean lion, the girdle of
+ * Hippolyta, the talaria and the Titan's breastplate. Norse pieces: dark iron armour and the helmet of Heimdall.
  * <ul>
  *   <li>Union of the pantheons (both mythologies worn): 2 pieces give Haste, 3 also Fire Resistance, 4 also
  *       Regeneration; two of each also give Resistance.</li>
  *   <li>Blessing of Olympus (4 Greek pieces): Speed and Jump Boost.</li>
  *   <li>Fury of the berserker (4 Norse pieces): Strength and Resistance.</li>
+ *   <li>Hide of the Nemean lion (the whole Nemean set, Greek too): Strength, and no arrow or other projectile can
+ *       wound you.</li>
  * </ul>
  */
 @EventBusSubscriber(modid = MythsOfWorlds.MODID)
@@ -66,6 +71,25 @@ public final class ArmourSets {
         return counts;
     }
 
+    /** Whether {@code entity} wears the whole armour of the Nemean lion. */
+    public static boolean wearsNemean(LivingEntity entity) {
+        for (EquipmentSlot slot : ARMOUR) {
+            if (!(entity.getItemBySlot(slot).getItem() instanceof ArmorItem armour)
+                    || armour.getMaterial().value() != GreekContent.NEMEAN_MATERIAL.value()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /** Arrows, tridents and fireballs glance off the hide of the Nemean lion. */
+    @SubscribeEvent
+    public static void onIncomingDamage(LivingIncomingDamageEvent event) {
+        if (event.getSource().is(DamageTypeTags.IS_PROJECTILE) && wearsNemean(event.getEntity())) {
+            event.setCanceled(true);
+        }
+    }
+
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent.Post event) {
         Player player = event.getEntity();
@@ -104,6 +128,9 @@ public final class ArmourSets {
         } else if (norse == 4) {
             RelicArmorItem.keep(player, MobEffects.DAMAGE_BOOST, 0);
             RelicArmorItem.keep(player, MobEffects.DAMAGE_RESISTANCE, 0);
+        }
+        if (wearsNemean(player)) {
+            RelicArmorItem.keep(player, MobEffects.DAMAGE_BOOST, 0);
         }
     }
 }

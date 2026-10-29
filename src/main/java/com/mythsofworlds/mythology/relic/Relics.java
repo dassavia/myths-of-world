@@ -3,7 +3,6 @@ package com.mythsofworlds.mythology.relic;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 
 /** What each relic does while worn (see {@link RelicArmorItem}). */
@@ -28,13 +27,17 @@ public final class Relics {
         }
     }
 
+    /** How far the helmet of Heimdall sees, in blocks. */
+    public static final double HEIMDALL_RANGE = 100.0;
+
     /** Helmet set with the eye of Heimdall, who sees a hundred leagues by night and day: night vision, and every
-     *  monster within 32 blocks glows through the walls. */
+     *  creature within {@value #HEIMDALL_RANGE} blocks glows through the walls. */
+
     public static void heimdall(Player player) {
         if (player.tickCount % 20 == 0) {
             RelicArmorItem.keep(player, MobEffects.NIGHT_VISION, 0);
-            for (Mob mob : player.level().getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(32.0),
-                    mob -> mob instanceof Enemy && mob.isAlive())) {
+            for (Mob mob : player.level().getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(HEIMDALL_RANGE),
+                    mob -> mob.isAlive() && mob.distanceToSqr(player) < HEIMDALL_RANGE * HEIMDALL_RANGE)) {
                 mob.addEffect(new MobEffectInstance(MobEffects.GLOWING, 40, 0, true, false));
             }
         }

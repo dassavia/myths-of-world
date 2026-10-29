@@ -50,8 +50,8 @@ ENTRIES = [
      ['Таларии и нагрудник титана', 'Крылатые сандалии Гермеса: скорость, высокий прыжок и никакого урона от падения. Ищите в святилищах на облаках и в храмах или скуйте: перья гарпий, золото и золотые сапоги.', 'Нагрудник титана: сила, стойкость и твёрдая стойка. Лежит в пещерах циклопов и в лабиринте, или скуйте из орихалкового нагрудника, орихалка, глаза циклопа и чешуи гидры.'],
      ["Talaria and the Titan's Breastplate", 'The winged sandals of Hermes: speed, high jumps and no fall damage. Look in the cloud shrines and temples, or make them: harpy feathers, gold and golden boots.', "The Titan's breastplate: strength, resistance and a firm stance. Found in cyclops caves and the labyrinth, or made from an orichalcum chestplate, orichalcum, a cyclops eye and a hydra scale."]),
     ("god_sets", "intro", None,
-     ['Сеты богов', 'Броня из разных мифологий складывается в сет. Эллада: орихалк, пояс Ипполиты, таларии, нагрудник титана. Йотунхейм: тёмное железо, шлем Хеймдалля.', 'Союз пантеонов (обе мифологии): 2 вещи дают спешку, 3 - ещё огнестойкость, 4 - ещё регенерацию. Две и две - ещё и стойкость.', 'Только Эллада, 4 вещи: скорость и прыжок. Только Йотунхейм, 4 вещи: сила и стойкость.'],
-     ['Sets of the Gods', "Armour of different mythologies adds up to a set. Hellas: orichalcum, the girdle of Hippolyta, the talaria, the Titan's breastplate. Jotunheim: dark iron, the helmet of Heimdall.", 'Union of the pantheons (both mythologies): 2 pieces give Haste, 3 also Fire Resistance, 4 also Regeneration. Two and two also give Resistance.', 'Hellas only, 4 pieces: Speed and Jump Boost. Jotunheim only, 4 pieces: Strength and Resistance.']),
+     ['Сеты богов', 'Броня из разных мифологий складывается в сет. Эллада: орихалк, сет Немейского льва, пояс Ипполиты, таларии, нагрудник титана. Йотунхейм: тёмное железо, шлем Хеймдалля.', 'Союз пантеонов (обе мифологии): 2 вещи дают спешку, 3 - ещё огнестойкость, 4 - ещё регенерацию. Две и две - ещё и стойкость.', 'Только Эллада, 4 вещи: скорость и прыжок. Только Йотунхейм, 4 вещи: сила и стойкость.'],
+     ['Sets of the Gods', "Armour of different mythologies adds up to a set. Hellas: orichalcum, the Nemean lion set, the girdle of Hippolyta, the talaria, the Titan's breastplate. Jotunheim: dark iron, the helmet of Heimdall.", 'Union of the pantheons (both mythologies): 2 pieces give Haste, 3 also Fire Resistance, 4 also Regeneration. Two and two also give Resistance.', 'Hellas only, 4 pieces: Speed and Jump Boost. Jotunheim only, 4 pieces: Strength and Resistance.']),
 
     # ---------------------------------------------------------------- creatures
     ("satyr", "creature", mob("satyr"),
@@ -92,20 +92,15 @@ ENTRIES = [
       "See-through soul of the Asphodel Meadows and the Stygian Marsh. Blinks to a fleeing victim and heals with "
       "every blow it lands.",
       "How to beat: do not run, fight, and strike often. Sometimes drops an echo shard."]),
-    ("pegasus", "creature", mob("pegasus"),
-     ["Пегас",
-      "Белый крылатый конь, рождённый из крови Медузы. Пасётся на Олимпе и Елисейских полях.",
-      "Приручается как лошадь. Высоко прыгает и плавно планирует в полёте. Наденьте седло."],
-     ["Pegasus",
-      "White winged horse, born from the blood of Medusa. Grazes on Olympus and the Elysian Fields.",
-      "Tame it like a horse. It jumps very high and glides gently down. Put a saddle on it."]),
     ("golden_hind", "creature", mob("golden_hind"),
      ["Керинейская лань",
       "Священная лань Артемиды с золотыми рогами и медными копытами, в Рощах Аркадии. Геракл ловил её целый год.",
+      "Амазонки держат ручных ланей в загоне лагеря и во дворе Фемискиры.",
       "Самый быстрый скакун Эллады. Приручается как лошадь."],
      ["Ceryneian Hind",
       "Sacred hind of Artemis with golden antlers and bronze hooves, in the Arcadian Grove. Heracles chased it for a "
       "whole year.",
+      "The amazons keep tame hinds in the pen of their camps and in the courtyard of Themiscyra.",
       "The fastest mount in Hellas. Tame it like a horse."]),
     ("hydra_hatchling", "creature", mob("hydra_hatchling"),
      ["Гидрёныш",
@@ -132,7 +127,7 @@ ENTRIES = [
       "Careful: hurt one and the whole pride comes for you. They breed on raw beef. Drop leather and meat."]),
     ("amazon", "creature", mob("amazon"),
      ["Амазонка",
-      "Воительница Фемискиры, живёт в лагерях и в городе. Бьёт чудовищ, а если её задеть, отвечает вместе с сёстрами.",
+      "Воительница Фемискиры (40 здоровья, урон 8, броня 10), живёт в лагерях и в городе. Бьёт чудовищ, а если её задеть, отвечает вместе с сёстрами.",
       "Ухаживание: дарите цветы, золото, оружие, трофеи или еду, раз в 20 секунд. ПКМ пустой рукой: она скажет, что "
       "любит больше всего. Любимый подарок даёт вдвое больше симпатии.",
       "При симпатии 100 подарите обручальное кольцо (алмаз над тремя слитками золота). Жена идёт за вами и сражается "
@@ -144,9 +139,11 @@ ENTRIES = [
       "Амазонки держатся своего лагеря. Если они разбрелись, протрубите в горн Фемискиры (козий рог, золото и кожа): "
       "все вокруг вернутся домой.",
       "Не хотите ждать, пока дочь подрастёт? Бросьте в неё взрывное зелье роста (пузырёк, костная мука, золотая "
-      "морковь и порох): она сразу станет взрослой. Зелье растит и любых других малышей."],
+      "морковь и порох): она сразу станет взрослой. Зелье растит и любых других малышей.",
+      "Семейный свисток (золото, железный самородок и жемчуг Края): ПКМ, и все ваши жёны и дочери сразу приходят "
+      "к вам, даже из другого мира."],
      ["Amazon",
-      "Warrior woman of Themiscyra, in the camps and the city. She fights monsters, and if you hurt her she answers "
+      "Warrior woman of Themiscyra (40 health, damage 8, armour 10), in the camps and the city. She fights monsters, and if you hurt her she answers "
       "together with her sisters.",
       "Courtship: give flowers, gold, weapons, trophies or food, once every 20 seconds. Right-click with an empty hand: "
       "she says what she likes best, and that gift counts double.",
@@ -159,7 +156,9 @@ ENTRIES = [
       "Amazons keep to their camp. If they have wandered off, blow the horn of Themiscyra (a goat horn, gold and "
       "leather): everyone around goes back home.",
       "Cannot wait for your daughter to grow up? Throw a splash potion of growth at her (a glass bottle, bone meal, "
-      "a golden carrot and gunpowder): she is grown at once. The potion grows up any other young creature too."]),
+      "a golden carrot and gunpowder): she is grown at once. The potion grows up any other young creature too.",
+      "The family whistle (gold, an iron nugget and an ender pearl): right-click and all your wives and daughters "
+      "come to you at once, even from another world."]),
 
     # ---------------------------------------------------------------- bosses
     ("cyclops", "boss", mob("cyclops"),
@@ -340,10 +339,9 @@ ENTRIES = [
       "on deck; in the hold a chest with a map, a compass and sometimes a trident."]),
     ("perseus_refuge", "place", place("perseus_refuge"),
      ["Убежище Персея",
-      "Маленький лагерь героя на побережье и в горах. Здесь всегда лежат харпа и зеркальный щит, а рядом пасётся пегас."],
+      "Маленький лагерь героя на побережье и в горах. Здесь всегда лежат харпа и зеркальный щит."],
      ["Refuge of Perseus",
-      "The hero's small camp on the coast and in the mountains. The harpe and the mirror shield always lie here, and a "
-      "pegasus grazes nearby."]),
+      "The hero's small camp on the coast and in the mountains. The harpe and the mirror shield always lie here."]),
     ("amazon_camp", "place", place("amazon_camp"),
      ["Лагерь амазонок",
       "Частокол на равнине: шатры, костёр, мишени и загон с лошадьми. Здесь живут амазонки. В сундуке бывает "
@@ -366,3 +364,11 @@ ENTRIES = [
       "A white house with a flat roof and blue shutters, as on the islands. A vine pergola, an olive tree, a beehive, "
       "amphorae, a well and a goat pen. Olives, honey and bread in the chest."]),
 ]
+
+
+def with_gear():
+    """The entries with the ore and gear pages of journal_gear.py after the introduction pages."""
+    import journal_gear
+    intro = [entry for entry in ENTRIES if entry[1] == "intro"]
+    rest = [entry for entry in ENTRIES if entry[1] != "intro"]
+    return intro + journal_gear.greek() + rest

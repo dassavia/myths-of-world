@@ -1,6 +1,7 @@
 package com.mythsofworlds.mythology.greek;
 
 import com.mythsofworlds.MythsOfWorlds;
+import com.mythsofworlds.core.family.FamilyWhistleItem;
 import com.mythsofworlds.mythology.greek.item.HydraEggItem;
 import com.mythsofworlds.mythology.greek.item.MedusaHeadItem;
 import com.mythsofworlds.journal.JournalItem;
@@ -288,6 +289,9 @@ public final class GreekContent {
     /** Give it to an amazon who loves you to marry her. */
     public static final DeferredItem<Item> WEDDING_RING = ITEMS.registerSimpleItem("wedding_ring",
             new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
+    /** Blown anywhere, it brings your wives and daughters to you from any world. */
+    public static final DeferredItem<FamilyWhistleItem> FAMILY_WHISTLE = ITEMS.register("family_whistle",
+            () -> new FamilyWhistleItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
     /** The necklace Hephaestus made for Harmonia: any amazon who receives it falls in love at once. Found, never made. */
     public static final DeferredItem<Item> NECKLACE_OF_HARMONIA = ITEMS.registerSimpleItem("necklace_of_harmonia",
             new Item.Properties().stacksTo(1).rarity(Rarity.EPIC));
@@ -318,7 +322,20 @@ public final class GreekContent {
             () -> new RelicArmorItem(TITAN_MATERIAL, ArmorItem.Type.CHESTPLATE, Mythology.GREEK, Relics::titan,
                     new Item.Properties().durability(ArmorItem.Type.CHESTPLATE.getDurability(40)).rarity(Rarity.EPIC).fireResistant()));
 
+    /** The hide of the Nemean lion, which no arrow could pierce, worn by Heracles: a whole set of armour. */
+    public static final DeferredHolder<ArmorMaterial, ArmorMaterial> NEMEAN_MATERIAL = RelicArmorItem.setMaterial("nemean",
+            3, 8, 6, 3, 15, SoundEvents.ARMOR_EQUIP_LEATHER, () -> Ingredient.of(NEMEAN_PELT.get()), 2.0F, 0.1F);
+    public static final DeferredItem<RelicArmorItem> NEMEAN_HELMET = nemean("nemean_helmet", ArmorItem.Type.HELMET);
+    public static final DeferredItem<RelicArmorItem> NEMEAN_CHESTPLATE = nemean("nemean_chestplate", ArmorItem.Type.CHESTPLATE);
+    public static final DeferredItem<RelicArmorItem> NEMEAN_LEGGINGS = nemean("nemean_leggings", ArmorItem.Type.LEGGINGS);
+    public static final DeferredItem<RelicArmorItem> NEMEAN_BOOTS = nemean("nemean_boots", ArmorItem.Type.BOOTS);
+
     private GreekContent() {
+    }
+
+    private static DeferredItem<RelicArmorItem> nemean(String name, ArmorItem.Type type) {
+        return ITEMS.register(name, () -> new RelicArmorItem(NEMEAN_MATERIAL, type, Mythology.GREEK, player -> {
+        }, new Item.Properties().durability(type.getDurability(33)).rarity(Rarity.RARE)));
     }
 
     /** Called from the mod constructor so the fields above are registered. */

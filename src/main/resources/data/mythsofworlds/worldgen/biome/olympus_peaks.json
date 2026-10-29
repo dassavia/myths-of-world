@@ -45,12 +45,6 @@
     ],
     "creature": [
       {
-        "type": "mythsofworlds:pegasus",
-        "weight": 8,
-        "minCount": 1,
-        "maxCount": 2
-      },
-      {
         "type": "minecraft:goat",
         "weight": 8,
         "minCount": 1,

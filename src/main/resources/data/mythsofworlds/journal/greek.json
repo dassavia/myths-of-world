@@ -21,6 +21,31 @@
       "pages": 3
     },
     {
+      "id": "greek.ores",
+      "category": "intro",
+      "pages": 2
+    },
+    {
+      "id": "greek.orichalcum_tools",
+      "category": "intro",
+      "pages": 2
+    },
+    {
+      "id": "greek.orichalcum_armour",
+      "category": "intro",
+      "pages": 2
+    },
+    {
+      "id": "greek.weapons",
+      "category": "intro",
+      "pages": 2
+    },
+    {
+      "id": "greek.hero_armour",
+      "category": "intro",
+      "pages": 4
+    },
+    {
       "id": "greek.satyr",
       "category": "creature",
       "pages": 2,
@@ -45,15 +70,9 @@
       "entity": "mythsofworlds:shade"
     },
     {
-      "id": "greek.pegasus",
-      "category": "creature",
-      "pages": 2,
-      "entity": "mythsofworlds:pegasus"
-    },
-    {
       "id": "greek.golden_hind",
       "category": "creature",
-      "pages": 2,
+      "pages": 3,
       "entity": "mythsofworlds:golden_hind"
     },
     {
@@ -77,7 +96,7 @@
     {
       "id": "greek.amazon",
       "category": "creature",
-      "pages": 7,
+      "pages": 8,
       "entity": "mythsofworlds:amazon"
     },
     {

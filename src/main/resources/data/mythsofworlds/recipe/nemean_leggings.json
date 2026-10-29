@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "LPL",
+    "L L",
+    "L L"
+  ],
+  "key": {
+    "P": {
+      "item": "mythsofworlds:nemean_pelt"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    }
+  },
+  "result": {
+    "id": "mythsofworlds:nemean_leggings",
+    "count": 1
+  }
+}

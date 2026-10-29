@@ -265,7 +265,7 @@ BIOMES = {
                               "minecraft:flower_meadow", "minecraft:patch_grass_plain"],
         "spawners": {
             "monster": [spawn(f"{NS}:harpy", 70, 1, 3), spawn("minecraft:skeleton", 20, 1, 2)],
-            "creature": [spawn(f"{NS}:pegasus", 8, 1, 2), spawn("minecraft:goat", 8, 1, 3)],
+            "creature": [spawn("minecraft:goat", 8, 1, 3)],
         },
     },
     "elysian_fields": {
@@ -279,7 +279,7 @@ BIOMES = {
                               "minecraft:patch_grass_plain", "minecraft:patch_sugar_cane"],
         "spawners": {
             "monster": [spawn(f"{NS}:satyr", 20, 1, 2)],
-            "creature": [spawn(f"{NS}:pegasus", 6, 1, 3), spawn(f"{NS}:golden_hind", 2, 1, 2), spawn("minecraft:sheep", 10, 2, 4),
+            "creature": [spawn(f"{NS}:golden_hind", 2, 1, 2), spawn("minecraft:sheep", 10, 2, 4),
                          spawn("minecraft:cow", 6, 2, 4), spawn("minecraft:horse", 4, 2, 4)],
         },
     },
@@ -414,9 +414,9 @@ def biome_json(spec, order=None):
 def ore(name, block, size, count, lo, hi, rarity=None):
     write_json(data("worldgen", "configured_feature", f"{name}.json"), {
         "type": "minecraft:ore",
-        "config": {"size": size, "discard_chance_on_air_exposure": 0.0, "targets": [{
-            "target": {"predicate_type": "minecraft:tag_match", "tag": "minecraft:stone_ore_replaceables"},
-            "state": {"Name": block}}]},
+        "config": {"size": size, "discard_chance_on_air_exposure": 0.0, "targets": [
+            {"target": {"predicate_type": "minecraft:tag_match", "tag": tag}, "state": {"Name": block}}
+            for tag in ("minecraft:stone_ore_replaceables", "minecraft:deepslate_ore_replaceables")]},
     })
     placement = [{"type": "minecraft:count", "count": count}, {"type": "minecraft:in_square"},
                  {"type": "minecraft:height_range", "height": {"type": "minecraft:uniform", "min_inclusive": {"absolute": lo},
@@ -894,7 +894,7 @@ def loot():
     mob("harpy", [(f"{NS}:harpy_feather", 0, 2, None), ("minecraft:feather", 0, 2, None)])
     mob("spartoi", [("minecraft:bone", 0, 2, None), ("minecraft:iron_nugget", 0, 3, None)])
     mob("shade", [("minecraft:echo_shard", 1, 1, 0.05)])
-    mob("pegasus", [("minecraft:leather", 0, 2, None), (f"{NS}:harpy_feather", 1, 2, None)])
+    mob("pegasus", [("minecraft:leather", 0, 2, None), ("minecraft:feather", 1, 3, None)])
     mob("cyclops", [(f"{NS}:cyclops_eye", 1, 1, None), ("minecraft:mutton", 2, 6, None), ("minecraft:iron_ingot", 2, 6, None)])
     mob("medusa", [(f"{NS}:medusa_head", 1, 1, None), ("minecraft:gold_ingot", 2, 5, None)])
     mob("nemean_lion", [(f"{NS}:nemean_pelt", 1, 1, None), (f"{NS}:nemean_claw", 1, 2, None), ("minecraft:leather", 3, 6, None)])
@@ -1195,7 +1195,7 @@ def lang():
     import journal_greek
     entries = dict(LANG)
     entries.update(JOURNAL_UI)
-    entries.update(journal("greek", journal_greek.INTRO, journal_greek.ENTRIES))
+    entries.update(journal("greek", journal_greek.INTRO, journal_greek.with_gear()))
     for key, values in AMAZON_TEXT.items():
         entries[f"entity.{NS}.amazon.{key}"] = values
     for key, values in HIPPOLYTA_TEXT.items():

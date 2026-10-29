@@ -26,7 +26,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "mythsofworlds:harpy_feather",
+          "name": "minecraft:feather",
           "weight": 1,
           "functions": [
             {
@@ -34,7 +34,7 @@
               "count": {
                 "type": "minecraft:uniform",
                 "min": 1,
-                "max": 2
+                "max": 3
               }
             }
           ]

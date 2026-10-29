@@ -1,6 +1,7 @@
 package com.mythsofworlds.mythology.greek;
 
 import com.mythsofworlds.MythsOfWorlds;
+import com.mythsofworlds.core.back.BackSlot;
 import com.mythsofworlds.mythology.greek.item.GirdleItem;
 import com.mythsofworlds.mythology.greek.item.WingsItem;
 import java.util.Map;
@@ -55,6 +56,8 @@ public final class GreekEvents {
         ItemStack chest = player.getItemBySlot(EquipmentSlot.CHEST);
         if (chest.is(GreekContent.WINGS_OF_DAEDALUS.get())) {
             WingsItem.wornTick(player, chest);
+        } else if (BackSlot.get(player).is(GreekContent.WINGS_OF_DAEDALUS.get())) {
+            WingsItem.wornTick(player, BackSlot.get(player));
         }
         if (GirdleItem.isWorn(player)) {
             GirdleItem.wornTick(player);

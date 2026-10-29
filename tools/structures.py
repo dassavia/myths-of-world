@@ -800,8 +800,6 @@ def perseus_refuge():
     t.chest(7, 1, 7, "perseus_refuge", facing="west")
     t.set(7, 1, 4, "minecraft:campfire[facing=north,lit=true,signal_fire=false,waterlogged=false]")
     t.set(5, 4, 5, "minecraft:lantern[hanging=true,waterlogged=false]")
-    # Pegasus, born from Medusa's blood, waits by the hero.
-    t.entity(5.5, 1.0, 3.5, "mythsofworlds:pegasus")
     return t
 
 
@@ -876,6 +874,8 @@ def amazon_camp():
     t.set(6, 1, 17, "minecraft:spruce_fence_gate[facing=north,in_wall=false,open=false,powered=false]")
     t.entity(5.5, 1.0, 19.5, "minecraft:horse", {"Variant": 1})
     t.entity(7.5, 1.0, 20.5, "minecraft:horse", {"Variant": 3})
+    # The amazons keep a Ceryneian hind of Artemis in the pen with the horses.
+    t.entity(5.5, 1.0, 21.0, "mythsofworlds:golden_hind", {"Tame": nbt.Byte(1)})
     t.set(8, 1, 21, "minecraft:hay_block[axis=y]")
     t.chest(c + 3, 1, 4, "amazon_camp", facing="south")
     t.set(c - 3, 1, 4, "minecraft:barrel[facing=up,open=false]")
@@ -929,6 +929,9 @@ def themiscyra():
     t.set(c + 1, 4, c + 7, "minecraft:lightning_rod[facing=up,powered=false,waterlogged=false]")
     for x, z in ((14, 23), (26, 23), (8, 33), (32, 33)):
         olive_tree(t, x, z, rng)
+    # Sacred hinds of Artemis graze in the courtyard.
+    for x, z in ((22.5, 25.5), (17.5, 27.5)):
+        t.entity(x, 1.0, z, "mythsofworlds:golden_hind", {"Tame": nbt.Byte(1)})
     for x in (10, 13, 16):
         t.set(x, 1, 30, "minecraft:hay_block[axis=y]")
         t.set(x, 2, 30, "minecraft:target[power=0]")

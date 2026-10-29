@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:goat_horn"
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "mythsofworlds:raven_feather"
+    }
+  ],
+  "result": {
+    "id": "mythsofworlds:horn_of_vingolf",
+    "count": 1
+  }
+}

@@ -9,6 +9,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -18,7 +19,8 @@ import org.jetbrains.annotations.Nullable;
  * Valkyrie, shield-maiden of Odin, in the halls of the valkyries in Jotunheim. In the sagas valkyries wed heroes:
  * Brynhild and Sigurd, Svanhvit and Volund's brother, Sigrun and Helgi. Courted and married like an amazon (see
  * {@link Amazon}), with the wedding ring: she likes gold and jewels, weapons, trophies of the monsters of the North
- * and a good feast, flowers leave her cold. Give your wife mead and a daughter is born, once a day; she grows up a
+ * and a good feast, flowers leave her cold; Brisingamen, Freyja's necklace, wins her heart at once and the horn of
+ * Vingolf calls her home. Give your wife mead and a daughter is born, once a day; she grows up a
  * valkyrie loyal to your family.
  */
 public class Valkyrie extends Amazon {
@@ -26,7 +28,9 @@ public class Valkyrie extends Amazon {
 
     private static final String[] NAMES = {"Brynhild", "Sigrun", "Svanhvit", "Hildr", "Gondul", "Skogul", "Hrist",
             "Mist", "Skuld", "Kara", "Eir", "Geirskogul", "Randgrid", "Reginleif", "Sigrdrifa", "Thrud", "Alvitr",
-            "Olrun", "Gunnr", "Herfjotur"};
+            "Olrun", "Gunnr", "Herfjotur", "Goll", "Geironul", "Hlokk", "Herja", "Hrund", "Sanngrid", "Skeggjold",
+            "Svipul", "Thogn", "Hervor", "Svava", "Brynja", "Astrid", "Ingrid", "Sigrid", "Freydis", "Ragnhild",
+            "Gunnhild", "Solveig", "Thora", "Ylva", "Alfhild", "Dagny", "Eydis", "Halla", "Runa", "Sigyn", "Tove"};
 
     public Valkyrie(EntityType<? extends AgeableMob> type, Level level) {
         super(type, level);
@@ -34,9 +38,21 @@ public class Valkyrie extends Amazon {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Amazon.createAttributes()
-                .add(Attributes.MAX_HEALTH, 34.0)
-                .add(Attributes.ATTACK_DAMAGE, 6.0)
-                .add(Attributes.ARMOR, 6.0);
+                .add(Attributes.MAX_HEALTH, 46.0)
+                .add(Attributes.ATTACK_DAMAGE, 9.0)
+                .add(Attributes.ARMOR, 12.0)
+                .add(Attributes.ARMOR_TOUGHNESS, 5.0);
+    }
+
+    @Override
+    public Item horn() {
+        return NorseContent.HORN_OF_VINGOLF.get();
+    }
+
+    /** Brisingamen, Freyja's necklace, wins a valkyrie's heart at once. */
+    @Override
+    protected boolean isLoveCharm(ItemStack stack) {
+        return stack.is(NorseContent.BRISINGAMEN.get());
     }
 
     @Override
