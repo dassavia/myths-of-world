@@ -81,6 +81,83 @@ def multi_noise(points):
     }
 
 
+# ---------------------------------------------------------------- surface of Hellas
+
+def _block(name):
+    return {"type": "minecraft:block", "result_state": {"Name": name}}
+
+
+def _if(condition, then):
+    return {"type": "minecraft:condition", "if_true": condition, "then_run": then}
+
+
+def _seq(*rules):
+    return {"type": "minecraft:sequence", "sequence": list(rules)}
+
+
+def _biome(*names):
+    return {"type": "minecraft:biome", "biome_is": [f"{NS}:{n}" for n in names]}
+
+
+def _noise(lo, hi, noise="minecraft:surface"):
+    return {"type": "minecraft:noise_threshold", "noise": noise, "min_threshold": lo, "max_threshold": hi}
+
+
+def _above(y):
+    return {"type": "minecraft:y_above", "anchor": {"absolute": y}, "surface_depth_multiplier": 0, "add_stone_depth": False}
+
+
+FLOOR = {"type": "minecraft:stone_depth", "offset": 0, "surface_type": "floor", "add_surface_depth": False,
+         "secondary_depth_range": 0}
+UNDER_FLOOR = {"type": "minecraft:stone_depth", "offset": 0, "surface_type": "floor", "add_surface_depth": True,
+               "secondary_depth_range": 0}
+STEEP = {"type": "minecraft:steep"}
+DRY = {"type": "minecraft:water", "offset": -1, "surface_depth_multiplier": 0, "add_stone_depth": False}
+NOT_DRY = {"type": "minecraft:not", "invert": DRY}
+MARBLE_BLOCK = f"{NS}:marble"
+
+
+def hellas_surface():
+    """Surface rules of Hellas, tried before the Overworld's: white limestone on every steep slope, marble
+    mountains, sand beaches below the white cliffs, grey ash in the fields of the dead, black mud by the Styx."""
+    living = ("elysian_fields", "arcadian_grove", "nemean_forest", "aegean_coast")
+    return _if({"type": "minecraft:above_preliminary_surface"}, _seq(
+        _if(_biome("olympus_peaks"), _seq(
+            _if(FLOOR, _seq(
+                _if(STEEP, _block("minecraft:calcite")),
+                _if(_above(150), _seq(_if(_noise(-0.15, 0.15), _block("minecraft:calcite")), _block(MARBLE_BLOCK))),
+                _if(_noise(0.45, 4.0), _block("minecraft:calcite")))),
+            _if(UNDER_FLOOR, _seq(
+                _if(STEEP, _block(MARBLE_BLOCK)),
+                _if(_above(140), _block(MARBLE_BLOCK)))))),
+        _if(_biome("aegean_sea"), _if(UNDER_FLOOR, _seq(_if(_noise(0.4, 4.0), _block("minecraft:gravel")), _block("minecraft:sand")))),
+        _if(_biome("stygian_marsh"), _if(UNDER_FLOOR, _seq(_if(_noise(0.35, 4.0), _block("minecraft:soul_soil")), _block("minecraft:mud")))),
+        _if(_biome("asphodel_meadows"), _if(FLOOR, _seq(
+            _if(_noise(0.15, 4.0), _block("minecraft:soul_soil")),
+            _if(_noise(-4.0, -0.3), _block("minecraft:gravel"))))),
+        _if(_biome(*living), _seq(
+            _if(FLOOR, _seq(
+                _if(STEEP, _block("minecraft:calcite")),
+                _if(_biome("aegean_coast"), _seq(
+                    _if({"type": "minecraft:not", "invert": _above(66)}, _block("minecraft:sand")),
+                    _if(_noise(0.4, 4.0), _block("minecraft:calcite")))),
+                _if(_biome("nemean_forest"), _seq(
+                    _if(_noise(0.2, 4.0), _block("minecraft:coarse_dirt")),
+                    _if(_noise(-4.0, -0.45), _block("minecraft:rooted_dirt")))),
+                _if(_biome("arcadian_grove"), _if(_noise(0.5, 4.0), _block("minecraft:podzol"))))),
+            _if(UNDER_FLOOR, _seq(
+                _if(STEEP, _block("minecraft:calcite")),
+                _if(_biome("aegean_coast"), _if({"type": "minecraft:not", "invert": _above(65)}, _block("minecraft:sandstone")))))))))
+
+
+def hellas_noise_settings():
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "vanilla", "overworld_noise_settings.json"),
+              encoding="utf-8") as f:
+        settings = json.load(f)
+    settings["surface_rule"]["sequence"].insert(1, hellas_surface())
+    write_json(data("worldgen", "noise_settings", "hellas.json"), settings)
+
+
 def dimension(name, biome_source, settings="minecraft:overworld"):
     return {
         "type": f"{NS}:{name}",
@@ -138,8 +215,8 @@ FEATURE_ORDER = [
      f"{NS}:ore_marble", f"{NS}:olympus_marble", f"{NS}:olympus_calcite", f"{NS}:white_cliffs", "minecraft:disk_sand", "minecraft:disk_clay", "minecraft:disk_gravel"],
     [],
     ["minecraft:spring_water", "minecraft:spring_lava"],
-    ["minecraft:glow_lichen", f"{NS}:asphodel_ash", f"{NS}:stygian_mud", f"{NS}:golden_apple_tree", f"{NS}:olive_tree",
-     f"{NS}:cypress_tree", f"{NS}:laurel_bush", f"{NS}:dead_trunk", f"{NS}:elysian_flowers", "minecraft:trees_plains", "minecraft:trees_birch_and_oak", "minecraft:trees_savanna",
+    ["minecraft:glow_lichen", f"{NS}:asphodel_ash", f"{NS}:stygian_mud", f"{NS}:golden_apple_tree", f"{NS}:olive_tree", f"{NS}:olive_grove", f"{NS}:pomegranate_tree",
+     f"{NS}:cypress_tree", f"{NS}:laurel_bush", f"{NS}:dead_trunk", f"{NS}:elysian_flowers", f"{NS}:maquis", "minecraft:trees_plains", "minecraft:trees_birch_and_oak", "minecraft:trees_savanna",
      "minecraft:trees_swamp", "minecraft:trees_meadow", "minecraft:flower_meadow", "minecraft:flower_plains",
      "minecraft:flower_default", "minecraft:flower_swamp", f"{NS}:patch_asphodel", "minecraft:patch_sunflower",
      "minecraft:patch_grass_plain", "minecraft:patch_grass_forest", "minecraft:patch_tall_grass_2",
@@ -195,7 +272,7 @@ BIOMES = {
         "temperature": 0.8, "downfall": 0.4,
         "sky": 0xFFE09A, "fog": 0xFFF1C9, "water": 0x7FE9FF, "water_fog": 0x0A4A5A, "grass": 0xE6CC5A, "foliage": 0xD9B84A,
         "particle": ("minecraft:end_rod", 0.003), "music": OLYMPUS_MUSIC, "additions": CHIMES,
-        "features": COMMON + [f"{NS}:marble_ruin", f"{NS}:cloud_island", f"{NS}:golden_apple_tree", f"{NS}:olive_tree",
+        "features": COMMON + [f"{NS}:marble_ruin", f"{NS}:cloud_island", f"{NS}:golden_apple_tree", f"{NS}:olive_tree", f"{NS}:olive_grove", f"{NS}:pomegranate_tree",
                               f"{NS}:elysian_flowers", "minecraft:flower_meadow", "minecraft:patch_sunflower",
                               "minecraft:patch_grass_plain", "minecraft:patch_sugar_cane"],
         "spawners": {
@@ -211,8 +288,9 @@ BIOMES = {
         "sky": 0x8ECFFF, "fog": 0xCFE6FF, "water": 0x3FA0E4, "water_fog": 0x050533, "grass": 0x7FBF4A, "foliage": 0x8AA36A,
         "particle": ("minecraft:spore_blossom_air", 0.002),
         "features": COMMON + ["minecraft:amethyst_geode", "minecraft:forest_rock", f"{NS}:marble_ruin", f"{NS}:ore_marble",
-                              f"{NS}:olive_tree", f"{NS}:cypress_tree", f"{NS}:laurel_bush", "minecraft:flower_default",
-                              "minecraft:patch_grass_forest", "minecraft:patch_tall_grass_2", "minecraft:patch_pumpkin"],
+                              f"{NS}:olive_tree", f"{NS}:olive_grove", f"{NS}:cypress_tree", f"{NS}:laurel_bush", f"{NS}:maquis",
+                              "minecraft:flower_default", "minecraft:patch_grass_forest", "minecraft:patch_tall_grass_2",
+                              "minecraft:patch_pumpkin"],
         "spawners": {
             "monster": [spawn(f"{NS}:satyr", 80, 2, 4), spawn("minecraft:spider", 30, 1, 2), spawn("minecraft:zombie", 20, 1, 3)],
             "creature": [spawn(f"{NS}:golden_hind", 3, 1, 2), spawn("minecraft:fox", 8, 2, 3), spawn("minecraft:sheep", 8, 2, 4),
@@ -226,8 +304,8 @@ BIOMES = {
         "sky": 0x5E636C, "fog": 0x6C7078, "water": 0x4A5A6A, "water_fog": 0x10181E, "grass": 0x8A9088, "foliage": 0x6E746C,
         "particle": ("minecraft:soul", 0.004), "music": UNDERWORLD_MUSIC,
         "additions": ("minecraft:ambient.soul_sand_valley.additions", 0.0111),
-        "features": COMMON + ["minecraft:lake_lava_underground", f"{NS}:asphodel_ash", f"{NS}:dead_trunk", f"{NS}:patch_asphodel",
-                              "minecraft:patch_dead_bush"],
+        "features": COMMON + ["minecraft:lake_lava_underground", f"{NS}:asphodel_ash", f"{NS}:pomegranate_tree", f"{NS}:dead_trunk",
+                              f"{NS}:patch_asphodel", "minecraft:patch_dead_bush"],
         "spawners": {
             "monster": [spawn(f"{NS}:shade", 100, 1, 3), spawn(f"{NS}:spartoi", 60, 1, 3), spawn("minecraft:skeleton", 20, 1, 2)],
             "ambient": [spawn("minecraft:bat", 10, 8, 8)],
@@ -252,14 +330,32 @@ BIOMES = {
         "point": {"c": -0.1, "e": 0.3, "t": 0.5, "h": -0.2},
         "temperature": 0.9, "downfall": 0.3,
         "sky": 0x78C0FF, "fog": 0xD8EEFF, "water": 0x2FD8D0, "water_fog": 0x05313A, "grass": 0xA9C25A, "foliage": 0x8FA27A,
-        "features": COMMON + DISKS + [f"{NS}:marble_ruin", f"{NS}:white_cliffs", f"{NS}:olive_tree", f"{NS}:cypress_tree",
-                                      "minecraft:flower_default", "minecraft:patch_grass_plain", "minecraft:patch_dead_bush",
+        "features": COMMON + DISKS + [f"{NS}:marble_ruin", f"{NS}:white_cliffs", f"{NS}:olive_tree", f"{NS}:olive_grove",
+                                      f"{NS}:cypress_tree", f"{NS}:maquis", "minecraft:flower_default", "minecraft:patch_grass_plain", "minecraft:patch_dead_bush",
                                       "minecraft:patch_sugar_cane", "minecraft:seagrass_warm", "minecraft:sea_pickle"],
         "spawners": {
             "monster": [spawn(f"{NS}:harpy", 40, 1, 3), spawn("minecraft:drowned", 30, 1, 2), spawn("minecraft:zombie", 20, 1, 2)],
             "creature": [spawn("minecraft:turtle", 5, 2, 5), spawn("minecraft:goat", 4, 1, 2)],
             "water_creature": [spawn("minecraft:squid", 4, 1, 4)],
             "water_ambient": [spawn("minecraft:tropical_fish", 25, 8, 8)],
+        },
+    },
+    # Home of the pride of lions, and of the Nemean Lion in its den: a dry open forest of olive, oak and cypress
+    # on golden grass.
+    "nemean_forest": {
+        "ru": "Немейский лес", "en": "Nemean Forest",
+        "point": {"c": 0.45, "e": 0.0, "t": 0.45, "h": 0.15},
+        "temperature": 1.2, "downfall": 0.2, "precipitation": False,
+        "sky": 0x8CC8FF, "fog": 0xE8DDB8, "water": 0x3FA0C4, "water_fog": 0x05313A, "grass": 0xC4B04A, "foliage": 0x9AA048,
+        "particle": ("minecraft:white_ash", 0.0015),
+        "features": COMMON + ["minecraft:forest_rock", f"{NS}:marble_ruin", f"{NS}:ore_marble", f"{NS}:olive_tree",
+                              f"{NS}:olive_grove", f"{NS}:cypress_tree", f"{NS}:maquis", "minecraft:trees_savanna",
+                              "minecraft:trees_birch_and_oak", "minecraft:flower_default", "minecraft:patch_grass_forest",
+                              "minecraft:patch_tall_grass_2", "minecraft:patch_dead_bush"],
+        "spawners": {
+            "monster": [spawn(f"{NS}:satyr", 40, 1, 3), spawn("minecraft:spider", 20, 1, 2)],
+            "creature": [spawn(f"{NS}:lion", 14, 2, 4), spawn("minecraft:sheep", 8, 2, 4), spawn("minecraft:goat", 6, 1, 3),
+                         spawn("minecraft:rabbit", 6, 2, 3), spawn(f"{NS}:golden_hind", 1, 1, 1)],
         },
     },
     "aegean_sea": {
@@ -356,12 +452,19 @@ def simple(name, **props):
     return {"type": "minecraft:simple_state_provider", "state": state(name, **props)}
 
 
-def tree(name, log, leaves, trunk, foliage, count=None, rarity=None, dirt="minecraft:dirt"):
+def tree(name, log, leaves, trunk, foliage, count=None, rarity=None, dirt="minecraft:dirt", fruit=False, placement=None):
+    if fruit:
+        # Fruit trees grow with some of their fruit already ripe.
+        foliage_provider = {"type": "minecraft:weighted_state_provider", "entries": [
+            {"weight": 3, "data": state(leaves, age=0, distance=7, persistent=False, waterlogged=False)},
+            {"weight": 1, "data": state(leaves, age=3, distance=7, persistent=False, waterlogged=False)}]}
+    else:
+        foliage_provider = simple(leaves, distance=7, persistent=False, waterlogged=False)
     write_json(data("worldgen", "configured_feature", f"{name}.json"), {
         "type": "minecraft:tree",
         "config": {
             "trunk_provider": simple(log, axis="y"),
-            "foliage_provider": simple(leaves, distance=7, persistent=False, waterlogged=False),
+            "foliage_provider": foliage_provider,
             "dirt_provider": simple(dirt),
             "trunk_placer": trunk,
             "foliage_placer": foliage,
@@ -372,7 +475,7 @@ def tree(name, log, leaves, trunk, foliage, count=None, rarity=None, dirt="minec
         },
     })
     write_json(data("worldgen", "placed_feature", f"{name}.json"),
-               {"feature": f"{NS}:{name}", "placement": surface_placement(count, rarity, [SAPLING_OK])})
+               {"feature": f"{NS}:{name}", "placement": placement or surface_placement(count, rarity, [SAPLING_OK])})
 
 
 def hellas_features():
@@ -383,9 +486,33 @@ def hellas_features():
     ore("white_cliffs", "minecraft:calcite", 40, 10, 55, 120)
 
     # Olive: short, gnarled, forking trunk with a wide silvery crown.
-    tree("olive_tree", "minecraft:oak_log", "minecraft:oak_leaves",
-         {"type": "minecraft:forking_trunk_placer", "base_height": 3, "height_rand_a": 2, "height_rand_b": 1},
-         {"type": "minecraft:acacia_foliage_placer", "radius": 2, "offset": 0}, count=1)
+    olive_trunk = {"type": "minecraft:forking_trunk_placer", "base_height": 3, "height_rand_a": 2, "height_rand_b": 1}
+    olive_crown = {"type": "minecraft:acacia_foliage_placer", "radius": 2, "offset": 0}
+    tree("olive_tree", "minecraft:oak_log", f"{NS}:olive_leaves", olive_trunk, olive_crown, count=1, fruit=True)
+    # Olive groves: patches where many olive trees stand together, as on the hills of Attica.
+    tree("olive_grove", "minecraft:oak_log", f"{NS}:olive_leaves", olive_trunk, olive_crown, fruit=True,
+         placement=[{"type": "minecraft:rarity_filter", "chance": 6}, {"type": "minecraft:count", "count": 8}] +
+         surface_placement(extra=[SAPLING_OK]))
+    # Pomegranate of Persephone: a small round tree with red fruit.
+    tree("pomegranate_tree", "minecraft:dark_oak_log", f"{NS}:pomegranate_leaves",
+         {"type": "minecraft:straight_trunk_placer", "base_height": 2, "height_rand_a": 1, "height_rand_b": 0},
+         {"type": "minecraft:blob_foliage_placer", "radius": 2, "offset": 0, "height": 2}, rarity=3, fruit=True)
+    # Maquis: the low, thick, sweet-smelling scrub of the Mediterranean hills.
+    write_json(data("worldgen", "configured_feature", "maquis.json"), {"type": "minecraft:random_patch", "config": {
+        "tries": 24, "xz_spread": 5, "y_spread": 2, "feature": {"feature": {"type": "minecraft:simple_block", "config": {
+            "to_place": {"type": "minecraft:weighted_state_provider", "entries": [
+                {"weight": 4, "data": state("minecraft:azalea_leaves", distance=1, persistent=True, waterlogged=False)},
+                {"weight": 2, "data": state("minecraft:oak_leaves", distance=1, persistent=True, waterlogged=False)},
+                {"weight": 2, "data": state("minecraft:sweet_berry_bush", age=3)},
+                {"weight": 1, "data": state("minecraft:flowering_azalea_leaves", distance=1, persistent=True, waterlogged=False)},
+                {"weight": 2, "data": state("minecraft:short_grass")}]}}},
+            "placement": [{"type": "minecraft:block_predicate_filter", "predicate": {"type": "minecraft:all_of", "predicates": [
+                {"type": "minecraft:matching_blocks", "blocks": "minecraft:air"},
+                {"type": "minecraft:matching_blocks", "offset": [0, -1, 0], "blocks": ["minecraft:grass_block", "minecraft:coarse_dirt",
+                                                                                   "minecraft:dirt", "minecraft:podzol"]}]}}]}}})
+    write_json(data("worldgen", "placed_feature", "maquis.json"), {"feature": f"{NS}:maquis", "placement": [
+        {"type": "minecraft:count", "count": 2}, {"type": "minecraft:in_square"},
+        {"type": "minecraft:heightmap", "heightmap": "MOTION_BLOCKING"}, {"type": "minecraft:biome"}]})
     # Cypress: a tall dark-green spire.
     tree("cypress_tree", "minecraft:spruce_log", "minecraft:spruce_leaves",
          {"type": "minecraft:straight_trunk_placer", "base_height": 7, "height_rand_a": 4, "height_rand_b": 0},
@@ -400,7 +527,7 @@ def hellas_features():
          {"type": "minecraft:straight_trunk_placer", "base_height": 5, "height_rand_a": 2, "height_rand_b": 0},
          {"type": "minecraft:blob_foliage_placer", "radius": 2, "offset": 0, "height": 3}, rarity=2)
 
-    for name, rarity in (("cloud_island", 5), ("marble_ruin", 6)):
+    for name, rarity in (("cloud_island", 5), ("marble_ruin", 3)):
         write_json(data("worldgen", "configured_feature", f"{name}.json"), {"type": f"{NS}:{name}", "config": {}})
     write_json(data("worldgen", "placed_feature", "cloud_island.json"), {"feature": f"{NS}:cloud_island", "placement": [
         {"type": "minecraft:rarity_filter", "chance": 5}, {"type": "minecraft:in_square"},
@@ -408,7 +535,7 @@ def hellas_features():
                                                       "max_inclusive": {"absolute": 200}}},
         {"type": "minecraft:biome"}]})
     write_json(data("worldgen", "placed_feature", "marble_ruin.json"), {"feature": f"{NS}:marble_ruin", "placement": [
-        {"type": "minecraft:rarity_filter", "chance": 6}, {"type": "minecraft:in_square"},
+        {"type": "minecraft:rarity_filter", "chance": 3}, {"type": "minecraft:in_square"},
         {"type": "minecraft:heightmap", "heightmap": "WORLD_SURFACE_WG"}, {"type": "minecraft:biome"}]})
 
     # Fields of the dead: grey soul soil and coarse earth among the asphodels.
@@ -512,21 +639,31 @@ def worldgen_features():
 # ====================================================================== structures
 
 # name: (biomes, spacing, separation, salt, heightmap, depth offset, terrain adaptation)
-# Spacing is in chunks; v0.3 doubled it so that lairs no longer crowd each other.
+# Spacing is in chunks. The lairs of the bosses and mini-bosses share one structure set (LAIRS below), so there is at
+# most one lair per cell of that grid and two lairs are never closer than its separation, however far from spawn.
 STRUCTURES = {
     "greek_temple": (["olympus_peaks", "elysian_fields"], 56, 20, 1450201, "WORLD_SURFACE_WG", 0, "beard_thin"),
     "oracle_of_delphi": (["arcadian_grove", "olympus_peaks"], 48, 16, 1450202, "WORLD_SURFACE_WG", 0, "beard_thin"),
-    "labyrinth": (["elysian_fields", "aegean_coast", "arcadian_grove"], 64, 24, 1450203, "WORLD_SURFACE_WG", -1, "beard_box"),
-    "gates_of_hades": (["asphodel_meadows"], 56, 20, 1450204, "WORLD_SURFACE_WG", 0, "beard_thin"),
-    "hydra_lair": (["stygian_marsh"], 52, 18, 1450205, "WORLD_SURFACE_WG", -2, "beard_thin"),
-    "medusa_lair": (["aegean_coast"], 52, 18, 1450206, "WORLD_SURFACE_WG", 0, "beard_thin"),
-    "cyclops_cave": (["olympus_peaks", "aegean_coast", "arcadian_grove"], 56, 20, 1450207, "WORLD_SURFACE_WG", 0, "beard_thin"),
-    "nemean_lion_den": (["arcadian_grove"], 48, 16, 1450208, "WORLD_SURFACE_WG", 0, "beard_thin"),
-    # The agora is the hub of Hellas, so it stays the most common structure.
+    # Underground: only the propylon on top of the 21-block-deep template shows above the ground.
+    "labyrinth": (["elysian_fields", "aegean_coast", "arcadian_grove"], 0, 0, 0, "WORLD_SURFACE_WG", -21, "none"),
+    "gates_of_hades": (["asphodel_meadows"], 0, 0, 0, "WORLD_SURFACE_WG", 0, "beard_thin"),
+    "hydra_lair": (["stygian_marsh"], 0, 0, 0, "WORLD_SURFACE_WG", -2, "beard_thin"),
+    "medusa_lair": (["aegean_coast"], 0, 0, 0, "WORLD_SURFACE_WG", 0, "beard_thin"),
+    "cyclops_cave": (["olympus_peaks", "aegean_coast", "arcadian_grove"], 0, 0, 0, "WORLD_SURFACE_WG", 0, "beard_thin"),
+    "nemean_lion_den": (["nemean_forest"], 0, 0, 0, "WORLD_SURFACE_WG", 0, "beard_thin"),
+    "themiscyra": (["elysian_fields", "arcadian_grove", "aegean_coast"], 0, 0, 0, "WORLD_SURFACE_WG", 0, "beard_thin"),
+    # The agora is the hub of Hellas, so it stays the most common big structure.
     "agora": (["elysian_fields", "arcadian_grove", "aegean_coast"], 32, 12, 1450209, "WORLD_SURFACE_WG", 0, "beard_thin"),
     "ship_of_theseus": (["aegean_sea"], 44, 14, 1450210, "WORLD_SURFACE_WG", -3, "none"),
     "perseus_refuge": (["aegean_coast", "olympus_peaks"], 44, 14, 1450211, "WORLD_SURFACE_WG", 0, "beard_thin"),
+    "amazon_camp": (["elysian_fields", "arcadian_grove", "aegean_coast", "nemean_forest"], 36, 14, 1450212,
+                    "WORLD_SURFACE_WG", 0, "beard_thin"),
+    "greek_farmstead": (["elysian_fields", "arcadian_grove", "aegean_coast", "nemean_forest"], 14, 5, 1450213,
+                        "WORLD_SURFACE_WG", 0, "beard_thin"),
 }
+LAIRS = {"structures": {"labyrinth": 3, "gates_of_hades": 3, "hydra_lair": 3, "medusa_lair": 3, "cyclops_cave": 3,
+                        "nemean_lion_den": 3, "themiscyra": 2},
+         "spacing": 40, "separation": 22, "salt": 1450300}
 
 STRUCTURE_NAMES = {
     "greek_temple": ("Храм Олимпийцев", "Temple of the Olympians"),
@@ -540,6 +677,9 @@ STRUCTURE_NAMES = {
     "agora": ("Агора", "Agora"),
     "ship_of_theseus": ("Корабль Тесея", "Ship of Theseus"),
     "perseus_refuge": ("Убежище Персея", "Refuge of Perseus"),
+    "amazon_camp": ("Лагерь амазонок", "Amazon Camp"),
+    "themiscyra": ("Фемискира", "Themiscyra"),
+    "greek_farmstead": ("Усадьба", "Farmstead"),
 }
 
 
@@ -571,10 +711,20 @@ def worldgen_structures():
             "max_distance_from_center": 80,
             "use_expansion_hack": False,
         })
-        write_json(data("worldgen", "structure_set", f"{name}.json"), {
+        set_path = data("worldgen", "structure_set", f"{name}.json")
+        if name in LAIRS["structures"]:
+            if os.path.exists(set_path):  # each lair had its own set before 0.4
+                os.remove(set_path)
+            continue
+        write_json(set_path, {
             "structures": [{"structure": f"{NS}:{name}", "weight": 1}],
             "placement": {"type": "minecraft:random_spread", "spacing": spacing, "separation": separation, "salt": salt},
         })
+    write_json(data("worldgen", "structure_set", "greek_lairs.json"), {
+        "structures": [{"structure": f"{NS}:{name}", "weight": w} for name, w in LAIRS["structures"].items()],
+        "placement": {"type": "minecraft:random_spread", "spacing": LAIRS["spacing"], "separation": LAIRS["separation"],
+                      "salt": LAIRS["salt"]},
+    })
 
 
 # ====================================================================== loot
@@ -704,6 +854,37 @@ def loot():
     table["pools"].append({"rolls": 1, "entries": [entry("minecraft:shield", 1)]})
     write_json(data("loot_table", "chests", "perseus_refuge.json"), table)
 
+    for leaves, fruit in (("olive_leaves", "olives"), ("pomegranate_leaves", "pomegranate")):
+        write_json(data("loot_table", "blocks", f"{leaves}.json"), {
+            "type": "minecraft:block",
+            "pools": [
+                {"rolls": 1, "entries": [{"type": "minecraft:alternatives", "children": [
+                    {"type": "minecraft:item", "name": f"{NS}:{leaves}", "conditions": [shears_or_silk]},
+                    {"type": "minecraft:item", "name": f"{NS}:{fruit}", "conditions": [
+                        {"condition": "minecraft:block_state_property", "block": f"{NS}:{leaves}", "properties": {"age": "3"}}]},
+                    {"type": "minecraft:item", "name": "minecraft:stick",
+                     "conditions": [{"condition": "minecraft:random_chance", "chance": 0.04}]}]}]}],
+            "random_sequence": f"{NS}:blocks/{leaves}",
+        })
+    chest("amazon_camp", (3, 6), [
+        entry("minecraft:arrow", 8, 4, 16), entry("minecraft:leather", 8, 2, 6), entry("minecraft:iron_ingot", 6, 1, 4),
+        entry("minecraft:bow", 3, enchant=True), entry("minecraft:iron_sword", 3, enchant=True), entry("minecraft:cooked_mutton", 6, 2, 5),
+        entry("minecraft:saddle", 2), entry(f"{NS}:wedding_ring", 1),
+    ])
+    chest("themiscyra", (4, 7), gold + [
+        entry("minecraft:emerald", 6, 2, 6), entry("minecraft:diamond", 3, 1, 3), entry("minecraft:golden_horse_armor", 2),
+        entry("minecraft:book", 4, enchant=True), entry("minecraft:golden_apple", 3), entry(f"{NS}:ambrosia", 3),
+        entry(f"{NS}:wedding_ring", 2),
+    ])
+    chest("greek_farmstead", (3, 6), [
+        entry(f"{NS}:olives", 10, 2, 8), entry(f"{NS}:pomegranate", 4, 1, 3), entry("minecraft:bread", 8, 1, 4),
+        entry("minecraft:honey_bottle", 6, 1, 3), entry("minecraft:honeycomb", 6, 1, 4), entry("minecraft:wheat", 8, 2, 8),
+        entry("minecraft:white_wool", 5, 1, 4), entry("minecraft:emerald", 3, 1, 2),
+    ])
+    mob("lion", [("minecraft:leather", 0, 2, None), ("minecraft:beef", 1, 3, None)])
+    mob("karkinos", [(f"{NS}:karkinos_claw", 1, 2, None), ("minecraft:cod", 2, 5, None), ("minecraft:prismarine_shard", 1, 4, None)])
+    mob("amazon", [])
+    mob("hippolyta", [("minecraft:gold_ingot", 4, 9, None), ("minecraft:diamond", 1, 2, None)])
     mob("satyr", [("minecraft:leather", 0, 2, None), ("minecraft:wheat", 0, 2, None)])
     mob("harpy", [(f"{NS}:harpy_feather", 0, 2, None), ("minecraft:feather", 0, 2, None)])
     mob("spartoi", [("minecraft:bone", 0, 2, None), ("minecraft:iron_nugget", 0, 3, None)])
@@ -760,6 +941,21 @@ def recipes():
         "pattern": ["C", "S"], "key": {"C": {"item": f"{NS}:nemean_claw"}, "S": {"item": "minecraft:stick"}},
         "result": {"id": f"{NS}:nemean_claw_dagger", "count": 1},
     })
+    write_json(data("recipe", "wings_of_daedalus.json"), {
+        "type": "minecraft:crafting_shaped", "category": "equipment",
+        "pattern": ["HFH", "FFF", "F F"], "key": {"H": {"item": "minecraft:honeycomb"}, "F": {"item": f"{NS}:harpy_feather"}},
+        "result": {"id": f"{NS}:wings_of_daedalus", "count": 1},
+    })
+    write_json(data("recipe", "wedding_ring.json"), {
+        "type": "minecraft:crafting_shaped", "category": "misc",
+        "pattern": [" D ", "G G", " G "], "key": {"D": {"item": "minecraft:diamond"}, "G": {"item": "minecraft:gold_ingot"}},
+        "result": {"id": f"{NS}:wedding_ring", "count": 1},
+    })
+    write_json(data("recipe", "greek_journal.json"), {
+        "type": "minecraft:crafting_shapeless", "category": "misc",
+        "ingredients": [{"item": "minecraft:book"}, {"item": "minecraft:feather"}, {"item": "minecraft:gold_nugget"}],
+        "result": {"id": f"{NS}:greek_journal", "count": 1},
+    })
     pickaxe = os.path.join(ROOT, "data", "minecraft", "tags", "block", "mineable", "pickaxe.json")
     with open(pickaxe, encoding="utf-8") as f:
         tag = json.load(f)
@@ -767,12 +963,12 @@ def recipes():
         if f"{NS}:{block}" not in tag["values"]:
             tag["values"].append(f"{NS}:{block}")
     write_json(pickaxe, tag)
-    for tag_name, values in (("leaves", ["golden_leaves"]), ("mineable/hoe", ["golden_leaves"]),
-                             ("mineable/shovel", ["cloud"])):
+    fruit_leaves = ["golden_leaves", "olive_leaves", "pomegranate_leaves"]
+    for tag_name, values in (("leaves", fruit_leaves), ("mineable/hoe", fruit_leaves), ("mineable/shovel", ["cloud"])):
         write_json(os.path.join(ROOT, "data", "minecraft", "tags", "block", f"{tag_name}.json"),
                    {"replace": False, "values": [f"{NS}:{v}" for v in values]})
     write_json(os.path.join(ROOT, "data", "minecraft", "tags", "item", "leaves.json"),
-               {"replace": False, "values": [f"{NS}:golden_leaves"]})
+               {"replace": False, "values": [f"{NS}:{v}" for v in fruit_leaves]})
     write_json(os.path.join(ROOT, "data", "minecraft", "tags", "block", "small_flowers.json"),
                {"replace": False, "values": [f"{NS}:asphodel"]})
     write_json(os.path.join(ROOT, "data", "minecraft", "tags", "item", "small_flowers.json"),
@@ -782,14 +978,25 @@ def recipes():
 # ====================================================================== models
 
 ITEMS = ["promethean_torch", "ambrosia", "harpy_feather", "minotaur_horn", "hydra_scale", "cerberus_fang",
-         "nemean_pelt", "cyclops_eye", "medusa_head", "nemean_claw", "nemean_claw_dagger", "harpe", "hydra_egg"]
+         "nemean_pelt", "cyclops_eye", "medusa_head", "nemean_claw", "nemean_claw_dagger", "harpe", "hydra_egg",
+         "olives", "pomegranate", "wings_of_daedalus", "karkinos_claw", "girdle_of_hippolyta", "wedding_ring",
+         "greek_journal", "greek_journal_complete"]
 HANDHELD = {"promethean_torch", "nemean_claw_dagger", "harpe"}
 MOBS = ["satyr", "harpy", "spartoi", "shade", "pegasus", "golden_hind", "hydra_hatchling", "greek_merchant",
-        "cyclops", "medusa", "nemean_lion", "minotaur", "hydra", "cerberus"]
+        "cyclops", "medusa", "nemean_lion", "minotaur", "hydra", "cerberus", "lion", "amazon", "karkinos", "hippolyta"]
 
 
 def models():
-    for block in ("marble", "marble_bricks", "olympian_marble"):
+    for leaves in ("olive_leaves", "pomegranate_leaves"):
+        write_json(assets("blockstates", f"{leaves}.json"), {"variants": {
+            f"age={age}": {"model": f"{NS}:block/{leaves}" + ("_ripe" if age == 3 else "")} for age in range(4)}})
+        for suffix in ("", "_ripe"):
+            write_json(assets("models", "block", f"{leaves}{suffix}.json"), {
+                "parent": "minecraft:block/cube_all", "render_type": "minecraft:cutout_mipped",
+                "textures": {"all": f"{NS}:block/{leaves}{suffix}"}})
+        write_json(assets("models", "item", f"{leaves}.json"), {"parent": f"{NS}:block/{leaves}_ripe"})
+    for block in ("marble", "marble_bricks", "olympian_marble", "labyrinth_bricks", "mossy_labyrinth_bricks",
+                  "cracked_labyrinth_bricks"):
         write_json(assets("blockstates", f"{block}.json"), {"variants": {"": {"model": f"{NS}:block/{block}"}}})
         write_json(assets("models", "block", f"{block}.json"),
                    {"parent": "minecraft:block/cube_all", "textures": {"all": f"{NS}:block/{block}"}})
@@ -878,6 +1085,31 @@ LANG = {
     "block.mythsofworlds.cloud": ("Облако", "Cloud"),
     "block.mythsofworlds.golden_leaves": ("Листва золотой яблони", "Golden Apple Leaves"),
     "block.mythsofworlds.asphodel": ("Асфодель", "Asphodel"),
+    "block.mythsofworlds.labyrinth_bricks": ("Кирпичи лабиринта", "Labyrinth Bricks"),
+    "block.mythsofworlds.mossy_labyrinth_bricks": ("Замшелые кирпичи лабиринта", "Mossy Labyrinth Bricks"),
+    "block.mythsofworlds.cracked_labyrinth_bricks": ("Потрескавшиеся кирпичи лабиринта", "Cracked Labyrinth Bricks"),
+    "block.mythsofworlds.olive_leaves": ("Листва оливы", "Olive Leaves"),
+    "block.mythsofworlds.pomegranate_leaves": ("Листва граната", "Pomegranate Leaves"),
+    "item.mythsofworlds.olives": ("Оливки", "Olives"),
+    "item.mythsofworlds.pomegranate": ("Гранат", "Pomegranate"),
+    "item.mythsofworlds.wings_of_daedalus": ("Крылья Дедала", "Wings of Daedalus"),
+    "item.mythsofworlds.wings_of_daedalus.desc": (
+        "Надеваются вместо нагрудника: высокий прыжок и плавное падение. Не поднимайтесь к солнцу выше 200 блоков: воск тает",
+        "Worn in the chest slot: a very high jump and a gentle glide down. Do not fly above y 200 in the sun: the wax melts"),
+    "item.mythsofworlds.wings_of_daedalus.melting": ("Солнце растапливает воск ваших крыльев!", "The sun is melting the wax of your wings!"),
+    "item.mythsofworlds.karkinos_claw": ("Клешня Каркина", "Claw of Karkinos"),
+    "item.mythsofworlds.girdle_of_hippolyta": ("Пояс Ипполиты", "Girdle of Hippolyta"),
+    "item.mythsofworlds.girdle_of_hippolyta.desc": ("Надевается вместо поножей: сила и стойкость", "Worn in the legs slot: strength and resistance"),
+    "item.mythsofworlds.wedding_ring": ("Обручальное кольцо", "Wedding Ring"),
+    "item.mythsofworlds.greek_journal": ("Журнал героя Эллады", "Hero's Journal of Hellas"),
+    "item.mythsofworlds.greek_journal_complete": ("Полный журнал героя Эллады", "Complete Hero's Journal of Hellas"),
+    "item.mythsofworlds.journal.desc": ("Записи появляются, когда вы встречаете существ и находите места",
+                                        "Entries appear as you meet creatures and find places"),
+    "item.mythsofworlds.journal.complete": ("Все записи уже на месте", "Every entry is already written"),
+    "entity.mythsofworlds.lion": ("Лев", "Lion"),
+    "entity.mythsofworlds.amazon": ("Амазонка", "Amazon"),
+    "entity.mythsofworlds.karkinos": ("Каркин", "Karkinos"),
+    "entity.mythsofworlds.hippolyta": ("Ипполита", "Hippolyta"),
     "item.mythsofworlds.promethean_torch": ("Факел Прометея", "Promethean Torch"),
     "item.mythsofworlds.promethean_torch.desc": (
         "Обложите водоём олимпийским мрамором, поставьте жертвенные чаши на 4 угла и зажгите их факелом",
@@ -906,8 +1138,8 @@ LANG = {
     "entity.mythsofworlds.pegasus": ("Пегас", "Pegasus"),
     "entity.mythsofworlds.cyclops": ("Циклоп", "Cyclops"),
     "entity.mythsofworlds.medusa": ("Медуза Горгона", "Medusa"),
-    "entity.mythsofworlds.medusa.petrify": ("Взгляд Медузы обращает вас в камень! Отвернитесь или поднимите щит",
-                                            "Medusa's gaze is turning you to stone! Look away or raise a shield"),
+    "entity.mythsofworlds.medusa.petrify": ("Взгляд Медузы обращает вас в камень! Отвернитесь, поднимите щит или наденьте тыкву",
+                                            "Medusa's gaze is turning you to stone! Look away, raise a shield or wear a pumpkin"),
     "entity.mythsofworlds.nemean_lion": ("Немейский лев", "Nemean Lion"),
     "entity.mythsofworlds.minotaur": ("Минотавр", "Minotaur"),
     "entity.mythsofworlds.hydra": ("Лернейская гидра", "Lernaean Hydra"),
@@ -921,12 +1153,20 @@ MOB_NAMES_RU = {
     "satyr": "сатира", "harpy": "гарпии", "spartoi": "спарта", "shade": "тени умершего", "pegasus": "пегаса",
     "cyclops": "циклопа", "medusa": "Медузы Горгоны", "nemean_lion": "Немейского льва", "minotaur": "Минотавра",
     "hydra": "Лернейской гидры", "cerberus": "Цербера", "golden_hind": "Керинейской лани",
-    "hydra_hatchling": "гидрёныша", "greek_merchant": "торговца агоры",
+    "hydra_hatchling": "гидрёныша", "greek_merchant": "торговца агоры", "lion": "льва", "amazon": "амазонки",
+    "karkinos": "Каркина", "hippolyta": "Ипполиты",
 }
 
 
 def lang():
+    import journal_greek
     entries = dict(LANG)
+    entries.update(JOURNAL_UI)
+    entries.update(journal("greek", journal_greek.INTRO, journal_greek.ENTRIES))
+    for key, values in AMAZON_TEXT.items():
+        entries[f"entity.{NS}.amazon.{key}"] = values
+    for key, values in HIPPOLYTA_TEXT.items():
+        entries[f"entity.{NS}.hippolyta.{key}"] = values
     for name in MOBS:
         en = LANG[f"entity.{NS}.{name}"][1]
         entries[f"item.{NS}.{name}_spawn_egg"] = (f"Яйцо призыва {MOB_NAMES_RU[name]}", f"{en} Spawn Egg")
@@ -939,6 +1179,125 @@ def lang():
         for key, values in entries.items():
             current[key] = values[index]
         write_json(path, current)
+
+
+# ====================================================================== journal
+
+NARROW = {"i": 2, "l": 3, "t": 4, "f": 5, "k": 5, "I": 4, " ": 4, ".": 2, ",": 2, ":": 2, ";": 2, "!": 2, "'": 2,
+          "|": 2, "(": 4, ")": 4, "[": 4, "]": 4, "*": 4, "\"": 4, "`": 3}
+BOOK_WIDTH, BOOK_LINES = 114, 14
+
+
+def text_lines(text, bold=False):
+    """How many lines a text takes in the book screen (word wrap with the widths of the default font)."""
+    count = 0
+    for paragraph in text.split("\n"):
+        width = 0
+        count += 1
+        for word in paragraph.split(" "):
+            w = sum(NARROW.get(ch, 6) + (1 if bold else 0) for ch in word)
+            if width and width + 4 + w > BOOK_WIDTH:
+                count += 1
+                width = w
+            else:
+                width += (4 if width else 0) + w
+    return count
+
+
+def journal(volume, intro, entries):
+    """Writes data/mythsofworlds/journal/<volume>.json and the journal text into LANG; checks every page fits."""
+    lang_entries = {}
+    title_ru, title_en, intro_ru, intro_en = intro
+    lang_entries[f"journal.{NS}.{volume}.title"] = (title_ru, title_en)
+    lang_entries[f"journal.{NS}.{volume}.intro"] = (intro_ru, intro_en)
+    listed = []
+    for entry_id, category, unlock, ru, en in entries:
+        if len(ru) != len(en):
+            raise ValueError(f"journal {entry_id}: {len(ru) - 1} Russian pages but {len(en) - 1} English")
+        full_id = f"{volume}.{entry_id}"
+        for lang_index, pages in ((0, ru), (1, en)):
+            title, body = pages[0], pages[1:]
+            for n, page in enumerate(body, 1):
+                budget = BOOK_LINES - (2 + text_lines(title, bold=True) if n == 1 else 0)
+                if text_lines(page) > budget:
+                    raise ValueError(f"journal {full_id} page {n} ({'ru' if lang_index == 0 else 'en'}) is "
+                                     f"{text_lines(page)} lines, only {budget} fit")
+        lang_entries[f"journal.{NS}.{full_id}.title"] = (ru[0], en[0])
+        for n in range(1, len(ru)):
+            lang_entries[f"journal.{NS}.{full_id}.page{n}"] = (ru[n], en[n])
+        item = {"id": full_id, "category": category, "pages": len(ru) - 1}
+        if unlock:
+            item[unlock[0]] = unlock[1]
+        listed.append(item)
+    write_json(data("journal", f"{volume}.json"), {"entries": listed})
+    return lang_entries
+
+
+JOURNAL_UI = {
+    "journal.mythsofworlds.progress": ("Записей: %s из %s", "Entries: %s of %s"),
+    "journal.mythsofworlds.new_entry": ("Новая запись в журнале: %s", "New journal entry: %s"),
+    "journal.mythsofworlds.given": ("В вашей сумке появился %s. Записи в нём будут появляться сами.",
+                                    "You find %s in your pack. Its entries will write themselves."),
+    "journal.mythsofworlds.category.intro": ("Введение", "Introduction"),
+    "journal.mythsofworlds.category.creature": ("Существа", "Creatures"),
+    "journal.mythsofworlds.category.boss": ("Боссы", "Bosses"),
+    "journal.mythsofworlds.category.place": ("Места", "Places"),
+}
+
+AMAZON_TEXT = {
+    "daughter": ("%1$s тянет вас за руку: «Папа, научи меня держать меч!»", "%1$s tugs at your hand: \"Father, teach me to hold a sword!\""),
+    "child": ("%1$s прячется за маму.", "%1$s hides behind her mother."),
+    "angry": ("%1$s в ярости и не желает с вами говорить!", "%1$s is furious and will not talk to you!"),
+    "stay": ("%1$s: «Я подожду здесь».", "%1$s: \"I will wait here.\""),
+    "follow": ("%1$s: «Я иду с тобой».", "%1$s: \"I am coming with you.\""),
+    "busy": ("%1$s ещё любуется прошлым подарком. Подождите немного.", "%1$s is still admiring your last gift. Wait a little."),
+    "gift": ("%1$s принимает подарок. Симпатия: %2$s/%3$s", "%1$s accepts the gift. Affection: %2$s/%3$s"),
+    "gift_favourite": ("%1$s в восторге: это её любимое! Симпатия: %2$s/%3$s", "%1$s is delighted: her favourite! Affection: %2$s/%3$s"),
+    "in_love": ("%1$s смотрит на вас с нежностью. Подарите ей обручальное кольцо!",
+                "%1$s looks at you tenderly. Give her a wedding ring!"),
+    "wife": ("%1$s, ваша жена, улыбается. Подарите ей торт, и родится дочь. Shift+ПКМ: ждать или идти за вами.",
+             "%1$s, your wife, smiles. Give her a cake and a daughter is born. Shift + right-click: stay or follow."),
+    "grown_daughter": ("%1$s, ваша дочь, готова сражаться рядом с вами.", "%1$s, your daughter, is ready to fight at your side."),
+    "talk": ("%1$s: «Чем ты удивишь амазонку?» Больше всего она любит %2$s. Симпатия: %3$s/%4$s",
+             "%1$s: \"What can you offer an amazon?\" She likes %2$s best. Affection: %3$s/%4$s"),
+    "likes.0": ("цветы", "flowers"),
+    "likes.1": ("золото и драгоценности", "gold and jewels"),
+    "likes.2": ("оружие и трофеи чудовищ", "weapons and monster trophies"),
+    "likes.3": ("вкусную еду", "good food"),
+    "is_daughter": ("%1$s - ваша дочь!", "%1$s is your daughter!"),
+    "already_yours": ("%1$s уже ваша жена.", "%1$s is already your wife."),
+    "taken": ("%1$s замужем за другим героем.", "%1$s is married to another hero."),
+    "you_are_married": ("Вы уже женаты. Амазонки не делят мужей.", "You are already married. Amazons do not share husbands."),
+    "unworthy": ("%1$s не примет кольцо от вас.", "%1$s will not take a ring from you."),
+    "not_yet": ("%1$s смеётся: «Сначала завоюй моё сердце». Симпатия: %2$s/%3$s",
+                "%1$s laughs: \"Win my heart first.\" Affection: %2$s/%3$s"),
+    "married": ("%1$s принимает кольцо! Теперь она ваша жена.", "%1$s takes the ring! She is your wife now."),
+    "tired": ("%1$s: «Не сегодня. Приходи завтра».", "%1$s: \"Not today. Come back tomorrow.\""),
+    "not_tonight": ("%1$s: «Не сегодня».", "%1$s: \"Not tonight.\""),
+    "daughter_born": ("У вас родилась дочь, %2$s!", "A daughter is born to you: %2$s!"),
+    "died": ("Ваша жена %1$s погибла...", "Your wife %1$s has died..."),
+}
+HIPPOLYTA_TEXT = dict(AMAZON_TEXT, **{
+    "challenge": ("%1$s: «Ты вошёл в Фемискиру с оружием. Победи меня или уходи».",
+                  "%1$s: \"You came armed into Themiscyra. Defeat me or leave.\""),
+    "yield": ("%1$s опускает меч: «Ты сильнее меня. Возьми мой пояс, герой».",
+              "%1$s lowers her sword: \"You are stronger than me. Take my girdle, hero.\""),
+    "unworthy": ("%1$s: «Я слушаю только того, кто победил меня в бою».", "%1$s: \"I listen only to the one who beat me in battle.\""),
+    "scorn": ("%1$s отвергает подарок: «Это недостойно царицы». Симпатия: %2$s/%3$s",
+              "%1$s scorns the gift: \"This is not fit for a queen.\" Affection: %2$s/%3$s"),
+    "already": ("%1$s: «Такой дар у меня уже есть».", "%1$s: \"I already have such a gift.\""),
+    "gift": ("%1$s благосклонно принимает дар. Симпатия: %2$s/%3$s", "%1$s graciously accepts the gift. Affection: %2$s/%3$s"),
+    "talk": ("%1$s: «Принеси трофеи великих чудовищ, амброзию или сокровища, каких нет ни у кого». Симпатия: %2$s/%3$s",
+             "%1$s: \"Bring me trophies of the great monsters, ambrosia or treasures no one else has.\" Affection: %2$s/%3$s"),
+    "in_love": ("%1$s: «Ты достоин стать мужем царицы. Где твоё кольцо?»", "%1$s: \"You are worthy to wed a queen. Where is your ring?\""),
+    "wife": ("%1$s, царица амазонок и ваша жена. Амброзия, и, может быть, родится царевна. Shift+ПКМ: ждать или идти.",
+             "%1$s, queen of the Amazons and your wife. Ambrosia, and perhaps a princess is born. Shift + right-click: stay or follow."),
+    "you_are_married": ("Царица не делит мужа ни с кем!", "A queen shares her husband with no one!"),
+    "married": ("%1$s надевает кольцо. Царица амазонок - ваша жена!", "%1$s puts on the ring. The queen of the Amazons is your wife!"),
+    "tired": ("%1$s: «Царице нужен отдых. Приходи через три дня».", "%1$s: \"A queen needs her rest. Come back in three days.\""),
+    "not_tonight": ("%1$s: «Не сегодня, мой царь».", "%1$s: \"Not tonight, my king.\""),
+    "daughter_born": ("У вас родилась царевна, %2$s!", "A princess is born to you: %2$s!"),
+})
 
 
 # ====================================================================== textures
@@ -958,12 +1317,20 @@ def textures():
         tx.save(tx.item(fn, rng), assets("textures", "item", f"{name}.png"))
     for name, fn in tx.ENTITIES.items():
         tx.save(fn(rng), assets("textures", "entity", f"{name}.png"))
+    for name, fn in tx.NEW_BLOCKS.items():
+        tx.save(fn(random.Random(name)), assets("textures", "block", f"{name}.png"))
+    for name, fn in tx.NEW_ITEMS.items():
+        tx.save(tx.item(fn, random.Random(name)), assets("textures", "item", f"{name}.png"))
+    for name, fn in tx.NEW_ENTITIES.items():
+        tx.save(fn(random.Random(name)), assets("textures", "entity", f"{name}.png"))
 
 
 def main():
     write_json(data("dimension_type", "hellas.json"), dimension_type())
+    hellas_noise_settings()
     write_json(data("dimension", "hellas.json"),
-               dimension("hellas", multi_noise([(f"{NS}:{name}", spec["point"]) for name, spec in BIOMES.items()])))
+               dimension("hellas", multi_noise([(f"{NS}:{name}", spec["point"]) for name, spec in BIOMES.items()]),
+                         settings=f"{NS}:hellas"))
     for name, (fixed_time, source) in STUB_DIMENSIONS.items():
         write_json(data("dimension_type", f"{name}.json"), dimension_type(fixed_time))
         write_json(data("dimension", f"{name}.json"), dimension(name, source))

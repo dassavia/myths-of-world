@@ -1,0 +1,38 @@
+{
+  "structures": [
+    {
+      "structure": "mythsofworlds:labyrinth",
+      "weight": 3
+    },
+    {
+      "structure": "mythsofworlds:gates_of_hades",
+      "weight": 3
+    },
+    {
+      "structure": "mythsofworlds:hydra_lair",
+      "weight": 3
+    },
+    {
+      "structure": "mythsofworlds:medusa_lair",
+      "weight": 3
+    },
+    {
+      "structure": "mythsofworlds:cyclops_cave",
+      "weight": 3
+    },
+    {
+      "structure": "mythsofworlds:nemean_lion_den",
+      "weight": 3
+    },
+    {
+      "structure": "mythsofworlds:themiscyra",
+      "weight": 2
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 40,
+    "separation": 22,
+    "salt": 1450300
+  }
+}

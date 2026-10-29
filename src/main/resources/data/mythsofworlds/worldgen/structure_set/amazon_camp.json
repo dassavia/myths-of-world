@@ -1,14 +1,14 @@
 {
   "structures": [
     {
-      "structure": "mythsofworlds:labyrinth",
+      "structure": "mythsofworlds:amazon_camp",
       "weight": 1
     }
   ],
   "placement": {
     "type": "minecraft:random_spread",
-    "spacing": 64,
-    "separation": 24,
-    "salt": 1450203
+    "spacing": 36,
+    "separation": 14,
+    "salt": 1450212
   }
 }

@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "mythsofworlds:block/pomegranate_leaves"
+    },
+    "age=1": {
+      "model": "mythsofworlds:block/pomegranate_leaves"
+    },
+    "age=2": {
+      "model": "mythsofworlds:block/pomegranate_leaves"
+    },
+    "age=3": {
+      "model": "mythsofworlds:block/pomegranate_leaves_ripe"
+    }
+  }
+}

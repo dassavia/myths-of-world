@@ -3,10 +3,14 @@ package com.mythsofworlds.mythology.greek.client;
 import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.mythology.greek.GreekEntities;
 import com.mythsofworlds.mythology.greek.entity.Cerberus;
+import com.mythsofworlds.mythology.greek.entity.Karkinos;
+import com.mythsofworlds.mythology.greek.entity.Lion;
 import com.mythsofworlds.mythology.greek.entity.Hydra;
 import com.mythsofworlds.mythology.greek.entity.HydraHatchling;
 import com.mythsofworlds.mythology.greek.entity.NemeanLion;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
@@ -26,6 +30,7 @@ public final class GreekClient {
     public static final ModelLayerLocation CERBERUS = layer("cerberus");
     public static final ModelLayerLocation HYDRA = layer("hydra");
     public static final ModelLayerLocation GOLDEN_HIND = layer("golden_hind");
+    public static final ModelLayerLocation KARKINOS = layer("karkinos");
 
     private GreekClient() {
     }
@@ -44,6 +49,7 @@ public final class GreekClient {
         event.registerLayerDefinition(CERBERUS, () -> BeastModel.createBodyLayer(3, false));
         event.registerLayerDefinition(HYDRA, HydraModel::createBodyLayer);
         event.registerLayerDefinition(GOLDEN_HIND, HindModel::createBodyLayer);
+        event.registerLayerDefinition(KARKINOS, CrabModel::createBodyLayer);
     }
 
     @SubscribeEvent
@@ -72,8 +78,24 @@ public final class GreekClient {
                         "hydra_hatchling", 0.45F));
         event.registerEntityRenderer(GreekEntities.GOLDEN_HIND.get(), HindRenderer::new);
         event.registerEntityRenderer(GreekEntities.GREEK_MERCHANT.get(), GreekMerchantRenderer::new);
+        event.registerEntityRenderer(GreekEntities.LION.get(),
+                ctx -> new GreekMobRenderer<Lion, BeastModel<Lion>>(ctx, new BeastModel<>(ctx.bakeLayer(NEMEAN_LION), 1), "lion", 0.85F));
+        event.registerEntityRenderer(GreekEntities.KARKINOS.get(),
+                ctx -> new GreekMobRenderer<Karkinos, CrabModel<Karkinos>>(ctx, new CrabModel<>(ctx.bakeLayer(KARKINOS)), "karkinos", 1.3F));
+        event.registerEntityRenderer(GreekEntities.AMAZON.get(), AmazonRenderer::new);
+        event.registerEntityRenderer(GreekEntities.HIPPOLYTA.get(), AmazonRenderer::new);
         event.registerEntityRenderer(GreekEntities.CERBERUS.get(),
                 ctx -> new GreekMobRenderer<Cerberus, BeastModel<Cerberus>>(ctx, new BeastModel<>(ctx.bakeLayer(CERBERUS), 3),
                         "cerberus", 1.8F));
+    }
+
+    /** Players wearing the wings of Daedalus show them on their back. */
+    @SubscribeEvent
+    public static void addLayers(EntityRenderersEvent.AddLayers event) {
+        for (PlayerSkin.Model skin : event.getSkins()) {
+            if (event.getSkin(skin) instanceof PlayerRenderer renderer) {
+                renderer.addLayer(new WingsLayer<>(renderer, event.getEntityModels()));
+            }
+        }
     }
 }

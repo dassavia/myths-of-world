@@ -1,6 +1,8 @@
 package com.mythsofworlds.mythology.greek.entity;
 
 import com.mythsofworlds.mythology.greek.GreekSounds;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.BossEvent;
@@ -12,16 +14,22 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 
 /**
  * The Lernaean Hydra, boss of the Stygian Marsh. Five heads spit poison, and its wounds close by themselves
- * unless they are burned: like Heracles, use fire (flaming swords, fire aspect, flame arrows, lava) to stop
- * the regeneration for 10 seconds. Fire also hurts it twice as much. Below half health it spits twice as often.
+ * unless they are burned: like Heracles and Iolaus, use fire (fire aspect, flame arrows, lava) to stop the
+ * regeneration for 10 seconds. Fire burns it three times as hard, and a blade enchanted with fire aspect cuts it
+ * (1 + 1.5 x level) times as deep. Below half health it spits twice as often, and Karkinos, the giant crab Hera
+ * sent to help it, guards its lair.
  * Drops a Hydra Egg, from which a tame little hydra hatches.
  */
 public class Hydra extends GreekBoss {
@@ -53,9 +61,27 @@ public class Hydra extends GreekBoss {
     public boolean hurt(DamageSource source, float amount) {
         if (source.is(DamageTypeTags.IS_FIRE)) {
             lastFireHurt = tickCount;
+            amount *= 3.0F;
+        }
+        int fireAspect = fireAspectLevel(source);
+        if (fireAspect > 0) {
+            lastFireHurt = tickCount;
+            amount *= 1.0F + 1.5F * fireAspect;
+        } else if (source.getDirectEntity() instanceof AbstractArrow arrow && arrow.isOnFire()) {
+            lastFireHurt = tickCount;
             amount *= 2.0F;
         }
         return super.hurt(source, amount);
+    }
+
+    /** Level of fire aspect on the weapon of whoever struck this blow in melee, 0 if none. */
+    private int fireAspectLevel(DamageSource source) {
+        if (!source.isDirect() || !(source.getEntity() instanceof LivingEntity attacker)) {
+            return 0;
+        }
+        Holder<Enchantment> fireAspect = level().registryAccess().registryOrThrow(Registries.ENCHANTMENT)
+                .getHolderOrThrow(Enchantments.FIRE_ASPECT);
+        return EnchantmentHelper.getItemEnchantmentLevel(fireAspect, attacker.getMainHandItem());
     }
 
     @Override

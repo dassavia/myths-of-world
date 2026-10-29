@@ -3,7 +3,9 @@ package com.mythsofworlds.gametest;
 import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.mythology.Mythology;
 import com.mythsofworlds.mythology.greek.GreekContent;
+import com.mythsofworlds.mythology.greek.entity.Amazon;
 import com.mythsofworlds.mythology.greek.entity.GreekMerchant;
+import com.mythsofworlds.mythology.greek.entity.Hippolyta;
 import com.mythsofworlds.mythology.greek.portal.PoolPortal;
 import java.util.ArrayList;
 import java.util.List;
@@ -111,6 +113,17 @@ public final class WorldSmokeTest {
                             throw new IllegalStateException("the agora has no merchants");
                         }
                         report("agora merchants: " + merchants);
+                    }
+                    if (name.equals("amazon_camp") || name.equals("themiscyra")) {
+                        Class<? extends Mob> who = name.equals("themiscyra") ? Hippolyta.class : Amazon.class;
+                        if (hellas.getEntitiesOfClass(who, new AABB(pos).inflate(72, 128, 72)).isEmpty()) {
+                            throw new IllegalStateException(name + " has no " + who.getSimpleName());
+                        }
+                    }
+                    if (name.equals("labyrinth")) {
+                        int surface = hellas.getHeight(Heightmap.Types.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
+                        var start = hellas.structureManager().getStructureWithPieceAt(pos.atY(surface - 18), holder.value());
+                        report("labyrinth: surface y=" + surface + ", maze below the surface: " + start.isValid());
                     }
                     report("structure " + name + " generated at " + pos + ", mobs around: " + mobs);
                 });

@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "mythsofworlds:golden_leaves"
+    "mythsofworlds:golden_leaves",
+    "mythsofworlds:olive_leaves",
+    "mythsofworlds:pomegranate_leaves"
   ]
 }

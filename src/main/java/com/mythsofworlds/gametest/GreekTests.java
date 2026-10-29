@@ -1,12 +1,18 @@
 package com.mythsofworlds.gametest;
 
 import com.mythsofworlds.MythsOfWorlds;
+import com.mythsofworlds.core.PlayerData;
+import com.mythsofworlds.journal.Journal;
 import com.mythsofworlds.mythology.Mythology;
 import com.mythsofworlds.mythology.greek.GreekContent;
 import com.mythsofworlds.mythology.greek.GreekEntities;
+import com.mythsofworlds.mythology.greek.block.FruitLeavesBlock;
+import com.mythsofworlds.mythology.greek.entity.Amazon;
 import com.mythsofworlds.mythology.greek.entity.GreekMerchant;
+import com.mythsofworlds.mythology.greek.entity.Hippolyta;
 import com.mythsofworlds.mythology.greek.entity.Hydra;
 import com.mythsofworlds.mythology.greek.entity.HydraHatchling;
+import com.mythsofworlds.mythology.greek.entity.Medusa;
 import com.mythsofworlds.mythology.greek.entity.NemeanLion;
 import com.mythsofworlds.mythology.greek.entity.Spartoi;
 import com.mythsofworlds.mythology.greek.portal.BrazierBlock;
@@ -17,6 +23,7 @@ import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -29,14 +36,19 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.FeatureSorter;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
@@ -224,5 +236,141 @@ public class GreekTests {
             burned.discard();
             helper.succeed();
         });
+    }
+
+    /** The labyrinth of Daedalus cannot be dug through. */
+    @GameTest(template = "empty")
+    public static void labyrinthWallsAreUnbreakable(GameTestHelper helper) {
+        BlockPos pos = new BlockPos(1, 1, 1);
+        for (var block : List.of(GreekContent.LABYRINTH_BRICKS, GreekContent.MOSSY_LABYRINTH_BRICKS, GreekContent.CRACKED_LABYRINTH_BRICKS)) {
+            helper.setBlock(pos, block.get());
+            BlockState state = helper.getBlockState(pos);
+            helper.assertTrue(state.getDestroySpeed(helper.getLevel(), helper.absolutePos(pos)) < 0, block.getId() + " can be broken");
+            helper.assertTrue(state.getBlock().getExplosionResistance() >= 3600000.0F, block.getId() + " can be blown up");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void pumpkinHidesTheEyesFromMedusa(GameTestHelper helper) {
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        helper.assertTrue(!Medusa.isShielded(player), "a bare-headed player must see Medusa's gaze");
+        player.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.CARVED_PUMPKIN));
+        helper.assertTrue(Medusa.isShielded(player), "a carved pumpkin must protect from the gaze");
+        helper.succeed();
+    }
+
+    /** Fire aspect cuts the hydra far deeper than a plain blade. */
+    @GameTest(template = "empty")
+    public static void fireAspectHurtsTheHydra(GameTestHelper helper) {
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        var sources = helper.getLevel().damageSources();
+        Hydra plain = helper.spawn(GreekEntities.HYDRA.get(), new BlockPos(1, 2, 1));
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
+        plain.hurt(sources.playerAttack(player), 10.0F);
+        float plainLoss = plain.getMaxHealth() - plain.getHealth();
+        Hydra burned = helper.spawn(GreekEntities.HYDRA.get(), new BlockPos(1, 2, 1));
+        ItemStack fireSword = new ItemStack(Items.IRON_SWORD);
+        fireSword.enchant(helper.getLevel().registryAccess().registryOrThrow(Registries.ENCHANTMENT)
+                .getHolderOrThrow(Enchantments.FIRE_ASPECT), 2);
+        player.setItemInHand(InteractionHand.MAIN_HAND, fireSword);
+        burned.hurt(sources.playerAttack(player), 10.0F);
+        float fireLoss = burned.getMaxHealth() - burned.getHealth();
+        helper.assertTrue(fireLoss > plainLoss * 3.0F, "fire aspect II should hurt the hydra 4 times as much: " + fireLoss + " vs " + plainLoss);
+        helper.assertTrue(burned.isCauterized(), "a fire aspect blow should stop the regeneration");
+        plain.discard();
+        burned.discard();
+        helper.succeed();
+    }
+
+    /** Courtship from first gift to a daughter. */
+    @GameTest(template = "empty")
+    public static void amazonMarriesAndHasADaughter(GameTestHelper helper) {
+        Amazon amazon = helper.spawn(GreekEntities.AMAZON.get(), new BlockPos(1, 2, 1));
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.GOLD_INGOT));
+        amazon.mobInteract(player, InteractionHand.MAIN_HAND);
+        helper.assertTrue(amazon.affection(player) >= 10, "a gold ingot should win some affection");
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(GreekContent.WEDDING_RING.get()));
+        amazon.mobInteract(player, InteractionHand.MAIN_HAND);
+        helper.assertTrue(amazon.bond() == Amazon.Bond.NONE, "she must not marry before she loves you");
+        amazon.setAffection(player, Amazon.LOVE);
+        amazon.mobInteract(player, InteractionHand.MAIN_HAND);
+        helper.assertTrue(amazon.bond() == Amazon.Bond.WIFE && amazon.isFamily(player), "she should accept the ring");
+        helper.assertTrue(PlayerData.spouse(player).filter(amazon.getUUID()::equals).isPresent(), "the player should be married to her");
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.CAKE));
+        amazon.mobInteract(player, InteractionHand.MAIN_HAND);
+        var daughters = helper.getLevel().getEntitiesOfClass(Amazon.class, amazon.getBoundingBox().inflate(3.0),
+                a -> a.isBaby() && a.bond() == Amazon.Bond.DAUGHTER && a.isFamily(player));
+        helper.assertTrue(daughters.size() == 1, "a cake should bring one daughter, got " + daughters.size());
+        Amazon other = helper.spawn(GreekEntities.AMAZON.get(), new BlockPos(1, 2, 1));
+        other.setAffection(player, Amazon.LOVE);
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(GreekContent.WEDDING_RING.get()));
+        other.mobInteract(player, InteractionHand.MAIN_HAND);
+        helper.assertTrue(other.bond() == Amazon.Bond.NONE, "a married man cannot marry again");
+        daughters.forEach(Amazon::discard);
+        amazon.discard();
+        other.discard();
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void hippolytaYieldsAndGivesHerGirdle(GameTestHelper helper) {
+        Hippolyta queen = helper.spawn(GreekEntities.HIPPOLYTA.get(), new BlockPos(1, 2, 1));
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.DIAMOND));
+        queen.mobInteract(player, InteractionHand.MAIN_HAND);
+        helper.assertTrue(queen.affection(player) == 0, "she ignores gifts from someone who has not beaten her");
+        queen.hurt(helper.getLevel().damageSources().playerAttack(player), 1000.0F);
+        helper.assertTrue(queen.isAlive() && queen.hasYielded() && queen.isWorthy(player), "she should yield instead of dying");
+        var girdles = helper.getLevel().getEntitiesOfClass(ItemEntity.class, queen.getBoundingBox().inflate(3.0),
+                item -> item.getItem().is(GreekContent.GIRDLE_OF_HIPPOLYTA.get()));
+        helper.assertTrue(girdles.size() == 1, "she should give up her girdle");
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(GreekContent.MINOTAUR_HORN.get()));
+        queen.mobInteract(player, InteractionHand.MAIN_HAND);
+        helper.assertTrue(queen.affection(player) > 0, "a worthy trophy should please her");
+        girdles.forEach(ItemEntity::discard);
+        queen.discard();
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void ripeOlivesCanBePicked(GameTestHelper helper) {
+        BlockPos pos = new BlockPos(1, 2, 1);
+        helper.setBlock(pos, GreekContent.OLIVE_LEAVES.get().defaultBlockState()
+                .setValue(FruitLeavesBlock.AGE, FruitLeavesBlock.RIPE).setValue(LeavesBlock.PERSISTENT, true));
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        BlockPos abs = helper.absolutePos(pos);
+        helper.getBlockState(pos).useWithoutItem(helper.getLevel(), player, new BlockHitResult(Vec3.atCenterOf(abs), Direction.UP, abs, false));
+        helper.assertTrue(helper.getBlockState(pos).getValue(FruitLeavesBlock.AGE) == 0, "picking should leave unripe leaves");
+        var olives = helper.getLevel().getEntitiesOfClass(ItemEntity.class, new AABB(abs).inflate(2.0),
+                item -> item.getItem().is(GreekContent.OLIVES.get()));
+        helper.assertTrue(!olives.isEmpty(), "picking ripe leaves should drop olives");
+        olives.forEach(ItemEntity::discard);
+        helper.succeed();
+    }
+
+    /** The journal loads, the complete copy holds every entry, and a new hero's copy only the introduction. */
+    @GameTest(template = "empty")
+    public static void journalShowsWhatWasFound(GameTestHelper helper) {
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        var entries = Journal.volume("greek");
+        helper.assertTrue(entries.size() > 30, "the journal of Hellas has only " + entries.size() + " entries");
+        int fresh = Journal.book("greek", player, false).pages().size();
+        int complete = Journal.book("greek", player, true).pages().size();
+        PlayerData.addEntry(player, "greek.hydra");
+        int afterHydra = Journal.book("greek", player, false).pages().size();
+        helper.assertTrue(complete > afterHydra && afterHydra > fresh, "pages: new " + fresh + ", after the hydra " + afterHydra
+                + ", complete " + complete);
+        for (var entry : entries) {
+            if (entry.entity().isPresent()) {
+                helper.assertTrue(BuiltInRegistries.ENTITY_TYPE.containsKey(entry.entity().get()), "unknown mob " + entry.entity().get());
+            }
+            if (entry.structure().isPresent()) {
+                helper.assertTrue(helper.getLevel().registryAccess().registryOrThrow(Registries.STRUCTURE).containsKey(entry.structure().get()),
+                        "unknown structure " + entry.structure().get());
+            }
+        }
+        helper.succeed();
     }
 }

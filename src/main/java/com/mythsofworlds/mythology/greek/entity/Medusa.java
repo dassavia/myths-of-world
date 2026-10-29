@@ -14,11 +14,13 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -26,7 +28,7 @@ import net.minecraft.world.phys.Vec3;
 /**
  * Medusa the Gorgon, mini-boss of the coast. Looking at her slows you down, and after 3 seconds of eye
  * contact you start turning to stone (heavy damage). Like Perseus with his mirrored shield, a player
- * holding a shield is safe from the gaze. Her snake hair poisons on every bite. The harpe, the sickle-sword
+ * holding a shield is safe from the gaze, and so is one who wears a carved pumpkin over their eyes. Her snake hair poisons on every bite. The harpe, the sickle-sword
  * Perseus beheaded her with, deals her double damage.
  */
 public class Medusa extends GreekBoss {
@@ -59,7 +61,8 @@ public class Medusa extends GreekBoss {
 
     public static boolean isShielded(Player player) {
         return player.getMainHandItem().getItem() instanceof ShieldItem
-                || player.getOffhandItem().getItem() instanceof ShieldItem;
+                || player.getOffhandItem().getItem() instanceof ShieldItem
+                || player.getItemBySlot(EquipmentSlot.HEAD).is(Items.CARVED_PUMPKIN);
     }
 
     @Override

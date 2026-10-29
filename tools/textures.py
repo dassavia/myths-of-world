@@ -845,24 +845,22 @@ def greek_merchant(rng, robe, trim, skin=0xC8956B, hair=0x3E2B1E, beard=True, ha
             fill_rect(img, rx + 1, ry + 2, rw - 2, rh - 4, rgb(apron), rng, 10)
             speckle(img, (rx + 1, ry + 2, rw - 2, rh - 4), rgb(0x1A1410), rng, 6)
     if hat:
-        # Petasos: the wide-brimmed travelling hat of Hermes' merchants, on the hat rim layer.
+        # Petasos: the wide-brimmed travelling hat of Hermes' merchants. The rim is a 16x16x1 box that the model turns
+        # flat, so its round brim goes on the big front and back faces and the thin edges stay empty.
         parts["rim"] = paint_box(img, 30, 47, 16, 16, 1, rgb(hat), rng, 10, shaded=False)
-        x, y, w, h = parts["rim"]["top"]
-        for i in range(w):
-            for j in range(h):
-                r = math.hypot(i - (w - 1) / 2, j - (h - 1) / 2)
-                if r > 7.6:
-                    img.putpixel((x + i, y + j), (0, 0, 0, 0))
-                elif r > 6.6:
-                    img.putpixel((x + i, y + j), scale(rgb(hat), 0.75))
-        x, y, w, h = parts["rim"]["bottom"]
-        for i in range(w):
-            for j in range(h):
-                if math.hypot(i - (w - 1) / 2, j - (h - 1) / 2) > 7.6:
-                    img.putpixel((x + i, y + j), (0, 0, 0, 0))
-        for name in ("front", "back", "right", "left"):
+        for name in ("front", "back"):
+            x, y, w, h = parts["rim"][name]
+            for i in range(w):
+                for j in range(h):
+                    r = math.hypot(i - (w - 1) / 2, j - (h - 1) / 2)
+                    if r > 7.6:
+                        img.putpixel((x + i, y + j), (0, 0, 0, 0))
+                    elif r > 6.6 or r < 4.2:
+                        img.putpixel((x + i, y + j), scale(rgb(hat), 0.78))
+        for name in ("top", "bottom", "right", "left"):
             x, y, w, h = parts["rim"][name]
             fill_rect(img, x, y, w, h, (0, 0, 0, 0), rng, 0)
+        del parts["rim"]
         hat_rects = box_faces(32, 0, 8, 10, 8)
         x, y, w, h = hat_rects["top"]
         fill_rect(img, x + 1, y + 1, w - 2, h - 2, rgb(hat), rng, 10)
@@ -976,4 +974,320 @@ BLOCKS = {
     "olympian_marble": olympian_marble,
     "asphodel": asphodel,
     "hellas_portal": hellas_portal,
+}
+
+
+# ================================================================ added in 0.4
+# Each texture below gets its own random generator (seeded by its name), so adding one never changes the others.
+
+def stone_bricks(rng, base, mortar, rows=4):
+    img = Image.new("RGBA", (16, 16))
+    fill_rect(img, 0, 0, 16, 16, rgb(base), rng, 7)
+    h = 16 // rows
+    for r in range(rows):
+        y = r * h
+        for x in range(16):
+            img.putpixel((x, y), jitter(rgb(mortar), rng, 4))
+        offset = 0 if r % 2 == 0 else 4
+        for x in (offset, offset + 8):
+            for j in range(y, y + h):
+                img.putpixel((x % 16, j), jitter(rgb(mortar), rng, 4))
+        # Light top edge and dark bottom edge on every brick.
+        for x in range(16):
+            if y + 1 < 16 and img.getpixel((x, y + 1))[:3] != rgb(mortar)[:3]:
+                img.putpixel((x, y + 1), scale(img.getpixel((x, y + 1)), 1.1))
+            if y + h - 1 < 16:
+                img.putpixel((x, y + h - 1), scale(img.getpixel((x, y + h - 1)), 0.86))
+    return img
+
+
+def labyrinth_bricks(rng, moss=False, cracked=False):
+    img = stone_bricks(rng, 0x5D6069, 0x2E3036)
+    # A worn bronze-red meander inlaid in the middle row: the mark of Daedalus.
+    for i, (x, y) in enumerate(((2, 9), (2, 10), (3, 10), (4, 10), (4, 9), (5, 9), (6, 9), (6, 10), (7, 10),
+                                (10, 9), (10, 10), (11, 10), (12, 10), (12, 9), (13, 9))):
+        img.putpixel((x, y), jitter(rgb(0x8A4A2E), rng, 10))
+    if moss:
+        for _ in range(5):
+            cx, cy = rng.randrange(16), rng.randrange(16)
+            for _ in range(7):
+                x, y = (cx + rng.randint(-2, 2)) % 16, (cy + rng.randint(-1, 2)) % 16
+                img.putpixel((x, y), jitter(rgb(rng.choice((0x4F6B32, 0x5E7D3A, 0x3E5A2A))), rng, 8))
+    if cracked:
+        for _ in range(2):
+            x, y = rng.randrange(16), rng.randrange(16)
+            for _ in range(9):
+                img.putpixel((x % 16, y % 16), rgb(0x24262B))
+                x += rng.choice((-1, 0, 1))
+                y += rng.choice((0, 1))
+    return img
+
+
+def leaves(rng, colors, fruit=None, fruit_count=0, fruit_size=2, holes=0.16):
+    img = Image.new("RGBA", (16, 16), (0, 0, 0, 0))
+    for x in range(16):
+        for y in range(16):
+            if rng.random() > holes:
+                img.putpixel((x, y), jitter(rgb(rng.choice(colors)), rng, 8))
+    for _ in range(fruit_count):
+        fx, fy = rng.randrange(1, 16 - fruit_size), rng.randrange(1, 16 - fruit_size)
+        for dx in range(fruit_size):
+            for dy in range(fruit_size):
+                img.putpixel((fx + dx, fy + dy), rgb(fruit[0]))
+        img.putpixel((fx, fy), rgb(fruit[1]))
+        if fruit_size > 1:
+            img.putpixel((fx + fruit_size - 1, fy + fruit_size - 1), scale(rgb(fruit[0]), 0.7))
+    return img
+
+
+OLIVE_GREENS = (0x7E9468, 0x92A67C, 0x6A8058, 0xA9B998, 0x5E7450)
+POMEGRANATE_GREENS = (0x3E6B34, 0x4E7E3E, 0x2E5628, 0x5A8A46)
+
+NEW_BLOCKS = {
+    "labyrinth_bricks": labyrinth_bricks,
+    "mossy_labyrinth_bricks": lambda rng: labyrinth_bricks(rng, moss=True),
+    "cracked_labyrinth_bricks": lambda rng: labyrinth_bricks(rng, cracked=True),
+    "olive_leaves": lambda rng: leaves(rng, OLIVE_GREENS),
+    "olive_leaves_ripe": lambda rng: leaves(rng, OLIVE_GREENS, (0x3B2A3A, 0x6E5470), 7, 1),
+    "pomegranate_leaves": lambda rng: leaves(rng, POMEGRANATE_GREENS),
+    "pomegranate_leaves_ripe": lambda rng: leaves(rng, POMEGRANATE_GREENS, (0xB8202A, 0xF06A6A), 3, 3),
+}
+
+
+def draw_olives(img, d, rng):
+    d.line([(3, 3), (12, 9)], fill=rgb(0x6B4A2B))
+    d.polygon([(6, 3), (9, 2), (11, 4), (8, 5)], fill=rgb(0x7E9468))
+    for x, y in ((4, 8), (8, 10), (11, 12)):
+        d.ellipse([x, y, x + 3, y + 3], fill=rgb(0x3B2A3A))
+        img.putpixel((x + 1, y + 1), rgb(0x8A6E8E))
+
+
+def draw_pomegranate(img, d, rng):
+    d.ellipse([2, 4, 13, 14], fill=rgb(0xB8202A))
+    d.ellipse([4, 6, 7, 9], fill=rgb(0xE85A5A))
+    d.polygon([(6, 4), (7, 1), (8, 3), (9, 1), (10, 4)], fill=rgb(0x8A1A20))
+    img.putpixel((5, 7), rgb(0xFFC0C0))
+
+
+def draw_wings(img, d, rng):
+    for side in (-1, 1):
+        cx = 8 + side
+        for i in range(6):
+            x = cx + side * (1 + i)
+            top = 3 + i // 2
+            d.line([(x, top), (x, 13 - i)], fill=rgb(0xF4F1EA if i % 2 == 0 else 0xD9D2C2))
+        d.line([(cx, 3), (cx + side * 6, 3)], fill=rgb(0xE2B33C))
+    d.line([(8, 3), (8, 9)], fill=rgb(0xC98A2E))
+
+
+def draw_karkinos_claw(img, d, rng):
+    d.polygon([(3, 13), (6, 6), (11, 3), (13, 6), (9, 8), (12, 11), (7, 10), (5, 14)], fill=rgb(0xB3361E))
+    d.line([(6, 7), (11, 4)], fill=rgb(0xE86A4A))
+    d.line([(9, 8), (12, 11)], fill=rgb(0x7A1E10))
+
+
+def draw_girdle(img, d, rng):
+    d.ellipse([1, 5, 14, 12], outline=rgb(0xE2B33C), width=2)
+    d.rectangle([6, 4, 9, 7], fill=rgb(0xC9962E))
+    img.putpixel((7, 5), rgb(0xC0262E))
+    img.putpixel((8, 5), rgb(0xE85A5A))
+    for x in (3, 12):
+        img.putpixel((x, 8), rgb(0x8A1E2A))
+
+
+def draw_ring(img, d, rng):
+    d.ellipse([3, 5, 12, 14], outline=rgb(0xE2B33C), width=2)
+    d.polygon([(7, 1), (9, 1), (10, 3), (8, 5), (6, 3)], fill=rgb(0xBFF4FF))
+    img.putpixel((7, 2), rgb(0xFFFFFF))
+
+
+def draw_journal(img, d, rng, cover=0x7A4A24, trim=0xE2B33C):
+    d.rectangle([3, 2, 12, 14], fill=rgb(cover))
+    d.rectangle([3, 2, 4, 14], fill=scale(rgb(cover), 0.7))
+    d.rectangle([12, 3, 13, 13], fill=rgb(0xF4ECD8))
+    for x, y in ((6, 4), (7, 4), (8, 4), (8, 5), (8, 6), (7, 6), (6, 6), (6, 7), (6, 8), (7, 8), (8, 8), (9, 8), (10, 8)):
+        img.putpixel((x, y), rgb(trim))
+    d.line([(6, 11), (10, 11)], fill=rgb(trim))
+
+
+NEW_ITEMS = {
+    "olives": draw_olives,
+    "pomegranate": draw_pomegranate,
+    "wings_of_daedalus": draw_wings,
+    "karkinos_claw": draw_karkinos_claw,
+    "girdle_of_hippolyta": draw_girdle,
+    "wedding_ring": draw_ring,
+    "greek_journal": draw_journal,
+    "greek_journal_complete": lambda img, d, rng: draw_journal(img, d, rng, cover=0x4A2A6A),
+}
+
+
+def lion(rng):
+    return beast(rng, 0xC4914A, 0xE0B880, 0x2A1C12, mane=0x6B4420, back=0xB07E3A, belly=0xE8D0A0)
+
+
+def crab(rng, shell=0xB3361E, under=0xE8B07A, eyes=0x111111):
+    """Layout of client/CrabModel."""
+    img = Image.new("RGBA", (64, 64), (0, 0, 0, 0))
+    parts = {}
+    parts["body"] = paint_box(img, 0, 0, 16, 6, 12, rgb(shell), rng, 12,
+                              faces={"bottom": rgb(under)}, shaded=False)
+    x, y, w, h = parts["body"]["top"]
+    for _ in range(26):
+        img.putpixel((x + rng.randrange(w), y + rng.randrange(h)), jitter(rgb(0xD9583A), rng, 10))
+    for i in range(w):
+        img.putpixel((x + i, y + h - 1), scale(rgb(shell), 0.7))
+    for rect in side_faces(parts["body"]):
+        rx, ry, rw, rh = rect
+        fill_rect(img, rx, ry + rh - 2, rw, 2, rgb(under), rng, 6)
+    parts["stalk"] = paint_box(img, 0, 18, 1, 4, 1, rgb(shell), rng, 6, shaded=False)
+    parts["eye"] = paint_box(img, 4, 18, 2, 2, 2, rgb(eyes), rng, 4, shaded=False)
+    parts["arm"] = paint_box(img, 0, 24, 3, 3, 6, rgb(shell), rng, 10, shaded=False)
+    parts["pincer"] = paint_box(img, 20, 24, 5, 4, 6, rgb(shell), rng, 10, shaded=False)
+    parts["finger"] = paint_box(img, 20, 36, 2, 1, 5, scale(rgb(shell), 0.8), rng, 8, shaded=False)
+    parts["leg"] = paint_box(img, 0, 36, 8, 2, 2, rgb(shell), rng, 10, shaded=False)
+    for rect in side_faces(parts["leg"]):
+        rx, ry, rw, rh = rect
+        for i in range(0, rw, 3):
+            img.putpixel((rx + i, ry), rgb(under))
+    shade_parts(img, parts)
+    return img
+
+
+# Player skin layout (slim arms) for the amazons.
+SKIN = {"head": (0, 0, 8, 8, 8), "hat": (32, 0, 8, 8, 8), "body": (16, 16, 8, 12, 4), "jacket": (16, 32, 8, 12, 4),
+        "right_arm": (40, 16, 3, 12, 4), "right_sleeve": (40, 32, 3, 12, 4), "left_arm": (32, 48, 3, 12, 4),
+        "left_sleeve": (48, 48, 3, 12, 4), "right_leg": (0, 16, 4, 12, 4), "right_pants": (0, 32, 4, 12, 4),
+        "left_leg": (16, 48, 4, 12, 4), "left_pants": (0, 48, 4, 12, 4)}
+
+
+def amazon(rng, skin, hair, tunic, armour, trim, eyes=0x4A3320, crown=None, girdle=None, braid=True, plume=None):
+    img = Image.new("RGBA", (64, 64), (0, 0, 0, 0))
+    parts = {}
+    s = rgb(skin)
+    parts["head"] = paint_box(img, *SKIN["head"], s, rng, 4, faces={"top": rgb(hair), "back": rgb(hair)}, shaded=False)
+    hd = parts["head"]
+    for name in ("right", "left"):
+        x, y, w, h = hd[name]
+        fill_rect(img, x, y, w, 3, rgb(hair), rng, 8)
+        fill_rect(img, x + (w - 3 if name == "right" else 0), y, 3, h, rgb(hair), rng, 8)
+    x, y, w, h = hd["front"]
+    fill_rect(img, x, y, w, 2, rgb(hair), rng, 8)
+    img.putpixel((x, y + 2), rgb(hair))
+    img.putpixel((x + 7, y + 2), rgb(hair))
+    # Almond eyes with lashes, soft blush, red lips.
+    for ex in (1, 5):
+        img.putpixel((x + ex, y + 4), rgb(0xF4F1EA))
+        img.putpixel((x + ex + 1, y + 4), rgb(eyes))
+        img.putpixel((x + ex, y + 3), scale(rgb(hair), 0.7))
+        img.putpixel((x + ex + 1, y + 3), scale(rgb(hair), 0.7))
+    img.putpixel((x + 1, y + 5), mix(s, rgb(0xE07A7A), 0.35))
+    img.putpixel((x + 6, y + 5), mix(s, rgb(0xE07A7A), 0.35))
+    img.putpixel((x + 3, y + 6), rgb(0xB8404A))
+    img.putpixel((x + 4, y + 6), rgb(0xB8404A))
+    img.putpixel((x + 3, y + 5), scale(s, 0.9))
+    # Hair layer: long hair down the back and sides, a fringe; a braid or a plumed helmet.
+    hat = box_faces(*SKIN["hat"])
+    for name in ("top", "back"):
+        fill_rect(img, *hat[name], rgb(hair), rng, 10)
+    for name in ("right", "left"):
+        hx, hy, hw, hh = hat[name]
+        fill_rect(img, hx, hy, hw, 2, rgb(hair), rng, 10)
+        fill_rect(img, hx + (hw - 3 if name == "right" else 0), hy, 3, hh, rgb(hair), rng, 10)
+    fx, fy, fw, fh = hat["front"]
+    fill_rect(img, fx, fy, fw, 1, rgb(hair), rng, 10)
+    if crown:
+        for name in ("front", "right", "left", "back"):
+            cx, cy, cw, ch = hat[name]
+            fill_rect(img, cx, cy, cw, 1, rgb(crown), rng, 6)
+            for i in range(0, cw, 2):
+                img.putpixel((cx + i, cy), scale(rgb(crown), 1.15))
+        img.putpixel((fx + 3, fy + 1), rgb(0xC0262E))
+        img.putpixel((fx + 4, fy + 1), rgb(0xC0262E))
+    if plume:
+        tx, ty, tw, th = hat["top"]
+        fill_rect(img, tx + 3, ty, 2, th, rgb(plume), rng, 12)
+    parts["body"] = paint_box(img, *SKIN["body"], rgb(tunic), rng, 8, shaded=False)
+    for arm in ("right_arm", "left_arm"):
+        parts[arm] = paint_box(img, *SKIN[arm], s, rng, 4, shaded=False)
+        for rect in side_faces(parts[arm]):
+            ax, ay, aw, ah = rect
+            fill_rect(img, ax, ay, aw, 2, rgb(tunic), rng, 6)
+            fill_rect(img, ax, ay + 8, aw, 2, rgb(armour), rng, 6)   # bracers
+    for leg in ("right_leg", "left_leg"):
+        parts[leg] = paint_box(img, *SKIN[leg], s, rng, 4, shaded=False)
+        for rect in side_faces(parts[leg]):
+            lx, ly, lw, lh = rect
+            fill_rect(img, lx, ly, lw, 3, rgb(tunic), rng, 6)
+            fill_rect(img, lx, ly + lh - 2, lw, 2, rgb(0x6B4A2B), rng, 6)    # sandals
+            for j in range(lh - 6, lh - 2, 2):
+                fill_rect(img, lx, ly + j, lw, 1, rgb(0x6B4A2B), rng, 4)     # straps
+    # Armour layer: a bronze cuirass on the chest, a skirt of leather strips over the hips.
+    jacket = box_faces(*SKIN["jacket"])
+    for name in ("front", "back", "right", "left"):
+        jx, jy, jw, jh = jacket[name]
+        fill_rect(img, jx, jy + 1, jw, 6, rgb(armour), rng, 10)
+        fill_rect(img, jx, jy + 7, jw, 1, rgb(girdle or trim), rng, 4)
+        for i in range(jw):
+            if i % 2 == 0:
+                fill_rect(img, jx + i, jy + 8, 1, 4, rgb(trim), rng, 8)
+            else:
+                fill_rect(img, jx + i, jy + 8, 1, 4, scale(rgb(trim), 0.75), rng, 8)
+    jx, jy, jw, jh = jacket["front"]
+    img.putpixel((jx + 2, jy + 3), scale(rgb(armour), 1.25))
+    img.putpixel((jx + 5, jy + 3), scale(rgb(armour), 1.25))
+    if girdle:
+        img.putpixel((jx + 3, jy + 7), rgb(0xC0262E))
+        img.putpixel((jx + 4, jy + 7), rgb(0xFFE08A))
+    for pants in ("right_pants", "left_pants"):
+        p = box_faces(*SKIN[pants])
+        for name in ("front", "back", "right", "left"):
+            px, py, pw, ph = p[name]
+            for i in range(pw):
+                fill_rect(img, px + i, py, 1, 3, rgb(trim) if i % 2 == 0 else scale(rgb(trim), 0.75), rng, 8)
+    for sleeve in ("right_sleeve", "left_sleeve"):
+        p = box_faces(*SKIN[sleeve])
+        for name in ("front", "back", "right", "left"):
+            px, py, pw, ph = p[name]
+            fill_rect(img, px, py, pw, 2, rgb(armour), rng, 8)
+    if braid:
+        bx, by, bw, bh = parts["body"]["back"]
+        fill_rect(img, bx + 3, by, 2, 7, rgb(hair), rng, 10)
+    for name in ("jacket", "right_pants", "left_pants", "right_sleeve", "left_sleeve", "hat"):
+        parts[name] = box_faces(*SKIN[name])
+    shade_parts(img, parts)
+    return img
+
+
+def wings_of_daedalus_entity(rng):
+    """Elytra layout: one wing box at (22, 0), 10 x 20 x 2."""
+    img = Image.new("RGBA", (64, 32), (0, 0, 0, 0))
+    rects = box_faces(22, 0, 10, 20, 2)
+    for name, (x, y, w, h) in rects.items():
+        for i in range(w):
+            for j in range(h):
+                feather = (i + (j // 4)) % 3
+                c = (0xF4F1EA, 0xE4DCCB, 0xCFC5B0)[feather]
+                if name in ("front", "back") and j > h - 3 - (i % 4):
+                    continue
+                img.putpixel((x + i, y + j), jitter(rgb(c), rng, 6))
+        if name in ("front", "back"):
+            for i in range(w):
+                img.putpixel((x + i, y), rgb(0xD9A441))    # wax along the frame
+                img.putpixel((x + i, y + 1), rgb(0xE8C060))
+    shade_box(img, rects)
+    return img
+
+
+NEW_ENTITIES = {
+    "lion": lion,
+    "karkinos": crab,
+    "amazon_0": lambda rng: amazon(rng, 0xD8A47A, 0x2A1A10, 0xF2ECDC, 0xB8823A, 0x7A3A22, plume=0xC0262E),
+    "amazon_1": lambda rng: amazon(rng, 0xC08A5E, 0x5A2E18, 0x8A2E22, 0xA8A8A8, 0x4A3220, eyes=0x2E5A2E),
+    "amazon_2": lambda rng: amazon(rng, 0xE8C4A0, 0xC9962E, 0x2E5FA8, 0xC9963E, 0xE2B33C, eyes=0x2E5FA8),
+    "amazon_3": lambda rng: amazon(rng, 0x8A5A3A, 0x161010, 0x3E6B34, 0x8A6A3A, 0x6B4A2B, braid=False, plume=0xF4F1EA),
+    "amazon_4": lambda rng: amazon(rng, 0xE2B894, 0x3A1E12, 0x6A2A6A, 0xE2B33C, 0xF4ECD8, crown=0xE2B33C),
+    "hippolyta": lambda rng: amazon(rng, 0xDDAE86, 0x1E120C, 0x8A1E2A, 0xE2B33C, 0x5A1018, eyes=0x6B3E1A,
+                                    crown=0xFFD34E, girdle=0xFFD34E),
+    "wings_of_daedalus": wings_of_daedalus_entity,
 }

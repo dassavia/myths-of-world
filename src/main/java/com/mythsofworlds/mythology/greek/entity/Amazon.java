@@ -1,0 +1,582 @@
+package com.mythsofworlds.mythology.greek.entity;
+
+import com.mythsofworlds.core.PlayerData;
+import com.mythsofworlds.mythology.greek.GreekContent;
+import com.mythsofworlds.mythology.greek.GreekEntities;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
+
+/**
+ * Amazon, warrior woman of Themiscyra. Neutral: fights monsters, and fights back (with her sisters) when attacked.
+ * <p>
+ * She can be courted. Gifts (flowers, gold and jewels, weapons and trophies, good food) raise her affection for the
+ * giver, twice as much if it is what she likes best (ask her by right-clicking with an empty hand); one gift every
+ * 20 seconds. Hurting her or her sisters costs a lot of it. At {@value #LOVE} affection, give her a wedding ring to
+ * marry her: your wife follows you, fights at your side, and stays or follows on shift + right-click. Give your wife a
+ * cake and a daughter is born (once a day); she grows up into an amazon loyal to your family.
+ */
+public class Amazon extends AgeableMob {
+    /** Number of common looks; {@link #ROYAL} is the look of Hippolyta's daughters. */
+    public static final int VARIANTS = 4;
+    public static final int ROYAL = 4;
+    public static final int LOVE = 100;
+    private static final int MAX_AFFECTION = 150;
+    private static final int GIFT_COOLDOWN = 400;
+    private static final int GROW_UP_TICKS = 24000;
+
+    public enum Bond { NONE, WIFE, DAUGHTER }
+
+    /** What a gift is: 0 flowers, 1 gold and jewels, 2 weapons and trophies, 3 food. */
+    public record Gift(int kind, int points) {
+    }
+
+    public static final int KINDS = 4;
+
+    private static final String[] NAMES = {"Antiope", "Melanippe", "Penthesilea", "Otrere", "Aella", "Areto", "Alcippe",
+            "Hippothoe", "Lampedo", "Marpesia", "Orithyia", "Clonie", "Polemusa", "Derinoe", "Antibrote", "Bremusa",
+            "Thermodosa", "Andromache", "Philippis", "Prothoe"};
+    private static final EntityDataAccessor<Integer> DATA_VARIANT = SynchedEntityData.defineId(Amazon.class, EntityDataSerializers.INT);
+
+    private final Map<UUID, Integer> affection = new HashMap<>();
+    private Bond bond = Bond.NONE;
+    @Nullable
+    private UUID family;
+    private int favourite;
+    private int giftCooldown;
+    private int childCooldown;
+    private boolean staying;
+    private boolean initialized;
+
+    public Amazon(EntityType<? extends AgeableMob> type, Level level) {
+        super(type, level);
+        setPersistenceRequired();
+    }
+
+    public static AttributeSupplier.Builder createAttributes() {
+        return AgeableMob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 30.0)
+                .add(Attributes.ATTACK_DAMAGE, 5.0)
+                .add(Attributes.MOVEMENT_SPEED, 0.32)
+                .add(Attributes.ARMOR, 4.0)
+                .add(Attributes.FOLLOW_RANGE, 24.0);
+    }
+
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_VARIANT, 0);
+    }
+
+    public int getVariant() {
+        return entityData.get(DATA_VARIANT);
+    }
+
+    public void setVariant(int variant) {
+        entityData.set(DATA_VARIANT, variant);
+    }
+
+    @Override
+    protected void registerGoals() {
+        goalSelector.addGoal(0, new FloatGoal(this));
+        goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.15, true));
+        goalSelector.addGoal(4, new FollowFamilyGoal());
+        goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 0.7));
+        goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+        targetSelector.addGoal(1, new HurtByTargetGoal(this).setAlertOthers());
+        targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Monster.class, 10, true, false,
+                target -> !(target instanceof Creeper) && !isBaby()));
+    }
+
+    // ---- Who she is ----
+
+    /** Looks, name, taste and weapons, chosen the first time she ticks (also for amazons placed by structures). */
+    protected void initialize() {
+        if (getVariant() == 0) {
+            setVariant(random.nextInt(VARIANTS));
+        }
+        setCustomName(Component.literal(NAMES[random.nextInt(NAMES.length)]));
+        favourite = random.nextInt(KINDS);
+        if (!isBaby()) {
+            arm();
+        }
+    }
+
+    protected void arm() {
+        setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(random.nextInt(10) < 7 ? Items.IRON_SWORD : Items.IRON_AXE));
+        if (random.nextInt(10) < 4) {
+            setItemSlot(EquipmentSlot.OFFHAND, new ItemStack(Items.SHIELD));
+        }
+        setDropChance(EquipmentSlot.MAINHAND, 0.0F);
+        setDropChance(EquipmentSlot.OFFHAND, 0.0F);
+    }
+
+    public Bond bond() {
+        return bond;
+    }
+
+    public boolean isFamily(Player player) {
+        return family != null && family.equals(player.getUUID());
+    }
+
+    public int affection(Player player) {
+        return affection.getOrDefault(player.getUUID(), 0);
+    }
+
+    public void setAffection(Player player, int value) {
+        affection.put(player.getUUID(), Math.max(-100, Math.min(MAX_AFFECTION, value)));
+    }
+
+    protected String messages() {
+        return "entity.mythsofworlds.amazon.";
+    }
+
+    protected void say(Player player, String key, Object... args) {
+        Object[] withName = new Object[args.length + 1];
+        withName[0] = getDisplayName();
+        System.arraycopy(args, 0, withName, 1, args.length);
+        player.displayClientMessage(Component.translatable(messages() + key, withName).withStyle(ChatFormatting.LIGHT_PURPLE), false);
+    }
+
+    protected void particles(ParticleOptions particle, int count) {
+        if (level() instanceof ServerLevel server) {
+            server.sendParticles(particle, getX(), getEyeY() + 0.4, getZ(), count, 0.4, 0.3, 0.4, 0.0);
+        }
+    }
+
+    // ---- Courtship ----
+
+    /** How much a gift is worth to amazons, or null if it is no gift. */
+    @Nullable
+    public static Gift gift(ItemStack stack) {
+        if (stack.is(ItemTags.FLOWERS)) {
+            return new Gift(0, 6);
+        }
+        if (stack.is(Items.GOLD_BLOCK)) {
+            return new Gift(1, 40);
+        }
+        if (stack.is(Items.DIAMOND)) {
+            return new Gift(1, 20);
+        }
+        if (stack.is(Items.GOLD_INGOT)) {
+            return new Gift(1, 10);
+        }
+        if (stack.is(Items.EMERALD)) {
+            return new Gift(1, 8);
+        }
+        if (stack.is(Items.AMETHYST_SHARD) || stack.is(Items.GOLD_NUGGET)) {
+            return new Gift(1, 3);
+        }
+        if (stack.is(GreekContent.MINOTAUR_HORN.get()) || stack.is(GreekContent.HYDRA_SCALE.get())
+                || stack.is(GreekContent.CERBERUS_FANG.get()) || stack.is(GreekContent.NEMEAN_PELT.get())
+                || stack.is(GreekContent.CYCLOPS_EYE.get()) || stack.is(GreekContent.KARKINOS_CLAW.get())) {
+            return new Gift(2, 20);
+        }
+        if (stack.is(ItemTags.SWORDS) || stack.is(ItemTags.AXES) || stack.is(Items.BOW) || stack.is(Items.CROSSBOW)
+                || stack.is(Items.TRIDENT) || stack.is(Items.SHIELD)) {
+            return new Gift(2, 12);
+        }
+        if (stack.is(GreekContent.HARPY_FEATHER.get())) {
+            return new Gift(2, 4);
+        }
+        if (stack.is(GreekContent.AMBROSIA.get())) {
+            return new Gift(3, 25);
+        }
+        if (stack.is(Items.GOLDEN_APPLE)) {
+            return new Gift(3, 20);
+        }
+        if (stack.is(Items.HONEY_BOTTLE) || stack.is(GreekContent.POMEGRANATE.get())) {
+            return new Gift(3, 8);
+        }
+        if (stack.is(GreekContent.OLIVES.get()) || stack.is(Items.BREAD) || stack.is(Items.COOKIE) || stack.is(Items.COOKED_MUTTON)
+                || stack.is(Items.COOKED_BEEF) || stack.is(Items.SWEET_BERRIES)) {
+            return new Gift(3, 4);
+        }
+        return null;
+    }
+
+    /** Affection a gift earns from this amazon; 0 or less means she refuses it (and it is not used up). */
+    protected int giftPoints(Player player, ItemStack stack, Gift gift) {
+        if (gift.kind() == favourite) {
+            say(player, "gift_favourite", affection(player) + gift.points() * 2, LOVE);
+            return gift.points() * 2;
+        }
+        say(player, "gift", affection(player) + gift.points(), LOVE);
+        return gift.points();
+    }
+
+    /** Whether this amazon would marry the player at all, once she loves them. */
+    protected boolean canMarry(Player player) {
+        return true;
+    }
+
+    protected ItemStack childGift() {
+        return new ItemStack(Items.CAKE);
+    }
+
+    protected int childCooldownTicks() {
+        return 24000;
+    }
+
+    /** Whether she agrees to a child today. */
+    protected boolean wantsChild(Player player) {
+        return true;
+    }
+
+    protected int childVariant() {
+        return random.nextBoolean() ? getVariant() : random.nextInt(VARIANTS);
+    }
+
+    @Override
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        if (level().isClientSide) {
+            return InteractionResult.SUCCESS;
+        }
+        ItemStack stack = player.getItemInHand(hand);
+        if (isBaby()) {
+            say(player, isFamily(player) ? "daughter" : "child");
+            return InteractionResult.SUCCESS;
+        }
+        if (getTarget() == player) {
+            say(player, "angry");
+            particles(ParticleTypes.ANGRY_VILLAGER, 3);
+            return InteractionResult.SUCCESS;
+        }
+        if (isFamily(player) && player.isShiftKeyDown()) {
+            staying = !staying;
+            getNavigation().stop();
+            say(player, staying ? "stay" : "follow");
+            return InteractionResult.SUCCESS;
+        }
+        if (stack.is(GreekContent.WEDDING_RING.get())) {
+            marry(player, stack);
+            return InteractionResult.SUCCESS;
+        }
+        if (bond == Bond.WIFE && isFamily(player) && stack.is(childGift().getItem())) {
+            haveChild(player, stack);
+            return InteractionResult.SUCCESS;
+        }
+        Gift gift = gift(stack);
+        if (gift != null) {
+            if (giftCooldown > 0) {
+                say(player, "busy");
+                return InteractionResult.SUCCESS;
+            }
+            int before = affection(player);
+            int points = giftPoints(player, stack, gift);
+            if (points > 0) {
+                setAffection(player, before + points);
+                stack.consume(1, player);
+                giftCooldown = GIFT_COOLDOWN;
+                particles(ParticleTypes.HEART, Math.max(1, points / 5));
+                playSound(SoundEvents.AMETHYST_BLOCK_CHIME, 1.0F, 1.2F);
+                if (before < LOVE && affection(player) >= LOVE && bond == Bond.NONE) {
+                    say(player, "in_love");
+                }
+            }
+            return InteractionResult.SUCCESS;
+        }
+        talk(player);
+        return InteractionResult.SUCCESS;
+    }
+
+    protected void talk(Player player) {
+        if (bond == Bond.WIFE && isFamily(player)) {
+            say(player, "wife");
+        } else if (bond == Bond.DAUGHTER && isFamily(player)) {
+            say(player, "grown_daughter");
+        } else {
+            say(player, "talk", Component.translatable(messages() + "likes." + favourite), affection(player), LOVE);
+        }
+    }
+
+    private void marry(Player player, ItemStack ring) {
+        if (bond == Bond.DAUGHTER && isFamily(player)) {
+            say(player, "is_daughter");
+        } else if (bond == Bond.WIFE) {
+            say(player, isFamily(player) ? "already_yours" : "taken");
+        } else if (PlayerData.spouse(player).isPresent()) {
+            say(player, "you_are_married");
+        } else if (!canMarry(player)) {
+            say(player, "unworthy");
+        } else if (affection(player) < LOVE) {
+            say(player, "not_yet", affection(player), LOVE);
+        } else {
+            bond = Bond.WIFE;
+            family = player.getUUID();
+            staying = false;
+            PlayerData.setSpouse(player, Optional.of(getUUID()));
+            ring.consume(1, player);
+            particles(ParticleTypes.HEART, 20);
+            playSound(SoundEvents.PLAYER_LEVELUP, 1.0F, 1.0F);
+            say(player, "married");
+        }
+    }
+
+    private void haveChild(Player player, ItemStack gift) {
+        if (childCooldown > 0) {
+            say(player, "tired");
+            return;
+        }
+        if (!wantsChild(player)) {
+            childCooldown = 1200;
+            say(player, "not_tonight");
+            return;
+        }
+        Amazon child = GreekEntities.AMAZON.get().create(level());
+        if (child == null) {
+            return;
+        }
+        child.moveTo(getX(), getY(), getZ(), getYRot(), 0.0F);
+        child.setAge(-GROW_UP_TICKS);
+        child.setVariant(childVariant());
+        child.initialized = true;
+        child.setCustomName(Component.literal(NAMES[random.nextInt(NAMES.length)]));
+        child.favourite = random.nextInt(KINDS);
+        child.bond = Bond.DAUGHTER;
+        child.family = player.getUUID();
+        level().addFreshEntity(child);
+        gift.consume(1, player);
+        childCooldown = childCooldownTicks();
+        particles(ParticleTypes.HEART, 12);
+        playSound(SoundEvents.PLAYER_LEVELUP, 1.0F, 1.5F);
+        say(player, "daughter_born", child.getDisplayName());
+    }
+
+    // ---- Life ----
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (!level().isClientSide && !initialized) {
+            initialized = true;
+            initialize();
+        }
+    }
+
+    @Override
+    protected void customServerAiStep() {
+        super.customServerAiStep();
+        if (giftCooldown > 0) {
+            giftCooldown--;
+        }
+        if (childCooldown > 0) {
+            childCooldown--;
+        }
+        // Defend the family: go for whatever hurts them or whatever they fight.
+        if (family != null && tickCount % 10 == 0 && !isBaby()) {
+            Player owner = level().getPlayerByUUID(family);
+            if (owner != null && distanceToSqr(owner) < 32 * 32) {
+                LivingEntity enemy = owner.getLastHurtByMob();
+                if (enemy == null || !enemy.isAlive()) {
+                    enemy = owner.getLastHurtMob();
+                }
+                if (enemy != null && enemy.isAlive() && enemy != this && !(enemy instanceof Player)
+                        && !(enemy instanceof Amazon sister && sister.family != null && sister.family.equals(family))) {
+                    setTarget(enemy);
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void ageBoundaryReached() {
+        super.ageBoundaryReached();
+        if (!level().isClientSide && !isBaby() && getMainHandItem().isEmpty()) {
+            arm();
+        }
+    }
+
+    @Override
+    public void setTarget(@Nullable LivingEntity target) {
+        if (target instanceof Player player && isFamily(player)) {
+            return;
+        }
+        super.setTarget(target);
+    }
+
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        boolean hurt = super.hurt(source, amount);
+        if (hurt && !level().isClientSide && source.getEntity() instanceof Player player && !isFamily(player)) {
+            setAffection(player, affection(player) - 40);
+        }
+        return hurt;
+    }
+
+    @Override
+    public void die(DamageSource source) {
+        if (!level().isClientSide && bond == Bond.WIFE && family != null && level().getServer() != null) {
+            Player husband = level().getServer().getPlayerList().getPlayer(family);
+            if (husband != null) {
+                PlayerData.setSpouse(husband, Optional.empty());
+                husband.displayClientMessage(Component.translatable(messages() + "died", getDisplayName())
+                        .withStyle(ChatFormatting.DARK_RED), false);
+            }
+        }
+        super.die(source);
+    }
+
+    @Nullable
+    @Override
+    public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob partner) {
+        return null;
+    }
+
+    @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return false;
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return null;
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return SoundEvents.PLAYER_HURT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.PLAYER_DEATH;
+    }
+
+    @Override
+    public float getVoicePitch() {
+        return isBaby() ? 1.8F : 1.35F;
+    }
+
+    // ---- Saving ----
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putInt("Variant", getVariant());
+        tag.putString("Bond", bond.name());
+        if (family != null) {
+            tag.putUUID("Family", family);
+        }
+        tag.putInt("Favourite", favourite);
+        tag.putInt("GiftCooldown", giftCooldown);
+        tag.putInt("ChildCooldown", childCooldown);
+        tag.putBoolean("Staying", staying);
+        tag.putBoolean("Initialized", initialized);
+        ListTag list = new ListTag();
+        affection.forEach((uuid, value) -> {
+            CompoundTag entry = new CompoundTag();
+            entry.putUUID("Player", uuid);
+            entry.putInt("Value", value);
+            list.add(entry);
+        });
+        tag.put("Affection", list);
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        setVariant(tag.getInt("Variant"));
+        try {
+            bond = Bond.valueOf(tag.getString("Bond"));
+        } catch (IllegalArgumentException e) {
+            bond = Bond.NONE;
+        }
+        family = tag.hasUUID("Family") ? tag.getUUID("Family") : null;
+        favourite = tag.getInt("Favourite");
+        giftCooldown = tag.getInt("GiftCooldown");
+        childCooldown = tag.getInt("ChildCooldown");
+        staying = tag.getBoolean("Staying");
+        initialized = tag.getBoolean("Initialized");
+        affection.clear();
+        for (Tag element : tag.getList("Affection", Tag.TAG_COMPOUND)) {
+            CompoundTag entry = (CompoundTag) element;
+            affection.put(entry.getUUID("Player"), entry.getInt("Value"));
+        }
+    }
+
+    /** Walks after her husband (or father) unless told to stay; catches up by teleporting if left far behind. */
+    private class FollowFamilyGoal extends Goal {
+        @Nullable
+        private Player owner;
+
+        FollowFamilyGoal() {
+            setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
+        }
+
+        @Override
+        public boolean canUse() {
+            if (family == null || staying || getTarget() != null) {
+                return false;
+            }
+            owner = level().getPlayerByUUID(family);
+            return owner != null && !owner.isSpectator() && distanceToSqr(owner) > 36.0;
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return owner != null && owner.isAlive() && !staying && getTarget() == null && distanceToSqr(owner) > 9.0;
+        }
+
+        @Override
+        public void tick() {
+            if (owner == null) {
+                return;
+            }
+            getLookControl().setLookAt(owner, 10.0F, getMaxHeadXRot());
+            if (distanceToSqr(owner) > 24 * 24 && owner.onGround()) {
+                teleportTo(owner.getX(), owner.getY(), owner.getZ());
+                getNavigation().stop();
+            } else {
+                getNavigation().moveTo(owner, 1.1);
+            }
+        }
+
+        @Override
+        public void stop() {
+            owner = null;
+            getNavigation().stop();
+        }
+    }
+}

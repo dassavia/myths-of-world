@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "HFH",
+    "FFF",
+    "F F"
+  ],
+  "key": {
+    "H": {
+      "item": "minecraft:honeycomb"
+    },
+    "F": {
+      "item": "mythsofworlds:harpy_feather"
+    }
+  },
+  "result": {
+    "id": "mythsofworlds:wings_of_daedalus",
+    "count": 1
+  }
+}

@@ -1,14 +1,14 @@
 {
   "structures": [
     {
-      "structure": "mythsofworlds:cyclops_cave",
+      "structure": "mythsofworlds:greek_farmstead",
       "weight": 1
     }
   ],
   "placement": {
     "type": "minecraft:random_spread",
-    "spacing": 56,
-    "separation": 20,
-    "salt": 1450207
+    "spacing": 14,
+    "separation": 5,
+    "salt": 1450213
   }
 }
