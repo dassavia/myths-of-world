@@ -82,6 +82,11 @@
               }
             }
           ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "mythsofworlds:titan_breastplate",
+          "weight": 1
         }
       ]
     }

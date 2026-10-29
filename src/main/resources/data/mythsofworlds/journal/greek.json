@@ -11,6 +11,16 @@
       "pages": 2
     },
     {
+      "id": "greek.relics",
+      "category": "intro",
+      "pages": 2
+    },
+    {
+      "id": "greek.god_sets",
+      "category": "intro",
+      "pages": 3
+    },
+    {
       "id": "greek.satyr",
       "category": "creature",
       "pages": 2,
@@ -109,7 +119,7 @@
     {
       "id": "greek.cerberus",
       "category": "boss",
-      "pages": 3,
+      "pages": 4,
       "entity": "mythsofworlds:cerberus"
     },
     {

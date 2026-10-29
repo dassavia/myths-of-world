@@ -46,6 +46,13 @@ ENTRIES = [
       "Higher in the mountains you find Hephaestus coal from the god's forges under the earth. In a furnace it "
       "burns twice as long as ordinary coal."]),
 
+    ("relics", "intro", None,
+     ['Таларии и нагрудник титана', 'Крылатые сандалии Гермеса: скорость, высокий прыжок и никакого урона от падения. Ищите в святилищах на облаках и в храмах или скуйте: перья гарпий, золото и золотые сапоги.', 'Нагрудник титана: сила, стойкость и твёрдая стойка. Лежит в пещерах циклопов и в лабиринте, или скуйте из орихалкового нагрудника, орихалка, глаза циклопа и чешуи гидры.'],
+     ["Talaria and the Titan's Breastplate", 'The winged sandals of Hermes: speed, high jumps and no fall damage. Look in the cloud shrines and temples, or make them: harpy feathers, gold and golden boots.', "The Titan's breastplate: strength, resistance and a firm stance. Found in cyclops caves and the labyrinth, or made from an orichalcum chestplate, orichalcum, a cyclops eye and a hydra scale."]),
+    ("god_sets", "intro", None,
+     ['Сеты богов', 'Броня из разных мифологий складывается в сет. Эллада: орихалк, пояс Ипполиты, таларии, нагрудник титана. Йотунхейм: тёмное железо, шлем Хеймдалля.', 'Союз пантеонов (обе мифологии): 2 вещи дают спешку, 3 - ещё огнестойкость, 4 - ещё регенерацию. Две и две - ещё и стойкость.', 'Только Эллада, 4 вещи: скорость и прыжок. Только Йотунхейм, 4 вещи: сила и стойкость.'],
+     ['Sets of the Gods', "Armour of different mythologies adds up to a set. Hellas: orichalcum, the girdle of Hippolyta, the talaria, the Titan's breastplate. Jotunheim: dark iron, the helmet of Heimdall.", 'Union of the pantheons (both mythologies): 2 pieces give Haste, 3 also Fire Resistance, 4 also Regeneration. Two and two also give Resistance.', 'Hellas only, 4 pieces: Speed and Jump Boost. Jotunheim only, 4 pieces: Strength and Resistance.']),
+
     # ---------------------------------------------------------------- creatures
     ("satyr", "creature", mob("satyr"),
      ["Сатир",
@@ -230,12 +237,16 @@ ENTRIES = [
       "Трёхглавый пёс у Врат Аида на Асфоделевых лугах, 350 здоровья. Не боится огня.",
       "Способности: укус поджигает, дышит огнём. На половине здоровья призывает три тени.",
       "Как победить: зелье огнестойкости и хорошая броня. Сначала разберитесь с тенями. Роняет клыки, огненные "
-      "стержни и алмазы."],
+      "стержни и алмазы.",
+      "В крепостях и бастионах Незера лежит двузубец Аида, хозяина пса. Ударьте им Цербера или нажмите ПКМ, "
+      "и пёс сразу падает. Двузубец срабатывает один раз."],
      ["Cerberus",
       "Three-headed hound at the Gates of Hades in the Asphodel Meadows, 350 health. Fire does not harm it.",
       "Abilities: its bite sets you on fire, it breathes fire. At half health it calls up three shades.",
       "How to beat: a fire resistance potion and good armour. Deal with the shades first. Drops fangs, blaze rods "
-      "and diamonds."]),
+      "and diamonds.",
+      "In the fortresses and bastions of the Nether lies the bident of Hades, his master. Strike Cerberus with it "
+      "or use it on him, and the hound falls at once. The bident works only once."]),
     ("hippolyta", "boss", mob("hippolyta"),
      ["Ипполита",
       "Царица амазонок на троне Фемискиры, 220 здоровья. Нападает на любого чужака, сёстры приходят ей на помощь.",

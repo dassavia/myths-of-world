@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "FGF",
+    "FBF"
+  ],
+  "key": {
+    "F": {
+      "item": "mythsofworlds:harpy_feather"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "B": {
+      "item": "minecraft:golden_boots"
+    }
+  },
+  "result": {
+    "id": "mythsofworlds:talaria",
+    "count": 1
+  }
+}

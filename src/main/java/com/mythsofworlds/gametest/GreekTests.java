@@ -6,8 +6,10 @@ import com.mythsofworlds.journal.Journal;
 import com.mythsofworlds.mythology.Mythology;
 import com.mythsofworlds.mythology.greek.GreekContent;
 import com.mythsofworlds.mythology.greek.GreekEntities;
+import com.mythsofworlds.mythology.greek.GreekEvents;
 import com.mythsofworlds.mythology.greek.block.FruitLeavesBlock;
 import com.mythsofworlds.mythology.greek.entity.Amazon;
+import com.mythsofworlds.mythology.greek.entity.Cerberus;
 import com.mythsofworlds.mythology.greek.entity.GreekMerchant;
 import com.mythsofworlds.mythology.greek.entity.Hippolyta;
 import com.mythsofworlds.mythology.greek.entity.Hydra;
@@ -37,6 +39,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
@@ -52,6 +55,7 @@ import net.minecraft.world.level.biome.FeatureSorter;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -309,7 +313,12 @@ public class GreekTests {
         other.setAffection(player, Amazon.LOVE);
         player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(GreekContent.WEDDING_RING.get()));
         other.mobInteract(player, InteractionHand.MAIN_HAND);
-        helper.assertTrue(other.bond() == Amazon.Bond.NONE, "a married man cannot marry again");
+        helper.assertTrue(other.bond() == Amazon.Bond.NONE && other.rival() == amazon && amazon.rival() == other,
+                "a second proposal should start a duel with the wife");
+        amazon.hurt(helper.getLevel().damageSources().mobAttack(other), 1000.0F);
+        helper.assertTrue(amazon.isAlive() && amazon.rival() == null && other.rival() == null, "the beaten wife should yield, not die");
+        helper.assertTrue(other.bond() == Amazon.Bond.WIFE && amazon.bond() == Amazon.Bond.NONE
+                && PlayerData.spouse(player).filter(other.getUUID()::equals).isPresent(), "the winner of the duel becomes the wife");
         daughters.forEach(Amazon::discard);
         amazon.discard();
         other.discard();
@@ -488,6 +497,21 @@ public class GreekTests {
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
         player.setItemSlot(EquipmentSlot.LEGS, new ItemStack(girdle));
         helper.assertTrue(com.mythsofworlds.mythology.greek.item.GirdleItem.isWorn(player), "the girdle should count as worn");
+        helper.succeed();
+    }
+
+    /** The bident of Hades fells Cerberus at once, as if the player had slain him, and is used up. */
+    @GameTest(template = "empty")
+    public static void bidentOfHadesBanishesCerberus(GameTestHelper helper) {
+        Cerberus cerberus = helper.spawn(GreekEntities.CERBERUS.get(), new BlockPos(1, 2, 1));
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(GreekContent.BIDENT_OF_HADES.get()));
+        InteractionResult result = player.getMainHandItem().interactLivingEntity(player, cerberus, InteractionHand.MAIN_HAND);
+        helper.assertTrue(result.consumesAction(), "using the bident on Cerberus should work, got " + result);
+        helper.assertTrue(!cerberus.isAlive(), "Cerberus should fall at once");
+        helper.assertTrue(player.getMainHandItem().isEmpty(), "the bident works only once");
+        helper.assertTrue(GreekEvents.BIDENT_CHESTS.containsKey(BuiltInLootTables.NETHER_BRIDGE.location()),
+                "the bident should be hidden in Nether fortresses");
         helper.succeed();
     }
 }

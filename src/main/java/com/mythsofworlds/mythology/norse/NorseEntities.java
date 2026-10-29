@@ -7,6 +7,7 @@ import com.mythsofworlds.mythology.norse.entity.Fenrir;
 import com.mythsofworlds.mythology.norse.entity.FireGiant;
 import com.mythsofworlds.mythology.norse.entity.FrostGiant;
 import com.mythsofworlds.mythology.norse.entity.Garm;
+import com.mythsofworlds.mythology.norse.entity.Heimdall;
 import com.mythsofworlds.mythology.norse.entity.NorseMerchant;
 import com.mythsofworlds.mythology.norse.entity.Raven;
 import com.mythsofworlds.mythology.norse.entity.Surtr;
@@ -75,6 +76,9 @@ public final class NorseEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<Surtr>> SURTR = register("surtr",
             EntityType.Builder.of(Surtr::new, MobCategory.MONSTER).sized(1.6F, 4.7F).eyeHeight(4.2F).fireImmune()
                     .clientTrackingRange(10));
+    /** Watchman of the gods at the end of the Bifrost; drops his all-seeing eye. */
+    public static final DeferredHolder<EntityType<?>, EntityType<Heimdall>> HEIMDALL = register("heimdall",
+            EntityType.Builder.of(Heimdall::new, MobCategory.MONSTER).sized(0.8F, 2.5F).eyeHeight(2.2F).clientTrackingRange(10));
 
     // ---- Spawn eggs (creative tab) ----
     public static final DeferredItem<DeferredSpawnEggItem> DRAUGR_SPAWN_EGG = egg("draugr", DRAUGR, 0x5E7A82, 0xBFD9E0);
@@ -94,11 +98,12 @@ public final class NorseEntities {
     public static final DeferredItem<DeferredSpawnEggItem> THRYM_SPAWN_EGG = egg("thrym", THRYM, 0x7FA8C4, 0x1E3A5A);
     public static final DeferredItem<DeferredSpawnEggItem> FENRIR_SPAWN_EGG = egg("fenrir", FENRIR, 0x3A3A40, 0xB3261E);
     public static final DeferredItem<DeferredSpawnEggItem> SURTR_SPAWN_EGG = egg("surtr", SURTR, 0x1E1414, 0xFF8A1E);
+    public static final DeferredItem<DeferredSpawnEggItem> HEIMDALL_SPAWN_EGG = egg("heimdall", HEIMDALL, 0xE8E4D8, 0xE2B33C);
 
     /** Every mob of Jotunheim, used by the tests. */
     public static List<DeferredHolder<EntityType<?>, ? extends EntityType<? extends Mob>>> all() {
         return List.of(DRAUGR, WARG, TROLL, FROST_GIANT, FIRE_GIANT, RAVEN, NORSE_MERCHANT, VALKYRIE, DRAUGR_CHIEFTAIN, GARM,
-                THRYM, FENRIR, SURTR);
+                THRYM, FENRIR, SURTR, HEIMDALL);
     }
 
     private NorseEntities() {
@@ -132,6 +137,7 @@ public final class NorseEntities {
         event.put(THRYM.get(), Thrym.createAttributes().build());
         event.put(FENRIR.get(), Fenrir.createAttributes().build());
         event.put(SURTR.get(), Surtr.createAttributes().build());
+        event.put(HEIMDALL.get(), Heimdall.createAttributes().build());
         event.put(VALKYRIE.get(), Valkyrie.createAttributes().build());
     }
 

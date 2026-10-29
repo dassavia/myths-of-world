@@ -10,12 +10,15 @@ import com.mythsofworlds.mythology.norse.NorseEntities;
 import com.mythsofworlds.mythology.norse.entity.Draugr;
 import com.mythsofworlds.mythology.norse.entity.Fenrir;
 import com.mythsofworlds.mythology.norse.entity.Garm;
+import com.mythsofworlds.mythology.norse.entity.Heimdall;
 import com.mythsofworlds.mythology.norse.entity.NorseMerchant;
 import com.mythsofworlds.mythology.norse.entity.Surtr;
 import com.mythsofworlds.mythology.norse.entity.Thrym;
 import com.mythsofworlds.mythology.norse.entity.Troll;
 import com.mythsofworlds.mythology.norse.entity.Valkyrie;
 import com.mythsofworlds.mythology.norse.item.MjolnirItem;
+import com.mythsofworlds.mythology.relic.ArmourSets;
+import com.mythsofworlds.mythology.relic.RelicArmorItem;
 import com.mythsofworlds.registry.MetalSet;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -35,11 +38,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -304,6 +310,61 @@ public class NorseTests {
         int ember = new ItemStack(NorseContent.MUSPEL_EMBER.get()).getBurnTime(RecipeType.SMELTING);
         helper.assertTrue(hephaestus == coal * 2 && ember == coal * 3, "burn times: coal " + coal + ", Hephaestus coal "
                 + hephaestus + ", Muspel ember " + ember);
+        helper.succeed();
+    }
+
+    /** Mjolnir's lightning melts sand into glass and chars soil into scorched earth. */
+    @GameTest(template = "empty")
+    public static void mjolnirScorchesTheGround(GameTestHelper helper) {
+        BlockPos sand = new BlockPos(1, 1, 1);
+        BlockPos grass = new BlockPos(2, 1, 1);
+        helper.setBlock(sand, Blocks.SAND);
+        helper.setBlock(grass, Blocks.GRASS_BLOCK);
+        helper.setBlock(sand.above(), Blocks.AIR);
+        helper.setBlock(grass.above(), Blocks.AIR);
+        MjolnirItem.scorch(helper.getLevel(), helper.absolutePos(sand.above()));
+        helper.assertBlockPresent(Blocks.GLASS, sand);
+        helper.assertBlockPresent(NorseContent.SCORCHED_EARTH.get(), grass);
+        helper.succeed();
+    }
+
+    /** Heimdall sees arrows coming: they hurt him a third as much as a blow. */
+    @GameTest(template = "empty")
+    public static void heimdallSeesArrowsComing(GameTestHelper helper) {
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        var sources = helper.getLevel().damageSources();
+        Heimdall heimdall = helper.spawn(NorseEntities.HEIMDALL.get(), new BlockPos(1, 2, 1));
+        float blowLoss = loss(heimdall, sources.playerAttack(player), 30.0F);
+        Arrow arrow = EntityType.ARROW.create(helper.getLevel());
+        float arrowLoss = loss(heimdall, sources.arrow(arrow, player), 30.0F);
+        helper.assertTrue(arrowLoss < blowLoss * 0.5F, "an arrow took " + arrowLoss + ", a blow " + blowLoss);
+        heimdall.discard();
+        helper.succeed();
+    }
+
+    /** Relics give their powers, and armour of two mythologies makes a set. */
+    @GameTest(template = "empty")
+    public static void armourOfTheGods(GameTestHelper helper) {
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        player.setItemSlot(EquipmentSlot.HEAD, new ItemStack(NorseContent.HEIMDALL_HELMET.get()));
+        player.setItemSlot(EquipmentSlot.FEET, new ItemStack(GreekContent.TALARIA.get()));
+        player.fallDistance = 10.0F;
+        for (EquipmentSlot slot : List.of(EquipmentSlot.HEAD, EquipmentSlot.FEET)) {
+            ((RelicArmorItem) player.getItemBySlot(slot).getItem()).wornTick(player);
+        }
+        helper.assertTrue(player.hasEffect(MobEffects.NIGHT_VISION), "the helmet of Heimdall gives night vision");
+        helper.assertTrue(player.hasEffect(MobEffects.MOVEMENT_SPEED) && player.fallDistance == 0.0F,
+                "the talaria give speed and stop falls");
+        ArmourSets.apply(player);
+        helper.assertTrue(player.hasEffect(MobEffects.DIG_SPEED), "a Greek and a Norse piece make a set: haste");
+        helper.assertTrue(!player.hasEffect(MobEffects.FIRE_RESISTANCE), "two pieces give no fire resistance yet");
+        player.setItemSlot(EquipmentSlot.CHEST, new ItemStack(GreekContent.TITAN_BREASTPLATE.get()));
+        player.setItemSlot(EquipmentSlot.LEGS, new ItemStack(NorseContent.DARK_IRON.leggings.get()));
+        ArmourSets.apply(player);
+        helper.assertTrue(player.hasEffect(MobEffects.FIRE_RESISTANCE) && player.hasEffect(MobEffects.REGENERATION)
+                && player.hasEffect(MobEffects.DAMAGE_RESISTANCE), "two and two give the full union of the pantheons");
+        int[] counts = ArmourSets.count(player);
+        helper.assertTrue(counts[0] == 2 && counts[1] == 2, "counted " + counts[0] + " Greek and " + counts[1] + " Norse");
         helper.succeed();
     }
 }

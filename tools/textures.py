@@ -1268,25 +1268,25 @@ def amazon(rng, skin, hair, dress, trim, eyes=0x4A3320, outfit="chiton", style="
     for name in ("top", "back", "right", "left"):
         hair_rect(*hd[name])
     x, y, w, h = hd["front"]
-    hair_rect(x, y, w, 2)
-    for i in (0, 1, 2, 5, 6, 7):
-        hair_px(x + i, y + 2)
+    hair_rect(x, y, w, 3)                             # a full fringe down to the brows
+    for i in (2, 5):
+        img.putpixel((x + i, y + 2), jitter(h_dark, rng, 4))
     for j in range(3, 8):                             # locks framing the face
         hair_px(x, y + j)
         hair_px(x + 7, y + j)
-    dark = mix(rgb(0x1A1216), rgb(eyes), 0.25)
+    lash = mix(rgb(0x140E12), rgb(eyes), 0.2)
     iris = rgb(eyes)
-    for ex, outer in ((1, 0), (5, 1)):                # 2x2 eyes, the catchlight on the outer corner
-        img.putpixel((x + ex + outer, y + 3), rgb(0xFFFFFF))
-        img.putpixel((x + ex + 1 - outer, y + 3), dark)
-        img.putpixel((x + ex, y + 4), iris)
-        img.putpixel((x + ex + 1, y + 4), iris)
-        img.putpixel((x + ex + 1 - outer, y + 4), scale(iris, 1.3))
-    blush = mix(s, rgb(0xF07A8A), 0.35)
-    img.putpixel((x + 1, y + 5), blush)
-    img.putpixel((x + 6, y + 5), blush)
-    img.putpixel((x + 3, y + 6), rgb(lips))
-    img.putpixel((x + 4, y + 6), scale(rgb(lips), 1.1))
+    white = rgb(0xF4F2F0)
+    for inner, outer in ((2, 1), (5, 6)):             # big eyes: lashes, white and iris, a lighter iris below
+        img.putpixel((x + outer, y + 3), lash)
+        img.putpixel((x + inner, y + 3), lash)
+        img.putpixel((x + outer, y + 4), white)
+        img.putpixel((x + inner, y + 4), iris)
+        img.putpixel((x + inner, y + 5), scale(iris, 1.35))
+        img.putpixel((x + outer, y + 5), mix(s, iris, 0.15))
+    img.putpixel((x + 3, y + 6), mix(s, rgb(lips), 0.2))    # only a hint of a mouth
+    for i in range(1, 7):                             # the chin falls into shade
+        img.putpixel((x + i, y + 7), scale(s, 0.94))
     # --- hair layer: volume over the head and strands hanging past it ---
     hat = box_faces(*lay["hat"])
     hair_rect(*hat["top"])

@@ -63,6 +63,6 @@ jobs:
             gh release upload "$TAG" dist/*.jar --clobber
           else
             gh release create "$TAG" dist/*.jar --target "$GITHUB_SHA" \
-              --title "Мифы Миров $VERSION (Minecraft 1.21.1, NeoForge)" \
+              --title "Myths of Worlds $VERSION (Minecraft 1.21.1, NeoForge)" \
               --notes-file .github/release-notes.md
           fi
