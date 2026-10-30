@@ -14,67 +14,16 @@ jobs:
           distribution: temurin
           java-version: 21
       - uses: gradle/actions/setup-gradle@v4
-      - run: ./gradlew createMinecraftArtifacts --stacktrace -q || ./gradlew tasks --all | grep -i artifact
+      - run: ./gradlew createMinecraftArtifacts -q
       - name: Print API
         shell: bash {0}
         run: |
-          ls build/moddev/artifacts
-          SRC=$(ls build/moddev/artifacts/*-sources.jar | head -1)
-          mkdir -p /tmp/src && cd /tmp/src && unzip -q -o "$GITHUB_WORKSPACE/$SRC"
-          full() { echo "=================== $1"; cat "$1"; }
-          sig() { echo "=================== $1"; grep -nE '^\s*(public|protected|default|static|record|private static final)[^;=]*[({]' "$1" | grep -v '^\s*//' ; }
-          full net/neoforged/neoforge/client/extensions/common/IClientItemExtensions.java
-          full net/neoforged/neoforge/client/extensions/common/RegisterClientExtensionsEvent.java
-          grep -n -A25 "getArmorModel\|copyModelProperties" net/neoforged/neoforge/client/ClientHooks.java | head -80
-          full net/minecraft/client/renderer/entity/layers/HumanoidArmorLayer.java
-          sig net/neoforged/neoforge/client/event/RegisterGuiLayersEvent.java
-          sig net/neoforged/neoforge/client/event/RenderGuiLayerEvent.java
-          full net/neoforged/neoforge/client/gui/VanillaGuiLayers.java
-          sig net/minecraft/client/gui/Gui.java
-          sig net/neoforged/neoforge/client/gui/ConfigurationScreen.java
-          full net/neoforged/neoforge/client/gui/IConfigScreenFactory.java
-          grep -n -B3 -A60 "private void renderArmWithItem" net/minecraft/client/renderer/ItemInHandRenderer.java
-          sig net/neoforged/neoforge/event/entity/EntityAttributeModificationEvent.java
-          sig net/minecraft/world/entity/ai/attributes/Attribute.java
-          sig net/minecraft/world/entity/ai/attributes/RangedAttribute.java
-          sig net/minecraft/world/item/component/ItemAttributeModifiers.java
-          sig net/neoforged/neoforge/event/ItemAttributeModifierEvent.java
-          sig net/minecraft/client/gui/screens/inventory/InventoryScreen.java
-          sig net/minecraft/client/multiplayer/ClientAdvancements.java
-          sig net/neoforged/neoforge/event/entity/player/AdvancementEvent.java
-          sig net/minecraft/client/gui/GuiGraphics.java
-          sig net/neoforged/neoforge/client/event/RegisterKeyMappingsEvent.java
-          sig net/neoforged/neoforge/client/event/RegisterParticleProvidersEvent.java
-          ls net/neoforged/neoforge/client/model/
-          grep -rn "separate_transforms\|\"composite\"\|ResourceLocation.withDefaultNamespace(\"neoforge\"\|fromNamespaceAndPath(\"neoforge\"" net/neoforged/neoforge/client/model/ net/neoforged/neoforge/client/ClientNeoForgeMod.java | head
-          sig net/neoforged/neoforge/event/entity/living/LivingDamageEvent.java
-          sig net/neoforged/neoforge/event/entity/living/LivingIncomingDamageEvent.java
-          sig net/neoforged/neoforge/common/damagesource/DamageContainer.java
-          sig net/neoforged/neoforge/client/event/ScreenEvent.java
-          sig net/neoforged/neoforge/common/ModConfigSpec.java | head -60
-          sig net/minecraft/world/entity/LivingEntity.java | grep -i "attribute\|swing\|getArmorValue\|getAbsorption\|getMaxAir\|getAirSupply" 
-          sig net/minecraft/client/model/HumanoidModel.java
-          sig net/minecraft/client/model/geom/builders/CubeListBuilder.java
-          sig net/minecraft/client/model/geom/builders/PartDefinition.java
-          sig net/minecraft/client/model/geom/builders/LayerDefinition.java
-          sig net/minecraft/client/model/geom/PartPose.java
-          sig net/minecraft/client/model/geom/builders/CubeDeformation.java
-          grep -n "ArmPose\|create(" net/minecraft/client/model/HumanoidModel.java | head -30
-          sig net/neoforged/neoforge/client/IArmPoseTransformer.java
-          sig net/minecraft/client/gui/Font.java | head -60
-          sig net/minecraft/client/player/LocalPlayer.java | grep -i "attackAnim\|swing"
-          sig net/minecraft/world/entity/player/Player.java | grep -i "attack\|sweep\|getAttackStrengthScale"
-          sig net/neoforged/neoforge/event/entity/player/AttackEntityEvent.java
-          sig net/neoforged/neoforge/event/entity/player/CriticalHitEvent.java
-          sig net/minecraft/client/gui/components/Button.java
-          sig net/minecraft/client/gui/screens/Screen.java | head -60
-          sig net/neoforged/neoforge/network/PacketDistributor.java
-          sig net/minecraft/world/entity/ai/attributes/Attributes.java | head -5
-          grep -n "register(" net/minecraft/world/entity/ai/attributes/Attributes.java | head -3
-          sig net/minecraft/client/renderer/entity/ItemRenderer.java | head -40
-          sig net/minecraft/client/gui/components/toasts/SystemToast.java | head -5
-          ls net/neoforged/neoforge/common/ | grep -i attribute
-          sig net/neoforged/neoforge/common/PercentageAttribute.java
-          grep -rn "class .*Attribute" net/neoforged/neoforge/common/*.java | head
-          grep -n "addModifierTooltip\|ATTRIBUTE_MODIFIER" -A3 net/minecraft/world/item/ItemStack.java | head -40
-          sig net/neoforged/neoforge/common/extensions/IAttributeExtension.java
+          JAR=$GITHUB_WORKSPACE/build/moddev/artifacts/neoforge-21.1.172.jar
+          curl -sSLo /tmp/vf.jar https://repo1.maven.org/maven2/org/vineflower/vineflower/1.10.1/vineflower-1.10.1.jar
+          mkdir -p /tmp/cls /tmp/out && cd /tmp/cls && unzip -q -o "$JAR"
+          sed -n '/^#PROBE/,$p' $GITHUB_WORKSPACE/.github/probe.txt | grep -v '^#' | while read mode cls; do
+            [ -z "$mode" ] && continue
+            echo "=================== $mode $cls"
+            if [ "$mode" = sig ]; then javap -p -cp "$JAR" "${cls//\//.}" 2>&1 | grep -v 'lambda\$' ;
+            else java -jar /tmp/vf.jar -log=ERROR "/tmp/cls/$cls.class" /tmp/out >/dev/null 2>&1; cat "/tmp/out/$(basename $cls).java"; fi
+          done
