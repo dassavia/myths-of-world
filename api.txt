@@ -1,0 +1,1645 @@
+########## curios
+9.4.0+1.21.1
+9.4.1+1.21.1
+9.4.2+1.21.1
+9.5.0-alpha.2+1.21.1
+9.5.0-alpha.3+1.21.1
+9.5.0-alpha+1.21.1
+9.5.0+1.21.1
+9.5.1+1.21.1
+CHOSEN curios 9.5.1+1.21.1
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>top.theillusivec4.curios</groupId>
+  <artifactId>curios-neoforge</artifactId>
+  <version>9.5.1+1.21.1</version>
+</project>
+
+modLoader="javafml"
+loaderVersion="[1,)"
+license="LGPL-3.0-or-later"
+issueTrackerURL="https://github.com/TheIllusiveC4/Curios/issues"
+logoFile="curios_icon.png"
+logoBlur=false
+[[mods]]
+    modId="curios"
+    version="9.5.1+1.21.1"
+    displayName="Curios API"
+    displayURL="https://github.com/TheIllusiveC4/Curios"
+    authors="C4"
+    description='''A flexible and expandable accessory/equipment API for users and developers.'''
+[[mixins]]
+    config = "curios.neoforge.mixins.json"
+[[mixins]]
+    config = "curios.mixins.json"
+[[dependencies.curios]]
+    modId="neoforge"
+    type="required"
+    versionRange="[21.1.60,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.curios]]
+    modId="minecraft"
+    type="required"
+    versionRange="[1.21, 1.22)"
+    ordering="NONE"
+    side="BOTH"
+[modproperties.curios]
+    catalogueImageIcon="curios_icon.png"---- classes: 152
+=== sig top/theillusivec4/curios/api/CuriosApi
+Compiled from "CuriosApi.java"
+public final class top.theillusivec4.curios.api.CuriosApi {
+  private static final org.slf4j.Logger LOGGER;
+  public static final java.lang.String MODID;
+  private static top.theillusivec4.curios.api.type.util.IIconHelper iconHelper;
+  private static top.theillusivec4.curios.api.type.util.ICuriosHelper curiosHelper;
+  private static top.theillusivec4.curios.api.type.util.ISlotHelper slotHelper;
+  public top.theillusivec4.curios.api.CuriosApi();
+  public static void registerCurio(net.minecraft.world.item.Item, top.theillusivec4.curios.api.type.capability.ICurioItem);
+  public static java.util.Optional<top.theillusivec4.curios.api.type.ISlotType> getSlot(java.lang.String, net.minecraft.world.level.Level);
+  public static java.util.Optional<top.theillusivec4.curios.api.type.ISlotType> getSlot(java.lang.String, boolean);
+  public static java.util.Map<java.lang.String, top.theillusivec4.curios.api.type.ISlotType> getSlots(net.minecraft.world.level.Level);
+  public static java.util.Map<java.lang.String, top.theillusivec4.curios.api.type.ISlotType> getSlots(boolean);
+  public static java.util.Map<java.lang.String, top.theillusivec4.curios.api.type.ISlotType> getPlayerSlots(net.minecraft.world.level.Level);
+  public static java.util.Map<java.lang.String, top.theillusivec4.curios.api.type.ISlotType> getPlayerSlots(boolean);
+  public static java.util.Map<java.lang.String, top.theillusivec4.curios.api.type.ISlotType> getPlayerSlots(net.minecraft.world.entity.player.Player);
+  public static java.util.Map<java.lang.String, top.theillusivec4.curios.api.type.ISlotType> getEntitySlots(net.minecraft.world.entity.LivingEntity);
+  public static java.util.Map<java.lang.String, top.theillusivec4.curios.api.type.ISlotType> getEntitySlots(net.minecraft.world.entity.EntityType<?>, net.minecraft.world.level.Level);
+  public static java.util.Map<java.lang.String, top.theillusivec4.curios.api.type.ISlotType> getEntitySlots(net.minecraft.world.entity.EntityType<?>, boolean);
+  public static java.util.Map<java.lang.String, top.theillusivec4.curios.api.type.ISlotType> getItemStackSlots(net.minecraft.world.item.ItemStack, net.minecraft.world.level.Level);
+  public static java.util.Map<java.lang.String, top.theillusivec4.curios.api.type.ISlotType> getItemStackSlots(net.minecraft.world.item.ItemStack, boolean);
+  public static java.util.Map<java.lang.String, top.theillusivec4.curios.api.type.ISlotType> getItemStackSlots(net.minecraft.world.item.ItemStack, net.minecraft.world.entity.LivingEntity);
+  public static java.util.Optional<top.theillusivec4.curios.api.type.capability.ICurio> getCurio(net.minecraft.world.item.ItemStack);
+  public static java.util.Optional<top.theillusivec4.curios.api.type.capability.ICuriosItemHandler> getCuriosInventory(net.minecraft.world.entity.LivingEntity);
+  public static boolean isStackValid(top.theillusivec4.curios.api.SlotContext, net.minecraft.world.item.ItemStack);
+  public static com.google.common.collect.Multimap<net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute>, net.minecraft.world.entity.ai.attributes.AttributeModifier> getAttributeModifiers(top.theillusivec4.curios.api.SlotContext, net.minecraft.resources.ResourceLocation, net.minecraft.world.item.ItemStack);
+  public static void addSlotModifier(com.google.common.collect.Multimap<net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute>, net.minecraft.world.entity.ai.attributes.AttributeModifier>, java.lang.String, net.minecraft.resources.ResourceLocation, double, net.minecraft.world.entity.ai.attributes.AttributeModifier$Operation);
+  public static void addSlotModifier(net.minecraft.world.item.ItemStack, java.lang.String, net.minecraft.resources.ResourceLocation, double, net.minecraft.world.entity.ai.attributes.AttributeModifier$Operation, java.lang.String);
+  public static net.minecraft.world.item.component.ItemAttributeModifiers withSlotModifier(net.minecraft.world.item.component.ItemAttributeModifiers, java.lang.String, net.minecraft.resources.ResourceLocation, double, net.minecraft.world.entity.ai.attributes.AttributeModifier$Operation, net.minecraft.world.entity.EquipmentSlotGroup);
+  public static void addModifier(net.minecraft.world.item.ItemStack, net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute>, net.minecraft.resources.ResourceLocation, double, net.minecraft.world.entity.ai.attributes.AttributeModifier$Operation, java.lang.String);
+  public static void registerCurioPredicate(net.minecraft.resources.ResourceLocation, java.util.function.Predicate<top.theillusivec4.curios.api.SlotResult>);
+  public static java.util.Optional<java.util.function.Predicate<top.theillusivec4.curios.api.SlotResult>> getCurioPredicate(net.minecraft.resources.ResourceLocation);
+  public static java.util.Map<net.minecraft.resources.ResourceLocation, java.util.function.Predicate<top.theillusivec4.curios.api.SlotResult>> getCurioPredicates();
+  public static boolean testCurioPredicates(java.util.Set<net.minecraft.resources.ResourceLocation>, top.theillusivec4.curios.api.SlotResult);
+  public static net.minecraft.resources.ResourceLocation getSlotId(top.theillusivec4.curios.api.SlotContext);
+  public static void broadcastCurioBreakEvent(top.theillusivec4.curios.api.SlotContext);
+  static void apiError();
+  public static java.util.Optional<top.theillusivec4.curios.api.type.ISlotType> getSlot(java.lang.String);
+  public static net.minecraft.resources.ResourceLocation getSlotIcon(java.lang.String);
+  public static java.util.Map<java.lang.String, top.theillusivec4.curios.api.type.ISlotType> getSlots();
+  public static java.util.Map<java.lang.String, top.theillusivec4.curios.api.type.ISlotType> getEntitySlots(net.minecraft.world.entity.EntityType<?>);
+  public static java.util.Map<java.lang.String, top.theillusivec4.curios.api.type.ISlotType> getPlayerSlots();
+  public static java.util.Map<java.lang.String, top.theillusivec4.curios.api.type.ISlotType> getItemStackSlots(net.minecraft.world.item.ItemStack);
+  public static void setIconHelper(top.theillusivec4.curios.api.type.util.IIconHelper);
+  public static top.theillusivec4.curios.api.type.util.IIconHelper getIconHelper();
+  public static void setCuriosHelper(top.theillusivec4.curios.api.type.util.ICuriosHelper);
+  public static top.theillusivec4.curios.api.type.util.ICuriosHelper getCuriosHelper();
+  public static top.theillusivec4.curios.api.type.util.ISlotHelper getSlotHelper();
+  public static void setSlotHelper(top.theillusivec4.curios.api.type.util.ISlotHelper);
+  static {};
+}
+=== sig top/theillusivec4/curios/api/CuriosCapability
+Compiled from "CuriosCapability.java"
+public class top.theillusivec4.curios.api.CuriosCapability {
+  public static final net.minecraft.resources.ResourceLocation ID_INVENTORY;
+  public static final net.minecraft.resources.ResourceLocation ID_ITEM_HANDLER;
+  public static final net.minecraft.resources.ResourceLocation ID_ITEM;
+  public static final net.neoforged.neoforge.capabilities.EntityCapability<top.theillusivec4.curios.api.type.capability.ICuriosItemHandler, java.lang.Void> INVENTORY;
+  public static final net.neoforged.neoforge.capabilities.EntityCapability<net.neoforged.neoforge.items.IItemHandler, java.lang.Void> ITEM_HANDLER;
+  public static final net.neoforged.neoforge.capabilities.ItemCapability<top.theillusivec4.curios.api.type.capability.ICurio, java.lang.Void> ITEM;
+  public top.theillusivec4.curios.api.CuriosCapability();
+  static {};
+}
+=== sig top/theillusivec4/curios/api/SlotContext
+Compiled from "SlotContext.java"
+public final class top.theillusivec4.curios.api.SlotContext extends java.lang.Record {
+  private final java.lang.String identifier;
+  private final net.minecraft.world.entity.LivingEntity entity;
+  private final int index;
+  private final boolean cosmetic;
+  private final boolean visible;
+  public top.theillusivec4.curios.api.SlotContext(java.lang.String, net.minecraft.world.entity.LivingEntity, int, boolean, boolean);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public java.lang.String identifier();
+  public net.minecraft.world.entity.LivingEntity entity();
+  public int index();
+  public boolean cosmetic();
+  public boolean visible();
+}
+=== sig top/theillusivec4/curios/api/client/CuriosRendererRegistry
+Compiled from "CuriosRendererRegistry.java"
+public class top.theillusivec4.curios.api.client.CuriosRendererRegistry {
+  private static final java.util.Map<net.minecraft.world.item.Item, java.util.function.Supplier<top.theillusivec4.curios.api.client.ICurioRenderer>> RENDERER_REGISTRY;
+  private static final java.util.Map<net.minecraft.world.item.Item, top.theillusivec4.curios.api.client.ICurioRenderer> RENDERERS;
+  public top.theillusivec4.curios.api.client.CuriosRendererRegistry();
+  public static void register(net.minecraft.world.item.Item, java.util.function.Supplier<top.theillusivec4.curios.api.client.ICurioRenderer>);
+  public static java.util.Optional<top.theillusivec4.curios.api.client.ICurioRenderer> getRenderer(net.minecraft.world.item.Item);
+  public static void load();
+  static {};
+}
+=== sig top/theillusivec4/curios/api/client/ICurioRenderer
+Compiled from "ICurioRenderer.java"
+public interface top.theillusivec4.curios.api.client.ICurioRenderer {
+  public abstract <T extends net.minecraft.world.entity.LivingEntity, M extends net.minecraft.client.model.EntityModel<T>> void render(net.minecraft.world.item.ItemStack, top.theillusivec4.curios.api.SlotContext, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.entity.RenderLayerParent<T, M>, net.minecraft.client.renderer.MultiBufferSource, int, float, float, float, float, float, float);
+  public static void translateIfSneaking(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.world.entity.LivingEntity);
+  public static void rotateIfSneaking(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.world.entity.LivingEntity);
+  public static void followHeadRotations(net.minecraft.world.entity.LivingEntity, net.minecraft.client.model.geom.ModelPart...);
+  public static void followBodyRotations(net.minecraft.world.entity.LivingEntity, net.minecraft.client.model.HumanoidModel<net.minecraft.world.entity.LivingEntity>...);
+}
+=== sig top/theillusivec4/curios/api/event/CurioChangeEvent
+Compiled from "CurioChangeEvent.java"
+public class top.theillusivec4.curios.api.event.CurioChangeEvent extends net.neoforged.neoforge.event.entity.living.LivingEvent {
+  private final java.lang.String type;
+  private final net.minecraft.world.item.ItemStack from;
+  private final net.minecraft.world.item.ItemStack to;
+  private final int index;
+  public top.theillusivec4.curios.api.event.CurioChangeEvent(net.minecraft.world.entity.LivingEntity, java.lang.String, int, net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemStack);
+  public java.lang.String getIdentifier();
+  public int getSlotIndex();
+  public net.minecraft.world.item.ItemStack getFrom();
+  public net.minecraft.world.item.ItemStack getTo();
+}
+=== sig top/theillusivec4/curios/api/type/ISlotType
+Compiled from "ISlotType.java"
+public interface top.theillusivec4.curios.api.type.ISlotType extends java.lang.Comparable<top.theillusivec4.curios.api.type.ISlotType> {
+  public abstract java.lang.String getIdentifier();
+  public abstract net.minecraft.resources.ResourceLocation getIcon();
+  public abstract int getOrder();
+  public abstract int getSize();
+  public abstract boolean useNativeGui();
+  public abstract boolean hasCosmetic();
+  public abstract boolean canToggleRendering();
+  public abstract top.theillusivec4.curios.api.type.capability.ICurio$DropRule getDropRule();
+  public default java.util.Set<net.minecraft.resources.ResourceLocation> getValidators();
+  public default net.minecraft.nbt.CompoundTag writeNbt();
+  public default boolean isLocked();
+  public default int getPriority();
+  public default boolean isVisible();
+}
+=== sig top/theillusivec4/curios/api/type/capability/ICurio
+Compiled from "ICurio.java"
+public interface top.theillusivec4.curios.api.type.capability.ICurio {
+  public abstract net.minecraft.world.item.ItemStack getStack();
+  public default void curioTick(top.theillusivec4.curios.api.SlotContext);
+  public default void onEquip(top.theillusivec4.curios.api.SlotContext, net.minecraft.world.item.ItemStack);
+  public default void onUnequip(top.theillusivec4.curios.api.SlotContext, net.minecraft.world.item.ItemStack);
+  public default boolean canEquip(top.theillusivec4.curios.api.SlotContext);
+  public default boolean canUnequip(top.theillusivec4.curios.api.SlotContext);
+  public default java.util.List<net.minecraft.network.chat.Component> getSlotsTooltip(java.util.List<net.minecraft.network.chat.Component>, net.minecraft.world.item.Item$TooltipContext);
+  public default java.util.List<net.minecraft.network.chat.Component> getSlotsTooltip(java.util.List<net.minecraft.network.chat.Component>);
+  public default com.google.common.collect.Multimap<net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute>, net.minecraft.world.entity.ai.attributes.AttributeModifier> getAttributeModifiers(top.theillusivec4.curios.api.SlotContext, java.util.UUID);
+  public default com.google.common.collect.Multimap<net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute>, net.minecraft.world.entity.ai.attributes.AttributeModifier> getAttributeModifiers(top.theillusivec4.curios.api.SlotContext, net.minecraft.resources.ResourceLocation);
+  public default void onEquipFromUse(top.theillusivec4.curios.api.SlotContext);
+  public default top.theillusivec4.curios.api.type.capability.ICurio$SoundInfo getEquipSound(top.theillusivec4.curios.api.SlotContext);
+  public default boolean canEquipFromUse(top.theillusivec4.curios.api.SlotContext);
+  public default void curioBreak(top.theillusivec4.curios.api.SlotContext);
+  public default boolean canSync(top.theillusivec4.curios.api.SlotContext);
+  public default net.minecraft.nbt.CompoundTag writeSyncData(top.theillusivec4.curios.api.SlotContext);
+  public default void readSyncData(top.theillusivec4.curios.api.SlotContext, net.minecraft.nbt.CompoundTag);
+  public default top.theillusivec4.curios.api.type.capability.ICurio$DropRule getDropRule(top.theillusivec4.curios.api.SlotContext, net.minecraft.world.damagesource.DamageSource, boolean);
+  public default top.theillusivec4.curios.api.type.capability.ICurio$DropRule getDropRule(top.theillusivec4.curios.api.SlotContext, net.minecraft.world.damagesource.DamageSource, int, boolean);
+  public default java.util.List<net.minecraft.network.chat.Component> getAttributesTooltip(java.util.List<net.minecraft.network.chat.Component>, net.minecraft.world.item.Item$TooltipContext);
+  public default java.util.List<net.minecraft.network.chat.Component> getAttributesTooltip(java.util.List<net.minecraft.network.chat.Component>);
+  public default int getFortuneLevel(top.theillusivec4.curios.api.SlotContext, net.minecraft.world.level.storage.loot.LootContext);
+  public default int getLootingLevel(top.theillusivec4.curios.api.SlotContext, net.minecraft.world.level.storage.loot.LootContext);
+  public default boolean makesPiglinsNeutral(top.theillusivec4.curios.api.SlotContext);
+  public default boolean canWalkOnPowderedSnow(top.theillusivec4.curios.api.SlotContext);
+  public default boolean isEnderMask(top.theillusivec4.curios.api.SlotContext, net.minecraft.world.entity.monster.EnderMan);
+  public static void playBreakAnimation(net.minecraft.world.item.ItemStack, net.minecraft.world.entity.LivingEntity);
+}
+=== sig top/theillusivec4/curios/api/type/capability/ICurioItem
+Compiled from "ICurioItem.java"
+public interface top.theillusivec4.curios.api.type.capability.ICurioItem {
+  public static final top.theillusivec4.curios.api.type.capability.ICurio defaultInstance;
+  public default boolean hasCurioCapability(net.minecraft.world.item.ItemStack);
+  public default void curioTick(top.theillusivec4.curios.api.SlotContext, net.minecraft.world.item.ItemStack);
+  public default void onEquip(top.theillusivec4.curios.api.SlotContext, net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemStack);
+  public default void onUnequip(top.theillusivec4.curios.api.SlotContext, net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemStack);
+  public default boolean canEquip(top.theillusivec4.curios.api.SlotContext, net.minecraft.world.item.ItemStack);
+  public default boolean canUnequip(top.theillusivec4.curios.api.SlotContext, net.minecraft.world.item.ItemStack);
+  public default java.util.List<net.minecraft.network.chat.Component> getSlotsTooltip(java.util.List<net.minecraft.network.chat.Component>, net.minecraft.world.item.Item$TooltipContext, net.minecraft.world.item.ItemStack);
+  public default java.util.List<net.minecraft.network.chat.Component> getSlotsTooltip(java.util.List<net.minecraft.network.chat.Component>, net.minecraft.world.item.ItemStack);
+  public default com.google.common.collect.Multimap<net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute>, net.minecraft.world.entity.ai.attributes.AttributeModifier> getAttributeModifiers(top.theillusivec4.curios.api.SlotContext, net.minecraft.resources.ResourceLocation, net.minecraft.world.item.ItemStack);
+  public default com.google.common.collect.Multimap<net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute>, net.minecraft.world.entity.ai.attributes.AttributeModifier> getAttributeModifiers(top.theillusivec4.curios.api.SlotContext, java.util.UUID, net.minecraft.world.item.ItemStack);
+  public default void onEquipFromUse(top.theillusivec4.curios.api.SlotContext, net.minecraft.world.item.ItemStack);
+  public default top.theillusivec4.curios.api.type.capability.ICurio$SoundInfo getEquipSound(top.theillusivec4.curios.api.SlotContext, net.minecraft.world.item.ItemStack);
+  public default boolean canEquipFromUse(top.theillusivec4.curios.api.SlotContext, net.minecraft.world.item.ItemStack);
+  public default void curioBreak(top.theillusivec4.curios.api.SlotContext, net.minecraft.world.item.ItemStack);
+  public default boolean canSync(top.theillusivec4.curios.api.SlotContext, net.minecraft.world.item.ItemStack);
+  public default net.minecraft.nbt.CompoundTag writeSyncData(top.theillusivec4.curios.api.SlotContext, net.minecraft.world.item.ItemStack);
+  public default void readSyncData(top.theillusivec4.curios.api.SlotContext, net.minecraft.nbt.CompoundTag, net.minecraft.world.item.ItemStack);
+  public default top.theillusivec4.curios.api.type.capability.ICurio$DropRule getDropRule(top.theillusivec4.curios.api.SlotContext, net.minecraft.world.damagesource.DamageSource, boolean, net.minecraft.world.item.ItemStack);
+  public default top.theillusivec4.curios.api.type.capability.ICurio$DropRule getDropRule(top.theillusivec4.curios.api.SlotContext, net.minecraft.world.damagesource.DamageSource, int, boolean, net.minecraft.world.item.ItemStack);
+  public default java.util.List<net.minecraft.network.chat.Component> getAttributesTooltip(java.util.List<net.minecraft.network.chat.Component>, net.minecraft.world.item.Item$TooltipContext, net.minecraft.world.item.ItemStack);
+  public default java.util.List<net.minecraft.network.chat.Component> getAttributesTooltip(java.util.List<net.minecraft.network.chat.Component>, net.minecraft.world.item.ItemStack);
+  public default int getFortuneLevel(top.theillusivec4.curios.api.SlotContext, net.minecraft.world.level.storage.loot.LootContext, net.minecraft.world.item.ItemStack);
+  public default int getLootingLevel(top.theillusivec4.curios.api.SlotContext, net.minecraft.world.level.storage.loot.LootContext, net.minecraft.world.item.ItemStack);
+  public default boolean makesPiglinsNeutral(top.theillusivec4.curios.api.SlotContext, net.minecraft.world.item.ItemStack);
+  public default boolean canWalkOnPowderedSnow(top.theillusivec4.curios.api.SlotContext, net.minecraft.world.item.ItemStack);
+  public default boolean isEnderMask(top.theillusivec4.curios.api.SlotContext, net.minecraft.world.entity.monster.EnderMan, net.minecraft.world.item.ItemStack);
+  static {};
+}
+=== sig top/theillusivec4/curios/api/type/capability/ICuriosItemHandler
+Compiled from "ICuriosItemHandler.java"
+public interface top.theillusivec4.curios.api.type.capability.ICuriosItemHandler {
+  public static final org.slf4j.Logger LOGGER;
+  public abstract java.util.Map<java.lang.String, top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler> getCurios();
+  public abstract void setCurios(java.util.Map<java.lang.String, top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler>);
+  public abstract int getSlots();
+  public default int getVisibleSlots();
+  public abstract void reset();
+  public abstract java.util.Optional<top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler> getStacksHandler(java.lang.String);
+  public abstract net.neoforged.neoforge.items.IItemHandlerModifiable getEquippedCurios();
+  public abstract void setEquippedCurio(java.lang.String, int, net.minecraft.world.item.ItemStack);
+  public default boolean isEquipped(net.minecraft.world.item.Item);
+  public default boolean isEquipped(java.util.function.Predicate<net.minecraft.world.item.ItemStack>);
+  public default boolean isSlotActive(java.lang.String, int);
+  public default void setSlotActive(java.lang.String, int, boolean);
+  public default void setSlotsActive(java.lang.String, boolean);
+  public abstract java.util.Optional<top.theillusivec4.curios.api.SlotResult> findFirstCurio(net.minecraft.world.item.Item);
+  public abstract java.util.Optional<top.theillusivec4.curios.api.SlotResult> findFirstCurio(java.util.function.Predicate<net.minecraft.world.item.ItemStack>);
+  public abstract java.util.Optional<top.theillusivec4.curios.api.SlotResult> findFirstCurio(java.util.function.Predicate<net.minecraft.world.item.ItemStack>, java.lang.String);
+  public default java.util.Optional<top.theillusivec4.curios.api.SlotResult> findFirstCurio(java.util.function.Predicate<net.minecraft.world.item.ItemStack>, boolean, java.lang.String);
+  public abstract java.util.List<top.theillusivec4.curios.api.SlotResult> findCurios(net.minecraft.world.item.Item);
+  public abstract java.util.List<top.theillusivec4.curios.api.SlotResult> findCurios(java.util.function.Predicate<net.minecraft.world.item.ItemStack>);
+  public default java.util.List<top.theillusivec4.curios.api.SlotResult> findCurios(java.util.function.Predicate<net.minecraft.world.item.ItemStack>, boolean, java.lang.String);
+  public abstract java.util.List<top.theillusivec4.curios.api.SlotResult> findCurios(java.lang.String...);
+  public default java.util.List<top.theillusivec4.curios.api.SlotResult> findCurios(boolean, java.lang.String...);
+  public abstract java.util.Optional<top.theillusivec4.curios.api.SlotResult> findCurio(java.lang.String, int);
+  public default java.util.Optional<top.theillusivec4.curios.api.SlotResult> findCurio(java.lang.String, int, boolean);
+  public abstract net.minecraft.world.entity.LivingEntity getWearer();
+  public abstract void loseInvalidStack(net.minecraft.world.item.ItemStack);
+  public abstract void handleInvalidStacks();
+  public abstract int getFortuneLevel(net.minecraft.world.level.storage.loot.LootContext);
+  public abstract int getLootingLevel(net.minecraft.world.level.storage.loot.LootContext);
+  public abstract net.minecraft.nbt.ListTag saveInventory(boolean);
+  public abstract void loadInventory(net.minecraft.nbt.ListTag);
+  public abstract java.util.Set<top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler> getUpdatingInventories();
+  public default void addTransientSlotModifier(java.lang.String, net.minecraft.resources.ResourceLocation, double, net.minecraft.world.entity.ai.attributes.AttributeModifier$Operation);
+  public abstract void addTransientSlotModifiers(com.google.common.collect.Multimap<java.lang.String, net.minecraft.world.entity.ai.attributes.AttributeModifier>);
+  public default void addPermanentSlotModifier(java.lang.String, net.minecraft.resources.ResourceLocation, double, net.minecraft.world.entity.ai.attributes.AttributeModifier$Operation);
+  public abstract void addPermanentSlotModifiers(com.google.common.collect.Multimap<java.lang.String, net.minecraft.world.entity.ai.attributes.AttributeModifier>);
+  public default void removeSlotModifier(java.lang.String, net.minecraft.resources.ResourceLocation);
+  public abstract void removeSlotModifiers(com.google.common.collect.Multimap<java.lang.String, net.minecraft.world.entity.ai.attributes.AttributeModifier>);
+  public abstract void clearSlotModifiers();
+  public abstract com.google.common.collect.Multimap<java.lang.String, net.minecraft.world.entity.ai.attributes.AttributeModifier> getModifiers();
+  public abstract net.minecraft.nbt.Tag writeTag();
+  public abstract void readTag(net.minecraft.nbt.Tag);
+  public abstract void clearCachedSlotModifiers();
+  public default java.util.Set<java.lang.String> getLockedSlots();
+  public default void unlockSlotType(java.lang.String, int, boolean, boolean);
+  public default void lockSlotType(java.lang.String);
+  public default void processSlots();
+  public default int getFortuneBonus();
+  public abstract void growSlotType(java.lang.String, int);
+  public abstract void shrinkSlotType(java.lang.String, int);
+  static {};
+}
+=== sig top/theillusivec4/curios/api/type/inventory/ICurioStacksHandler
+Compiled from "ICurioStacksHandler.java"
+public interface top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler {
+  public abstract top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler getStacks();
+  public abstract top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler getCosmeticStacks();
+  public abstract net.minecraft.core.NonNullList<java.lang.Boolean> getRenders();
+  public default net.minecraft.core.NonNullList<java.lang.Boolean> getActiveStates();
+  public default void updateActiveState(int);
+  public default boolean canToggleRendering();
+  public default top.theillusivec4.curios.api.type.capability.ICurio$DropRule getDropRule();
+  public abstract int getSlots();
+  public abstract boolean isVisible();
+  public abstract boolean hasCosmetic();
+  public abstract net.minecraft.nbt.CompoundTag serializeNBT();
+  public abstract void deserializeNBT(net.minecraft.nbt.CompoundTag);
+  public abstract java.lang.String getIdentifier();
+  public abstract java.util.Map<net.minecraft.resources.ResourceLocation, net.minecraft.world.entity.ai.attributes.AttributeModifier> getModifiers();
+  public abstract java.util.Set<net.minecraft.world.entity.ai.attributes.AttributeModifier> getPermanentModifiers();
+  public abstract java.util.Set<net.minecraft.world.entity.ai.attributes.AttributeModifier> getCachedModifiers();
+  public abstract java.util.Collection<net.minecraft.world.entity.ai.attributes.AttributeModifier> getModifiersByOperation(net.minecraft.world.entity.ai.attributes.AttributeModifier$Operation);
+  public abstract void addTransientModifier(net.minecraft.world.entity.ai.attributes.AttributeModifier);
+  public abstract void addPermanentModifier(net.minecraft.world.entity.ai.attributes.AttributeModifier);
+  public abstract void removeModifier(net.minecraft.resources.ResourceLocation);
+  public abstract void clearModifiers();
+  public abstract void clearCachedModifiers();
+  public abstract void copyModifiers(top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler);
+  public abstract void update();
+  public abstract net.minecraft.nbt.CompoundTag getSyncTag();
+  public abstract void applySyncTag(net.minecraft.nbt.CompoundTag);
+  public abstract int getSizeShift();
+  public abstract void grow(int);
+  public abstract void shrink(int);
+}
+=== src top/theillusivec4/curios/api/CuriosApi
+package top.theillusivec4.curios.api;
+
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+import com.mojang.logging.LogUtils;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.function.Predicate;
+import javax.annotation.Nonnull;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.level.Level;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.loading.FMLLoader;
+import org.jetbrains.annotations.ApiStatus.ScheduledForRemoval;
+import org.slf4j.Logger;
+import top.theillusivec4.curios.api.type.ISlotType;
+import top.theillusivec4.curios.api.type.capability.ICurio;
+import top.theillusivec4.curios.api.type.capability.ICurioItem;
+import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
+import top.theillusivec4.curios.api.type.util.ICuriosHelper;
+import top.theillusivec4.curios.api.type.util.IIconHelper;
+import top.theillusivec4.curios.api.type.util.ISlotHelper;
+
+public final class CuriosApi {
+   private static final Logger LOGGER = LogUtils.getLogger();
+   public static final String MODID = "curios";
+   private static IIconHelper iconHelper;
+   private static ICuriosHelper curiosHelper;
+   private static ISlotHelper slotHelper;
+
+   public static void registerCurio(Item item, ICurioItem curio) {
+      apiError();
+   }
+
+   public static Optional<ISlotType> getSlot(String id, Level level) {
+      return getSlot(id, level.isClientSide());
+   }
+
+   public static Optional<ISlotType> getSlot(String id, boolean isClient) {
+      return Optional.ofNullable(getSlots(isClient).get(id));
+   }
+
+   public static Map<String, ISlotType> getSlots(Level level) {
+      return getSlots(level.isClientSide());
+   }
+
+   public static Map<String, ISlotType> getSlots(boolean isClient) {
+      apiError();
+      return Map.of();
+   }
+
+   public static Map<String, ISlotType> getPlayerSlots(Level level) {
+      return getPlayerSlots(level.isClientSide());
+   }
+
+   public static Map<String, ISlotType> getPlayerSlots(boolean isClient) {
+      return getEntitySlots(EntityType.PLAYER, isClient);
+   }
+
+   public static Map<String, ISlotType> getPlayerSlots(Player player) {
+      return getEntitySlots(player);
+   }
+
+   public static Map<String, ISlotType> getEntitySlots(LivingEntity livingEntity) {
+      return livingEntity != null ? getEntitySlots(livingEntity.getType(), livingEntity.level()) : Map.of();
+   }
+
+   public static Map<String, ISlotType> getEntitySlots(EntityType<?> type, Level level) {
+      return getEntitySlots(type, level.isClientSide());
+   }
+
+   public static Map<String, ISlotType> getEntitySlots(EntityType<?> type, boolean isClient) {
+      apiError();
+      return Map.of();
+   }
+
+   public static Map<String, ISlotType> getItemStackSlots(ItemStack stack, Level level) {
+      return getItemStackSlots(stack, level.isClientSide());
+   }
+
+   public static Map<String, ISlotType> getItemStackSlots(ItemStack stack, boolean isClient) {
+      apiError();
+      return Map.of();
+   }
+
+   public static Map<String, ISlotType> getItemStackSlots(ItemStack stack, LivingEntity livingEntity) {
+      apiError();
+      return Map.of();
+   }
+
+   public static Optional<ICurio> getCurio(ItemStack stack) {
+      apiError();
+      return Optional.empty();
+   }
+
+   public static Optional<ICuriosItemHandler> getCuriosInventory(LivingEntity livingEntity) {
+      apiError();
+      return Optional.empty();
+   }
+
+   public static boolean isStackValid(SlotContext slotContext, ItemStack stack) {
+      apiError();
+      return false;
+   }
+
+   public static Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(SlotContext slotContext, ResourceLocation id, ItemStack stack) {
+      apiError();
+      return HashMultimap.create();
+   }
+
+   public static void addSlotModifier(
+      Multimap<Holder<Attribute>, AttributeModifier> map, String identifier, ResourceLocation id, double amount, Operation operation
+   ) {
+      apiError();
+   }
+
+   public static void addSlotModifier(ItemStack stack, String identifier, ResourceLocation id, double amount, Operation operation, String slot) {
+      apiError();
+   }
+
+   public static ItemAttributeModifiers withSlotModifier(
+      ItemAttributeModifiers itemAttributeModifiers, String identifier, ResourceLocation id, double amount, Operation operation, EquipmentSlotGroup slotGroup
+   ) {
+      apiError();
+      return ItemAttributeModifiers.EMPTY;
+   }
+
+   public static void addModifier(ItemStack stack, Holder<Attribute> attribute, ResourceLocation id, double amount, Operation operation, String slot) {
+      apiError();
+   }
+
+   public static void registerCurioPredicate(ResourceLocation resourceLocation, Predicate<SlotResult> predicate) {
+      apiError();
+   }
+
+   public static Optional<Predicate<SlotResult>> getCurioPredicate(ResourceLocation resourceLocation) {
+      apiError();
+      return Optional.empty();
+   }
+
+   public static Map<ResourceLocation, Predicate<SlotResult>> getCurioPredicates() {
+      apiError();
+      return Map.of();
+   }
+
+   public static boolean testCurioPredicates(Set<ResourceLocation> predicates, SlotResult slotResult) {
+      apiError();
+      return true;
+   }
+
+   public static ResourceLocation getSlotId(SlotContext slotContext) {
+      apiError();
+      return ResourceLocation.fromNamespaceAndPath("curios", slotContext.identifier());
+   }
+
+   public static void broadcastCurioBreakEvent(SlotContext slotContext) {
+      apiError();
+   }
+
+   static void apiError() {
+      LOGGER.error("Missing Curios API implementation!");
+
+      for (StackTraceElement stackTraceElement : Thread.currentThread().getStackTrace()) {
+         LOGGER.error(stackTraceElement.toString());
+      }
+   }
+
+   @Deprecated(
+      since = "1.20.1"
+   )
+   @ScheduledForRemoval(
+      inVersion = "1.22"
+   )
+   public static Optional<ISlotType> getSlot(String id) {
+      return getSlot(id, false);
+   }
+
+   @Deprecated(
+      since = "1.21"
+   )
+   @Nonnull
+   public static ResourceLocation getSlotIcon(String id) {
+      return getSlot(id, true).<ResourceLocation>map(ISlotType::getIcon).orElse(ResourceLocation.fromNamespaceAndPath("curios", "slot/empty_curio_slot"));
+   }
+
+   @Deprecated(
+      since = "1.20.1"
+   )
+   @ScheduledForRemoval(
+      inVersion = "1.22"
+   )
+   public static Map<String, ISlotType> getSlots() {
+      return getSlots(false);
+   }
+
+   @Deprecated(
+      since = "1.20.1"
+   )
+   @ScheduledForRemoval(
+      inVersion = "1.22"
+   )
+   public static Map<String, ISlotType> getEntitySlots(EntityType<?> type) {
+      return getEntitySlots(type, false);
+   }
+
+   @Deprecated(
+      since = "1.20.1"
+   )
+   @ScheduledForRemoval(
+      inVersion = "1.22"
+   )
+   public static Map<String, ISlotType> getPlayerSlots() {
+      return getPlayerSlots(false);
+   }
+
+   @Deprecated(
+      since = "1.20.1"
+   )
+   @ScheduledForRemoval(
+      inVersion = "1.22"
+   )
+   public static Map<String, ISlotType> getItemStackSlots(ItemStack stack) {
+      return getItemStackSlots(stack, FMLLoader.getDist() == Dist.CLIENT);
+   }
+
+   @Deprecated(
+      since = "1.20.1"
+   )
+   @ScheduledForRemoval(
+      inVersion = "1.22"
+   )
+   public static void setIconHelper(IIconHelper helper) {
+      if (iconHelper == null) {
+         iconHelper = helper;
+      }
+   }
+
+   @Deprecated(
+      since = "1.20.1"
+   )
+   @ScheduledForRemoval(
+      inVersion = "1.22"
+   )
+   public static IIconHelper getIconHelper() {
+      return iconHelper;
+   }
+
+   @Deprecated(
+      since = "1.20.1"
+   )
+   @ScheduledForRemoval(
+      inVersion = "1.22"
+   )
+   public static void setCuriosHelper(ICuriosHelper helper) {
+      if (curiosHelper == null) {
+         curiosHelper = helper;
+      }
+   }
+
+   @Deprecated(
+      since = "1.20.1"
+   )
+   @ScheduledForRemoval(
+      inVersion = "1.22"
+   )
+   public static ICuriosHelper getCuriosHelper() {
+      return curiosHelper;
+   }
+
+   @Deprecated(
+      forRemoval = true,
+      since = "1.20.1"
+   )
+   @ScheduledForRemoval(
+      inVersion = "1.22"
+   )
+   public static ISlotHelper getSlotHelper() {
+      return slotHelper;
+   }
+
+   @Deprecated(
+      forRemoval = true,
+      since = "1.20.1"
+   )
+   @ScheduledForRemoval(
+      inVersion = "1.22"
+   )
+   public static void setSlotHelper(ISlotHelper helper) {
+      slotHelper = helper;
+   }
+}
+=== src top/theillusivec4/curios/api/type/capability/ICurioItem
+package top.theillusivec4.curios.api.type.capability;
+
+import com.google.common.collect.Multimap;
+import java.util.List;
+import java.util.UUID;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import net.minecraft.core.Holder;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Item.TooltipContext;
+import net.minecraft.world.level.storage.loot.LootContext;
+import org.jetbrains.annotations.ApiStatus.ScheduledForRemoval;
+import top.theillusivec4.curios.api.SlotContext;
+import top.theillusivec4.curios.api.type.capability.ICurio.DropRule;
+import top.theillusivec4.curios.api.type.capability.ICurio.SoundInfo;
+import top.theillusivec4.curios.platform.Services;
+
+public interface ICurioItem {
+   ICurio defaultInstance = () -> ItemStack.EMPTY;
+
+   default boolean hasCurioCapability(ItemStack stack) {
+      return true;
+   }
+
+   default void curioTick(SlotContext slotContext, ItemStack stack) {
+      defaultInstance.curioTick(slotContext);
+   }
+
+   default void onEquip(SlotContext slotContext, ItemStack prevStack, ItemStack stack) {
+      defaultInstance.onEquip(slotContext, prevStack);
+   }
+
+   default void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
+      defaultInstance.onUnequip(slotContext, newStack);
+   }
+
+   default boolean canEquip(SlotContext slotContext, ItemStack stack) {
+      return defaultInstance.canEquip(slotContext);
+   }
+
+   default boolean canUnequip(SlotContext slotContext, ItemStack stack) {
+      return defaultInstance.canUnequip(slotContext);
+   }
+
+   default List<Component> getSlotsTooltip(List<Component> tooltips, TooltipContext context, ItemStack stack) {
+      return defaultInstance.getSlotsTooltip(tooltips, context);
+   }
+
+   @Deprecated(
+      forRemoval = true,
+      since = "1.22"
+   )
+   default List<Component> getSlotsTooltip(List<Component> tooltips, ItemStack stack) {
+      return defaultInstance.getSlotsTooltip(tooltips, TooltipContext.EMPTY);
+   }
+
+   default Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(SlotContext slotContext, ResourceLocation id, ItemStack stack) {
+      return defaultInstance.getAttributeModifiers(slotContext, id);
+   }
+
+   @Deprecated(
+      forRemoval = true,
+      since = "1.21"
+   )
+   default Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
+      return defaultInstance.getAttributeModifiers(slotContext, ResourceLocation.withDefaultNamespace("empty"));
+   }
+
+   default void onEquipFromUse(SlotContext slotContext, ItemStack stack) {
+      defaultInstance.onEquipFromUse(slotContext);
+   }
+
+   @Nonnull
+   default SoundInfo getEquipSound(SlotContext slotContext, ItemStack stack) {
+      return defaultInstance.getEquipSound(slotContext);
+   }
+
+   default boolean canEquipFromUse(SlotContext slotContext, ItemStack stack) {
+      return defaultInstance.canEquipFromUse(slotContext);
+   }
+
+   default void curioBreak(SlotContext slotContext, ItemStack stack) {
+      defaultInstance.curioBreak(slotContext);
+   }
+
+   default boolean canSync(SlotContext slotContext, ItemStack stack) {
+      return defaultInstance.canSync(slotContext);
+   }
+
+   @Nonnull
+   default CompoundTag writeSyncData(SlotContext slotContext, ItemStack stack) {
+      return defaultInstance.writeSyncData(slotContext);
+   }
+
+   default void readSyncData(SlotContext slotContext, CompoundTag compound, ItemStack stack) {
+      defaultInstance.readSyncData(slotContext, compound);
+   }
+
+   @Nonnull
+   default DropRule getDropRule(SlotContext slotContext, DamageSource source, boolean recentlyHit, ItemStack stack) {
+      return this.getDropRule(slotContext, source, 0, recentlyHit, stack);
+   }
+
+   @Deprecated(
+      forRemoval = true,
+      since = "1.21.1"
+   )
+   @Nonnull
+   @ScheduledForRemoval(
+      inVersion = "1.22"
+   )
+   default DropRule getDropRule(SlotContext slotContext, DamageSource source, int lootingLevel, boolean recentlyHit, ItemStack stack) {
+      return defaultInstance.getDropRule(slotContext, source, recentlyHit);
+   }
+
+   default List<Component> getAttributesTooltip(List<Component> tooltips, TooltipContext context, ItemStack stack) {
+      return defaultInstance.getAttributesTooltip(tooltips, context);
+   }
+
+   @Deprecated(
+      forRemoval = true,
+      since = "1.22"
+   )
+   default List<Component> getAttributesTooltip(List<Component> tooltips, ItemStack stack) {
+      return defaultInstance.getAttributesTooltip(tooltips, TooltipContext.EMPTY);
+   }
+
+   default int getFortuneLevel(SlotContext slotContext, LootContext lootContext, ItemStack stack) {
+      return defaultInstance.getFortuneLevel(slotContext, lootContext);
+   }
+
+   default int getLootingLevel(SlotContext slotContext, @Nullable LootContext lootContext, ItemStack stack) {
+      return defaultInstance.getLootingLevel(slotContext, lootContext);
+   }
+
+   default boolean makesPiglinsNeutral(SlotContext slotContext, ItemStack stack) {
+      return Services.CURIOS.makesPiglinsNeutral(stack, slotContext.entity());
+   }
+
+   default boolean canWalkOnPowderedSnow(SlotContext slotContext, ItemStack stack) {
+      return Services.CURIOS.canWalkOnPowderedSnow(stack, slotContext.entity());
+   }
+
+   default boolean isEnderMask(SlotContext slotContext, EnderMan enderMan, ItemStack stack) {
+      return slotContext.entity() instanceof Player player ? Services.CURIOS.isEnderMask(stack, player, enderMan) : false;
+   }
+}
+/tmp/c/assets/curios/:
+lang
+textures
+
+/tmp/c/assets/minecraft/:
+atlases
+
+/tmp/c/data/curios/:
+curios
+########## patchouli
+1.21.1-90-NEOFORGE
+1.21.1-91-NEOFORGE
+1.21.1-92-NEOFORGE
+1.21.1-93-NEOFORGE
+CHOSEN patchouli 1.21.1-93-NEOFORGE
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>vazkii.patchouli</groupId>
+  <artifactId>Patchouli</artifactId>
+  <version>1.21.1-93-NEOFORGE</version>
+</project>
+
+modLoader="javafml"
+license="CC BY-NC-SA 3.0"
+loaderVersion="[4,)"
+issueTrackerURL="https://github.com/VazkiiMods/Patchouli"
+logoFile="logo.png"
+
+[[mods]]
+modId="patchouli"
+displayName="Patchouli"
+version="${file.jarVersion}"
+authors="Vazkii"
+description='''
+Accessible, Data-Driven, Dependency-Free Documentation for Minecraft Modders and Pack Makers
+'''
+
+[[dependencies.patchouli]]
+modId="neoforge"
+type="REQUIRED"
+versionRange="[21.0.31-beta,)"
+
+[[dependencies.patchouli]]
+modId="minecraft"
+type="REQUIRED"
+versionRange="[1.21.1,1.21.2)"
+
+[[mixins]]
+config="patchouli_xplat.mixins.json"---- classes: 198
+=== sig vazkii/patchouli/api/PatchouliAPI
+Compiled from "PatchouliAPI.java"
+public class vazkii.patchouli.api.PatchouliAPI {
+  private static final java.util.function.Supplier<vazkii.patchouli.api.PatchouliAPI$IPatchouliAPI> LAZY_INSTANCE;
+  public static final java.lang.String MOD_ID;
+  public static final org.apache.logging.log4j.Logger LOGGER;
+  public vazkii.patchouli.api.PatchouliAPI();
+  public static vazkii.patchouli.api.PatchouliAPI$IPatchouliAPI get();
+  static {};
+}
+=== src vazkii/patchouli/client/book/AbstractReadStateHolder
+package vazkii.patchouli.client.book;
+
+import java.util.Comparator;
+import java.util.stream.Stream;
+
+public abstract class AbstractReadStateHolder {
+   EntryDisplayState readState;
+   boolean readStateDirty = true;
+
+   public EntryDisplayState getReadState() {
+      if (this.readStateDirty) {
+         this.readState = this.computeReadState();
+         this.readStateDirty = false;
+      }
+
+      return this.readState;
+   }
+
+   public void markReadStateDirty() {
+      this.readStateDirty = true;
+   }
+
+   protected abstract EntryDisplayState computeReadState();
+
+   public static EntryDisplayState mostImportantState(Stream<EntryDisplayState> stream) {
+      return stream.min(Comparator.comparingInt(Enum::ordinal)).orElse(EntryDisplayState.DEFAULT_TYPE);
+   }
+}
+=== src vazkii/patchouli/client/book/BookCategory
+package vazkii.patchouli.client.book;
+
+import com.google.common.collect.Streams;
+import com.google.gson.JsonObject;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Stream;
+import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import org.jetbrains.annotations.Nullable;
+import vazkii.patchouli.common.base.PatchouliConfig;
+import vazkii.patchouli.common.book.Book;
+
+public final class BookCategory extends AbstractReadStateHolder implements Comparable<BookCategory> {
+   private final ResourceLocation id;
+   private final String name;
+   private final String description;
+   private final BookIcon icon;
+   @Nullable
+   private final String parent;
+   private final String flag;
+   private final int sortnum;
+   private final boolean secret;
+   private final Book book;
+   @Nullable
+   private BookCategory parentCategory;
+   private final List<BookCategory> children = new ArrayList<>();
+   private final List<BookEntry> entries = new ArrayList<>();
+   private boolean locked;
+   private boolean built;
+
+   public BookCategory(JsonObject root, ResourceLocation id, Book book, Provider registries) {
+      this.book = book;
+      this.id = id;
+      this.name = GsonHelper.getAsString(root, "name");
+      this.description = GsonHelper.getAsString(root, "description");
+      this.icon = BookIcon.from(GsonHelper.getAsString(root, "icon"), registries);
+      this.parent = GsonHelper.getAsString(root, "parent", null);
+      this.flag = GsonHelper.getAsString(root, "flag", "");
+      this.sortnum = GsonHelper.getAsInt(root, "sortnum", 0);
+      this.secret = GsonHelper.getAsBoolean(root, "secret", false);
+   }
+
+   public MutableComponent getName() {
+      return this.book.i18n ? Component.translatable(this.name) : Component.literal(this.name);
+   }
+
+   public String getDescription() {
+      return this.description;
+   }
+
+   public BookIcon getIcon() {
+      return this.icon;
+   }
+
+   public void addEntry(BookEntry entry) {
+      this.entries.add(entry);
+   }
+
+   public void addChildCategory(BookCategory category) {
+      this.children.add(category);
+   }
+
+   public List<BookEntry> getEntries() {
+      return this.entries;
+   }
+
+   @Nullable
+   public BookCategory getParentCategory() {
+      return this.parentCategory;
+   }
+
+   public void updateLockStatus(boolean rootOnly) {
+      if (!rootOnly || this.isRootCategory()) {
+         this.children.forEach(c -> c.updateLockStatus(false));
+         boolean wasLocked = this.locked;
+         this.locked = !this.children.isEmpty() || !this.entries.isEmpty();
+         Iterator var3 = this.children.iterator();
+
+         label41:
+         while (true) {
+            if (var3.hasNext()) {
+               BookCategory c = (BookCategory)var3.next();
+               if (c.isLocked()) {
+                  continue;
+               }
+
+               this.locked = false;
+               break;
+            }
+
+            var3 = this.entries.iterator();
+
+            BookEntry e;
+            do {
+               if (!var3.hasNext()) {
+                  break label41;
+               }
+
+               e = (BookEntry)var3.next();
+            } while (e.isLocked());
+
+            this.locked = false;
+            break;
+         }
+
+         if (!this.locked && wasLocked) {
+            this.book.markUpdated();
+         }
+      }
+   }
+
+   public boolean isSecret() {
+      return this.secret;
+   }
+
+   public boolean shouldHide() {
+      return this.isSecret() && this.isLocked();
+   }
+
+   public boolean isLocked() {
+      return this.getBook().advancementsEnabled() && this.locked;
+   }
+
+   public boolean isRootCategory() {
+      return this.parent == null || this.parent.isEmpty();
+   }
+
+   public ResourceLocation getId() {
+      return this.id;
+   }
+
+   public boolean canAdd() {
+      return this.flag.isEmpty() || PatchouliConfig.getConfigFlag(this.flag);
+   }
+
+   public int compareTo(BookCategory o) {
+      if (this.book.advancementsEnabled() && o.locked != this.locked) {
+         return this.locked ? 1 : -1;
+      } else {
+         return this.sortnum != o.sortnum ? Integer.compare(this.sortnum, o.sortnum) : this.getName().getString().compareTo(o.getName().getString());
+      }
+   }
+
+   public void build(BookContentsBuilder builder) {
+      if (!this.built) {
+         if (!this.isRootCategory()) {
+            if (!this.parent.contains(":")) {
+               String hint = String.format("`%s:%s`", this.book.id.getNamespace(), this.parent);
+               throw new IllegalArgumentException("`parent` must be fully qualified (domain:name). Hint: Try " + hint);
+            }
+
+            BookCategory parentCat = builder.getCategory(ResourceLocation.tryParse(this.parent));
+            if (parentCat == null) {
+               String msg = String.format("Category %s specifies parent %s, but it could not be found", this.id, this.parent);
+               throw new RuntimeException(msg);
+            }
+
+            parentCat.addChildCategory(this);
+            this.parentCategory = parentCat;
+         }
+
+         this.built = true;
+      }
+   }
+
+   public Book getBook() {
+      return this.book;
+   }
+
+   protected EntryDisplayState computeReadState() {
+      Stream<EntryDisplayState> entryStream = this.entries.stream().filter(e -> !e.isLocked()).map(AbstractReadStateHolder::getReadState);
+      Stream<EntryDisplayState> childrenStream = this.children.stream().map(AbstractReadStateHolder::getReadState);
+      return mostImportantState(Streams.concat(new Stream[]{entryStream, childrenStream}));
+   }
+
+   public void markReadStateDirty() {
+      super.markReadStateDirty();
+      if (this.parentCategory != null) {
+         this.parentCategory.markReadStateDirty();
+      } else {
+         this.book.getContents().markReadStateDirty();
+      }
+   }
+}
+=== src vazkii/patchouli/client/book/BookEntry
+package vazkii.patchouli.client.book;
+
+import com.google.common.collect.ImmutableList;
+import com.google.gson.JsonObject;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
+import vazkii.patchouli.api.PatchouliAPI;
+import vazkii.patchouli.client.base.ClientAdvancements;
+import vazkii.patchouli.client.base.PersistentData;
+import vazkii.patchouli.client.base.PersistentData.BookData;
+import vazkii.patchouli.client.book.BookEntry.1;
+import vazkii.patchouli.client.book.page.PageEmpty;
+import vazkii.patchouli.client.book.page.PageQuest;
+import vazkii.patchouli.common.base.PatchouliConfig;
+import vazkii.patchouli.common.book.Book;
+import vazkii.patchouli.common.util.ItemStackUtil;
+import vazkii.patchouli.common.util.SerializationUtil;
+import vazkii.patchouli.common.util.ItemStackUtil.StackWrapper;
+
+public final class BookEntry extends AbstractReadStateHolder implements Comparable<BookEntry> {
+   private final String name;
+   private final String flag;
+   private final boolean priority;
+   private final boolean secret;
+   private final boolean readByDefault;
+   private final BookPage[] pages;
+   @Nullable
+   private final ResourceLocation advancement;
+   @Nullable
+   private final ResourceLocation turnin;
+   private final int sortnum;
+   private final int entryColor;
+   private final Map<String, Integer> extraRecipeMappings;
+   private final ResourceLocation id;
+   private final Book book;
+   @Nullable
+   private final String addedBy;
+   private final ResourceLocation categoryId;
+   private BookCategory category;
+   private final BookIcon icon;
+   private final List<BookPage> realPages = new ArrayList<>();
+   private final List<StackWrapper> relevantStacks = new LinkedList<>();
+   private boolean locked;
+   private boolean built;
+   private static final List<BookPage> NO_PAGE = ImmutableList.of(new PageEmpty());
+
+   public BookEntry(JsonObject root, ResourceLocation id, Book book, @Nullable String addedBy, Provider registries) {
+      this.id = id;
+      this.book = book;
+      this.addedBy = addedBy;
+      String categoryId = GsonHelper.getAsString(root, "category");
+      if (categoryId.contains(":")) {
+         this.categoryId = ResourceLocation.tryParse(categoryId);
+         this.name = GsonHelper.getAsString(root, "name");
+         this.flag = GsonHelper.getAsString(root, "flag", "");
+         this.icon = BookIcon.from(GsonHelper.getAsString(root, "icon"), registries);
+         this.priority = GsonHelper.getAsBoolean(root, "priority", false);
+         this.secret = GsonHelper.getAsBoolean(root, "secret", false);
+         this.readByDefault = GsonHelper.getAsBoolean(root, "read_by_default", false);
+         this.advancement = SerializationUtil.getAsResourceLocation(root, "advancement", null);
+         this.turnin = SerializationUtil.getAsResourceLocation(root, "turnin", null);
+         this.sortnum = GsonHelper.getAsInt(root, "sortnum", 0);
+         String entryColor = GsonHelper.getAsString(root, "entry_color", null);
+         if (entryColor != null) {
+            this.entryColor = Integer.parseInt(entryColor, 16);
+         } else {
+            this.entryColor = book.textColor;
+         }
+
+         this.pages = (BookPage[])ClientBookRegistry.INSTANCE.gson.fromJson(GsonHelper.getAsJsonArray(root, "pages"), BookPage[].class);
+         JsonObject extraRecipeMap = GsonHelper.getAsJsonObject(root, "extra_recipe_mappings", null);
+         if (extraRecipeMap == null) {
+            this.extraRecipeMappings = Collections.emptyMap();
+         } else {
+            this.extraRecipeMappings = (Map<String, Integer>)ClientBookRegistry.INSTANCE.gson.fromJson(extraRecipeMap, new 1(this).getType());
+         }
+      } else {
+         String hint = String.format("`%s:%s`", book.id.getNamespace(), categoryId);
+         throw new IllegalArgumentException("`category` must be fully qualified (domain:name). Hint: Try " + hint);
+      }
+   }
+
+   public MutableComponent getName() {
+      return this.book.i18n ? Component.translatable(this.name) : Component.literal(this.name);
+   }
+
+   public List<BookPage> getPages() {
+      List<BookPage> pages = !this.getBook().advancementsEnabled()
+         ? this.realPages
+         : this.realPages.stream().filter(BookPage::isPageUnlocked).collect(Collectors.toList());
+      return pages.isEmpty() ? NO_PAGE : pages;
+   }
+
+   public int getPageFromAnchor(String anchor) {
+      List<BookPage> pages = this.getPages();
+
+      for (int i = 0; i < pages.size(); i++) {
+         BookPage page = pages.get(i);
+         if (anchor.equals(page.anchor)) {
+            return i;
+         }
+      }
+
+      return -1;
+   }
+
+   public boolean isPriority() {
+      return this.priority;
+   }
+
+   public BookIcon getIcon() {
+      return this.icon;
+   }
+
+   public void initCategory(ResourceLocation file, Function<ResourceLocation, BookCategory> categories) {
+      this.category = categories.apply(this.categoryId);
+      if (this.category == null) {
+         String msg = String.format("Entry in file %s does not have a valid category.", file);
+         throw new RuntimeException(msg);
+      } else {
+         this.category.addEntry(this);
+      }
+   }
+
+   public BookCategory getCategory() {
+      return this.category;
+   }
+
+   public void updateLockStatus() {
+      boolean currLocked = this.locked;
+      this.locked = this.advancement != null && !ClientAdvancements.hasDone(this.advancement.toString());
+      boolean dirty = false;
+      if (!this.locked && currLocked) {
+         dirty = true;
+         this.book.markUpdated();
+      }
+
+      if (!dirty && !this.readStateDirty && this.getReadState() == EntryDisplayState.PENDING && ClientAdvancements.hasDone(this.turnin.toString())) {
+         dirty = true;
+      }
+
+      if (dirty) {
+         this.markReadStateDirty();
+      }
+   }
+
+   public boolean isLocked() {
+      return this.isSecret() ? this.locked : this.getBook().advancementsEnabled() && this.locked;
+   }
+
+   public boolean isSecret() {
+      return this.secret;
+   }
+
+   public boolean shouldHide() {
+      return this.isSecret() && this.isLocked();
+   }
+
+   public int getEntryColor() {
+      return this.entryColor;
+   }
+
+   public ResourceLocation getId() {
+      return this.id;
+   }
+
+   public boolean canAdd() {
+      return this.flag.isEmpty() || PatchouliConfig.getConfigFlag(this.flag);
+   }
+
+   public boolean isFoundByQuery(String query) {
+      if (this.getName().getString().toLowerCase().contains(query)) {
+         return true;
+      } else {
+         for (StackWrapper wrapper : this.relevantStacks) {
+            if (wrapper.stack.getHoverName().getString().toLowerCase().contains(query)) {
+               return true;
+            }
+         }
+
+         return false;
+      }
+   }
+
+   public int compareTo(BookEntry o) {
+      if (o.locked != this.locked) {
+         return this.locked ? 1 : -1;
+      } else {
+         EntryDisplayState ourState = this.getReadState();
+         EntryDisplayState otherState = o.getReadState();
+         if (ourState != otherState) {
+            return ourState.compareTo(otherState);
+         } else if (o.priority != this.priority) {
+            return this.priority ? -1 : 1;
+         } else {
+            int sort = this.sortnum - o.sortnum;
+            return sort == 0 ? this.getName().getString().compareTo(o.getName().getString()) : sort;
+         }
+      }
+   }
+
+   public void build(Level level, BookContentsBuilder builder) {
+      if (!this.built) {
+         for (int i = 0; i < this.pages.length; i++) {
+            if (this.pages[i].canAdd(this.book)) {
+               try {
+                  this.pages[i].build(level, this, builder, i);
+                  this.realPages.add(this.pages[i]);
+               } catch (Exception var10) {
+                  throw new RuntimeException("Error while building entry %s page %d of book %s".formatted(this.id, i, this.book.id), var10);
+               }
+            }
+         }
+
+         if (this.extraRecipeMappings != null) {
+            Iterator var12 = this.extraRecipeMappings.entrySet().iterator();
+
+            label56:
+            while (true) {
+               String key;
+               List<ItemStack> stacks;
+               int pageNumber;
+               while (true) {
+                  if (!var12.hasNext()) {
+                     break label56;
+                  }
+
+                  Entry<String, Integer> entry = (Entry<String, Integer>)var12.next();
+                  key = entry.getKey();
+                  pageNumber = entry.getValue();
+
+                  try {
+                     stacks = ItemStackUtil.loadStackListFromString(key, RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY));
+                     break;
+                  } catch (Exception var11) {
+                     PatchouliAPI.LOGGER.warn("Invalid extra recipe mapping: {} to page {} in entry {}: {}", key, pageNumber, this.id, var11.getMessage());
+                  }
+               }
+
+               if (!stacks.isEmpty() && pageNumber < this.pages.length) {
+                  for (ItemStack stack : stacks) {
+                     this.addRelevantStack(builder, stack, pageNumber);
+                  }
+               } else {
+                  PatchouliAPI.LOGGER
+                     .warn("Invalid extra recipe mapping: {} to page {} in entry {}: Empty entry or page out of bounds", key, pageNumber, this.id);
+               }
+            }
+         }
+
+         this.built = true;
+      }
+   }
+
+   public void addRelevantStack(BookContentsBuilder builder, ItemStack stack, int page) {
+      if (!stack.isEmpty()) {
+         StackWrapper wrapper = ItemStackUtil.wrapStack(stack);
+         this.relevantStacks.add(wrapper);
+         builder.addRecipeMapping(wrapper, this, page / 2);
+      }
+   }
+
+   public Book getBook() {
+      return this.book;
+   }
+
+   @Nullable
+   public String getAddedBy() {
+      return this.addedBy;
+   }
+
+   protected EntryDisplayState computeReadState() {
+      BookData data = PersistentData.data.getBookData(this.book);
+      if (data != null && this.getId() != null && !this.readByDefault && !this.isLocked() && !data.viewedEntries.contains(this.getId())) {
+         return EntryDisplayState.UNREAD;
+      } else if (this.turnin != null && !ClientAdvancements.hasDone(this.turnin.toString())) {
+         return EntryDisplayState.PENDING;
+      } else {
+         for (BookPage page : this.pages) {
+            if (page instanceof PageQuest && ((PageQuest)page).isCompleted(this.book)) {
+               return EntryDisplayState.COMPLETED;
+            }
+         }
+
+         return EntryDisplayState.NEUTRAL;
+      }
+   }
+
+   public void markReadStateDirty() {
+      super.markReadStateDirty();
+      this.getCategory().markReadStateDirty();
+   }
+}
+=== src vazkii/patchouli/common/book/BookRegistry
+package vazkii.patchouli.common.book;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UncheckedIOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceLocation.Serializer;
+import net.minecraft.world.level.Level;
+import org.apache.commons.lang3.tuple.Pair;
+import vazkii.patchouli.api.PatchouliAPI;
+import vazkii.patchouli.client.book.ClientBookRegistry;
+import vazkii.patchouli.common.base.PatchouliConfig;
+import vazkii.patchouli.xplat.IXplatAbstractions;
+import vazkii.patchouli.xplat.XplatModContainer;
+
+public class BookRegistry {
+   public static final BookRegistry INSTANCE = new BookRegistry();
+   public static final String BOOKS_LOCATION = "patchouli_books";
+   public final Map<ResourceLocation, Book> books = new HashMap<>();
+   public static final Gson GSON = new GsonBuilder().registerTypeAdapter(ResourceLocation.class, new Serializer()).create();
+
+   private BookRegistry() {
+   }
+
+   public void init() {
+      Collection<XplatModContainer> mods = IXplatAbstractions.INSTANCE.getAllMods();
+      Map<Pair<XplatModContainer, ResourceLocation>, String> foundBooks = new HashMap<>();
+      mods.forEach(mod -> {
+         String id = mod.getId();
+         findFiles(mod, String.format("data/%s/%s", id, "patchouli_books"), x$0 -> Files.exists(x$0), (path, file) -> {
+            if (Files.isRegularFile(file) && file.getFileName().toString().equals("book.json")) {
+               String fileStr = file.toString().replaceAll("\\\\", "/");
+               String relPath = fileStr.substring(fileStr.indexOf("patchouli_books") + "patchouli_books".length() + 1);
+               String bookName = relPath.substring(0, relPath.indexOf("/"));
+               if (bookName.contains("/")) {
+                  PatchouliAPI.LOGGER.warn("Ignored book.json @ {}", file);
+                  return true;
+               }
+
+               String assetPath = fileStr.substring(fileStr.indexOf("data/"));
+               ResourceLocation bookId = ResourceLocation.fromNamespaceAndPath(id, bookName);
+               foundBooks.put(Pair.of(mod, bookId), assetPath);
+            }
+
+            return true;
+         }, true, 2);
+      });
+      foundBooks.forEach((pair, file) -> {
+         XplatModContainer mod = (XplatModContainer)pair.getLeft();
+         ResourceLocation res = (ResourceLocation)pair.getRight();
+
+         try (InputStream stream = Files.newInputStream(mod.getPath(file))) {
+            this.loadBook(mod, res, stream, false);
+         } catch (Exception var10) {
+            PatchouliAPI.LOGGER.error("Failed to load book {} defined by mod {}, skipping", res, mod.getId(), var10);
+         }
+      });
+      BookFolderLoader.findBooks();
+      IXplatAbstractions.INSTANCE.signalBooksLoaded();
+   }
+
+   public void loadBook(XplatModContainer mod, ResourceLocation res, InputStream stream, boolean external) {
+      Reader reader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
+      JsonObject tree = (JsonObject)GSON.fromJson(reader, JsonObject.class);
+      this.books.put(res, new Book(tree, mod, res, external));
+   }
+
+   public void reloadContents(Level level) {
+      PatchouliConfig.reloadBuiltinFlags();
+
+      for (Book book : this.books.values()) {
+         book.reloadContents(level, false);
+      }
+
+      ClientBookRegistry.INSTANCE.reloadLocks(false);
+   }
+
+   public static void findFiles(
+      XplatModContainer mod, String base, Predicate<Path> rootFilter, BiFunction<Path, Path, Boolean> processor, boolean visitAllFiles
+   ) {
+      findFiles(mod, base, rootFilter, processor, visitAllFiles, Integer.MAX_VALUE);
+   }
+
+   public static void findFiles(
+      XplatModContainer mod, String base, Predicate<Path> rootFilter, BiFunction<Path, Path, Boolean> processor, boolean visitAllFiles, int maxDepth
+   ) {
+      if (!mod.getId().equals("minecraft")) {
+         try {
+            for (Path root : mod.getRootPaths()) {
+               walk(root.resolve(base), rootFilter, processor, visitAllFiles, maxDepth);
+            }
+         } catch (IOException var8) {
+            throw new UncheckedIOException(var8);
+         }
+      }
+   }
+
+   private static void walk(Path root, Predicate<Path> rootFilter, BiFunction<Path, Path, Boolean> processor, boolean visitAllFiles, int maxDepth) throws IOException {
+      if (root != null && Files.exists(root) && rootFilter.test(root)) {
+         if (processor != null) {
+            try (Stream<Path> stream = Files.walk(root, maxDepth)) {
+               Iterator<Path> itr = stream.iterator();
+
+               while (itr.hasNext()) {
+                  boolean keepGoing = processor.apply(root, itr.next());
+                  if (!visitAllFiles && !keepGoing) {
+                     return;
+                  }
+               }
+            }
+         }
+      }
+   }
+}
+=== src vazkii/patchouli/common/item/ItemModBook
+package vazkii.patchouli.common.item;
+
+import java.util.List;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.item.Item.TooltipContext;
+import net.minecraft.world.level.Level;
+import vazkii.patchouli.api.PatchouliAPI;
+import vazkii.patchouli.client.book.BookEntry;
+import vazkii.patchouli.common.base.PatchouliSounds;
+import vazkii.patchouli.common.book.Book;
+import vazkii.patchouli.common.book.BookRegistry;
+
+public class ItemModBook extends Item {
+   public ItemModBook() {
+      super(new Properties().stacksTo(1));
+   }
+
+   public static float getCompletion(ItemStack stack) {
+      Book book = getBook(stack);
+      float progression = 0.0F;
+      if (book != null) {
+         int totalEntries = 0;
+         int unlockedEntries = 0;
+
+         for (BookEntry entry : book.getContents().entries.values()) {
+            if (!entry.isSecret()) {
+               totalEntries++;
+               if (!entry.isLocked()) {
+                  unlockedEntries++;
+               }
+            }
+         }
+
+         progression = (float)unlockedEntries / Math.max(1.0F, (float)totalEntries);
+      }
+
+      return progression;
+   }
+
+   public static ItemStack forBook(Book book) {
+      return forBook(book.id);
+   }
+
+   public static ItemStack forBook(ResourceLocation book) {
+      ItemStack stack = new ItemStack(PatchouliItems.BOOK);
+      stack.set(PatchouliDataComponents.BOOK, book);
+      return stack;
+   }
+
+   public String getCreatorModId(ItemStack stack) {
+      Book book = getBook(stack);
+      return book != null ? book.owner.getId() : BuiltInRegistries.ITEM.getKey(this).getNamespace();
+   }
+
+   public static Book getBook(ItemStack stack) {
+      ResourceLocation res = getBookId(stack);
+      return res == null ? null : (Book)BookRegistry.INSTANCE.books.get(res);
+   }
+
+   private static ResourceLocation getBookId(ItemStack stack) {
+      return !stack.has(PatchouliDataComponents.BOOK) ? null : (ResourceLocation)stack.get(PatchouliDataComponents.BOOK);
+   }
+
+   public Component getName(ItemStack stack) {
+      Book book = getBook(stack);
+      return (Component)(book != null ? Component.translatable(book.name) : super.getName(stack));
+   }
+
+   public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
+      super.appendHoverText(stack, context, tooltip, flagIn);
+      ResourceLocation rl = getBookId(stack);
+      if (flagIn.isAdvanced()) {
+         tooltip.add(Component.literal("Book ID: " + rl).withStyle(ChatFormatting.GRAY));
+      }
+
+      Book book = getBook(stack);
+      if (book != null && !book.getContents().isErrored()) {
+         tooltip.add(book.getSubtitle().withStyle(ChatFormatting.GRAY));
+      } else if (book == null) {
+         if (rl == null) {
+            tooltip.add(Component.translatable("item.patchouli.guide_book.undefined").withStyle(ChatFormatting.DARK_GRAY));
+         } else {
+            tooltip.add(Component.translatable("item.patchouli.guide_book.invalid", new Object[]{rl}).withStyle(ChatFormatting.DARK_GRAY));
+         }
+      }
+   }
+
+   public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+      ItemStack stack = playerIn.getItemInHand(handIn);
+      Book book = getBook(stack);
+      if (book == null) {
+         return new InteractionResultHolder(InteractionResult.FAIL, stack);
+      } else {
+         if (playerIn instanceof ServerPlayer) {
+            PatchouliAPI.get().openBookGUI((ServerPlayer)playerIn, book.id);
+            SoundEvent sfx = PatchouliSounds.getSound(book.openSound, PatchouliSounds.BOOK_OPEN);
+            playerIn.playSound(sfx, 1.0F, (float)(0.7 + Math.random() * 0.4));
+         }
+
+         return new InteractionResultHolder(InteractionResult.SUCCESS, stack);
+      }
+   }
+}
+/tmp/c/assets/patchouli/:
+icon.png
+lang
+models
+sounds
+sounds.json
+textures
+
+/tmp/c/data/minecraft/:
+tags
+
+/tmp/c/data/patchouli/:
