@@ -233,6 +233,21 @@ LANG = {
     "mythsofworlds.configuration.showNumbers": ("Цифры на полосах", "Numbers on the bars"),
     "mythsofworlds.configuration.showNumbers.tooltip": ("Писать здоровье, сытость и броню числами",
                                                         "Write health, hunger and armour as numbers"),
+    "mythsofworlds.configuration.bossHealth": ("Здоровье боссов (множитель)", "Boss health (multiplier)"),
+    "mythsofworlds.configuration.bossHealth.tooltip": ("Во сколько раз больше здоровья у боссов и полубоссов мифов",
+                                                       "How many times more health the bosses and half-bosses of the myths have"),
+    "mythsofworlds.configuration.bossDamage": ("Урон боссов (множитель)", "Boss damage (multiplier)"),
+    "mythsofworlds.configuration.bossDamage.tooltip": ("Во сколько раз сильнее бьют боссы: удары, огонь и снаряды",
+                                                       "How many times harder the bosses hit: blows, fire and missiles"),
+    "mythsofworlds.configuration.bossShareRange": ("Общая победа над боссом, блоков", "Shared boss victory, blocks"),
+    "mythsofworlds.configuration.bossShareRange.tooltip": ("Победа засчитывается всем игрокам ближе этого расстояния",
+                                                           "Every player closer than this to a fallen boss shares the victory"),
+    "mythsofworlds.configuration.heimdallRange": ("Зоркость шлема Хеймдалля, блоков", "Sight of Heimdall's helmet, blocks"),
+    "mythsofworlds.configuration.heimdallRange.tooltip": ("Существа ближе этого расстояния светятся сквозь стены",
+                                                          "Creatures closer than this glow through the walls"),
+    "mythsofworlds.configuration.journalSightRange": ("Дальность записи в Кодекс, блоков", "Codex sight range, blocks"),
+    "mythsofworlds.configuration.journalSightRange.tooltip": ("Существо попадает в Кодекс, когда вы видите его ближе этого",
+                                                              "A creature enters the Codex once you see it this close"),
 }
 
 

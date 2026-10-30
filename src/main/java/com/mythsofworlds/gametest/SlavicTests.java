@@ -8,9 +8,13 @@ import com.mythsofworlds.mythology.slavic.SlavicEntities;
 import com.mythsofworlds.mythology.slavic.block.WorldTree;
 import com.mythsofworlds.mythology.slavic.block.WorldTreeHollowBlock;
 import com.mythsofworlds.mythology.slavic.entity.Firebird;
+import com.mythsofworlds.mythology.slavic.entity.Kikimora;
 import com.mythsofworlds.mythology.slavic.entity.Koschei;
+import com.mythsofworlds.mythology.slavic.entity.Leshy;
+import com.mythsofworlds.mythology.slavic.entity.Rusalka;
 import com.mythsofworlds.mythology.slavic.entity.SlavicMerchant;
 import com.mythsofworlds.mythology.slavic.entity.Upyr;
+import com.mythsofworlds.mythology.slavic.entity.ZmeyGorynych;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,16 +34,20 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.SmallFireball;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.FeatureSorter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
@@ -220,6 +228,73 @@ public class SlavicTests {
                         "unknown structure " + entry.structure().get());
             }
         }
+        helper.succeed();
+    }
+
+    /** Zmey Gorynych does not burn, and each of his three heads breathes its own stream of fire. */
+    @GameTest(template = "empty")
+    public static void zmeyBreathesThreeFlamesAndDoesNotBurn(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        ZmeyGorynych zmey = helper.spawn(SlavicEntities.ZMEY_GORYNYCH.get(), new BlockPos(1, 2, 1));
+        helper.assertTrue(!zmey.hurt(level.damageSources().inFire(), 10.0F), "fire should not hurt the Zmey");
+        helper.assertTrue(zmey.getHealth() == zmey.getMaxHealth(), "the Zmey lost health in the fire");
+        Pig target = helper.spawn(EntityType.PIG, new BlockPos(1, 2, 4));
+        zmey.breathe(level, target);
+        var flames = level.getEntitiesOfClass(SmallFireball.class, zmey.getBoundingBox().inflate(4.0));
+        helper.assertTrue(flames.size() == ZmeyGorynych.HEADS, "one stream per head, got " + flames.size());
+        flames.forEach(SmallFireball::discard);
+        target.discard();
+        zmey.discard();
+        helper.succeed();
+    }
+
+    /** The blow of the leshy blinds and confuses whoever he strikes. */
+    @GameTest(template = "empty")
+    public static void leshyLeadsAstray(GameTestHelper helper) {
+        Leshy leshy = helper.spawn(SlavicEntities.LESHY.get(), new BlockPos(1, 2, 1));
+        Pig pig = helper.spawn(EntityType.PIG, new BlockPos(2, 2, 2));
+        leshy.leadAstray(pig);
+        helper.assertTrue(pig.hasEffect(MobEffects.BLINDNESS) && pig.hasEffect(MobEffects.CONFUSION), "the leshy should blind his victim");
+        pig.discard();
+        leshy.discard();
+        helper.succeed();
+    }
+
+    /** The upyr drinks: every bite heals it. */
+    @GameTest(template = "empty")
+    public static void upyrBiteHeals(GameTestHelper helper) {
+        Upyr upyr = helper.spawn(SlavicEntities.UPYR.get(), new BlockPos(1, 2, 1));
+        Pig pig = helper.spawn(EntityType.PIG, new BlockPos(2, 2, 1));
+        upyr.setHealth(10.0F);
+        helper.assertTrue(upyr.doHurtTarget(pig), "the upyr should bite the pig");
+        helper.assertTrue(upyr.getHealth() > 10.0F, "the bite should heal the upyr, health " + upyr.getHealth());
+        pig.discard();
+        upyr.discard();
+        helper.succeed();
+    }
+
+    /** The kikimora's grip drags into the mud: slowness and hunger. */
+    @GameTest(template = "empty")
+    public static void kikimoraGripSlows(GameTestHelper helper) {
+        Kikimora kikimora = helper.spawn(SlavicEntities.KIKIMORA.get(), new BlockPos(1, 2, 1));
+        Pig pig = helper.spawn(EntityType.PIG, new BlockPos(2, 2, 1));
+        helper.assertTrue(kikimora.doHurtTarget(pig), "the kikimora should grab the pig");
+        helper.assertTrue(pig.hasEffect(MobEffects.MOVEMENT_SLOWDOWN) && pig.hasEffect(MobEffects.HUNGER), "her grip should slow");
+        pig.discard();
+        kikimora.discard();
+        helper.succeed();
+    }
+
+    /** The song of the rusalka draws the listener a step towards her. */
+    @GameTest(template = "empty")
+    public static void rusalkaSongDrawsCloser(GameTestHelper helper) {
+        Rusalka rusalka = helper.spawn(SlavicEntities.RUSALKA.get(), new BlockPos(1, 2, 1));
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        player.setPos(rusalka.getX(), rusalka.getY(), rusalka.getZ() + 5.0);
+        player.setDeltaMovement(Vec3.ZERO);
+        rusalka.sing(helper.getLevel(), player);
+        helper.assertTrue(player.getDeltaMovement().z < 0.0, "the song should pull towards her, got " + player.getDeltaMovement());
+        rusalka.discard();
         helper.succeed();
     }
 }

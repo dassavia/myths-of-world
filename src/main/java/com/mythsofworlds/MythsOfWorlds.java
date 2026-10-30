@@ -3,6 +3,7 @@ package com.mythsofworlds;
 import com.mythsofworlds.codex.CodexContent;
 import com.mythsofworlds.core.ClientConfig;
 import com.mythsofworlds.core.PlayerData;
+import com.mythsofworlds.core.ServerConfig;
 import com.mythsofworlds.core.back.BackSlot;
 import com.mythsofworlds.mythology.egyptian.EgyptianContent;
 import com.mythsofworlds.mythology.greek.GreekContent;
@@ -31,6 +32,7 @@ public final class MythsOfWorlds {
 
     public MythsOfWorlds(IEventBus modBus, ModContainer container) {
         container.registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
+        container.registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);
         // One line per mythology (see mythology/Mythology.java for the list).
         PlayerData.init();
         BackSlot.init();

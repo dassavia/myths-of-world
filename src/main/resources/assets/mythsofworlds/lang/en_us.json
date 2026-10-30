@@ -833,5 +833,15 @@
   "hud.mythsofworlds.world.hawaiki": "Hawaiki",
   "hud.mythsofworlds.world.duat": "Duat",
   "hud.mythsofworlds.world.svarga": "Svarga",
-  "book.mythsofworlds.codex.landing": "Everything you have learned of the world of myths is written here. Meet creatures, defeat monsters and find places, and the pages open by themselves.$(br2)The chapters of the worlds open as you walk the hero's path. In creative mode everything is open."
+  "book.mythsofworlds.codex.landing": "Everything you have learned of the world of myths is written here. Meet creatures, defeat monsters and find places, and the pages open by themselves.$(br2)The chapters of the worlds open as you walk the hero's path. In creative mode everything is open.",
+  "mythsofworlds.configuration.bossHealth": "Boss health (multiplier)",
+  "mythsofworlds.configuration.bossHealth.tooltip": "How many times more health the bosses and half-bosses of the myths have",
+  "mythsofworlds.configuration.bossDamage": "Boss damage (multiplier)",
+  "mythsofworlds.configuration.bossDamage.tooltip": "How many times harder the bosses hit: blows, fire and missiles",
+  "mythsofworlds.configuration.bossShareRange": "Shared boss victory, blocks",
+  "mythsofworlds.configuration.bossShareRange.tooltip": "Every player closer than this to a fallen boss shares the victory",
+  "mythsofworlds.configuration.heimdallRange": "Sight of Heimdall's helmet, blocks",
+  "mythsofworlds.configuration.heimdallRange.tooltip": "Creatures closer than this glow through the walls",
+  "mythsofworlds.configuration.journalSightRange": "Codex sight range, blocks",
+  "mythsofworlds.configuration.journalSightRange.tooltip": "A creature enters the Codex once you see it this close"
 }

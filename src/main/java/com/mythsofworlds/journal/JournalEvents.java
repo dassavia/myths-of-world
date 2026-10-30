@@ -3,11 +3,13 @@ package com.mythsofworlds.journal;
 import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.codex.CodexBook;
 import com.mythsofworlds.core.PlayerData;
+import com.mythsofworlds.core.ServerConfig;
 import com.mythsofworlds.mythology.greek.GreekContent;
 import com.mythsofworlds.mythology.norse.NorseContent;
 import com.mythsofworlds.mythology.slavic.SlavicContent;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -18,6 +20,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.structure.Structure;
@@ -34,7 +37,6 @@ public final class JournalEvents {
             GreekContent.HELLAS, new Volume("greek"),
             NorseContent.JOTUNHEIM, new Volume("norse"),
             SlavicContent.NAV, new Volume("slavic"));
-    private static final double SIGHT_RANGE = 20.0;
 
     private record Volume(String id) {
     }
@@ -64,27 +66,41 @@ public final class JournalEvents {
         if (volume == null) {
             return;
         }
-        List<Journal.Entry> entries = Journal.volume(volume.id());
+        // One look around per check, however many entries are still closed: the structures the player stands in,
+        // and the kinds of creatures in sight.
+        var here = level.structureManager().getAllStructuresAt(player.blockPosition());
+        double sight = ServerConfig.get(ServerConfig.JOURNAL_SIGHT_RANGE);
+        Set<EntityType<?>> nearby = new HashSet<>();
+        for (Entity entity : level.getEntities(player, player.getBoundingBox().inflate(sight), e -> e.distanceToSqr(player) < sight * sight)) {
+            nearby.add(entity.getType());
+        }
+        Set<EntityType<?>> seen = new HashSet<>();
         var structures = level.registryAccess().registryOrThrow(Registries.STRUCTURE);
-        for (Journal.Entry entry : entries) {
+        for (Journal.Entry entry : Journal.volume(volume.id())) {
             if (PlayerData.hasEntry(player, entry.id())) {
                 continue;
             }
-            if (entry.structure().isPresent()) {
+            if (entry.structure().isPresent() && !here.isEmpty()) {
                 Structure structure = structures.get(entry.structure().get());
-                if (structure != null && level.structureManager().getStructureWithPieceAt(player.blockPosition(), structure).isValid()) {
+                if (structure != null && here.containsKey(structure)
+                        && level.structureManager().getStructureWithPieceAt(player.blockPosition(), structure).isValid()) {
                     unlock(player, entry);
                 }
             }
             if (entry.entity().isPresent()) {
-                var type = BuiltInRegistries.ENTITY_TYPE.get(entry.entity().get());
-                List<Entity> seen = level.getEntities(player, player.getBoundingBox().inflate(SIGHT_RANGE),
-                        e -> e.getType() == type && player.hasLineOfSight(e));
-                if (!seen.isEmpty()) {
+                EntityType<?> type = BuiltInRegistries.ENTITY_TYPE.get(entry.entity().get());
+                if (nearby.contains(type) && (seen.contains(type) || inSight(level, player, type, sight))) {
+                    seen.add(type);
                     unlock(player, entry);
                 }
             }
         }
+    }
+
+    /** Whether the player has a creature of this kind in sight. */
+    private static boolean inSight(ServerLevel level, ServerPlayer player, EntityType<?> type, double sight) {
+        return !level.getEntities(player, player.getBoundingBox().inflate(sight),
+                e -> e.getType() == type && player.hasLineOfSight(e)).isEmpty();
     }
 
     @SubscribeEvent

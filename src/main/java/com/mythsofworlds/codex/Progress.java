@@ -2,6 +2,7 @@ package com.mythsofworlds.codex;
 
 import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.core.PlayerData;
+import com.mythsofworlds.core.ServerConfig;
 import com.mythsofworlds.mythology.greek.GreekContent;
 import com.mythsofworlds.mythology.norse.NorseContent;
 import com.mythsofworlds.mythology.slavic.SlavicContent;
@@ -36,7 +37,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
  * Bifrost needs a fang of Cerberus and a scale of Zmey Gorynych, so Jotunheim, the hardest world, opens once both
  * are slain. Surtr, the last boss of Jotunheim, ends the path and opens the chapter of the far worlds.
  * <p>
- * A boss counts for every player within {@link #SHARE_RANGE} blocks, so friends who fight together on a server
+ * A boss counts for every player within {@link #shareRange()} blocks, so friends who fight together on a server
  * all go on.
  */
 @EventBusSubscriber(modid = MythsOfWorlds.MODID)
@@ -46,8 +47,10 @@ public final class Progress {
             "solovei", "zmey_gorynych", "koschei", "draugr_chieftain", "garm", "heimdall", "thrym", "fenrir", "surtr");
     public static final Map<ResourceKey<Level>, String> WORLDS = Map.of(
             GreekContent.HELLAS, "hellas", NorseContent.JOTUNHEIM, "jotunheim", SlavicContent.NAV, "nav");
-    /** Players this close to a boss when it falls share the victory. */
-    public static final double SHARE_RANGE = 64.0;
+    /** Players this close to a boss when it falls share the victory (blocks; {@code bossShareRange} in the server config). */
+    public static double shareRange() {
+        return ServerConfig.get(ServerConfig.BOSS_SHARE_RANGE);
+    }
 
     private Progress() {
     }
@@ -66,8 +69,9 @@ public final class Progress {
     /** Gives the milestone to every player around {@code source}. */
     public static void awardAround(Entity source, String milestone) {
         if (source.level() instanceof ServerLevel level) {
+            double range = shareRange();
             for (ServerPlayer player : level.players()) {
-                if (player.distanceToSqr(source) < SHARE_RANGE * SHARE_RANGE && !player.isSpectator()) {
+                if (player.distanceToSqr(source) < range * range && !player.isSpectator()) {
                     award(player, milestone);
                 }
             }

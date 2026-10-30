@@ -1,5 +1,6 @@
 package com.mythsofworlds.mythology.relic;
 
+import com.mythsofworlds.core.ServerConfig;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Mob;
@@ -27,18 +28,27 @@ public final class Relics {
         }
     }
 
-    /** How far the helmet of Heimdall sees, in blocks. */
-    public static final double HEIMDALL_RANGE = 100.0;
+    /** How often the helmet of Heimdall looks around, in ticks; the glow lasts a little longer so that it never flickers. */
+    public static final int HEIMDALL_PERIOD = 40;
+
+    /** How far the helmet of Heimdall sees, in blocks ({@code heimdallRange} in the server config, 100 by default). */
+    public static double heimdallRange() {
+        return ServerConfig.get(ServerConfig.HEIMDALL_RANGE);
+    }
 
     /** Helmet set with the eye of Heimdall, who sees a hundred leagues by night and day: night vision, and every
-     *  creature within {@value #HEIMDALL_RANGE} blocks glows through the walls. */
-
+     *  creature within {@link #heimdallRange()} blocks glows through the walls. A creature that still glows (another
+     *  wearer saw it a moment ago) is skipped, so that crowded servers do not resend the effect over and over. */
     public static void heimdall(Player player) {
-        if (player.tickCount % 20 == 0) {
+        if (player.tickCount % HEIMDALL_PERIOD == 0) {
             RelicArmorItem.keep(player, MobEffects.NIGHT_VISION, 0);
-            for (Mob mob : player.level().getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(HEIMDALL_RANGE),
-                    mob -> mob.isAlive() && mob.distanceToSqr(player) < HEIMDALL_RANGE * HEIMDALL_RANGE)) {
-                mob.addEffect(new MobEffectInstance(MobEffects.GLOWING, 40, 0, true, false));
+            double range = heimdallRange();
+            for (Mob mob : player.level().getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(range),
+                    mob -> mob.isAlive() && mob.distanceToSqr(player) < range * range)) {
+                MobEffectInstance glow = mob.getEffect(MobEffects.GLOWING);
+                if (glow == null || glow.getDuration() < HEIMDALL_PERIOD / 2) {
+                    mob.addEffect(new MobEffectInstance(MobEffects.GLOWING, HEIMDALL_PERIOD + 20, 0, true, false));
+                }
             }
         }
     }

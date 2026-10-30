@@ -833,5 +833,15 @@
   "hud.mythsofworlds.world.hawaiki": "Гаваики",
   "hud.mythsofworlds.world.duat": "Дуат",
   "hud.mythsofworlds.world.svarga": "Сварга",
-  "book.mythsofworlds.codex.landing": "Здесь записано всё, что вы узнали о мире мифов. Встречайте существ, побеждайте чудовищ и находите места, и страницы откроются сами.$(br2)Главы миров открываются по мере прохождения пути героя. В творческом режиме открыто всё."
+  "book.mythsofworlds.codex.landing": "Здесь записано всё, что вы узнали о мире мифов. Встречайте существ, побеждайте чудовищ и находите места, и страницы откроются сами.$(br2)Главы миров открываются по мере прохождения пути героя. В творческом режиме открыто всё.",
+  "mythsofworlds.configuration.bossHealth": "Здоровье боссов (множитель)",
+  "mythsofworlds.configuration.bossHealth.tooltip": "Во сколько раз больше здоровья у боссов и полубоссов мифов",
+  "mythsofworlds.configuration.bossDamage": "Урон боссов (множитель)",
+  "mythsofworlds.configuration.bossDamage.tooltip": "Во сколько раз сильнее бьют боссы: удары, огонь и снаряды",
+  "mythsofworlds.configuration.bossShareRange": "Общая победа над боссом, блоков",
+  "mythsofworlds.configuration.bossShareRange.tooltip": "Победа засчитывается всем игрокам ближе этого расстояния",
+  "mythsofworlds.configuration.heimdallRange": "Зоркость шлема Хеймдалля, блоков",
+  "mythsofworlds.configuration.heimdallRange.tooltip": "Существа ближе этого расстояния светятся сквозь стены",
+  "mythsofworlds.configuration.journalSightRange": "Дальность записи в Кодекс, блоков",
+  "mythsofworlds.configuration.journalSightRange.tooltip": "Существо попадает в Кодекс, когда вы видите его ближе этого"
 }
