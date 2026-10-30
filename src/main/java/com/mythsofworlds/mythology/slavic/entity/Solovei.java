@@ -1,5 +1,6 @@
 package com.mythsofworlds.mythology.slavic.entity;
 
+import com.mythsofworlds.mythology.slavic.SlavicSounds;
 import com.mythsofworlds.core.entity.MythBoss;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -93,7 +94,7 @@ public class Solovei extends MythBoss {
     /** The robber's whistle: everyone around is hurt, thrown back and dazed. */
     public void whistle(ServerLevel server) {
         playSpecial();
-        server.playSound(null, blockPosition(), SoundEvents.WARDEN_SONIC_BOOM, getSoundSource(), 3.0F, 1.6F);
+        server.playSound(null, blockPosition(), SlavicSounds.SOLOVEI_WHISTLE.get(), getSoundSource(), 4.0F, 1.0F);
         server.sendParticles(ParticleTypes.SONIC_BOOM, getX(), getY(0.8), getZ(), 1, 0.0, 0.0, 0.0, 0.0);
         server.sendParticles(ParticleTypes.CLOUD, getX(), getY(0.8), getZ(), 40, 3.0, 1.0, 3.0, 0.2);
         for (Player player : server.getEntitiesOfClass(Player.class, getBoundingBox().inflate(WHISTLE_RADIUS),

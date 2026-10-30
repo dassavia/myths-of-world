@@ -1,5 +1,6 @@
 package com.mythsofworlds.mythology.norse.entity;
 
+import com.mythsofworlds.mythology.norse.NorseSounds;
 import com.mythsofworlds.core.entity.MythBoss;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -69,7 +70,7 @@ public class Garm extends MythBoss {
             player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 80, 1), this);
         }
         server.sendParticles(ParticleTypes.SCULK_SOUL, getX(), getY() + 1.5, getZ(), 20, 1.0, 0.6, 1.0, 0.02);
-        playSound(SoundEvents.WOLF_HOWL, 4.0F, 0.4F);
+        playSound(NorseSounds.GARM_HOWL.get(), 4.0F, 1.0F);
         playSpecial();
     }
 

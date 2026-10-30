@@ -1,5 +1,6 @@
 package com.mythsofworlds.mythology.slavic.entity;
 
+import com.mythsofworlds.mythology.slavic.SlavicSounds;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -80,7 +81,7 @@ public class Rusalka extends Monster {
             player.hurtMarked = true;
         }
         server.sendParticles(ParticleTypes.NOTE, getX(), getY(1.1), getZ(), 3, 0.3, 0.2, 0.3, 1.0);
-        playSound(SoundEvents.ALLAY_AMBIENT_WITHOUT_ITEM, 1.2F, 0.7F);
+        playSound(SlavicSounds.RUSALKA_SONG.get(), 1.2F, 1.0F);
     }
 
     @Override

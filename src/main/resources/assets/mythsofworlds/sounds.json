@@ -378,5 +378,140 @@
         "stream": true
       }
     ]
+  },
+  "entity.solovei.whistle": {
+    "subtitle": "subtitles.mythsofworlds.entity.solovei.whistle",
+    "sounds": [
+      "mythsofworlds:solovei/whistle1",
+      "mythsofworlds:solovei/whistle2"
+    ]
+  },
+  "entity.zmey_gorynych.roar": {
+    "subtitle": "subtitles.mythsofworlds.entity.zmey_gorynych.roar",
+    "sounds": [
+      "mythsofworlds:zmey/roar1",
+      "mythsofworlds:zmey/roar2",
+      {
+        "name": "minecraft:entity.ender_dragon.growl",
+        "type": "event",
+        "pitch": 0.8
+      }
+    ]
+  },
+  "entity.zmey_gorynych.breath": {
+    "subtitle": "subtitles.mythsofworlds.entity.zmey_gorynych.breath",
+    "sounds": [
+      "mythsofworlds:zmey/breath"
+    ]
+  },
+  "entity.koschei.laugh": {
+    "subtitle": "subtitles.mythsofworlds.entity.koschei.laugh",
+    "sounds": [
+      "mythsofworlds:koschei/laugh1",
+      "mythsofworlds:koschei/laugh2"
+    ]
+  },
+  "entity.koschei.summon": {
+    "subtitle": "subtitles.mythsofworlds.entity.koschei.summon",
+    "sounds": [
+      "mythsofworlds:koschei/summon"
+    ]
+  },
+  "entity.rusalka.song": {
+    "subtitle": "subtitles.mythsofworlds.entity.rusalka.song",
+    "sounds": [
+      "mythsofworlds:rusalka/song1",
+      "mythsofworlds:rusalka/song2"
+    ]
+  },
+  "entity.leshy.ambient": {
+    "subtitle": "subtitles.mythsofworlds.entity.leshy.ambient",
+    "sounds": [
+      "mythsofworlds:leshy/creak1",
+      "mythsofworlds:leshy/creak2"
+    ]
+  },
+  "music.nav.forest": {
+    "sounds": [
+      {
+        "name": "mythsofworlds:music/nav_forest",
+        "stream": true
+      }
+    ]
+  },
+  "music.nav.dark": {
+    "sounds": [
+      {
+        "name": "mythsofworlds:music/nav_dark",
+        "stream": true
+      }
+    ]
+  },
+  "entity.heimdall.gjallarhorn": {
+    "subtitle": "subtitles.mythsofworlds.entity.heimdall.gjallarhorn",
+    "sounds": [
+      "mythsofworlds:heimdall/gjallarhorn"
+    ]
+  },
+  "entity.thrym.stomp": {
+    "subtitle": "subtitles.mythsofworlds.entity.thrym.stomp",
+    "sounds": [
+      "mythsofworlds:thrym/stomp1",
+      "mythsofworlds:thrym/stomp2"
+    ]
+  },
+  "entity.surtr.flames": {
+    "subtitle": "subtitles.mythsofworlds.entity.surtr.flames",
+    "sounds": [
+      "mythsofworlds:surtr/flames"
+    ]
+  },
+  "entity.draugr_chieftain.call": {
+    "subtitle": "subtitles.mythsofworlds.entity.draugr_chieftain.call",
+    "sounds": [
+      "mythsofworlds:draugr/call"
+    ]
+  },
+  "entity.fenrir.howl": {
+    "subtitle": "subtitles.mythsofworlds.entity.fenrir.howl",
+    "sounds": [
+      "mythsofworlds:fenrir/howl",
+      {
+        "name": "minecraft:entity.wolf.howl",
+        "type": "event",
+        "pitch": 0.45
+      }
+    ]
+  },
+  "entity.garm.howl": {
+    "subtitle": "subtitles.mythsofworlds.entity.garm.howl",
+    "sounds": [
+      {
+        "name": "minecraft:entity.wolf.howl",
+        "type": "event",
+        "pitch": 0.4
+      },
+      {
+        "name": "minecraft:entity.wolf.growl",
+        "type": "event",
+        "pitch": 0.5
+      }
+    ]
+  },
+  "music.jotunheim.north": {
+    "sounds": [
+      {
+        "name": "mythsofworlds:music/jotunheim_north",
+        "stream": true
+      }
+    ]
+  },
+  "music.jotunheim.niflheim": {
+    "sounds": [
+      {
+        "name": "mythsofworlds:music/jotunheim_niflheim",
+        "stream": true
+      }
+    ]
   }
 }

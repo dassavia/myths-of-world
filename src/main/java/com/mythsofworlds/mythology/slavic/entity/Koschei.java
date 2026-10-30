@@ -1,5 +1,6 @@
 package com.mythsofworlds.mythology.slavic.entity;
 
+import com.mythsofworlds.mythology.slavic.SlavicSounds;
 import com.mythsofworlds.core.entity.MythBoss;
 import com.mythsofworlds.mythology.slavic.SlavicContent;
 import com.mythsofworlds.mythology.slavic.SlavicEntities;
@@ -168,13 +169,13 @@ public class Koschei extends MythBoss {
             server.addFreshEntity(upyr);
             server.sendParticles(ParticleTypes.SOUL, upyr.getX(), upyr.getY(), upyr.getZ(), 15, 0.4, 0.2, 0.4, 0.02);
         }
-        playSound(SoundEvents.EVOKER_PREPARE_SUMMON, 1.5F, 0.8F);
+        playSound(SlavicSounds.KOSCHEI_SUMMON.get(), 1.5F, 1.0F);
         playSpecial();
     }
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.WITHER_SKELETON_AMBIENT;
+        return SlavicSounds.KOSCHEI_LAUGH.get();
     }
 
     @Override

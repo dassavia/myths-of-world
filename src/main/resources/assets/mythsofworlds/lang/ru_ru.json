@@ -846,5 +846,18 @@
   "mythsofworlds.configuration.journalSightRange.tooltip": "Существо попадает в Кодекс, когда вы видите его ближе этого",
   "boss.mythsofworlds.bar": "%s · %s",
   "boss.mythsofworlds.bar.enraged": "%s · %s · в ярости",
-  "boss.mythsofworlds.enraged": "%s приходит в ярость!"
+  "boss.mythsofworlds.enraged": "%s приходит в ярость!",
+  "subtitles.mythsofworlds.entity.solovei.whistle": "Соловей-разбойник свистит",
+  "subtitles.mythsofworlds.entity.zmey_gorynych.roar": "Змей Горыныч ревёт",
+  "subtitles.mythsofworlds.entity.zmey_gorynych.breath": "Змей Горыныч дышит огнём",
+  "subtitles.mythsofworlds.entity.koschei.laugh": "Кощей смеётся",
+  "subtitles.mythsofworlds.entity.koschei.summon": "Кощей поднимает мёртвых",
+  "subtitles.mythsofworlds.entity.rusalka.song": "Русалка поёт",
+  "subtitles.mythsofworlds.entity.leshy.ambient": "Леший скрипит",
+  "subtitles.mythsofworlds.entity.heimdall.gjallarhorn": "Хеймдалль трубит в Гьяллархорн",
+  "subtitles.mythsofworlds.entity.thrym.stomp": "Трим топает",
+  "subtitles.mythsofworlds.entity.surtr.flames": "Пламя Сурта",
+  "subtitles.mythsofworlds.entity.draugr_chieftain.call": "Вождь драугров зовёт мёртвых",
+  "subtitles.mythsofworlds.entity.fenrir.howl": "Фенрир воет",
+  "subtitles.mythsofworlds.entity.garm.howl": "Гарм воет"
 }

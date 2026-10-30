@@ -1,5 +1,6 @@
 package com.mythsofworlds.mythology.norse.entity;
 
+import com.mythsofworlds.mythology.norse.NorseSounds;
 import com.mythsofworlds.core.entity.MythBoss;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -105,7 +106,7 @@ public class Heimdall extends MythBoss {
     /** The Gjallarhorn: everyone within {@link #HORN_RADIUS} blocks is thrown back, slowed and stunned. */
     public void blowHorn(ServerLevel server) {
         playSpecial();
-        server.playSound(null, blockPosition(), SoundEvents.RAID_HORN.value(), getSoundSource(), 4.0F, 1.0F);
+        server.playSound(null, blockPosition(), NorseSounds.GJALLARHORN.get(), getSoundSource(), 4.0F, 1.0F);
         server.sendParticles(ParticleTypes.SONIC_BOOM, getX(), getY(0.6), getZ(), 1, 0.0, 0.0, 0.0, 0.0);
         for (Player player : server.getEntitiesOfClass(Player.class, getBoundingBox().inflate(HORN_RADIUS),
                 p -> p.isAlive() && !p.isSpectator() && !p.isCreative())) {

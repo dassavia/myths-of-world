@@ -90,13 +90,18 @@ def music(name):
     return (f"minecraft:music.{name}", 12000, 24000)
 
 
+# Music of Jotunheim (tools/sounds_nav_jotunheim.py): drum, kantele and horns in the North, cold drones in Niflheim.
+NORTH_MUSIC = (f"{NS}:music.jotunheim.north", 6000, 18000)
+NIFLHEIM_MUSIC = (f"{NS}:music.jotunheim.niflheim", 6000, 18000)
+
+
 BIOMES = {
     "frost_wastes": {
         "ru": "Ледяные пустоши", "en": "Frost Wastes",
         "point": {"c": 0.4, "t": -0.8, "h": -0.3},
         "temperature": -0.8, "downfall": 0.5,
         "sky": 0x8FA8C7, "fog": 0xB8C8D8, "water": 0x3D5CD6, "water_fog": 0x050533, "grass": 0x80B497, "foliage": 0x60A17B,
-        "particle": ("minecraft:snowflake", 0.015), "music": music("overworld.snowy_slopes"),
+        "particle": ("minecraft:snowflake", 0.015), "music": NORTH_MUSIC,
         "features": COMMON + ["minecraft:ice_spike", "minecraft:ice_patch", f"{NS}:menhir", "minecraft:forest_rock"],
         "spawners": {
             "monster": [spawn(f"{NS}:frost_giant", 25, 1, 1), spawn(f"{NS}:draugr", 40, 1, 3), spawn("minecraft:stray", 60, 1, 3),
@@ -109,7 +114,7 @@ BIOMES = {
         "point": {"c": 0.4, "t": -0.3, "h": 0.3},
         "temperature": -0.3, "downfall": 0.8,
         "sky": 0x7FA1C4, "fog": 0xA9BCCB, "water": 0x3D57D6, "water_fog": 0x050533, "grass": 0x86B783, "foliage": 0x68A464,
-        "music": music("overworld.old_growth_taiga"),
+        "music": NORTH_MUSIC,
         "features": COMMON + ["minecraft:forest_rock", f"{NS}:menhir", "minecraft:trees_old_growth_spruce_taiga",
                               "minecraft:patch_large_fern", "minecraft:patch_grass_taiga", "minecraft:patch_berry_common",
                               "minecraft:brown_mushroom_taiga", "minecraft:red_mushroom_taiga"],
@@ -139,7 +144,7 @@ BIOMES = {
         "point": {"c": -0.05, "t": -0.3, "e": 0.3},
         "temperature": 0.1, "downfall": 0.8,
         "sky": 0x7BA7D8, "fog": 0xC0D0E0, "water": 0x2E6B8A, "water_fog": 0x072A3A, "grass": 0x79A36A, "foliage": 0x5E8A52,
-        "music": music("overworld.stony_peaks"),
+        "music": NORTH_MUSIC,
         "features": COMMON + g.DISKS + [f"{NS}:menhir", f"{NS}:fjord_spruce", "minecraft:patch_grass_taiga"],
         "spawners": {
             "monster": [spawn(f"{NS}:draugr", 60, 1, 3), spawn("minecraft:skeleton", 40, 1, 3), spawn("minecraft:zombie", 40, 1, 3),
@@ -179,7 +184,7 @@ BIOMES = {
         "point": {"c": 0.5, "t": -0.9, "h": 0.6, "w": 0.6},
         "temperature": -1.0, "downfall": 0.9,
         "sky": 0x4A5A6A, "fog": 0x9AA8B4, "water": 0x2A3A4A, "water_fog": 0x0A1420, "grass": 0x6A7A7A, "foliage": 0x5A6A6A,
-        "particle": ("minecraft:white_ash", 0.02), "music": music("overworld.deep_dark"),
+        "particle": ("minecraft:white_ash", 0.02), "music": NIFLHEIM_MUSIC,
         "additions": ("minecraft:ambient.soul_sand_valley.additions", 0.0111),
         "features": COMMON + ["minecraft:ice_patch", f"{NS}:menhir", f"{NS}:niflheim_frost", f"{NS}:frozen_trunk"],
         "spawners": {
@@ -446,14 +451,20 @@ def loot():
     mob("raven", [(f"{NS}:raven_feather", 0, 2, None)])
     mob("norse_merchant", [])
     mob("valkyrie", [])
-    mob("draugr_chieftain", [(f"{NS}:barrow_crown", 1, 1, None), ("minecraft:gold_ingot", 3, 8, None), ("minecraft:emerald", 2, 6, None)])
-    mob("garm", [(f"{NS}:garm_fang", 1, 1, None), ("minecraft:bone", 3, 8, None), ("minecraft:diamond", 1, 2, None)])
+    # Jotunheim is the last and hardest world: its bosses pay more than those of Nav (diamonds 2-4 at the least) and
+    # in dark iron, the metal of the third tier; Surtr, the end of the path, most of all.
+    mob("draugr_chieftain", [(f"{NS}:barrow_crown", 1, 1, None), ("minecraft:gold_ingot", 3, 8, None), ("minecraft:emerald", 2, 6, None),
+                             ("minecraft:diamond", 1, 3, None), (f"{NS}:dark_iron_ingot", 1, 2, None)])
+    mob("garm", [(f"{NS}:garm_fang", 1, 1, None), ("minecraft:bone", 3, 8, None), ("minecraft:diamond", 2, 4, None),
+                 (f"{NS}:dark_iron_ingot", 1, 3, None)])
     mob("thrym", [(f"{NS}:mjolnir", 1, 1, None), (f"{NS}:frost_heart", 2, 4, None), ("minecraft:diamond", 2, 4, None),
-                  ("minecraft:gold_ingot", 4, 10, None)])
-    mob("heimdall", [(f"{NS}:heimdall_eye", 1, 1, None), ("minecraft:gold_ingot", 4, 10, None), ("minecraft:diamond", 1, 3, None)])
-    mob("fenrir", [(f"{NS}:fenrir_fang", 1, 2, None), ("minecraft:leather", 4, 8, None), ("minecraft:diamond", 2, 4, None)])
-    mob("surtr", [(f"{NS}:surtr_sword", 1, 1, None), (f"{NS}:muspel_ember", 2, 4, None), ("minecraft:netherite_scrap", 1, 2, None),
-                  ("minecraft:diamond", 2, 4, None)])
+                  ("minecraft:gold_ingot", 4, 10, None), (f"{NS}:dark_iron_ingot", 2, 4, None)])
+    mob("heimdall", [(f"{NS}:heimdall_eye", 1, 1, None), ("minecraft:gold_ingot", 4, 10, None), ("minecraft:diamond", 2, 4, None),
+                     (f"{NS}:dark_iron_ingot", 1, 3, None)])
+    mob("fenrir", [(f"{NS}:fenrir_fang", 1, 2, None), ("minecraft:leather", 4, 8, None), ("minecraft:diamond", 2, 5, None),
+                   (f"{NS}:dark_iron_ingot", 2, 4, None)])
+    mob("surtr", [(f"{NS}:surtr_sword", 1, 1, None), (f"{NS}:muspel_ember", 2, 4, None), ("minecraft:netherite_scrap", 2, 4, None),
+                  ("minecraft:diamond", 3, 6, None), (f"{NS}:dark_iron_ingot", 3, 6, None)])
 
 
 # ====================================================================== recipes and tags

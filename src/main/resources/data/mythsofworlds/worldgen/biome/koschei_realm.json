@@ -22,9 +22,9 @@
       "probability": 0.004
     },
     "music": {
-      "sound": "minecraft:music.overworld.deep_dark",
-      "min_delay": 12000,
-      "max_delay": 24000,
+      "sound": "mythsofworlds:music.nav.dark",
+      "min_delay": 6000,
+      "max_delay": 18000,
       "replace_current_music": false
     },
     "additions_sound": {

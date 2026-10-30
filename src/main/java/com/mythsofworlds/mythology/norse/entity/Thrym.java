@@ -1,5 +1,6 @@
 package com.mythsofworlds.mythology.norse.entity;
 
+import com.mythsofworlds.mythology.norse.NorseSounds;
 import com.mythsofworlds.core.entity.MythBoss;
 import com.mythsofworlds.mythology.norse.NorseEntities;
 import com.mythsofworlds.mythology.norse.item.MjolnirItem;
@@ -126,7 +127,7 @@ public class Thrym extends MythBoss {
             FrostGiant.chill(victim, this, 2);
         }
         server.sendParticles(ParticleTypes.EXPLOSION, getX(), getY() + 0.2, getZ(), 8, 2.0, 0.2, 2.0, 0.0);
-        playSound(SoundEvents.GLASS_BREAK, 2.0F, 0.5F);
+        playSound(NorseSounds.THRYM_STOMP.get(), 2.5F, 1.0F);
         playSpecial();
     }
 

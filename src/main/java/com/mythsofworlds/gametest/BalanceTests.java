@@ -3,8 +3,11 @@ package com.mythsofworlds.gametest;
 import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.core.BossBalance;
 import com.mythsofworlds.core.ServerConfig;
+import com.mythsofworlds.mythology.Mythology;
 import com.mythsofworlds.mythology.slavic.SlavicEntities;
 import com.mythsofworlds.mythology.slavic.entity.Koschei;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -54,6 +57,26 @@ public class BalanceTests {
         plain.discard();
         doubled.discard();
         koschei.discard();
+        helper.succeed();
+    }
+
+    /** Each world's bosses pay in the metal of its tier: bulat in Nav (but Koschei), dark iron in Jotunheim. */
+    @GameTest(template = "empty")
+    public static void bossesPayInTheirTiersMetal(GameTestHelper helper) throws Exception {
+        var resources = helper.getLevel().getServer().getResourceManager();
+        for (Mythology mythology : List.of(Mythology.SLAVIC, Mythology.NORSE)) {
+            String metal = mythology == Mythology.NORSE ? "dark_iron_ingot" : "bulat_ingot";
+            for (String boss : mythology.bosses()) {
+                if (boss.equals("koschei")) {
+                    continue;
+                }
+                String table;
+                try (var in = resources.getResourceOrThrow(MythsOfWorlds.id("loot_table/entities/" + boss + ".json")).open()) {
+                    table = new String(in.readAllBytes(), StandardCharsets.UTF_8);
+                }
+                helper.assertTrue(table.contains(MythsOfWorlds.id(metal).toString()), boss + " should drop " + metal);
+            }
+        }
         helper.succeed();
     }
 }

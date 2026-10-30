@@ -6,21 +6,29 @@
 src/main/java/com/mythsofworlds/
 ├── MythsOfWorlds.java          точка входа: по одной строке init() на мифологию
 ├── registry/ModRegistries.java общие реестры блоков, предметов и творческой вкладки
-├── core/portal/                общий движок порталов (трогать не нужно)
+├── core/                       общее для всех мифологий
+│   ├── entity/MythBoss.java    основа боссов: шкала здоровья с названием мира, две фазы (ярость ниже половины
+│   │                           здоровья), без деспавна, анимации GeckoLib (attack на удар, special — playSpecial())
+│   ├── entity/MythMerchant.java основа торговцев: три вида, не уходят из дома, сделки в updateTrades()
+│   ├── family/WarriorMaiden.java ухаживание, брак, дочери, дуэли за мужа: основа амазонок и валькирий
+│   ├── client/                 общие рендеры: MythHumanoidRenderer, MythMobRenderer, MythMerchantRenderer,
+│   │                           MythGeoRenderer (боссы на GeckoLib), слои MythModels.HUMANOID и WOLF, BeastModel
+│   ├── ServerConfig.java       серверные настройки баланса; BossBalance применяет их к боссам
+│   └── portal/                 общий движок порталов (трогать не нужно)
 │   ├── PortalSettings.java     чем один портал отличается от другого
 │   ├── MythPortalBlock.java    блок портала: телепорт, разрушение без рамки
 │   ├── PortalShape.java        поиск замкнутой рамки любой формы
 │   ├── PortalPlacement.java    поиск или постройка портала на другой стороне
 │   └── PortalIgniterItem.java  «зажигалка» для порталов
-├── mythology/Mythology.java    список шести мифологий и их измерений
+├── mythology/Mythology.java    список шести мифологий: измерение, есть ли портал, том Кодекса, боссы
 ├── mythology/greek/            всё греческое (полный пример)
 │   ├── GreekContent.java       блоки, предметы, Факел Прометея, списки биомов и структур
 │   ├── GreekEntities.java      мобы: типы, характеристики, яйца призыва, правила спавна
 │   ├── GreekTrades.java        сделки торговцев агоры (скупщик, кузнец, жрица)
 │   ├── GreekSounds.java        звуки; что в них звучит — assets/mythsofworlds/sounds.json
 │   ├── portal/                 священный водоём: чаша, блок портала, проверка водоёма, факел
-│   ├── entity/                 поведение мобов; GreekBoss — общая основа боссов (шкала здоровья, без деспавна,
-│   │                           hostile() для нейтральных, enraged() ниже половины здоровья)
+│   ├── entity/                 поведение мобов (боссы наследуют core/entity/MythBoss: hostile() для нейтральных,
+│   │                           enraged() ниже половины здоровья)
 │   ├── client/                 модели и рендеры мобов (только клиент)
 │   └── item/                   голова Медузы, яйцо гидры
 ├── mythology/norse/NorseContent.java   всё скандинавское: блоки, предметы, измерение
@@ -145,11 +153,28 @@ python3 tools/gen_greek_assets.py && python3 tools/gen_norse_assets.py && python
 
 ## Новый моб
 
-1. Класс в `mythology/greek/entity/` (обычный монстр — по образцу `Satyr`, босс — наследник `GreekBoss`, как `Minotaur`).
+1. Класс в `mythology/greek/entity/` (обычный монстр — по образцу `Satyr`, босс — наследник `core/entity/MythBoss`, как `Minotaur`;
+   его id добавьте в список боссов мифологии в `Mythology.java`, тогда победа над ним станет вехой пути).
 2. В `GreekEntities`: тип (`register(...)`), яйцо (`egg(...)`), строка в `registerAttributes`, при естественном спавне — в `registerSpawnPlacements`.
-3. В `client/GreekClient`: рендер. Человекоподобным подходит `GreekHumanoidRenderer` со слоем `HUMANOID`, зверям — `BeastModel`.
+3. В `client/GreekClient`: рендер. Человекоподобным подходит `MythHumanoidRenderer` со слоем `MythModels.HUMANOID`, зверям —
+   `BeastModel`, боссу — `MythGeoRenderer` (см. ниже).
 4. Текстура `textures/entity/<имя>.png`, лут `loot_table/entities/<имя>.json`, перевод `entity.mythsofworlds.<имя>`,
    модель яйца `models/item/<имя>_spawn_egg.json`. Где спавнится — в `spawners` нужных биомов.
+
+## Анимированная модель босса (GeckoLib)
+
+Модели боссов Нави и Йотунхейма описаны кодом в `tools/gen_geo_models.py`: кости с точкой поворота и коробки из
+материалов (цвет, узор, свечение) в пикселях модели, 16 на блок, ноги на y = 0, лицо к −z. Скрипт сам раскладывает
+грани на текстуре, рисует её вдвое детальнее и пишет `geo/entity/boss/<имя>.geo.json`, `animations/entity/boss/<имя>.animation.json`,
+`textures/entity/boss/<имя>.png` и `<имя>_glowmask.png` (светящиеся глаза, огонь, лава).
+
+1. Функция-модель по образцу `koschei()` (человекоподобным помогает `humanoid()`, зверям — `quadruped()`) и строка в `BOSSES`.
+2. Анимации `idle`, `walk` (повторяются), `attack` и `special` (по разу). `attack` играет сам `MythBoss` при ударе,
+   `special` — когда босс зовёт `playSpecial()` в своей способности. Кость `head` поворачивается за взглядом.
+3. Рендер: `ctx -> new MythGeoRenderer<>(ctx, "<имя>", радиус тени)`.
+4. Чтобы CI сфотографировал босса, добавьте его в `JoinTest.gallery()`.
+
+Модель можно открыть и доработать в Blockbench (формат GeckoLib), но следующий запуск скрипта её перезапишет.
 
 ## Новая сделка у торговцев агоры
 
@@ -159,8 +184,8 @@ python3 tools/gen_greek_assets.py && python3 tools/gen_norse_assets.py && python
 
 ## Новый звук
 
-1. В `GreekSounds.java`: `sound("entity.<моб>.<что>")`.
-2. В `tools/gen_greek_sounds.py` добавьте строку в `SOUNDS`: ванильный звук через `event(...)` с нужной высотой
+1. В `GreekSounds.java` (`SlavicSounds`, `NorseSounds`): `sound("entity.<моб>.<что>")`.
+2. В `tools/gen_greek_sounds.py` (звуки Нави и Йотунхейма — в `tools/sounds_nav_jotunheim.py`) добавьте строку в `SOUNDS`: ванильный звук через `event(...)` с нужной высотой
    или свой файл через `own(...)` (свой .ogg положите в `assets/mythsofworlds/sounds/` или синтезируйте в `SYNTHS`).
 3. `python3 tools/gen_greek_sounds.py` (с `--ogg`, чтобы пересоздать файлы).
 
@@ -168,7 +193,7 @@ python3 tools/gen_greek_assets.py && python3 tools/gen_norse_assets.py && python
 
 Например, египетскую: в `EgyptianContent` добавьте блок рамки, `MythPortalBlock` и зажигалку по образцу `NorseContent`
 (или портал своей формы, как священный водоём в `mythology/greek/portal` или Мировое древо в `mythology/slavic/block`),
-поставьте `true` у `EGYPTIAN` в `Mythology.java`, уберите `duat` из `STUB_DIMENSIONS` в `tools/gen_greek_assets.py` и
+поставьте `true` у `EGYPTIAN` в `Mythology.java` и впишите туда том Кодекса и боссов, уберите `duat` из `STUB_DIMENSIONS` в `tools/gen_greek_assets.py` и
 напишите свой генератор по образцу `tools/gen_slavic_assets.py`.
 
 ## Измерения: что можно менять без кода

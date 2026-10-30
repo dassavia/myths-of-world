@@ -1,5 +1,6 @@
 package com.mythsofworlds.mythology.norse.entity;
 
+import com.mythsofworlds.mythology.norse.NorseSounds;
 import com.mythsofworlds.core.entity.MythBoss;
 import com.mythsofworlds.mythology.norse.NorseContent;
 import net.minecraft.core.BlockPos;
@@ -161,7 +162,7 @@ public class Surtr extends MythBoss {
             }
         }
         server.sendParticles(ParticleTypes.LAVA, getX(), getY() + 0.5, getZ(), 20, 2.0, 0.2, 2.0, 0.0);
-        playSound(SoundEvents.FIRECHARGE_USE, 2.0F, 0.5F);
+        playSound(NorseSounds.SURTR_FLAMES.get(), 2.5F, 1.0F);
         playSpecial();
     }
 

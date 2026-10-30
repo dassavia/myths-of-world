@@ -87,13 +87,18 @@ def music(name):
     return (f"minecraft:music.{name}", 12000, 24000)
 
 
+# Music of Nav (tools/sounds_nav_jotunheim.py): gusli and a reed pipe in the forests, drones in the dark places.
+FOREST_MUSIC = (f"{NS}:music.nav.forest", 6000, 18000)
+DARK_MUSIC = (f"{NS}:music.nav.dark", 6000, 18000)
+
+
 BIOMES = {
     "dense_forest": {
         "ru": "Дремучий лес", "en": "Dense Forest",
         "point": {"c": 0.3, "h": 0.5, "t": 0.0},
         "temperature": 0.6, "downfall": 0.8,
         "sky": 0x6A5A8A, "fog": 0x6E6A7A, "water": 0x3A5A6A, "water_fog": 0x0A1A20, "grass": 0x4E7A3A, "foliage": 0x3E6A2E,
-        "particle": ("minecraft:spore_blossom_air", 0.004), "music": music("overworld.forest"),
+        "particle": ("minecraft:spore_blossom_air", 0.004), "music": FOREST_MUSIC,
         "features": COMMON + ["minecraft:forest_rock", f"{NS}:nav_old_oak", "minecraft:dark_forest_vegetation",
                               "minecraft:patch_grass_forest", "minecraft:patch_large_fern", "minecraft:patch_berry_common",
                               "minecraft:brown_mushroom_normal", "minecraft:red_mushroom_normal"],
@@ -109,7 +114,7 @@ BIOMES = {
         "point": {"c": 0.3, "h": -0.1, "t": 0.2},
         "temperature": 0.6, "downfall": 0.6,
         "sky": 0x8A7AAA, "fog": 0xB0A0C0, "water": 0x3F76E4, "water_fog": 0x050533, "grass": 0x88BB67, "foliage": 0x6BA941,
-        "particle": ("minecraft:end_rod", 0.0004), "music": music("overworld.meadow"),  # pale lights between the birches
+        "particle": ("minecraft:end_rod", 0.0004), "music": FOREST_MUSIC,  # pale lights between the birches
         "features": COMMON + ["minecraft:birch_tall", "minecraft:trees_birch", "minecraft:forest_flowers",
                               "minecraft:flower_default", "minecraft:patch_grass_forest"],
         "spawners": {
@@ -124,7 +129,7 @@ BIOMES = {
         "point": {"c": 0.2, "e": 0.7, "h": 0.8},
         "temperature": 0.7, "downfall": 0.9,
         "sky": 0x5A6A5A, "fog": 0x7A8A6E, "water": 0x4A5A2A, "water_fog": 0x1A220A, "grass": 0x6A7A3A, "foliage": 0x5A6A2E,
-        "particle": ("minecraft:mycelium", 0.02), "music": music("overworld.swamp"),
+        "particle": ("minecraft:mycelium", 0.02), "music": DARK_MUSIC,
         "features": COMMON + [f"{NS}:nav_bog_mud", f"{NS}:nav_dead_trunk", "minecraft:trees_swamp", "minecraft:patch_waterlily",
                               "minecraft:flower_swamp", "minecraft:brown_mushroom_swamp", "minecraft:red_mushroom_swamp",
                               "minecraft:patch_sugar_cane_swamp", "minecraft:seagrass_swamp"],
@@ -139,7 +144,7 @@ BIOMES = {
         "point": {"c": 0.4, "h": -0.6, "t": 0.4},
         "temperature": 0.8, "downfall": 0.4,
         "sky": 0x9A7AA0, "fog": 0xC8A8B0, "water": 0x3F76E4, "water_fog": 0x050533, "grass": 0x9ABE5A, "foliage": 0x7EA84A,
-        "music": music("overworld.meadow"),
+        "music": FOREST_MUSIC,
         "features": COMMON + ["minecraft:trees_plains", "minecraft:flower_plains", "minecraft:patch_sunflower",
                               "minecraft:patch_pumpkin", "minecraft:patch_grass_plain", "minecraft:patch_tall_grass_2"],
         "spawners": {
@@ -166,7 +171,7 @@ BIOMES = {
         "point": {"c": 0.6, "t": -0.7, "w": 0.6, "e": -0.4},
         "temperature": 0.2, "downfall": 0.3,
         "sky": 0x3A3048, "fog": 0x4A4058, "water": 0x2A2A4A, "water_fog": 0x0A0A1A, "grass": 0x6A6A5A, "foliage": 0x5A5A4A,
-        "particle": ("minecraft:soul", 0.004), "music": music("overworld.deep_dark"),
+        "particle": ("minecraft:soul", 0.004), "music": DARK_MUSIC,
         "additions": ("minecraft:ambient.soul_sand_valley.additions", 0.0111),
         "features": COMMON + [f"{NS}:nav_dead_trunk", f"{NS}:nav_bone_pile", "minecraft:patch_dead_bush"],
         "spawners": {
@@ -335,9 +340,11 @@ def loot():
     mob("rusalka", [("minecraft:prismarine_crystals", 0, 2, None), ("minecraft:kelp", 0, 3, None), ("minecraft:nautilus_shell", 1, 1, 0.05)])
     mob("firebird", [(f"{NS}:firebird_feather", 1, 2, None)])
     mob("slavic_merchant", [])
-    mob("solovei", [(f"{NS}:skorokhody", 1, 1, None), ("minecraft:gold_ingot", 3, 8, None), ("minecraft:emerald", 2, 6, None)])
+    # Nav is the second tier: its bosses pay a little more than those of Hellas, and in bulat, its own steel.
+    mob("solovei", [(f"{NS}:skorokhody", 1, 1, None), ("minecraft:gold_ingot", 3, 8, None), ("minecraft:emerald", 2, 6, None),
+                    ("minecraft:diamond", 1, 2, None), (f"{NS}:bulat_ingot", 1, 2, None)])
     mob("zmey_gorynych", [(f"{NS}:kladenets", 1, 1, None), (f"{NS}:zmey_scale", 3, 6, None), ("minecraft:diamond", 2, 4, None),
-                          ("minecraft:gold_ingot", 4, 10, None)])
+                          ("minecraft:gold_ingot", 4, 10, None), (f"{NS}:bulat_ingot", 2, 4, None)])
     mob("koschei", [(f"{NS}:shapka_nevidimka", 1, 1, None), ("minecraft:gold_block", 1, 3, None), ("minecraft:diamond", 2, 4, None),
                     ("minecraft:netherite_scrap", 1, 2, None)])
 

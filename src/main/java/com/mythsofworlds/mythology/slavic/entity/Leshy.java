@@ -1,5 +1,6 @@
 package com.mythsofworlds.mythology.slavic.entity;
 
+import com.mythsofworlds.mythology.slavic.SlavicSounds;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -81,7 +82,7 @@ public class Leshy extends Monster {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.AZALEA_LEAVES_STEP;
+        return SlavicSounds.LESHY_AMBIENT.get();
     }
 
     @Override

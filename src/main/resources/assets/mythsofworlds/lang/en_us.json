@@ -846,5 +846,18 @@
   "mythsofworlds.configuration.journalSightRange.tooltip": "A creature enters the Codex once you see it this close",
   "boss.mythsofworlds.bar": "%s · %s",
   "boss.mythsofworlds.bar.enraged": "%s · %s · enraged",
-  "boss.mythsofworlds.enraged": "%s flies into a rage!"
+  "boss.mythsofworlds.enraged": "%s flies into a rage!",
+  "subtitles.mythsofworlds.entity.solovei.whistle": "Solovei the Robber whistles",
+  "subtitles.mythsofworlds.entity.zmey_gorynych.roar": "Zmey Gorynych roars",
+  "subtitles.mythsofworlds.entity.zmey_gorynych.breath": "Zmey Gorynych breathes fire",
+  "subtitles.mythsofworlds.entity.koschei.laugh": "Koschei laughs",
+  "subtitles.mythsofworlds.entity.koschei.summon": "Koschei raises the dead",
+  "subtitles.mythsofworlds.entity.rusalka.song": "Rusalka sings",
+  "subtitles.mythsofworlds.entity.leshy.ambient": "Leshy creaks",
+  "subtitles.mythsofworlds.entity.heimdall.gjallarhorn": "Heimdall blows the Gjallarhorn",
+  "subtitles.mythsofworlds.entity.thrym.stomp": "Thrym stomps",
+  "subtitles.mythsofworlds.entity.surtr.flames": "Surtr's flames",
+  "subtitles.mythsofworlds.entity.draugr_chieftain.call": "Draugr chieftain calls the dead",
+  "subtitles.mythsofworlds.entity.fenrir.howl": "Fenrir howls",
+  "subtitles.mythsofworlds.entity.garm.howl": "Garm howls"
 }

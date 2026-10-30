@@ -1,5 +1,6 @@
 package com.mythsofworlds.mythology.slavic.entity;
 
+import com.mythsofworlds.mythology.slavic.SlavicSounds;
 import com.mythsofworlds.core.entity.MythBoss;
 import com.mythsofworlds.mythology.norse.entity.FireGiant;
 import net.minecraft.core.particles.ParticleTypes;
@@ -91,13 +92,13 @@ public class ZmeyGorynych extends MythBoss {
             server.addFreshEntity(fireball);
         }
         server.sendParticles(ParticleTypes.FLAME, getX() + aim.x * 2.0, getY(0.8), getZ() + aim.z * 2.0, 30, 0.6, 0.4, 0.6, 0.05);
-        playSound(SoundEvents.ENDER_DRAGON_SHOOT, 2.0F, 0.6F);
+        playSound(SlavicSounds.ZMEY_BREATH.get(), 2.0F, 1.0F);
         playSpecial();
     }
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENDER_DRAGON_GROWL;
+        return SlavicSounds.ZMEY_ROAR.get();
     }
 
     @Override

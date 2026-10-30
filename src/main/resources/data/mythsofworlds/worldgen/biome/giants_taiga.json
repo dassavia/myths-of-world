@@ -16,9 +16,9 @@
       "offset": 2.0
     },
     "music": {
-      "sound": "minecraft:music.overworld.old_growth_taiga",
-      "min_delay": 12000,
-      "max_delay": 24000,
+      "sound": "mythsofworlds:music.jotunheim.north",
+      "min_delay": 6000,
+      "max_delay": 18000,
       "replace_current_music": false
     }
   },

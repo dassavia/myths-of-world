@@ -6,7 +6,7 @@ Runs every generator of the mod's data and assets in the order they depend on ea
     python3 tools/gen_all.py --check    # regenerate, then fail if anything differs from what is committed (used by CI)
 
 Each generator reads helpers from the ones before it, so the order below matters. The logo (gen_logo.py) and the
-.ogg sounds (gen_greek_sounds.py --ogg, gen_myth_sounds.py --ogg) are left out: they are drawn once and kept as they are.
+.ogg sounds (gen_greek_sounds.py --ogg) are left out: they are drawn once and kept as they are.
 """
 import os
 import subprocess
@@ -19,7 +19,6 @@ ROOT = os.path.dirname(TOOLS)
 CHAIN = [
     ("gen_greek_assets.py", True),
     ("gen_greek_sounds.py", False),
-    ("gen_myth_sounds.py", False),
     ("gen_norse_assets.py", True),
     ("gen_metals.py", True),
     ("gen_relics.py", True),

@@ -1,4 +1,5 @@
-"""Sounds of Hellas: writes assets/mythsofworlds/sounds.json and synthesizes the custom .ogg files.
+"""Sounds of Hellas (and of Nav and Jotunheim, from tools/sounds_nav_jotunheim.py): writes
+assets/mythsofworlds/sounds.json and synthesizes the custom .ogg files.
 
 Most creatures are voiced by vanilla sounds re-pitched through "event" references; the sounds no vanilla
 sound fits (pan flute, lyre, Medusa's hiss, the brazier flaring up...) are synthesized here with numpy and
@@ -12,6 +13,8 @@ import tempfile
 import wave
 
 import numpy as np
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 NS = "mythsofworlds"
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", NS)
@@ -287,6 +290,10 @@ def write_ogg(samples, path):
 
 
 def main():
+    # The sounds of Nav and Jotunheim live in their own table.
+    import sounds_nav_jotunheim
+    SOUNDS.update(sounds_nav_jotunheim.SOUNDS)
+    SYNTHS.update(sounds_nav_jotunheim.SYNTHS)
     sounds = {}
     for key, (entries, ru, en) in SOUNDS.items():
         sounds[key] = {"subtitle": f"subtitles.{NS}.{key}", "sounds": entries} if ru else {"sounds": entries}

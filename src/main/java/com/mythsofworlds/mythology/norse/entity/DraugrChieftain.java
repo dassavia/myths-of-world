@@ -1,5 +1,6 @@
 package com.mythsofworlds.mythology.norse.entity;
 
+import com.mythsofworlds.mythology.norse.NorseSounds;
 import com.mythsofworlds.core.entity.MythBoss;
 import com.mythsofworlds.mythology.norse.NorseEntities;
 import net.minecraft.core.particles.ParticleTypes;
@@ -121,7 +122,7 @@ public class DraugrChieftain extends MythBoss {
                 server.addFreshEntity(draugr);
                 server.sendParticles(ParticleTypes.SOUL, draugr.getX(), draugr.getY() + 0.5, draugr.getZ(), 10, 0.3, 0.5, 0.3, 0.02);
             }
-            playSound(SoundEvents.ZOMBIE_AMBIENT, 2.0F, 0.4F);
+            playSound(NorseSounds.DRAUGR_CALL.get(), 2.0F, 1.0F);
             playSpecial();
         }
     }

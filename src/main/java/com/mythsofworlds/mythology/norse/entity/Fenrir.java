@@ -1,5 +1,6 @@
 package com.mythsofworlds.mythology.norse.entity;
 
+import com.mythsofworlds.mythology.norse.NorseSounds;
 import com.mythsofworlds.core.entity.MythBoss;
 import com.mythsofworlds.mythology.norse.NorseEntities;
 import net.minecraft.core.particles.ParticleTypes;
@@ -162,7 +163,7 @@ public class Fenrir extends MythBoss {
             warg.setTarget(getTarget());
             server.addFreshEntity(warg);
         }
-        playSound(SoundEvents.WOLF_HOWL, 4.0F, 0.5F);
+        playSound(NorseSounds.FENRIR_HOWL.get(), 4.0F, 1.0F);
         playSpecial();
     }
 
