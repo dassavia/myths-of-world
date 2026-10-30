@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "MMM",
+    "M M"
+  ],
+  "key": {
+    "M": {
+      "item": "mythsofworlds:bulat_ingot"
+    }
+  },
+  "result": {
+    "id": "mythsofworlds:bulat_helmet",
+    "count": 1
+  }
+}
