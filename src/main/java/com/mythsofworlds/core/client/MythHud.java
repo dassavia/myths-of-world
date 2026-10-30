@@ -228,10 +228,13 @@ public final class MythHud {
             // Armour above health, if any.
             int armour = player.getArmorValue();
             if (armour > 0) {
+                // Toughness is the thin steel-blue line along the bottom of the armour bar.
                 double toughness = player.getAttributeValue(Attributes.ARMOR_TOUGHNESS);
-                String armourText = armour + (toughness > 0 ? " · " + number((float) toughness) : "");
-                bar(graphics, font, leftX, y - 12, armour / 20.0F, 0xFFD8DEE8, 0xFF6E7684, 0, 0, 95, armourText, false);
+                bar(graphics, font, leftX, y - 12, armour / 20.0F, 0xFFD8DEE8, 0xFF6E7684, (float) toughness / 20.0F,
+                        0xFF5A9AD8, 95, Integer.toString(armour), false);
             }
+            // The bars stand taller than the vanilla icons: lift the held item's name above them.
+            minecraft.gui.leftHeight = Math.max(minecraft.gui.leftHeight, armour > 0 ? 64 : 52);
             // Food, unless a living mount shows its own health there.
             boolean mounted = player.getVehicle() instanceof LivingEntity mount && mount.showVehicleHealth();
             if (!mounted) {
@@ -247,6 +250,7 @@ public final class MythHud {
             if (player.isUnderWater() || air < maxAir) {
                 bar(graphics, font, rightX, y - 12, air / (float) maxAir, 0xFF9AD8FF, 0xFF2A64B0, 0, 0, 113,
                         Mth.ceil(air / 20.0F) + "s", false);
+                minecraft.gui.rightHeight = Math.max(minecraft.gui.rightHeight, 64);
             }
         }
         if (minecraft.gameMode.hasExperience() && player.jumpableVehicle() == null) {

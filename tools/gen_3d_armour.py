@@ -115,8 +115,11 @@ SPECS = {
     "heimdall_helmet": {
         "items": ["heimdall_helmet"],
         "parts": [
-            *pair(box("head", "right_wing", (-6, -12, -1), (1, 6, 6), "feather")),
-            *pair(box("head", "right_wing_tip", (-6, -16, 2), (1, 4, 4), "feather")),
+            # Rooted at the temple, swept back and outwards so they show from the front too.
+            *pair(box("head", "right_wing", (-0.5, -6, 0), (1, 6, 6), "feather", pivot=(-5.5, -8, 0.5),
+                      rotation=(0.35, -0.55, 0))),
+            *pair(box("head", "right_wing_tip", (-0.5, -10, 3), (1, 4, 4), "feather", pivot=(-5.5, -8, 0.5),
+                      rotation=(0.35, -0.55, 0))),
             box("head", "crown", (-5, -9.6, -5), (10, 1, 10), "gold", 0.05),
         ],
     },
@@ -124,8 +127,10 @@ SPECS = {
     "talaria": {
         "items": ["talaria"],
         "parts": [
-            *pair(box("right_leg", "right_wing", (-4, 7, -1), (1, 4, 5), "feather")),
-            *pair(box("right_leg", "right_wing_tip", (-4, 5, 1), (1, 3, 4), "feather")),
+            *pair(box("right_leg", "right_wing", (-0.5, -1, 0), (1, 4, 5), "feather", pivot=(-3.2, 8, 0.5),
+                      rotation=(0.3, -0.6, 0))),
+            *pair(box("right_leg", "right_wing_tip", (-0.5, -3, 2), (1, 3, 4), "feather", pivot=(-3.2, 8, 0.5),
+                      rotation=(0.3, -0.6, 0))),
         ],
     },
     # Seven-league boots with turned-up toes.
