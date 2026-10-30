@@ -407,6 +407,9 @@ public class NorseTests {
                 && new ItemStack(GreekContent.WINGS_OF_DAEDALUS.get()).is(back), "only wings go on the back");
         helper.assertTrue(BackSlot.flyingStack(player, chestplate) == chestplate, "nothing on the back: the chest decides");
         BackSlot.set(player, new ItemStack(Items.ELYTRA));
+        helper.assertTrue(CuriosApi.getCuriosInventory(player).flatMap(inventory -> inventory.getStacksHandler(BackSlot.CURIOS_SLOT))
+                .map(handler -> handler.getStacks().getStackInSlot(0).is(Items.ELYTRA)).orElse(false),
+                "the elytra went into the Curios slot");
         helper.assertTrue(BackSlot.get(player).is(Items.ELYTRA), "the slot keeps the elytra");
         helper.assertTrue(BackSlot.flyingStack(player, chestplate).is(Items.ELYTRA), "the elytra on the back should fly");
         helper.succeed();

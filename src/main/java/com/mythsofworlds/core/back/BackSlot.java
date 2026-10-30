@@ -13,7 +13,6 @@ import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.SlotResult;
 
 import static com.mythsofworlds.registry.ModRegistries.ATTACHMENT_TYPES;
 
@@ -43,8 +42,10 @@ public final class BackSlot {
     /** What {@code entity} carries on the back, or an empty stack. */
     public static ItemStack get(LivingEntity entity) {
         return CuriosApi.getCuriosInventory(entity)
-                .flatMap(inventory -> inventory.findFirstCurio(BackSlot::canWear, CURIOS_SLOT))
-                .map(SlotResult::stack)
+                .flatMap(inventory -> inventory.getStacksHandler(CURIOS_SLOT))
+                .filter(handler -> handler.getSlots() > 0)
+                .map(handler -> handler.getStacks().getStackInSlot(0))
+                .filter(BackSlot::canWear)
                 .orElse(ItemStack.EMPTY);
     }
 

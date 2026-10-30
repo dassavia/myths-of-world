@@ -8,6 +8,7 @@
     "PlayerMixin"
   ],
   "client": [
+    "InventoryScreenMixin",
     "LocalPlayerMixin"
   ],
   "injectors": {

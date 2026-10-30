@@ -61,7 +61,8 @@ public final class CodexBook {
         sync(player, player.isCreative());
     }
 
-    private static void sync(ServerPlayer player, boolean everything) {
+    /** Grants the player the locks they have earned, or all of them if {@code everything}, and takes back the rest. */
+    public static void sync(ServerPlayer player, boolean everything) {
         Set<ResourceLocation> earned = everything ? Set.of() : earned(player);
         PlayerAdvancements advancements = player.getAdvancements();
         for (AdvancementHolder holder : player.server.getAdvancements().getAllAdvancements()) {

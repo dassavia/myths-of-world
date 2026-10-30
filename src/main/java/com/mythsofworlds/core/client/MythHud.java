@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.core.ClientConfig;
 import java.util.Set;
+import net.minecraft.client.AttackIndicatorStatus;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -16,9 +17,11 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.food.FoodData;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
@@ -36,20 +39,27 @@ import org.lwjgl.glfw.GLFW;
 
 /**
  * The HUD of the myths: health, armour, hunger, air and experience as carved bars in gold frames, the numbers in the
- * old-style typeface of the Codex, and in the worlds of the myths a scroll with the world's name. It replaces the
- * vanilla hearts, armour, food, air and experience while it is on; the H key or the button in the pause menu
+ * old-style typeface of the myths, a lacquered hotbar in a gold rim, the survival inventory on parchment, and in the
+ * worlds of the myths a scroll with the world's name. It replaces the vanilla hearts, armour, food, air, experience,
+ * hotbar and inventory background while it is on (the spectator's hotbar stays vanilla); the H key or the button in the pause menu
  * switches it at any time ({@link ClientConfig}).
  */
 public final class MythHud {
     /** The font of the myths: titles and numbers of the HUD. */
     public static final ResourceLocation MYTH_FONT = MythsOfWorlds.id("myth");
+    /** The survival inventory on parchment, in vanilla's layout (tools/gen_gui.py). */
+    public static final ResourceLocation INVENTORY = MythsOfWorlds.id("textures/gui/inventory.png");
     private static final ResourceLocation TEXTURE = MythsOfWorlds.id("textures/gui/hud.png");
-    private static final int TEX_W = 256;
-    private static final int TEX_H = 96;
+    private static final int TEX_W = 512;
+    private static final int TEX_H = 128;
+    private static final ResourceLocation ATTACK_BACKGROUND = ResourceLocation.withDefaultNamespace(
+            "hud/hotbar_attack_indicator_background");
+    private static final ResourceLocation ATTACK_PROGRESS = ResourceLocation.withDefaultNamespace(
+            "hud/hotbar_attack_indicator_progress");
     /** The vanilla layers the HUD takes over. */
     private static final Set<ResourceLocation> REPLACED = Set.of(VanillaGuiLayers.PLAYER_HEALTH, VanillaGuiLayers.ARMOR_LEVEL,
             VanillaGuiLayers.FOOD_LEVEL, VanillaGuiLayers.AIR_LEVEL, VanillaGuiLayers.EXPERIENCE_BAR,
-            VanillaGuiLayers.EXPERIENCE_LEVEL);
+            VanillaGuiLayers.EXPERIENCE_LEVEL, VanillaGuiLayers.HOTBAR);
     public static final KeyMapping TOGGLE = new KeyMapping("key.mythsofworlds.toggle_hud", InputConstants.Type.KEYSYM,
             GLFW.GLFW_KEY_H, "key.categories.mythsofworlds");
     /** Health shown on the bar, easing towards the real value so that a blow drains it visibly. */
@@ -71,6 +81,8 @@ public final class MythHud {
 
         @SubscribeEvent
         public static void registerLayers(RegisterGuiLayersEvent event) {
+            event.registerAbove(VanillaGuiLayers.HOTBAR, MythsOfWorlds.id("myth_hotbar"),
+                    (graphics, delta) -> renderHotbar(graphics, delta.getGameTimeDeltaPartialTick(true)));
             event.registerAbove(VanillaGuiLayers.FOOD_LEVEL, MythsOfWorlds.id("myth_bars"), (graphics, delta) -> renderBars(graphics));
             event.registerAbove(VanillaGuiLayers.CAMERA_OVERLAYS, MythsOfWorlds.id("myth_world_scroll"),
                     (graphics, delta) -> renderWorldScroll(graphics));
@@ -96,7 +108,8 @@ public final class MythHud {
 
         @SubscribeEvent
         public static void hideVanilla(RenderGuiLayerEvent.Pre event) {
-            if (enabled() && REPLACED.contains(event.getName())) {
+            if (enabled() && REPLACED.contains(event.getName()) && !(event.getName().equals(VanillaGuiLayers.HOTBAR)
+                    && Minecraft.getInstance().player != null && Minecraft.getInstance().player.isSpectator())) {
                 event.setCanceled(true);
             }
         }
@@ -266,6 +279,67 @@ public final class MythHud {
             if (player.experienceLevel > 0) {
                 sprite(graphics, w / 2 - 12, y - 13, 0, 22, 24, 16);
                 label(graphics, font, myth(Integer.toString(player.experienceLevel)), w / 2, y - 9, 0xFFB8F070, 0.9F);
+            }
+        }
+    }
+
+    /** One item in a slot, bobbing as vanilla does when it was just picked up. */
+    private static void item(GuiGraphics graphics, Font font, LocalPlayer player, ItemStack stack, int x, int y,
+                             float partialTick, int seed) {
+        if (stack.isEmpty()) {
+            return;
+        }
+        float pop = stack.getPopTime() - partialTick;
+        if (pop > 0) {
+            float scale = 1 + pop / 5;
+            graphics.pose().pushPose();
+            graphics.pose().translate(x + 8, y + 12, 0);
+            graphics.pose().scale(1 / scale, (scale + 1) / 2, 1);
+            graphics.pose().translate(-(x + 8), -(y + 12), 0);
+        }
+        graphics.renderItem(player, stack, x, y, seed);
+        if (pop > 0) {
+            graphics.pose().popPose();
+        }
+        graphics.renderItemDecorations(font, stack, x, y);
+    }
+
+    /** The hotbar: nine slots in a gold-rimmed band, the selected one in a bright frame, the off hand beside it. */
+    static void renderHotbar(GuiGraphics graphics, float partialTick) {
+        Minecraft minecraft = Minecraft.getInstance();
+        LocalPlayer player = minecraft.player;
+        if (!enabled() || player == null || player.isSpectator() || minecraft.options.hideGui) {
+            return;
+        }
+        Font font = minecraft.font;
+        int x = graphics.guiWidth() / 2 - 91;
+        int y = graphics.guiHeight() - 22;
+        graphics.pose().pushPose();
+        graphics.pose().translate(0, 0, -90);
+        sprite(graphics, x, y, 0, 40, 182, 22);
+        sprite(graphics, x - 1 + player.getInventory().selected * 20, y - 1, 182, 40, 24, 24);
+        ItemStack offhand = player.getOffhandItem();
+        boolean offhandLeft = player.getMainArm().getOpposite() == HumanoidArm.LEFT;
+        int offhandX = offhandLeft ? x - 26 : x + 182 + 4;
+        if (!offhand.isEmpty()) {
+            sprite(graphics, offhandX, y, 206, 40, 22, 22);
+        }
+        graphics.pose().popPose();
+        int seed = 1;
+        for (int i = 0; i < 9; i++) {
+            item(graphics, font, player, player.getInventory().items.get(i), x + 3 + i * 20, y + 3, partialTick, seed++);
+        }
+        if (!offhand.isEmpty()) {
+            item(graphics, font, player, offhand, offhandX + 3, y + 3, partialTick, seed);
+        }
+        if (minecraft.options.attackIndicator().get() == AttackIndicatorStatus.HOTBAR) {
+            float strength = player.getAttackStrengthScale(0);
+            if (strength < 1) {
+                int ix = offhandLeft ? x + 182 + 6 : x - 22;
+                int iy = graphics.guiHeight() - 20;
+                int filled = (int) (strength * 19);
+                graphics.blitSprite(ATTACK_BACKGROUND, ix, iy, 18, 18);
+                graphics.blitSprite(ATTACK_PROGRESS, 18, 18, 0, 18 - filled, ix, iy + 18 - filled, 18, filled);
             }
         }
     }

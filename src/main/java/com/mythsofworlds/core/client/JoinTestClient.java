@@ -7,6 +7,7 @@ import com.mythsofworlds.mythology.relic.MythAttributes;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Screenshot;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -108,9 +109,11 @@ public final class JoinTestClient {
         switch (after) {
             case 5 -> PatchouliAPI.get().openBookEntry(CodexBook.ID, MythsOfWorlds.id("hellas/path"), 0);
             case 25 -> screenshot(mc, "codex_hellas");
-            case 30 -> mc.setScreen(null);
-            case 50 -> {
-                report("OK: joined, synced, every suit and swing drawn, the Codex opened");
+            case 30 -> mc.setScreen(new InventoryScreen(player));
+            case 45 -> screenshot(mc, "inventory");
+            case 50 -> mc.setScreen(null);
+            case 70 -> {
+                report("OK: joined, synced, every suit and swing drawn, the Codex and the inventory opened");
                 leftAt = ticks;
                 if (mc.getConnection() != null) {
                     mc.getConnection().getConnection().disconnect(Component.literal("done"));
