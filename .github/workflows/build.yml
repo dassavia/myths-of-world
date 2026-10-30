@@ -61,15 +61,19 @@ jobs:
           wait $SERVER || SERVER_EXIT=$?
           grep -h '\[join-test' run/join-server.log run/join-client.log || true
           if [ $CLIENT -ne 0 ] || [ $SERVER_EXIT -ne 0 ]; then
-            tail -n 150 run/join-client.log
-            tail -n 80 run/join-server.log
+            # The game's own errors, not Gradle's stack trace at the end of the log.
+            grep -v -E "org\.gradle|ALSA|flite|OpenAL" run/join-client.log | grep -n -A40 -E "Exception|Caused by|Crash Report" | head -n 250 || true
+            cat run/join-client/crash-reports/*.txt 2>/dev/null | head -n 200 || true
+            grep -v "org\.gradle" run/join-server.log | tail -n 80
             exit 1
           fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: join-test-screenshots
-          path: run/join-client/screenshots/
+          path: |
+            run/join-client/screenshots/
+            run/join-client/crash-reports/
           if-no-files-found: ignore
       - uses: actions/upload-artifact@v4
         with:

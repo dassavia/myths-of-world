@@ -9,7 +9,7 @@ at twice the resolution with its material (colour, grain, light from above, a da
 
     assets/mythsofworlds/geo/entity/boss/<name>.geo.json
     assets/mythsofworlds/animations/entity/boss/<name>.animation.json
-    assets/mythsofworlds/textures/entity/boss/<name>.png           (and <name>_glowmask.png for glowing materials)
+    assets/mythsofworlds/textures/entity/boss/<name>.png           (and <name>_glowmask.png if any material glows)
 
 Animations are built from the same bones: idle and walk loop, attack and special are played once when the boss
 strikes or uses its power (see MythBoss in Java). Bone names the Java side relies on: head (turns to look).
@@ -803,7 +803,12 @@ def main():
         write_json(os.path.join(ROOT, "geo", "entity", "boss", model.name + ".geo.json"), geo_json(model, width, height))
         write_json(os.path.join(ROOT, "animations", "entity", "boss", model.name + ".animation.json"), anim_json(model))
         save_png(img, os.path.join(ROOT, "textures", "entity", "boss", model.name + ".png"))
-        save_png(glow, os.path.join(ROOT, "textures", "entity", "boss", model.name + "_glowmask.png"))
+        # Only a model with glowing parts gets a glow mask (MythGeoRenderer is told so in Java: GLOWING there).
+        mask = os.path.join(ROOT, "textures", "entity", "boss", model.name + "_glowmask.png")
+        if glow.getbbox():
+            save_png(glow, mask)
+        elif os.path.exists(mask):
+            os.remove(mask)
         cubes = sum(len(b["cubes"]) for b in model.bones)
         print(f"{model.name}: {len(model.bones)} bones, {cubes} boxes, texture {width * SCALE}x{height * SCALE}")
 
