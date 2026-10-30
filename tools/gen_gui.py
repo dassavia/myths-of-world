@@ -140,11 +140,11 @@ def hud():
 
     # The hotbar: a dark lacquered band in a gold rim, the slots sunk into it, gold studs between them.
     def slot_cell(cx, cy):
-        d.rectangle([cx, cy, cx + 18 * S - 1, cy + 18 * S - 1], fill=(12, 8, 6, 150))
+        d.rectangle([cx, cy, cx + 18 * S - 1, cy + 18 * S - 1], fill=(58, 40, 26, 170))
         d.line([(cx, cy), (cx + 18 * S - 1, cy)], fill=(0, 0, 0, 120), width=S)
         d.line([(cx, cy), (cx, cy + 18 * S - 1)], fill=(0, 0, 0, 120), width=S)
-        d.line([(cx + 1, cy + 18 * S - 1), (cx + 18 * S - 1, cy + 18 * S - 1)], fill=(226, 179, 60, 70), width=1)
-        d.line([(cx + 18 * S - 1, cy + 1), (cx + 18 * S - 1, cy + 18 * S - 1)], fill=(226, 179, 60, 70), width=1)
+        d.line([(cx + 1, cy + 18 * S - 1), (cx + 18 * S - 1, cy + 18 * S - 1)], fill=(226, 179, 60, 120), width=1)
+        d.line([(cx + 18 * S - 1, cy + 1), (cx + 18 * S - 1, cy + 18 * S - 1)], fill=(226, 179, 60, 120), width=1)
 
     def band(name, cells):
         x, y, w, h = box(name)

@@ -112,7 +112,7 @@ python3 tools/gen_greek_assets.py --textures  # плюс перерисоват�
 Скрипт берёт помощники из греческого, поэтому запускайте оба по порядку:
 
 ```bash
-python3 tools/gen_greek_assets.py && python3 tools/gen_norse_assets.py && python3 tools/gen_metals.py && python3 tools/gen_relics.py && python3 tools/gen_slavic_assets.py && python3 tools/gen_codex.py && python3 tools/hd_textures.py && python3 tools/gen_3d_armour.py && python3 tools/gen_3d_gear.py   # --textures у первых, чтобы перерисовать PNG
+python3 tools/gen_greek_assets.py && python3 tools/gen_norse_assets.py && python3 tools/gen_metals.py && python3 tools/gen_relics.py && python3 tools/gen_slavic_assets.py && python3 tools/gen_codex.py && python3 tools/gen_book.py && python3 tools/hd_textures.py && python3 tools/gen_art32_items.py && python3 tools/gen_art32_blocks.py && python3 tools/gen_gui.py && python3 tools/gen_3d_armour.py && python3 tools/gen_3d_gear.py   # --textures у первых, чтобы перерисовать PNG
 ```
 
 Навь (славянская мифология) — `tools/gen_slavic_assets.py`, постройки в `tools/structures_slavic.py`, текстуры в
@@ -132,10 +132,14 @@ python3 tools/gen_greek_assets.py && python3 tools/gen_norse_assets.py && python
 страница помещается в книгу. Открытые записи хранятся у игрока (`core/PlayerData`) и переживают смерть.
 Новый том для другой мифологии: свой JSON, два `JournalItem` (обычный и полный) и строка в `JournalEvents.VOLUMES`.
 
-## Слот за спиной, сеть и миксины
+## Библиотеки, слот за спиной, сеть и миксины
 
-- Слот за спиной (`core/back/BackSlot.java`) хранится во вложении игрока `back`. Его добавляет в инвентарь миксин `mixin/InventoryMenuMixin`, а элитры на спине летают через `mixin/LivingEntityMixin`, `PlayerMixin` и клиентский `LocalPlayerMixin` (список в `src/main/resources/mythsofworlds.mixins.json`). Какие предметы можно надеть, решает `BackSlot.canWear`.
-- Свои пакеты регистрирует `core/ModNetwork.java`: `BackPayload` (что у игрока на спине, для отрисовки) и `DoubleJumpPayload` (двойной прыжок талариев).
+- Мод опирается на две библиотеки (зависимости в `build.gradle` и `neoforge.mods.toml`): Curios API для слотов украшений и Patchouli для книги. Не изобретайте своё там, где есть готовый мод для этого.
+- Кодекс мифов — книга Patchouli: `tools/gen_book.py` пишет `data/mythsofworlds/patchouli_books/codex/book.json`, главы и записи в `assets/mythsofworlds/patchouli_books/codex/<язык>/` и скрытые достижения-замки `advancement/codex/{entry,chapter,milestone}`. Выдаёт и забирает замки `codex/CodexBook.java` (в творческом режиме открыто всё).
+- Слот за спиной (`core/back/BackSlot.java`) — слот `back` из Curios: сам слот, кому он положен и какие предметы туда можно, описаны в `data/mythsofworlds/curios/` и теге `data/curios/tags/item/back.json` (их пишет `tools/gen_relics.py`). Элитры на спине летают через `mixin/LivingEntityMixin`, `PlayerMixin` и клиентский `LocalPlayerMixin` (список в `src/main/resources/mythsofworlds.mixins.json`). Какие предметы можно надеть, решает `BackSlot.canWear`.
+- Свои пакеты регистрирует `core/ModNetwork.java`: `DoubleJumpPayload` (двойной прыжок талариев).
+- Иконки предметов и текстуры блоков рисуют `tools/gen_art32_items.py` (реликвии в `tools/items_relics.py`) и `tools/gen_art32_blocks.py` средствами `tools/art32.py`: фигуры в координатах сетки 32x32, у каждой материал (палитра от тени до блика), объём, свет слева сверху и контур. Новый предмет — функция с `@item("имя")`.
+- Панель предметов и фон инвентаря при включённом HUD рисуют `core/client/MythHud.java` и миксин `mixin/InventoryScreenMixin` (текстуры `textures/gui/hud.png` и `inventory.png` из `tools/gen_gui.py`).
 - Жёны и дочери записываются в `core/family/FamilyRegistry` (данные мира), по нему их находит семейный свисток.
 - Страницы журнала о рудах и снаряжении собирает `tools/journal_gear.py`; цифры в нём держите такими же, как в Java.
 
