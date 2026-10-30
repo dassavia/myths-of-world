@@ -1,0 +1,13 @@
+{
+  "name": "Чертог валькирий",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_place",
+  "sortnum": 33,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Длинный зал, увешанный щитами, с конюшней крылатых коней и площадкой для учебного боя. Здесь живут валькирии, на которых можно жениться."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_valkyrie_hall"
+}

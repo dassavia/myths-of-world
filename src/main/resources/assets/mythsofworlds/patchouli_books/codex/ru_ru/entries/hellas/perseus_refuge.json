@@ -1,0 +1,13 @@
+{
+  "name": "Убежище Персея",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_place",
+  "sortnum": 36,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Маленький лагерь героя на побережье и в горах. Здесь всегда лежат харпа и зеркальный щит."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_perseus_refuge"
+}

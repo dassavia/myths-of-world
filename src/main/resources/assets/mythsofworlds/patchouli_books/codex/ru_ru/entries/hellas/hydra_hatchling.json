@@ -1,0 +1,22 @@
+{
+  "name": "Гидрёныш",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_creature",
+  "sortnum": 14,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:hydra_hatchling",
+      "name": "Гидрёныш"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Вылупляется из яйца, которое всегда роняет Лернейская гидра: ПКМ яйцом по земле. Ручной с рождения."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Ходит за хозяином, садится по ПКМ, кусает с ядом и сам яда не боится. Лечится рыбой."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_hydra_hatchling"
+}

@@ -1,0 +1,17 @@
+{
+  "name": "The Lands of Nav",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_intro",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "An endless dusk hangs over Nav. The dense forest and birch groves, the kikimora bog, the wild field and the Sea-Okiyan."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "In the south flows the fiery river Smorodina, with the Kalinov bridge across it. In the north lies the realm of Koschei: grey earth, dead trees and bones."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/nav"
+}

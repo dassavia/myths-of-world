@@ -1,0 +1,26 @@
+{
+  "name": "Медуза Горгона",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_boss",
+  "sortnum": 19,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:medusa",
+      "name": "Медуза Горгона"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Женщина со змеями вместо волос, в руинах храма на побережье. Её укус отравляет."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Способности: её взгляд замедляет, а через 3 секунды начинает обращать в камень. Защита: щит в руке, тыква на голове или просто не смотрите на неё."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Как победить: харпа Персея ранит её вдвое сильнее. Роняет голову Медузы: ПКМ ею обращает в камень всех перед вами."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_medusa"
+}

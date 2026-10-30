@@ -1,0 +1,13 @@
+{
+  "name": "Поселение викингов",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_place",
+  "sortnum": 23,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Медовый зал, длинные дома, кузня и хижина вёльвы над фьордом. Здесь живут торговцы Севера, а в сундуках хранятся припасы и мёд."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_viking_village"
+}

@@ -1,0 +1,17 @@
+{
+  "name": "Булатное оружие",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_intro",
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Прочность 1700, скорость добычи 8 (алмаз 8), зачаровываемость 16. Добывает всё, что и алмазная кирка.$(br)Меч: урон 7.5, скорость атаки 1.6$(br)Топор: урон 9.5, скорость атаки 1"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Кирка: урон 5.5, скорость атаки 1.2$(br)Лопата: урон 6, скорость атаки 1$(br)Мотыга: урон 1, скорость атаки 4"
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/nav"
+}

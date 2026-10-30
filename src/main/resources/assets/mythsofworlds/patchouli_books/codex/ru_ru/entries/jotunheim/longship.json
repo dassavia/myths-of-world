@@ -1,0 +1,13 @@
+{
+  "name": "Драккар",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_place",
+  "sortnum": 24,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Корабль с головой дракона на носу, у берегов фьордов и в море. В трюме сундук с добычей набега."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_longship"
+}

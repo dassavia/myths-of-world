@@ -13,6 +13,18 @@ base {
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
+repositories {
+    // Curios API: the accessory slots (the wings of Daedalus and the elytra go in its back slot).
+    maven { url = 'https://maven.theillusivec4.top/' }
+    // Patchouli: the book library the Codex of Myths is built with.
+    maven { url = 'https://maven.blamejared.com/' }
+}
+
+dependencies {
+    implementation "top.theillusivec4.curios:curios-neoforge:${curios_version}"
+    implementation "vazkii.patchouli:Patchouli:${patchouli_version}"
+}
+
 neoForge {
     version = project.neo_version
 

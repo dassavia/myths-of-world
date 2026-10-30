@@ -1,0 +1,13 @@
+{
+  "name": "Сварга",
+  "icon": "minecraft:recovery_compass",
+  "category": "mythsofworlds:far_intro",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Джунгли вечного полдня, небо богов Индии. Путь туда ещё не найден."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/far"
+}

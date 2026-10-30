@@ -1,0 +1,26 @@
+{
+  "name": "Керинейская лань",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_creature",
+  "sortnum": 13,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:golden_hind",
+      "name": "Керинейская лань"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Священная лань Артемиды с золотыми рогами и медными копытами, в Рощах Аркадии. Геракл ловил её целый год."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Амазонки держат ручных ланей в загоне лагеря и во дворе Фемискиры."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Самый быстрый скакун Эллады. Приручается как лошадь."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_golden_hind"
+}

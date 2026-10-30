@@ -1,0 +1,13 @@
+{
+  "name": "Усадьба",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_place",
+  "sortnum": 39,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Белый дом с плоской крышей и синими ставнями, как на островах. Виноградный навес, олива, улей, амфоры, колодец и загон с козой. В сундуке оливки, мёд и хлеб."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_greek_farmstead"
+}

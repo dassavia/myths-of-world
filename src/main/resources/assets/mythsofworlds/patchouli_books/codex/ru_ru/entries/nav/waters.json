@@ -1,0 +1,17 @@
+{
+  "name": "Живая и мёртвая вода",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_intro",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Мёртвая вода сращивает раны: сопротивление II и поглощение III на минуту. Живая вода сразу лечит и даёт регенерацию II."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Обе продаёт Баба-яга, иногда их находят в сундуках. Каравай - сытный хлеб: три пшеницы, яйцо и мёд."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/nav"
+}

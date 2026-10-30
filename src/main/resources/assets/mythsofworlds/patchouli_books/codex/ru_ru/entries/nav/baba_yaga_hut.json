@@ -1,0 +1,13 @@
+{
+  "name": "Избушка на курьих ножках",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_place",
+  "sortnum": 18,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Избушка стоит к лесу передом, к путнику задом, а вокруг частокол с черепами. Внутри Баба-яга, печь, котёл и сундук со снадобьями."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_baba_yaga_hut"
+}

@@ -1,0 +1,17 @@
+{
+  "name": "Земли Йотунхейма",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_intro",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Ледяные пустоши и тайга великанов, лес Железного дерева, фьорды и холодное море. На юге тлеет разлом Муспельхейма, на севере стелются туманы Нифльхейма."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Где-то цветёт сад Идунн: её молодильные яблоки зреют на листве, как плоды. Ночи здесь длинные, и днём солнце прогоняет троллей под землю."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/jotunheim"
+}

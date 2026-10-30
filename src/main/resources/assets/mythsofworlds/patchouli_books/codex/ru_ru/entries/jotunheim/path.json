@@ -1,0 +1,14 @@
+{
+  "name": "Путь мира",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim",
+  "priority": true,
+  "sortnum": -1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Шаги этого мира по порядку. Каждый открывает новые страницы.$(br)$(li)Вы прошли по Биврёсту в Йотунхейм$(li)Вождь драугров повержен$(li)Гарм повержен$(li)Хеймдалль повержен$(li)Трим повержен$(li)Фенрир повержен$(li)Сурт повержен: путь героя пройден"
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/jotunheim"
+}

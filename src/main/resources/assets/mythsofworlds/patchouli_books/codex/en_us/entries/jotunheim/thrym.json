@@ -1,0 +1,30 @@
+{
+  "name": "Thrym, King of Giants",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_boss",
+  "sortnum": 19,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:thrym",
+      "name": "Thrym, King of Giants"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The lord of Utgard, who stole Thor's hammer. He breathes frost ahead of him and stamps so hard that everything around flies off."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Enraged, he calls two frost giants. Fire hurts him twice as much; do not stand right in front of him. Drops Mjolnir."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Thor was the bane of giants: Mjolnir strikes every giant and troll twice as hard, and Thrym, who stole it, three times as hard. Take it back and carry it to Muspelheim."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Mjolnir's lightning melts sand into glass and chars the grass and soil around it into black scorched earth."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_thrym"
+}

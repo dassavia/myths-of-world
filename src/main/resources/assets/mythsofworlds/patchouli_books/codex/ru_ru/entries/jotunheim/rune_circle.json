@@ -1,0 +1,13 @@
+{
+  "name": "Рунный круг",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_place",
+  "sortnum": 34,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Кольцо стоячих камней с горящими рунами. Здесь живут вороны, а в центре лежит сундук с подношениями."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_rune_circle"
+}

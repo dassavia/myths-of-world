@@ -1,0 +1,22 @@
+{
+  "name": "Ворон",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_creature",
+  "sortnum": 13,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:raven",
+      "name": "Ворон"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Чёрная птица, как Хугин и Мунин, вороны Одина. Живёт в тайге, фьордах и саду Идунн, никого не трогает."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Приручите ворона семенами, как попугая. Ручной ворон летает рядом и подсвечивает чудовищ вокруг хозяина, чтобы те не подкрались. Роняет перья."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_raven"
+}

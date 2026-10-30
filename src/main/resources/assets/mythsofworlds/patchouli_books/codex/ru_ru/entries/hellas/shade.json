@@ -1,0 +1,22 @@
+{
+  "name": "Тень умершего",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_creature",
+  "sortnum": 12,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:shade",
+      "name": "Тень умершего"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Полупрозрачная душа из Асфоделевых лугов и Стигийских топей. Переносится к убегающей жертве и лечится каждым ударом."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Как победить: не убегайте, а сражайтесь, и бейте часто. Иногда роняет эхо-осколок."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_shade"
+}

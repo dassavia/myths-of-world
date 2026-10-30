@@ -1,0 +1,13 @@
+{
+  "name": "Ores of Nav",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_intro",
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Bulat ore: y -56 to 48, about 8 veins a chunk of up to 7 blocks, in stone and deepslate. Needs an iron pickaxe; Fortune gives more."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/nav"
+}

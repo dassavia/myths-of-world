@@ -1,0 +1,13 @@
+{
+  "name": "Кощеев дуб",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_place",
+  "sortnum": 20,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Старый чёрный дуб, который стерегут волколаки. Высоко в ветвях стоит сундук, а в нём яйцо с Кощеевой смертью."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_koschei_oak"
+}

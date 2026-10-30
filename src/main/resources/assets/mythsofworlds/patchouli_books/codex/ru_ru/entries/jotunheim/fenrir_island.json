@@ -1,0 +1,13 @@
+{
+  "name": "Остров Люнгви",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_place",
+  "sortnum": 28,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Скала в Железном лесу, где боги сковали Фенрира. Цепи порваны, и волк ждёт вас. Не приходите без Глейпнира."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_fenrir_island"
+}

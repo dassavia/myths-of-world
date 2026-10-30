@@ -111,6 +111,16 @@ def tags():
                {"replace": False, "values": [f"{NS}:valkyrie_hall"]})
     g.add_tag("block", "mineable/shovel", ["scorched_earth"])
     self_loot("scorched_earth")
+    curios()
+
+
+def curios():
+    """The back slot of the Curios API: the slot, every player having one, and what can be worn in it."""
+    root = os.path.dirname(data())
+    write_json(data("curios", "slots", "back.json"), {"size": 1})
+    write_json(data("curios", "entities", "players.json"), {"entities": ["minecraft:player"], "slots": ["back"]})
+    write_json(os.path.join(root, "curios", "tags", "item", "back.json"),
+               {"replace": False, "values": ["minecraft:elytra", f"{NS}:wings_of_daedalus"]})
 
 
 def lang():
@@ -131,7 +141,6 @@ def textures():
         tr.save(layer(random.Random(name + "_layer")), assets("textures", "models", "armor", f"{name}_layer_1.png"))
     tr.save(tr.nemean_layer_1(random.Random("nemean_1")), assets("textures", "models", "armor", "nemean_layer_1.png"))
     tr.save(tr.nemean_layer_2(random.Random("nemean_2")), assets("textures", "models", "armor", "nemean_layer_2.png"))
-    tr.save(tr.empty_slot_back(), assets("textures", "item", "empty_slot_back.png"))
     tr.save(tr.scorched_earth(random.Random("scorched_earth")), assets("textures", "block", "scorched_earth.png"))
 
 

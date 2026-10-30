@@ -1,0 +1,26 @@
+{
+  "name": "Ceryneian Hind",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_creature",
+  "sortnum": 13,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:golden_hind",
+      "name": "Ceryneian Hind"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Sacred hind of Artemis with golden antlers and bronze hooves, in the Arcadian Grove. Heracles chased it for a whole year."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The amazons keep tame hinds in the pen of their camps and in the courtyard of Themiscyra."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The fastest mount in Hellas. Tame it like a horse."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_golden_hind"
+}

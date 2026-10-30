@@ -1,0 +1,16 @@
+{
+  "name": "The Sacred Pool",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_intro",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Dig a pool from 1x1 to 8x8 and fill it with still water. Rim it with Olympian marble (8 marble around a gold ingot) and put braziers on the 4 corners of the rim."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Light every brazier with the Promethean Torch (flint, gold, Olympian marble and a torch). The water turns gold: stand in it for 3 seconds. A brazier put out or broken closes the portal."
+    }
+  ]
+}

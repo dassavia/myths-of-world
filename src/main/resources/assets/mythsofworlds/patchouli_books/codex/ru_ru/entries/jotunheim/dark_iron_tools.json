@@ -1,0 +1,17 @@
+{
+  "name": "Тёмножелезное оружие",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_intro",
+  "sortnum": 5,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Прочность 2400, скорость добычи 8.5 (алмаз 8), зачаровываемость 14. Добывает всё, что и незеритовая кирка.$(br)Меч: урон 8.5, скорость атаки 1.6$(br)Топор: урон 10.5, скорость атаки 1"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Кирка: урон 6.5, скорость атаки 1.2$(br)Лопата: урон 7, скорость атаки 1$(br)Мотыга: урон 1, скорость атаки 4"
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/jotunheim"
+}

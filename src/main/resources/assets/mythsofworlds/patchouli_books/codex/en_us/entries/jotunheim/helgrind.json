@@ -1,0 +1,13 @@
+{
+  "name": "Gates of Hel",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_place",
+  "sortnum": 30,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Tall gates in the mists of Niflheim, the way to the realm of the dead. The hound Garm guards them."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_helgrind"
+}

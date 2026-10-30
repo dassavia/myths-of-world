@@ -1,0 +1,13 @@
+{
+  "name": "Врата Хель",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_place",
+  "sortnum": 30,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Высокие ворота в туманах Нифльхейма, за которыми царство мёртвых. Их сторожит пёс Гарм."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_helgrind"
+}

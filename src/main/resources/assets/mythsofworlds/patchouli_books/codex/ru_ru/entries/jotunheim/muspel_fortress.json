@@ -1,0 +1,13 @@
+{
+  "name": "Крепость Сурта",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_place",
+  "sortnum": 29,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Чёрная крепость за рвом лавы в разломе Муспельхейма. Внутри Сурт и огненные великаны. Возьмите воду, снежки и огнестойкость."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_muspel_fortress"
+}

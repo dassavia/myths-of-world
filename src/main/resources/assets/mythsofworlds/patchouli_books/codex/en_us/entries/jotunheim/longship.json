@@ -1,0 +1,13 @@
+{
+  "name": "Longship",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_place",
+  "sortnum": 24,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A ship with a dragon's head on the prow, off the fjords and out at sea. A chest of raiding loot lies in the hold."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_longship"
+}

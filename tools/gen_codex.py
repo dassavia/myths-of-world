@@ -1,4 +1,5 @@
-"""The Codex of Myths: the one book of the mod (Java side: codex/Codex.java, codex/client/CodexScreen.java).
+"""The Codex of Myths: the one book of the mod (Java side: codex/Codex.java and codex/CodexBook.java;
+tools/gen_book.py turns it into the Patchouli book).
 
 Writes data/mythsofworlds/journal/codex.json (the chapters, what opens each one and the steps of each world in their
 intended order), the volumes of the chapters that have no journal of their own ("path": the hero's path, gear tiers

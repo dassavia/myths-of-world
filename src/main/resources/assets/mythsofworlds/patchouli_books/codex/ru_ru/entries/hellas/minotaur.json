@@ -1,0 +1,26 @@
+{
+  "name": "Минотавр",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_boss",
+  "sortnum": 22,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:minotaur",
+      "name": "Минотавр"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Человек с головой быка, 300 здоровья. Заперт в арене в дальнем углу подземного лабиринта."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Способности: таранит рогами. Ниже половины здоровья впадает в ярость: бегает быстрее и таранит вдвое чаще."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Как победить: уворачивайтесь от тарана в сторону и бейте в спину. Возьмите нить, то есть оставляйте метки, чтобы найти выход. Роняет рог, золото и алмазы."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_minotaur"
+}

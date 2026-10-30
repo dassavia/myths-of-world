@@ -1,0 +1,13 @@
+{
+  "name": "Hut on Chicken Legs",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_place",
+  "sortnum": 18,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The hut stands with its front to the forest and its back to the traveller, behind a fence of skulls. Inside are Baba Yaga, a stove, a cauldron and a chest of potions."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_baba_yaga_hut"
+}

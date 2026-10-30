@@ -356,19 +356,6 @@ def nemean_layer_2(rng):
 LAYERS = {"talaria": talaria_layer, "titan_breastplate": titan_layer, "heimdall_helmet": heimdall_layer}
 
 
-def empty_slot_back():
-    """Faint outline of a pair of wings, shown in the empty back slot like the vanilla armour outlines."""
-    img = Image.new("RGBA", (16, 16), (0, 0, 0, 0))
-    edge = (255, 255, 255, 70)
-    for side in (1, -1):
-        cx = 8
-        points = [(0, 1), (1, 2), (2, 2), (3, 3), (4, 4), (5, 6), (6, 9), (6, 12), (5, 13), (4, 11), (3, 9), (2, 7), (1, 5)]
-        for dx, y in points:
-            x = cx + side * dx - (1 if side < 0 else 0)
-            img.putpixel((x, y + 1), edge)
-    return img
-
-
 # ---------------------------------------------------------------- blocks
 
 def scorched_earth(rng):

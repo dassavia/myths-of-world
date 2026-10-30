@@ -26,7 +26,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
 
 /**
  * The hero's path through the myths. Milestones are earned by entering a world ({@code enter.hellas}) and by felling
@@ -53,14 +52,14 @@ public final class Progress {
     private Progress() {
     }
 
-    /** Gives {@code player} the milestone; tells them and updates their Codex if it is new. */
+    /** Gives {@code player} the milestone; tells them and opens its pages in the Codex if it is new. */
     public static void award(ServerPlayer player, String milestone) {
         if (PlayerData.addMilestone(player, milestone)) {
             player.displayClientMessage(Component.translatable("codex.mythsofworlds.milestone",
                     Component.translatable("codex.mythsofworlds.milestone." + milestone)).withStyle(ChatFormatting.GOLD), false);
             player.level().playSound(null, player.blockPosition(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundSource.PLAYERS,
                     0.5F, 1.2F);
-            sync(player);
+            CodexBook.sync(player);
         }
     }
 
@@ -73,12 +72,6 @@ public final class Progress {
                 }
             }
         }
-    }
-
-    /** Sends the player's journal entries and milestones to their client, for the Codex screen. */
-    public static void sync(ServerPlayer player) {
-        PacketDistributor.sendToPlayer(player, new CodexSyncPayload(List.copyOf(player.getData(PlayerData.JOURNAL)),
-                List.copyOf(player.getData(PlayerData.MILESTONES))));
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -103,7 +96,7 @@ public final class Progress {
         }
     }
 
-    /** Every hero gets the Codex the first time they join, and their progress is sent along. */
+    /** Every hero gets the Codex the first time they join, and its pages are brought up to date. */
     @SubscribeEvent
     public static void onLogin(PlayerEvent.PlayerLoggedInEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) {
@@ -115,14 +108,7 @@ public final class Progress {
                 player.drop(codex, false);
             }
         }
-        sync(player);
-    }
-
-    @SubscribeEvent
-    public static void onRespawn(PlayerEvent.PlayerRespawnEvent event) {
-        if (event.getEntity() instanceof ServerPlayer player) {
-            sync(player);
-        }
+        CodexBook.sync(player);
     }
 
     /** Whether {@code player} has everything {@code requires} lists. Creative players have walked every path. */

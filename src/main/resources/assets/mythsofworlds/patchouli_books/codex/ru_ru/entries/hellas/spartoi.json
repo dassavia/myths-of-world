@@ -1,0 +1,22 @@
+{
+  "name": "Спарт",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_creature",
+  "sortnum": 11,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:spartoi",
+      "name": "Спарт"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Воин в бронзе, выросший из зубов дракона, посеянных Кадмом. Бродит по ночам по полям мёртвых и сторожит тупики лабиринта."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Особенность: один раз встаёт снова после смерти. Добейте его ещё раз. Роняет кости и железные самородки."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_spartoi"
+}

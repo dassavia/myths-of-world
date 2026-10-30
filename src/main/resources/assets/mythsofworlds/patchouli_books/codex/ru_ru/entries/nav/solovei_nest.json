@@ -1,0 +1,13 @@
+{
+  "name": "Гнездо Соловья",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_place",
+  "sortnum": 21,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Помост на девяти дубах, увитый ветвями. Лестница ведёт наверх, где сидит Соловей-разбойник с награбленным добром."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_solovei_nest"
+}

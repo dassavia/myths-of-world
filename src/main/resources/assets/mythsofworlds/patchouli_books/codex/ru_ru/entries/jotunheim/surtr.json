@@ -1,0 +1,26 @@
+{
+  "name": "Сурт",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_boss",
+  "sortnum": 22,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:surtr",
+      "name": "Сурт"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Огненный великан с пылающим мечом, владыка Муспельхейма. Мечет огненные шары, разжигает вокруг себя кольцо пламени."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Разгневанный, обрушивает огненный дождь. Снежки, вода и молнии Мьёльнира ранят его сильнее. Возьмите зелья огнестойкости. Роняет меч Сурта."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Жар Сурта притупляет клинки и стрелы: они ранят его вдвое слабее. Держите во второй руке сердце инея, добытое у инеистых великанов, - и оружие бьёт в полную силу."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_surtr"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Варг",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_creature",
+  "sortnum": 9,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:warg",
+      "name": "Варг"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Огромный волк Железного леса, родня Фенрира. Охотится стаями: ударите одного - бросится вся стая. Прыгает на добычу издалека."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Как победить: держитесь спиной к стене, бейте по одному и не убегайте по открытому снегу. Роняет кожу и кости."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_warg"
+}

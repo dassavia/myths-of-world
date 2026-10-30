@@ -1,0 +1,22 @@
+{
+  "name": "Pegasus of the Valkyries",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_creature",
+  "sortnum": 16,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:pegasus",
+      "name": "Pegasus of the Valkyries"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "White winged horse on which the valkyries carry fallen heroes to Valhalla. Grazes in the fjords and the giants' taiga; two always stand in the stable of a valkyrie hall."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Tame it like a horse; the stable ones are tame already. It jumps very high and glides gently down. Put a saddle on it."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_pegasus"
+}

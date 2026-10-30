@@ -1,0 +1,21 @@
+{
+  "name": "Sets of the Gods",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_intro",
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Armour of different mythologies adds up to a set. Hellas: orichalcum, the Nemean lion set, the girdle of Hippolyta, the talaria, the Titan's breastplate. Jotunheim: dark iron, the helmet of Heimdall."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Union of the pantheons (both mythologies): 2 pieces give Haste, 3 also Fire Resistance, 4 also Regeneration. Two and two also give Resistance."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Hellas only, 4 pieces: Speed and Jump Boost. Jotunheim only, 4 pieces: Strength and Resistance."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/jotunheim"
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Кузня двергов",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_place",
+  "sortnum": 31,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Мастерская в скале, где дверги куют оружие. Здесь продают Глейпнир и алмазное снаряжение."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_dwarf_forge"
+}

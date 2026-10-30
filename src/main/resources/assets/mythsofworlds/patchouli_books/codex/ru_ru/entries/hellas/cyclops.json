@@ -1,0 +1,22 @@
+{
+  "name": "Циклоп",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_boss",
+  "sortnum": 18,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:cyclops",
+      "name": "Циклоп"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Одноглазый великан ростом с дом. Пасёт овец в пещере и не трогает путников, пока его не ударят."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Способности: топает и подбрасывает всех вокруг, бьёт очень сильно. Как победить: держитесь на расстоянии, стреляйте и отбегайте, когда он поднимает ногу. Роняет глаз циклопа."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_cyclops"
+}

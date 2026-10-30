@@ -832,5 +832,6 @@
   "hud.mythsofworlds.world.jotunheim": "Йотунхейм",
   "hud.mythsofworlds.world.hawaiki": "Гаваики",
   "hud.mythsofworlds.world.duat": "Дуат",
-  "hud.mythsofworlds.world.svarga": "Сварга"
+  "hud.mythsofworlds.world.svarga": "Сварга",
+  "book.mythsofworlds.codex.landing": "Здесь записано всё, что вы узнали о мире мифов. Встречайте существ, побеждайте чудовищ и находите места, и страницы откроются сами.$(br2)Главы миров открываются по мере прохождения пути героя. В творческом режиме открыто всё."
 }

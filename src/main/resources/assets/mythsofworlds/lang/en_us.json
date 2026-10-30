@@ -832,5 +832,6 @@
   "hud.mythsofworlds.world.jotunheim": "Jotunheim",
   "hud.mythsofworlds.world.hawaiki": "Hawaiki",
   "hud.mythsofworlds.world.duat": "Duat",
-  "hud.mythsofworlds.world.svarga": "Svarga"
+  "hud.mythsofworlds.world.svarga": "Svarga",
+  "book.mythsofworlds.codex.landing": "Everything you have learned of the world of myths is written here. Meet creatures, defeat monsters and find places, and the pages open by themselves.$(br2)The chapters of the worlds open as you walk the hero's path. In creative mode everything is open."
 }

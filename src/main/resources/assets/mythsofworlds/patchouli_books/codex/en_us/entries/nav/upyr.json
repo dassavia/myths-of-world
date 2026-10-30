@@ -1,0 +1,18 @@
+{
+  "name": "Upyr",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_creature",
+  "sortnum": 9,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:upyr",
+      "name": "Upyr"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "A dead man who drinks the blood of the living: every bite heals him. The sun burns an upyr, but in the dusk of Nav he has nothing to fear. A smith forges a sword from upyr fangs."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_upyr"
+}

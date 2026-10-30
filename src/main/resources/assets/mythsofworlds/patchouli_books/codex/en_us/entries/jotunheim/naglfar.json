@@ -1,0 +1,13 @@
+{
+  "name": "Naglfar",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_place",
+  "sortnum": 25,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The ship of the dead, built from nails. It sails the open sea with a crew of draugr. Take it: its rich chest is worth it."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_naglfar"
+}

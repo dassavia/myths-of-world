@@ -1,0 +1,22 @@
+{
+  "name": "Тролль",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_creature",
+  "sortnum": 10,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:troll",
+      "name": "Тролль"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Каменная громада тайги и Железного леса. Бьёт сильно и сам залечивает раны, пока его не обожгут огнём. Днём прячется в тени."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Главная слабость - солнце: тролль на солнечном свете обращается в камень и оставляет клык. Заманите его на открытое место на рассвете."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_troll"
+}

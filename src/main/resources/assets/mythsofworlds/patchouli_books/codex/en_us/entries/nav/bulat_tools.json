@@ -1,0 +1,17 @@
+{
+  "name": "Bulat Tools",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_intro",
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Durability 1700, mining speed 8 (diamond 8), enchantability 16. Mines everything a diamond pickaxe does.$(br)Sword: damage 7.5, attack speed 1.6$(br)Axe: damage 9.5, attack speed 1"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Pickaxe: damage 5.5, attack speed 1.2$(br)Shovel: damage 6, attack speed 1$(br)Hoe: damage 1, attack speed 4"
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/nav"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Harpy",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_creature",
+  "sortnum": 10,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:harpy",
+      "name": "Harpy"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Bird-woman with bronze feathers, in the mountains of Olympus and on the coast. She swoops from above, steals food right out of your pack and flies off."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "How to beat: shoot her with a bow while she circles. Kill the thief to get your food back. Drops harpy feathers: with honeycomb they make the wings of Daedalus."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_harpy"
+}

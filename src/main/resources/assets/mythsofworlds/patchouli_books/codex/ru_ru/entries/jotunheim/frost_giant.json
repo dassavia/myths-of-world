@@ -1,0 +1,22 @@
+{
+  "name": "Инеистый великан",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_creature",
+  "sortnum": 11,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:frost_giant",
+      "name": "Инеистый великан"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Хримтурс ледяных пустошей ростом с два дома. Его удар замораживает: вы двигаетесь медленно и покрываетесь инеем."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Как победить: огонь вдвое сильнее против него. Берите меч с заговором огня и горящие стрелы. Иногда роняет сердце мороза."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_frost_giant"
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Lair of Medusa",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_place",
+  "sortnum": 31,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A ruined temple on the coast. Among the columns stand heroes turned to stone: statues of those who met her eyes. Bring a shield or a pumpkin."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_medusa_lair"
+}

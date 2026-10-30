@@ -1,0 +1,18 @@
+{
+  "name": "Русалка",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_creature",
+  "sortnum": 11,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:rusalka",
+      "name": "Русалка"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Бледная дева с зелёными волосами в болотах и у моря. Её песня тянет вас к ней, а холодное прикосновение отнимает силу рук. Под водой она плавает быстро."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_rusalka"
+}

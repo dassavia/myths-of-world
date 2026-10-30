@@ -1,0 +1,21 @@
+{
+  "name": "Gifts from the Tales",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_intro",
+  "sortnum": 6,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Sword kladenets: damage 8.5, attack speed 1.6, durability 1700, fireproof. Every blow also cuts the foes around: 6 damage within 3 blocks."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Seven-league boots: armour 3, toughness 2, durability 390. Speed III and Jump Boost.$(br)Cap of invisibility: armour 3, toughness 2, durability 330. While you sneak, no one can see you."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Elytra and the wings of Daedalus can go in the back slot (right of the player in the inventory) together with a chestplate: they fly and work just the same."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/nav"
+}

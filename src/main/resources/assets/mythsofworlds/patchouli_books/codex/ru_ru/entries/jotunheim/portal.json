@@ -1,0 +1,17 @@
+{
+  "name": "Врата Биврёста",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_intro",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Сложите рамку из рунных камней, как для портала в Незер: внутри от 2 до 21x21 блоков пустоты. Рунный камень: 8 каменных кирпичей вокруг лазурита."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Зажгите рамку рунным огнивом (кремень, рунный камень, клык Цербера и чешуя Змея Горыныча). Внутри засияет радуга Биврёста: войдите в неё. Ломаете рамку - гаснет портал."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/jotunheim"
+}

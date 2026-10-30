@@ -1,0 +1,17 @@
+{
+  "name": "Земли Нави",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_intro",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Над Навью вечные сумерки. Дремучий лес и берёзовые рощи, кикиморино болото, дикое поле и море-Окиян."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "На юге течёт огненная река Смородина, через неё перекинут Калинов мост. На севере лежит Кощеево царство: серая земля, мёртвые деревья и кости."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/nav"
+}

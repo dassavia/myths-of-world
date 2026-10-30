@@ -1,0 +1,17 @@
+{
+  "name": "Лабиринт Минотавра",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_place",
+  "sortnum": 28,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "На поверхности видно только вход: портик с красными колоннами и чёрными капителями, а на крыше рога. Под ним винтовая лестница уходит на 20 блоков вниз."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Внизу лабиринт 61x61 из кирпичей, которые ничем не сломать. Вход в центре, арена Минотавра в дальнем углу. В тупиках спарты и тайники с сокровищами."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_labyrinth"
+}

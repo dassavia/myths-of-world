@@ -1,0 +1,16 @@
+{
+  "name": "Orichalcum and Hephaestus Coal",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_intro",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Deep in the stone of Hellas lies orichalcum, the red gold of Atlantis. It needs an iron pickaxe; smelt the raw metal into ingots. Orichalcum gear is stronger than iron and takes enchantments well."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Higher in the mountains you find Hephaestus coal from the god's forges under the earth. In a furnace it burns twice as long as ordinary coal."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "Dark Iron and Embers",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_intro",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Deep in the stone of Jotunheim lies the dwarves' dark iron ore. It needs an iron pickaxe; smelt the raw metal into ingots. They make the toughest weapons, tools and armour."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "In the rift of Muspelheim, embers smoulder in the stone. In a furnace they burn three times as long as coal, and valkyries prize them as trophies."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/jotunheim"
+}

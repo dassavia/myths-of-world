@@ -1,0 +1,22 @@
+{
+  "name": "Огненный великан",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_creature",
+  "sortnum": 12,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:fire_giant",
+      "name": "Огненный великан"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Сын Муспельхейма из огненного разлома. Бросает огненные шары и поджигает ударом. Огонь и лава ему не вредят."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Как победить: снежки ранят его сильно, а вода жжёт. Ведро воды и запас снежков - лучшее оружие. Иногда роняет уголь Муспеля."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_fire_giant"
+}

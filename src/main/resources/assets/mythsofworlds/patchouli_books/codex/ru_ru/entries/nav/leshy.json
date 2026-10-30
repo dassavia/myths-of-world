@@ -1,0 +1,22 @@
+{
+  "name": "Леший",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_creature",
+  "sortnum": 7,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:leshy",
+      "name": "Леший"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Хозяин леса, высокий старик из коры и мха. Не трогайте его, и он не тронет вас."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Разгневанный леший бьёт больно, а каждый удар ослепляет и уводит: вы оказываетесь в другом месте его леса. Иногда роняет жёлудь Мирового древа."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_leshy"
+}

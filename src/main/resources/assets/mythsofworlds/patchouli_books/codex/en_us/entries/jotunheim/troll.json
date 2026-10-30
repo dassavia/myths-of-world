@@ -1,0 +1,22 @@
+{
+  "name": "Troll",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_creature",
+  "sortnum": 10,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:troll",
+      "name": "Troll"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "A stone hulk of the taiga and the Ironwood. He hits hard and heals his wounds by himself, unless fire burns him. By day he hides in the shade."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "His great weakness is the sun: a troll in sunlight turns to stone and leaves a tusk behind. Lure him into the open at dawn."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_troll"
+}

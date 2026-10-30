@@ -1,0 +1,13 @@
+{
+  "name": "Barrow",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_place",
+  "sortnum": 26,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A grassy mound with a stone entrance. The draugr chieftain sleeps inside with his warband, beside his hoard of gold and enchanted weapons."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_barrow"
+}

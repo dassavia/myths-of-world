@@ -1,0 +1,22 @@
+{
+  "name": "Warg",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_creature",
+  "sortnum": 9,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:warg",
+      "name": "Warg"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "A huge wolf of the Ironwood, kin of Fenrir. They hunt in packs: hit one and the whole pack charges. It leaps at its prey from afar."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "How to beat: keep your back to a wall, fight them one at a time and do not run across open snow. Drops leather and bones."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_warg"
+}

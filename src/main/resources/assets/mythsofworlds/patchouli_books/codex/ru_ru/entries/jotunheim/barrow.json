@@ -1,0 +1,13 @@
+{
+  "name": "Курган",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_place",
+  "sortnum": 26,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Травяной холм с каменным входом. Внутри спит вождь драугров с дружиной и лежит его клад: золото и зачарованное оружие."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_barrow"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Lion",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_creature",
+  "sortnum": 16,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:lion",
+      "name": "Lion"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "A pride of lions lives in the Nemean Forest. They hunt sheep, goats and rabbits and leave people alone."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Careful: hurt one and the whole pride comes for you. They breed on raw beef. Drop leather and meat."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_lion"
+}

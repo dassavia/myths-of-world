@@ -1,0 +1,22 @@
+{
+  "name": "Пегас валькирий",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_creature",
+  "sortnum": 16,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:pegasus",
+      "name": "Пегас валькирий"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Белый крылатый конь, на котором валькирии уносят павших героев в Вальхаллу. Пасётся во фьордах и в тайге великанов, двое всегда стоят в конюшне чертога валькирий."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Приручается как лошадь, конюшенные уже ручные. Высоко прыгает и плавно планирует. Наденьте седло."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_pegasus"
+}

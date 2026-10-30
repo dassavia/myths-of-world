@@ -1,0 +1,22 @@
+{
+  "name": "Жар-птица",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_creature",
+  "sortnum": 12,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:firebird",
+      "name": "Жар-птица"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Птица с перьями как жар. Погладьте её пустой рукой, и она уронит перо - раз в две минуты. Перо в руке освещает сумерки: ночное зрение."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Приручите её семенами, как ворона: она летает за вами и подсвечивает чудищ вокруг. Живёт в рощах и у капищ."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_firebird"
+}

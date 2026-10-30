@@ -1,0 +1,13 @@
+{
+  "name": "Isle of Lyngvi",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_place",
+  "sortnum": 28,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The rock in the Ironwood where the gods bound Fenrir. The chains are broken and the wolf awaits. Do not come without Gleipnir."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_fenrir_island"
+}

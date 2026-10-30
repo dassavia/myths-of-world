@@ -1,0 +1,17 @@
+{
+  "name": "Bulat Armour",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_intro",
+  "sortnum": 5,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Helmet: armour 3, durability 374$(br)Chestplate: armour 8, durability 544$(br)Leggings: armour 6, durability 510$(br)Boots: armour 3, durability 442"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Whole set: armour 20, toughness 2 a piece. Enchantability 16."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/nav"
+}

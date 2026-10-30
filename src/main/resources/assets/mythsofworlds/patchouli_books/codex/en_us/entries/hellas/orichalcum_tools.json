@@ -1,0 +1,16 @@
+{
+  "name": "Orichalcum Tools",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_intro",
+  "sortnum": 5,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Durability 900, mining speed 7 (diamond 8), enchantability 22. Mines everything an iron pickaxe does.$(br)Sword: damage 6.5, attack speed 1.6$(br)Axe: damage 8.5, attack speed 1"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Pickaxe: damage 4.5, attack speed 1.2$(br)Shovel: damage 5, attack speed 1$(br)Hoe: damage 1, attack speed 4"
+    }
+  ]
+}

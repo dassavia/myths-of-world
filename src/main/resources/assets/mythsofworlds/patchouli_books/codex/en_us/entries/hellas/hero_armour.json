@@ -1,0 +1,24 @@
+{
+  "name": "Armour of the Heroes",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_intro",
+  "sortnum": 8,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Nemean lion set (pelt, leather, claws, gold): helmet 2, chest 7, legs 5, paws 2, toughness 1.5, knockback -10%."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Durability 363/528/495/429. Whole set: Strength, arrows and projectiles cannot wound you.$(br)Talaria of Hermes: armour 3, durability 390; Speed II, Jump Boost II, double jump, no fall damage."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Titan's breastplate: armour 7, toughness 1.5, knockback -20%, durability 640, fireproof; Strength and Resistance.$(br)Girdle of Hippolyta: armour 3 in place of leggings; Strength II, Resistance II, Speed, Regeneration."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Wings of Daedalus: durability 240, a high jump and a gentle glide, melt above y 200 by day.$(br)Elytra and the wings of Daedalus can go in the back slot (right of the player in the inventory) together with a chestplate: they fly and work just the same."
+    }
+  ]
+}

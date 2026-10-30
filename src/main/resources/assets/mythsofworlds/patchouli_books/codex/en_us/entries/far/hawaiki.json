@@ -1,0 +1,13 @@
+{
+  "name": "Hawaiki",
+  "icon": "minecraft:recovery_compass",
+  "category": "mythsofworlds:far_intro",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A warm sea and the islands of the Polynesian ancestors. No way there has been found yet."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/far"
+}

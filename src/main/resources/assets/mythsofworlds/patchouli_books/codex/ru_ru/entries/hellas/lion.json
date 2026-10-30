@@ -1,0 +1,22 @@
+{
+  "name": "Лев",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_creature",
+  "sortnum": 16,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:lion",
+      "name": "Лев"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Прайд львов живёт в Немейском лесу. Львы охотятся на овец, коз и кроликов и не трогают людей."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Осторожно: если ранить одного, на вас бросится весь прайд. Размножаются на сырой говядине. Роняют кожу и мясо."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_lion"
+}

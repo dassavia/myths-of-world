@@ -1,0 +1,26 @@
+{
+  "name": "Koschei the Deathless",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_boss",
+  "sortnum": 16,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:koschei",
+      "name": "Koschei the Deathless"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The bony sorcerer-king in his black castle. His blow withers, and wounded, he raises upyri from the earth."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Koschei cannot be killed: he gets up again. His death is at the tip of a needle, the needle in an egg, the egg in a chest on an old oak. Find Koschei's oak."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Break the egg (right-click) and carry the needle. Then the last blow kills Koschei, and the needle breaks. He drops the cap of invisibility."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_koschei"
+}

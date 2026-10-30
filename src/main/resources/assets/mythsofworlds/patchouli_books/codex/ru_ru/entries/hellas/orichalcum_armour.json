@@ -1,0 +1,16 @@
+{
+  "name": "Орихалковая броня",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_intro",
+  "sortnum": 6,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Шлем: броня 2, прочность 242$(br)Нагрудник: броня 7, прочность 352$(br)Поножи: броня 5, прочность 330$(br)Сапоги: броня 2, прочность 286"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Весь комплект: броня 16, твёрдость 1 за вещь. Зачаровываемость 22."
+    }
+  ]
+}

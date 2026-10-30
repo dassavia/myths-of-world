@@ -1,0 +1,17 @@
+{
+  "name": "The Lands of Jotunheim",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_intro",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Frost wastes and the giants' taiga, the Ironwood forest, the fjords and a cold sea. In the south the rift of Muspelheim smoulders, in the north the mists of Niflheim creep."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Somewhere Idunn's orchard blooms: her apples of youth ripen on the leaves like fruit. The nights are long, and by day the sun drives the trolls under the earth."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/jotunheim"
+}

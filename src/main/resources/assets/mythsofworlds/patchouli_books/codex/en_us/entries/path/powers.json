@@ -1,0 +1,20 @@
+{
+  "name": "Powers of the Armour",
+  "icon": "mythsofworlds:codex",
+  "category": "mythsofworlds:path_intro",
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The armour and weapons of the myths have powers the plain game lacks. They show in the item's tooltip and add up over everything you wear."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Reflection: that share of a melee blow strikes the attacker back.$(br)Lifesteal: that share of the damage you deal heals you.$(br)Monster slaying: more damage to the creatures and gods of the myths."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Divine ward: less damage from the creatures and gods of the myths.$(br)Evasion: a chance that a blow or an arrow misses.$(br)Fury: more damage while you are at half health or less."
+    }
+  ]
+}

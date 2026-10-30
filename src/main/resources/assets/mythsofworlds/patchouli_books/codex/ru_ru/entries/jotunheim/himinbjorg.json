@@ -1,0 +1,13 @@
+{
+  "name": "Химинбьёрг",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_place",
+  "sortnum": 32,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Чертог Хеймдалля на высокой террасе, со сторожевой башней. От ворот вниз сбегает радужный мост Биврёст, у его начала стоит сам страж богов."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_himinbjorg"
+}

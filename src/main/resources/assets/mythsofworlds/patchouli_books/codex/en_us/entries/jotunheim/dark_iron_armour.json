@@ -1,0 +1,17 @@
+{
+  "name": "Dark Iron Armour",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_intro",
+  "sortnum": 6,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Helmet: armour 3, durability 440$(br)Chestplate: armour 8, durability 640$(br)Leggings: armour 6, durability 600$(br)Boots: armour 3, durability 520"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Whole set: armour 20, toughness 3.5 a piece, knockback -10% a piece. Enchantability 14."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/jotunheim"
+}

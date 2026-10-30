@@ -1,0 +1,22 @@
+{
+  "name": "Solovei the Robber",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_boss",
+  "sortnum": 14,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:solovei",
+      "name": "Solovei the Robber"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "He sits in his nest on nine oaks over the road. His whistle is a storm: everyone around is hurt, thrown far back and dazed. Wounded, he whistles more often."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Stay close or shoot from afar, beyond 16 blocks the whistle cannot reach. He drops the seven-league boots."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_solovei"
+}

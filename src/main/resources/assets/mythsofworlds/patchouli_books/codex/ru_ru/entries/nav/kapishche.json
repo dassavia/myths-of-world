@@ -1,0 +1,13 @@
+{
+  "name": "Капище",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_place",
+  "sortnum": 19,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Круг деревянных идолов старых богов: Перун, Велес, Мокошь и Даждьбог смотрят на священный огонь. Здесь живут Жар-птицы."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_kapishche"
+}

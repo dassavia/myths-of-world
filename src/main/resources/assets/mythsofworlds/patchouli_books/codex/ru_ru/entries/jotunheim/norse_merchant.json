@@ -1,0 +1,22 @@
+{
+  "name": "Торговцы Севера",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_creature",
+  "sortnum": 14,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:norse_merchant",
+      "name": "Торговцы Севера"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Живут в поселениях викингов и кузнях. Управитель медового зала скупает трофеи и продаёт мёд. Двергкузнец меняет трофеи на алмазное снаряжение."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Дверг продаёт и Глейпнир - путы для Фенрира. Вёльва продаёт яблоки Идунн, рунное огниво, зелья и резные рунные камни."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_norse_merchant"
+}

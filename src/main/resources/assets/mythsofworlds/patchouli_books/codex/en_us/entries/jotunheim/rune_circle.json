@@ -1,0 +1,13 @@
+{
+  "name": "Rune Circle",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_place",
+  "sortnum": 34,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A ring of standing stones with glowing runes. Ravens live here, and a chest of offerings lies in the centre."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_rune_circle"
+}

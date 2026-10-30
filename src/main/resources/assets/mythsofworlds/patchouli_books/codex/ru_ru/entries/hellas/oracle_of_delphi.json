@@ -1,0 +1,13 @@
+{
+  "name": "Дельфийский оракул",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_place",
+  "sortnum": 27,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Круглое святилище Аполлона в Аркадии и горах. В сундуках пифии: склянки, светокамень, аметист, книги чар и бутыльки опыта."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_oracle_of_delphi"
+}

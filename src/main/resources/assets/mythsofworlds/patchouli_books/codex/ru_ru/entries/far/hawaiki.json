@@ -1,0 +1,13 @@
+{
+  "name": "Гаваики",
+  "icon": "minecraft:recovery_compass",
+  "category": "mythsofworlds:far_intro",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Тёплое море и острова предков Полинезии. Путь туда ещё не найден."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/far"
+}

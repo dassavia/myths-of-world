@@ -1,53 +1,37 @@
 package com.mythsofworlds.core.back;
 
-import com.mojang.datafixers.util.Pair;
 import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.mythology.greek.item.WingsItem;
-import java.util.Map;
-import java.util.WeakHashMap;
-import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.InventoryMenu;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.GameRules;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.attachment.AttachmentType;
-import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
-import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import net.neoforged.neoforge.network.PacketDistributor;
-import org.jetbrains.annotations.Nullable;
+import top.theillusivec4.curios.api.CuriosApi;
 
 import static com.mythsofworlds.registry.ModRegistries.ATTACHMENT_TYPES;
 
 /**
- * A slot on the back, next to the player in the inventory, for an elytra or the wings of Daedalus: wear them over a
- * chestplate. An elytra on the back flies whenever the chest slot holds nothing that can fly (see the mixins in
- * com.mythsofworlds.mixin); the wings work from the back as from the chest. The slot is kept on death with
- * keepInventory and dropped otherwise, and every player nearby sees what you carry on your back ({@link BackPayload}).
+ * The back slot for an elytra or the wings of Daedalus, worn over a chestplate. The slot itself is the "back" slot of
+ * the Curios API (data/mythsofworlds/curios: the slot, the player having it, and the items allowed in it through the
+ * curios:back tag), so it shows in the Curios inventory with the other accessories, is kept or dropped on death the
+ * way Curios does it and is seen by every player nearby. An elytra on the back flies whenever the chest slot holds
+ * nothing that can fly (see the mixins in com.mythsofworlds.mixin); the wings work from the back as from the chest.
  */
 @EventBusSubscriber(modid = MythsOfWorlds.MODID)
 public final class BackSlot {
-    public static final Supplier<AttachmentType<ItemStackHandler>> BACK = ATTACHMENT_TYPES.register("back",
+    public static final String CURIOS_SLOT = "back";
+    /**
+     * The slot of the mod before 0.12, kept only to hand back what a player had in it: on login it moves into the
+     * Curios slot, or into the inventory if that is taken.
+     */
+    public static final Supplier<AttachmentType<ItemStackHandler>> OLD_BACK = ATTACHMENT_TYPES.register("back",
             () -> AttachmentType.serializable(() -> new ItemStackHandler(1)).copyOnDeath().build());
-    /** Where the slot sits in the survival inventory, next to the offhand slot. */
-    public static final int X = 77;
-    public static final int Y = 44;
-    public static final ResourceLocation EMPTY_ICON = MythsOfWorlds.id("item/empty_slot_back");
-    /** True on the client while a screen is open that has no room for the slot (the creative inventory). */
-    public static BooleanSupplier hidden = () -> false;
-
-    private static final Map<Player, ItemStack> SENT = new WeakHashMap<>();
 
     private BackSlot() {
     }
@@ -55,13 +39,19 @@ public final class BackSlot {
     public static void init() {
     }
 
-    /** What {@code player} carries on the back (the stack itself, not a copy). */
-    public static ItemStack get(Player player) {
-        return player.getData(BACK).getStackInSlot(0);
+    /** What {@code entity} carries on the back, or an empty stack. */
+    public static ItemStack get(LivingEntity entity) {
+        return CuriosApi.getCuriosInventory(entity)
+                .flatMap(inventory -> inventory.getStacksHandler(CURIOS_SLOT))
+                .filter(handler -> handler.getSlots() > 0)
+                .map(handler -> handler.getStacks().getStackInSlot(0))
+                .filter(BackSlot::canWear)
+                .orElse(ItemStack.EMPTY);
     }
 
-    public static void set(Player player, ItemStack stack) {
-        player.getData(BACK).setStackInSlot(0, stack);
+    /** Puts {@code stack} on the back of {@code entity}, if it has a back slot. */
+    public static void set(LivingEntity entity, ItemStack stack) {
+        CuriosApi.getCuriosInventory(entity).ifPresent(inventory -> inventory.setEquippedCurio(CURIOS_SLOT, 0, stack));
     }
 
     /** Whether {@code stack} can be worn on the back: an elytra or the wings of Daedalus. */
@@ -84,109 +74,20 @@ public final class BackSlot {
     }
 
     @SubscribeEvent
-    public static void onDrops(LivingDropsEvent event) {
-        if (!(event.getEntity() instanceof Player player) || player.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
+    public static void onLogin(PlayerEvent.PlayerLoggedInEvent event) {
+        Player player = event.getEntity();
+        if (!player.hasData(OLD_BACK)) {
             return;
         }
-        ItemStack back = get(player);
-        if (!back.isEmpty()) {
-            ItemEntity drop = new ItemEntity(player.level(), player.getX(), player.getEyeY() - 0.3, player.getZ(), back.copy());
-            drop.setPickUpDelay(40);
-            event.getDrops().add(drop);
-            set(player, ItemStack.EMPTY);
-        }
-    }
-
-    @SubscribeEvent
-    public static void onPlayerTick(PlayerTickEvent.Post event) {
-        if (!(event.getEntity() instanceof ServerPlayer player)) {
+        ItemStack old = player.getData(OLD_BACK).getStackInSlot(0).copy();
+        player.removeData(OLD_BACK);
+        if (old.isEmpty()) {
             return;
         }
-        ItemStack back = get(player);
-        if (player.tickCount % 10 == 0) {
-            ItemStack sent = SENT.get(player);
-            if (sent == null || !ItemStack.matches(sent, back)) {
-                SENT.put(player, back.copy());
-                PacketDistributor.sendToPlayersTrackingEntityAndSelf(player, new BackPayload(player.getId(), back.copy()));
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public static void onStartTracking(PlayerEvent.StartTracking event) {
-        if (event.getTarget() instanceof Player target && event.getEntity() instanceof ServerPlayer watcher) {
-            PacketDistributor.sendToPlayer(watcher, new BackPayload(target.getId(), get(target).copy()));
-        }
-    }
-
-    @SubscribeEvent
-    public static void onRespawn(PlayerEvent.PlayerRespawnEvent event) {
-        SENT.remove(event.getEntity());
-    }
-
-    @SubscribeEvent
-    public static void onChangeDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
-        SENT.remove(event.getEntity());
-    }
-
-    /** The back slot in the player's inventory menu. It always reads the player's current attachment. */
-    public static class BackSlotUI extends Slot {
-        private final Player player;
-
-        public BackSlotUI(Player player) {
-            super(new SimpleContainer(1), 0, X, Y);
-            this.player = player;
-        }
-
-        @Override
-        public ItemStack getItem() {
-            return get(player);
-        }
-
-        @Override
-        public void set(ItemStack stack) {
-            BackSlot.set(player, stack);
-            setChanged();
-        }
-
-        @Override
-        public void setByPlayer(ItemStack stack, ItemStack previous) {
-            set(stack);
-        }
-
-        @Override
-        public ItemStack remove(int amount) {
-            return player.getData(BACK).extractItem(0, amount, false);
-        }
-
-        @Override
-        public void setChanged() {
-        }
-
-        @Override
-        public boolean mayPlace(ItemStack stack) {
-            return canWear(stack);
-        }
-
-        @Override
-        public int getMaxStackSize() {
-            return 1;
-        }
-
-        @Override
-        public int getMaxStackSize(ItemStack stack) {
-            return 1;
-        }
-
-        @Override
-        public boolean isActive() {
-            return !hidden.getAsBoolean();
-        }
-
-        @Nullable
-        @Override
-        public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
-            return Pair.of(InventoryMenu.BLOCK_ATLAS, EMPTY_ICON);
+        if (get(player).isEmpty() && CuriosApi.getCuriosInventory(player).isPresent()) {
+            set(player, old);
+        } else if (!player.getInventory().add(old)) {
+            player.drop(old, false);
         }
     }
 }

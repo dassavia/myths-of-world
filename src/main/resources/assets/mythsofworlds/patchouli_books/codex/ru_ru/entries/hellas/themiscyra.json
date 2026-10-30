@@ -1,0 +1,13 @@
+{
+  "name": "Фемискира",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_place",
+  "sortnum": 38,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Город амазонок за мраморными стенами с башнями. Во дворе статуя Ареса и оливы, на севере тронный зал с жаровнями, где сидит Ипполита. В сокровищнице золото и кольца."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_themiscyra"
+}

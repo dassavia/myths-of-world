@@ -1,0 +1,26 @@
+{
+  "name": "Nemean Lion",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_boss",
+  "sortnum": 20,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:nemean_lion",
+      "name": "Nemean Lion"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Huge golden lion in a den at the heart of the Nemean Forest. Pounces on its prey."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Abilities: its hide turns swords, arrows and fists. Only potions (poison, harming, wither, also on arrows) and a dagger made from its own claw hurt it."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "How to beat: bring down the first lion with potions. Make a dagger from its claw (a claw over a stick). Drops its pelt and claws."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_nemean_lion"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Вождь драугров",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_boss",
+  "sortnum": 17,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:draugr_chieftain",
+      "name": "Вождь драугров"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Конунг, похороненный в кургане со своей дружиной. Носит золотой шлем и топор, стрелы почти не берут его броню."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Поднимает из земли драугров и, как они, встаёт после первой смерти. Бейте топором или огнём. Роняет корону кургана."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_draugr_chieftain"
+}

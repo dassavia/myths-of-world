@@ -1,0 +1,7 @@
+{
+  "name": "Места",
+  "description": "",
+  "icon": "minecraft:compass",
+  "parent": "mythsofworlds:jotunheim",
+  "sortnum": 2
+}

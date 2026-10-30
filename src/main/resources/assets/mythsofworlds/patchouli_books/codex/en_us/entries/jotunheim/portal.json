@@ -1,0 +1,17 @@
+{
+  "name": "The Gate of Bifrost",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_intro",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Build a frame of runestone like a Nether portal: from 2 up to 21x21 empty blocks inside. Runestone: 8 stone bricks around lapis lazuli."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Light the frame with the Rune Igniter (flint, runestone, a fang of Cerberus and a scale of Zmey Gorynych). The rainbow of Bifrost shines inside: step into it. Break the frame and the portal goes out."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/jotunheim"
+}

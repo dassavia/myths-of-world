@@ -1,0 +1,13 @@
+{
+  "name": "Руды Нави",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_intro",
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Руда булата: высота от -56 до 48, около 8 жил на чанк по 7 блоков, в камне и глубинном сланце. Нужна железная кирка, удача увеличивает добычу."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/nav"
+}

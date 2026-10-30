@@ -1,0 +1,18 @@
+{
+  "name": "Rusalka",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_creature",
+  "sortnum": 11,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:rusalka",
+      "name": "Rusalka"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "A pale maiden with green hair in the bogs and by the sea. Her song draws you to her, and her cold touch takes the strength from your hands. Under water she swims fast."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_rusalka"
+}

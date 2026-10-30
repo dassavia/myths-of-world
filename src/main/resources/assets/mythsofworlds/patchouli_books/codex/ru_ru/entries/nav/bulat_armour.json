@@ -1,0 +1,17 @@
+{
+  "name": "Булатная броня",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_intro",
+  "sortnum": 5,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Шлем: броня 3, прочность 374$(br)Нагрудник: броня 8, прочность 544$(br)Поножи: броня 6, прочность 510$(br)Сапоги: броня 3, прочность 442"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Весь комплект: броня 20, твёрдость 2 за вещь. Зачаровываемость 16."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/nav"
+}

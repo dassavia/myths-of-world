@@ -1,0 +1,13 @@
+{
+  "name": "Svarga",
+  "icon": "minecraft:recovery_compass",
+  "category": "mythsofworlds:far_intro",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A jungle of eternal noon, the heaven of the gods of India. No way there has been found yet."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/far"
+}

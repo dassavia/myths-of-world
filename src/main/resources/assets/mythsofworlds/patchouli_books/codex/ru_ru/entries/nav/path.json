@@ -1,0 +1,14 @@
+{
+  "name": "Путь мира",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav",
+  "priority": true,
+  "sortnum": -1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Шаги этого мира по порядку. Каждый открывает новые страницы.$(br)$(li)Вы спустились в Навь$(li)Соловей-разбойник повержен$(li)Змей Горыныч повержен$(li)Кощей Бессмертный повержен"
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/nav"
+}

@@ -1,0 +1,30 @@
+{
+  "name": "Hippolyta",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_boss",
+  "sortnum": 25,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:hippolyta",
+      "name": "Hippolyta"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Queen of the Amazons on the throne of Themiscyra, 220 health. She attacks any stranger; her sisters come to help."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "How to beat: bring her down to a sixth of her health and she yields: she stops fighting and hands over her girdle (Strength II, Resistance II, Speed and Regeneration, worn in the legs slot)."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Marriage: she listens only to her victor and accepts only gifts fit for a queen: monster trophies, ambrosia, enchanted golden apples, netherite, the heart of the sea and the necklace of Harmonia (100 at once)."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "A new gift gives 20 affection, a repeat 10; anything else she scorns. The duel is forgiven once she yields. She turns away a married man. A child: ambrosia, once in three days."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_hippolyta"
+}

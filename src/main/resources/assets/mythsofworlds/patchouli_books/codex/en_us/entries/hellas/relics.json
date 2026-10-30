@@ -1,0 +1,16 @@
+{
+  "name": "Talaria and the Titan's Breastplate",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_intro",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The winged sandals of Hermes: speed, high jumps and no fall damage. Look in the cloud shrines and temples, or make them: harpy feathers, gold and golden boots."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The Titan's breastplate: strength, resistance and a firm stance. Found in cyclops caves and the labyrinth, or made from an orichalcum chestplate, orichalcum, a cyclops eye and a hydra scale."
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "How to Read the Codex",
+  "icon": "mythsofworlds:codex",
+  "category": "mythsofworlds:path_intro",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "On the left are the chapters, one for each world. A locked chapter shows a lock and what will open it."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Entries on creatures, bosses and places appear once you see or defeat them. Until then a question mark stands in their place.$(br)The first page of each world is a map of its bosses in the order best taken. The gold ones are slain."
+    }
+  ]
+}

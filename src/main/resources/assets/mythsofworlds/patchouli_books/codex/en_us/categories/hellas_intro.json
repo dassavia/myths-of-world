@@ -1,0 +1,7 @@
+{
+  "name": "Introduction",
+  "description": "",
+  "icon": "minecraft:writable_book",
+  "parent": "mythsofworlds:hellas",
+  "sortnum": 0
+}

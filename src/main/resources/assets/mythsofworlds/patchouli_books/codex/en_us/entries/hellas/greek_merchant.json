@@ -1,0 +1,22 @@
+{
+  "name": "Agora Merchant",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_creature",
+  "sortnum": 15,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:greek_merchant",
+      "name": "Agora Merchant"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Lives in the agora. The trophy dealer pays emeralds for the horns, fangs, pelts and scales of monsters. The smith of Hephaestus trades trophies for weapons and armour."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The priestess sells ambrosia, the Promethean Torch, Olympian marble and potions."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_greek_merchant"
+}

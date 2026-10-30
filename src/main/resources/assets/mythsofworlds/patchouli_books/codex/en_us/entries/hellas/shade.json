@@ -1,0 +1,22 @@
+{
+  "name": "Shade",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_creature",
+  "sortnum": 12,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:shade",
+      "name": "Shade"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "See-through soul of the Asphodel Meadows and the Stygian Marsh. Blinks to a fleeing victim and heals with every blow it lands."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "How to beat: do not run, fight, and strike often. Sometimes drops an echo shard."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_shade"
+}

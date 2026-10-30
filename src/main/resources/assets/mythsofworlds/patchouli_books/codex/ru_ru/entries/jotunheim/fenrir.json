@@ -1,0 +1,26 @@
+{
+  "name": "Фенрир",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_boss",
+  "sortnum": 20,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:fenrir",
+      "name": "Фенрир"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Чудовищный волк, сын Локи, на острове Люнгви. Его укус иссушает, а свободный Фенрир быстро залечивает раны и зовёт варгов."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Свяжите его Глейпниром (ПКМ по волку): на 8 секунд он не может кусать, едва движется и получает в полтора раза больше урона. Потом путы рвутся."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Пока волк свободен, оружие людей почти не ранит его: любой удар наносит лишь четверть урона. Без Глейпнира его не одолеть - купите путы у дверга."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_fenrir"
+}

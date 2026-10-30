@@ -1,0 +1,13 @@
+{
+  "name": "Логово Медузы",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_place",
+  "sortnum": 31,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Разрушенный храм на побережье. Среди колонн стоят окаменевшие герои: каменные статуи тех, кто посмотрел ей в глаза. Возьмите щит или тыкву."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_medusa_lair"
+}

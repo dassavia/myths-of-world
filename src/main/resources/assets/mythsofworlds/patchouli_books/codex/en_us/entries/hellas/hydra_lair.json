@@ -1,0 +1,13 @@
+{
+  "name": "Lair of the Hydra",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_place",
+  "sortnum": 30,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A round pool of black water with lily pads in the Stygian Marsh, ringed by a broken wall and fallen columns. A chest in the middle, the Hydra in the water, Karkinos on the bank."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_hydra_lair"
+}
