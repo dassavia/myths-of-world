@@ -8,8 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-java@v5
@@ -66,18 +64,6 @@ jobs:
           name: join-test-screenshots
           path: run/join-client/screenshots/
           if-no-files-found: ignore
-      # Temporary: publishes the join-test screenshots on a side branch so they can be reviewed without the artifact store.
-      - name: Publish screenshots for review (temporary)
-        if: always() && github.event_name == 'push' && github.ref != 'refs/heads/main'
-        run: |
-          [ -d run/join-client/screenshots ] || exit 0
-          mkdir -p /tmp/shots && cd /tmp/shots && git init -q -b ci-screenshots
-          sudo apt-get install -y -q imagemagick >/dev/null 2>&1 || true
-          for f in $GITHUB_WORKSPACE/run/join-client/screenshots/*.png; do
-            convert "$f" -resize 960x -quality 82 "$(basename "${f%.png}").jpg" 2>/dev/null || cp "$f" .
-          done
-          git add -A && git -c user.name=ci -c user.email=ci@users.noreply.github.com commit -q -m "join test screenshots"
-          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" ci-screenshots
       - uses: actions/upload-artifact@v4
         with:
           name: mythsofworlds-jar
