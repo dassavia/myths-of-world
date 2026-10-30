@@ -16,9 +16,10 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - run: ./gradlew createMinecraftArtifacts --stacktrace -q || ./gradlew tasks --all | grep -i artifact
       - name: Print API
+        shell: bash {0}
         run: |
-          find build -name "*sources*.jar" | head
-          SRC=$(find build -name "*sources*.jar" | head -1)
+          ls build/moddev/artifacts
+          SRC=$(ls build/moddev/artifacts/*-sources.jar | head -1)
           mkdir -p /tmp/src && cd /tmp/src && unzip -q -o "$GITHUB_WORKSPACE/$SRC"
           full() { echo "=================== $1"; cat "$1"; }
           sig() { echo "=================== $1"; grep -nE '^\s*(public|protected|default|static|record|private static final)[^;=]*[({]' "$1" | grep -v '^\s*//' ; }
@@ -72,3 +73,8 @@ jobs:
           grep -n "register(" net/minecraft/world/entity/ai/attributes/Attributes.java | head -3
           sig net/minecraft/client/renderer/entity/ItemRenderer.java | head -40
           sig net/minecraft/client/gui/components/toasts/SystemToast.java | head -5
+          ls net/neoforged/neoforge/common/ | grep -i attribute
+          sig net/neoforged/neoforge/common/PercentageAttribute.java
+          grep -rn "class .*Attribute" net/neoforged/neoforge/common/*.java | head
+          grep -n "addModifierTooltip\|ATTRIBUTE_MODIFIER" -A3 net/minecraft/world/item/ItemStack.java | head -40
+          sig net/neoforged/neoforge/common/extensions/IAttributeExtension.java
