@@ -112,7 +112,7 @@ python3 tools/gen_greek_assets.py --textures  # плюс перерисоват�
 Скрипт берёт помощники из греческого, поэтому запускайте оба по порядку:
 
 ```bash
-python3 tools/gen_greek_assets.py && python3 tools/gen_norse_assets.py && python3 tools/gen_metals.py && python3 tools/gen_relics.py && python3 tools/gen_slavic_assets.py && python3 tools/gen_codex.py   # --textures, чтобы перерисовать PNG
+python3 tools/gen_greek_assets.py && python3 tools/gen_norse_assets.py && python3 tools/gen_metals.py && python3 tools/gen_relics.py && python3 tools/gen_slavic_assets.py && python3 tools/gen_codex.py && python3 tools/hd_textures.py && python3 tools/gen_3d_armour.py && python3 tools/gen_3d_gear.py   # --textures у первых, чтобы перерисовать PNG
 ```
 
 Навь (славянская мифология) — `tools/gen_slavic_assets.py`, постройки в `tools/structures_slavic.py`, текстуры в

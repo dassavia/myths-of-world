@@ -479,7 +479,16 @@ public class CodexScreen extends Screen {
                     };
                 }
                 Component name = found ? e.title() : Component.translatable("codex.mythsofworlds.unknown");
-                String text = font.plainSubstrByWidth(name.getString(), TEXT_WIDTH - 8);
+                // A name too long for the row ends in an ellipsis, and the whole name shows on hover.
+                String full = name.getString();
+                int room = TEXT_WIDTH - 2 - font.width("• ");
+                String text = full;
+                if (font.width(full) > room) {
+                    text = font.plainSubstrByWidth(full, room - font.width("…")).stripTrailing() + "…";
+                    if (hover && found) {
+                        hoverTooltip.add(name);
+                    }
+                }
                 graphics.drawString(font, "• " + text, x + 2, y + 2, found ? INK : FADED, false);
                 if (hover && !found) {
                     hoverTooltip.add(Component.translatable("codex.mythsofworlds.unknown_hint").withStyle(ChatFormatting.GRAY));

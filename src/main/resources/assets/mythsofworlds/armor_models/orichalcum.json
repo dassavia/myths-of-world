@@ -1,0 +1,213 @@
+{
+ "items": [
+  "orichalcum_helmet",
+  "orichalcum_chestplate",
+  "orichalcum_boots"
+ ],
+ "texture_height": 64,
+ "parts": [
+  {
+   "bone": "head",
+   "name": "crest_base",
+   "uv": [
+    28,
+    32
+   ],
+   "origin": [
+    -1,
+    -10,
+    -5
+   ],
+   "size": [
+    2,
+    1,
+    10
+   ],
+   "inflate": 0.0,
+   "pivot": [
+    0,
+    0,
+    0
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "bone": "head",
+   "name": "crest",
+   "uv": [
+    0,
+    32
+   ],
+   "origin": [
+    -0.5,
+    -14,
+    -6
+   ],
+   "size": [
+    1,
+    4,
+    13
+   ],
+   "inflate": 0.0,
+   "pivot": [
+    0,
+    0,
+    0
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "bone": "head",
+   "name": "crest_tail",
+   "uv": [
+    52,
+    49
+   ],
+   "origin": [
+    -0.5,
+    -11,
+    7
+   ],
+   "size": [
+    1,
+    6,
+    1
+   ],
+   "inflate": 0.0,
+   "pivot": [
+    0,
+    0,
+    0
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "bone": "right_arm",
+   "name": "right_pauldron",
+   "uv": [
+    0,
+    49
+   ],
+   "origin": [
+    -4.1,
+    -3.6,
+    -3.5
+   ],
+   "size": [
+    6,
+    3,
+    7
+   ],
+   "inflate": 0.0,
+   "pivot": [
+    0,
+    0,
+    0
+   ],
+   "rotation": [
+    0,
+    0,
+    0.18
+   ]
+  },
+  {
+   "bone": "left_arm",
+   "name": "left_pauldron",
+   "uv": [
+    26,
+    49
+   ],
+   "origin": [
+    -1.9000000000000004,
+    -3.6,
+    -3.5
+   ],
+   "size": [
+    6,
+    3,
+    7
+   ],
+   "inflate": 0.0,
+   "pivot": [
+    0,
+    0,
+    0
+   ],
+   "rotation": [
+    0,
+    0,
+    -0.18
+   ]
+  },
+  {
+   "bone": "right_leg",
+   "name": "right_greave",
+   "uv": [
+    0,
+    59
+   ],
+   "origin": [
+    -2.5,
+    6,
+    -3.4
+   ],
+   "size": [
+    5,
+    4,
+    1
+   ],
+   "inflate": 0.0,
+   "pivot": [
+    0,
+    0,
+    0
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "bone": "left_leg",
+   "name": "left_greave",
+   "uv": [
+    12,
+    59
+   ],
+   "origin": [
+    -2.5,
+    6,
+    -3.4
+   ],
+   "size": [
+    5,
+    4,
+    1
+   ],
+   "inflate": 0.0,
+   "pivot": [
+    0,
+    0,
+    0
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ]
+  }
+ ]
+}
