@@ -1,5 +1,11 @@
 package com.mythsofworlds.mythology.greek.client;
 
+import com.mythsofworlds.core.client.MythMerchantRenderer;
+import com.mythsofworlds.core.client.BeastModel;
+import com.mythsofworlds.core.client.MythHumanoidRenderer;
+import com.mythsofworlds.core.client.MythMobRenderer;
+import com.mythsofworlds.core.client.MythModels;
+import com.mythsofworlds.core.client.ZombieArmsModel;
 import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.mythology.greek.GreekEntities;
 import com.mythsofworlds.mythology.greek.entity.Cerberus;
@@ -13,8 +19,6 @@ import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -23,7 +27,6 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 /** Client side of the Greek mobs: which model and texture each one is drawn with. */
 @EventBusSubscriber(modid = MythsOfWorlds.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class GreekClient {
-    public static final ModelLayerLocation HUMANOID = layer("greek_humanoid");
     public static final ModelLayerLocation MINOTAUR = layer("minotaur");
     public static final ModelLayerLocation HARPY = layer("harpy");
     public static final ModelLayerLocation PEGASUS = layer("pegasus");
@@ -42,7 +45,6 @@ public final class GreekClient {
 
     @SubscribeEvent
     public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(HUMANOID, () -> LayerDefinition.create(HumanoidModel.createMesh(CubeDeformation.NONE, 0.0F), 64, 64));
         event.registerLayerDefinition(MINOTAUR, MinotaurModel::createBodyLayer);
         event.registerLayerDefinition(HARPY, HarpyModel::createBodyLayer);
         event.registerLayerDefinition(PEGASUS, PegasusModel::createBodyLayer);
@@ -56,38 +58,38 @@ public final class GreekClient {
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(GreekEntities.SATYR.get(),
-                ctx -> new GreekHumanoidRenderer<>(ctx, new ZombieArmsModel<>(ctx.bakeLayer(HUMANOID)), "satyr", 0.95F, false));
+                ctx -> new MythHumanoidRenderer<>(ctx, new ZombieArmsModel<>(ctx.bakeLayer(MythModels.HUMANOID)), "satyr", 0.95F, false));
         event.registerEntityRenderer(GreekEntities.HARPY.get(),
-                ctx -> new GreekHumanoidRenderer<>(ctx, new HarpyModel(ctx.bakeLayer(HARPY)), "harpy", 0.9F, false));
+                ctx -> new MythHumanoidRenderer<>(ctx, new HarpyModel(ctx.bakeLayer(HARPY)), "harpy", 0.9F, false));
         event.registerEntityRenderer(GreekEntities.SPARTOI.get(), SpartoiRenderer::new);
         event.registerEntityRenderer(GreekEntities.GROWTH_POTION.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(GreekEntities.SHADE.get(),
-                ctx -> new GreekHumanoidRenderer<>(ctx, new ZombieArmsModel<>(ctx.bakeLayer(HUMANOID)), "shade", 1.0F, true));
+                ctx -> new MythHumanoidRenderer<>(ctx, new ZombieArmsModel<>(ctx.bakeLayer(MythModels.HUMANOID)), "shade", 1.0F, true));
         event.registerEntityRenderer(GreekEntities.PEGASUS.get(), PegasusRenderer::new);
         event.registerEntityRenderer(GreekEntities.CYCLOPS.get(),
-                ctx -> new GreekHumanoidRenderer<>(ctx, new ZombieArmsModel<>(ctx.bakeLayer(HUMANOID)), "cyclops", 2.2F, false));
+                ctx -> new MythHumanoidRenderer<>(ctx, new ZombieArmsModel<>(ctx.bakeLayer(MythModels.HUMANOID)), "cyclops", 2.2F, false));
         event.registerEntityRenderer(GreekEntities.MEDUSA.get(),
-                ctx -> new GreekHumanoidRenderer<>(ctx, new HumanoidModel<>(ctx.bakeLayer(HUMANOID)), "medusa", 1.1F, false));
+                ctx -> new MythHumanoidRenderer<>(ctx, new HumanoidModel<>(ctx.bakeLayer(MythModels.HUMANOID)), "medusa", 1.1F, false));
         event.registerEntityRenderer(GreekEntities.NEMEAN_LION.get(),
-                ctx -> new GreekMobRenderer<NemeanLion, BeastModel<NemeanLion>>(ctx, new BeastModel<>(ctx.bakeLayer(NEMEAN_LION), 1),
+                ctx -> new MythMobRenderer<NemeanLion, BeastModel<NemeanLion>>(ctx, new BeastModel<>(ctx.bakeLayer(NEMEAN_LION), 1),
                         "nemean_lion", 1.3F));
         event.registerEntityRenderer(GreekEntities.MINOTAUR.get(),
-                ctx -> new GreekHumanoidRenderer<>(ctx, new MinotaurModel(ctx.bakeLayer(MINOTAUR)), "minotaur", 1.5F, false));
+                ctx -> new MythHumanoidRenderer<>(ctx, new MinotaurModel(ctx.bakeLayer(MINOTAUR)), "minotaur", 1.5F, false));
         event.registerEntityRenderer(GreekEntities.HYDRA.get(),
-                ctx -> new GreekMobRenderer<Hydra, HydraModel<Hydra>>(ctx, new HydraModel<>(ctx.bakeLayer(HYDRA)), "hydra", 1.8F));
+                ctx -> new MythMobRenderer<Hydra, HydraModel<Hydra>>(ctx, new HydraModel<>(ctx.bakeLayer(HYDRA)), "hydra", 1.8F));
         event.registerEntityRenderer(GreekEntities.HYDRA_HATCHLING.get(),
-                ctx -> new GreekMobRenderer<HydraHatchling, HydraModel<HydraHatchling>>(ctx, new HydraModel<>(ctx.bakeLayer(HYDRA)),
+                ctx -> new MythMobRenderer<HydraHatchling, HydraModel<HydraHatchling>>(ctx, new HydraModel<>(ctx.bakeLayer(HYDRA)),
                         "hydra_hatchling", 0.45F));
         event.registerEntityRenderer(GreekEntities.GOLDEN_HIND.get(), HindRenderer::new);
-        event.registerEntityRenderer(GreekEntities.GREEK_MERCHANT.get(), GreekMerchantRenderer::new);
+        event.registerEntityRenderer(GreekEntities.GREEK_MERCHANT.get(), ctx -> new MythMerchantRenderer<>(ctx, "greek_merchant"));
         event.registerEntityRenderer(GreekEntities.LION.get(),
-                ctx -> new GreekMobRenderer<Lion, BeastModel<Lion>>(ctx, new BeastModel<>(ctx.bakeLayer(NEMEAN_LION), 1), "lion", 0.85F));
+                ctx -> new MythMobRenderer<Lion, BeastModel<Lion>>(ctx, new BeastModel<>(ctx.bakeLayer(NEMEAN_LION), 1), "lion", 0.85F));
         event.registerEntityRenderer(GreekEntities.KARKINOS.get(),
-                ctx -> new GreekMobRenderer<Karkinos, CrayfishModel<Karkinos>>(ctx, new CrayfishModel<>(ctx.bakeLayer(KARKINOS)), "karkinos", 0.65F));
+                ctx -> new MythMobRenderer<Karkinos, CrayfishModel<Karkinos>>(ctx, new CrayfishModel<>(ctx.bakeLayer(KARKINOS)), "karkinos", 0.65F));
         event.registerEntityRenderer(GreekEntities.AMAZON.get(), AmazonRenderer::new);
         event.registerEntityRenderer(GreekEntities.HIPPOLYTA.get(), AmazonRenderer::new);
         event.registerEntityRenderer(GreekEntities.CERBERUS.get(),
-                ctx -> new GreekMobRenderer<Cerberus, BeastModel<Cerberus>>(ctx, new BeastModel<>(ctx.bakeLayer(CERBERUS), 3),
+                ctx -> new MythMobRenderer<Cerberus, BeastModel<Cerberus>>(ctx, new BeastModel<>(ctx.bakeLayer(CERBERUS), 3),
                         "cerberus", 1.8F));
     }
 

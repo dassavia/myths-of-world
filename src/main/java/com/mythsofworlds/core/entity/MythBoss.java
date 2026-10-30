@@ -1,4 +1,4 @@
-package com.mythsofworlds.mythology.greek.entity;
+package com.mythsofworlds.core.entity;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -19,16 +19,16 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Shared behaviour of the bosses and mini-bosses of Hellas: a boss bar, no despawning, and a plain
+ * Shared behaviour of the bosses and mini-bosses of every world of the myths: a boss bar, no despawning, and a plain
  * "walk to the player and hit them" AI that each boss extends with its own ability in {@link #customServerAiStep()}.
  */
-public abstract class GreekBoss extends Monster {
+public abstract class MythBoss extends Monster {
     private final ServerBossEvent bossEvent;
 
     /**
      * @param miniBoss mini-bosses get a yellow, notched bar; bosses a red or purple one
      */
-    protected GreekBoss(EntityType<? extends Monster> type, Level level, BossEvent.BossBarColor color, boolean miniBoss) {
+    protected MythBoss(EntityType<? extends Monster> type, Level level, BossEvent.BossBarColor color, boolean miniBoss) {
         super(type, level);
         this.bossEvent = new ServerBossEvent(getDisplayName(), color,
                 miniBoss ? BossEvent.BossBarOverlay.NOTCHED_6 : BossEvent.BossBarOverlay.PROGRESS);

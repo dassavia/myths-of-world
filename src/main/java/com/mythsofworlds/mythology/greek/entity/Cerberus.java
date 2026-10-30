@@ -1,5 +1,6 @@
 package com.mythsofworlds.mythology.greek.entity;
 
+import com.mythsofworlds.core.entity.MythBoss;
 import com.mythsofworlds.mythology.greek.GreekEntities;
 import com.mythsofworlds.mythology.greek.GreekSounds;
 import net.minecraft.core.particles.ParticleTypes;
@@ -24,7 +25,7 @@ import net.minecraft.world.phys.Vec3;
  * ablaze and every few seconds each head breathes a fireball. At half health it howls and calls three shades
  * of the dead to its side.
  */
-public class Cerberus extends GreekBoss {
+public class Cerberus extends MythBoss {
     private int breathCooldown = 60;
     private boolean summoned;
 

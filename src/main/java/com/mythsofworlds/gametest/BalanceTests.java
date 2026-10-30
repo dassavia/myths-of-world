@@ -22,10 +22,10 @@ public class BalanceTests {
     public static void bossHealthScales(GameTestHelper helper) {
         Koschei koschei = helper.spawn(SlavicEntities.KOSCHEI.get(), new BlockPos(1, 2, 1));
         float base = koschei.getMaxHealth();
-        BossBalance.scaleHealth(koschei, 2.0);
-        helper.assertTrue(koschei.getMaxHealth() == base * 2.0F && koschei.getHealth() == koschei.getMaxHealth(),
-                "twice the health, at full: " + koschei.getHealth() + "/" + koschei.getMaxHealth());
-        koschei.setHealth(base);
+        BossBalance.scaleHealth(koschei, 1.5);
+        helper.assertTrue(koschei.getMaxHealth() == base * 1.5F && koschei.getHealth() == koschei.getMaxHealth(),
+                "half again the health, at full: " + koschei.getHealth() + "/" + koschei.getMaxHealth());
+        koschei.setHealth(base * 0.75F);
         BossBalance.scaleHealth(koschei, 1.0);
         helper.assertTrue(koschei.getMaxHealth() == base && Math.abs(koschei.getHealth() - base / 2.0F) < 0.01F,
                 "back to the base, still half wounded: " + koschei.getHealth() + "/" + koschei.getMaxHealth());

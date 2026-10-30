@@ -1,6 +1,6 @@
 package com.mythsofworlds.mythology.norse.entity;
 
-import com.mythsofworlds.mythology.greek.entity.GreekBoss;
+import com.mythsofworlds.core.entity.MythBoss;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -24,7 +24,7 @@ import net.minecraft.world.level.Level;
  * darkness of Hel over everyone nearby, and his bite brings the chill of the dead. A creature of the cold mists, he
  * dreads fire: while he burns, every blow hurts him twice as much.
  */
-public class Garm extends GreekBoss {
+public class Garm extends MythBoss {
     public static final double HOWL_RANGE = 16.0;
 
     private int howlCooldown = 100;

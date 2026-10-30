@@ -1,6 +1,6 @@
 package com.mythsofworlds.mythology.norse.entity;
 
-import com.mythsofworlds.mythology.greek.entity.GreekBoss;
+import com.mythsofworlds.core.entity.MythBoss;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -33,7 +33,7 @@ import org.jetbrains.annotations.Nullable;
  * seconds he blows the Gjallarhorn, and the blast throws back, slows and stuns everyone around him; at half health he
  * blows it twice as often. He drops his all-seeing eye.
  */
-public class Heimdall extends GreekBoss {
+public class Heimdall extends MythBoss {
     public static final double HORN_RADIUS = 14.0;
 
     private int hornCooldown = 160;

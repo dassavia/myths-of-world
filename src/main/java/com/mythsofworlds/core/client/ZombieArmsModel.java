@@ -1,4 +1,4 @@
-package com.mythsofworlds.mythology.greek.client;
+package com.mythsofworlds.core.client;
 
 import net.minecraft.client.model.AnimationUtils;
 import net.minecraft.client.model.HumanoidModel;

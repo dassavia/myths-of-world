@@ -1,5 +1,6 @@
 package com.mythsofworlds.mythology.greek.entity;
 
+import com.mythsofworlds.core.entity.MythBoss;
 import com.mythsofworlds.mythology.greek.GreekSounds;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -32,7 +33,7 @@ import net.minecraft.world.level.Level;
  * sent to help it, guards its lair.
  * Drops a Hydra Egg, from which a tame little hydra hatches.
  */
-public class Hydra extends GreekBoss {
+public class Hydra extends MythBoss {
     /** How long after a fire hit the hydra cannot regenerate. */
     public static final int CAUTERIZED_TICKS = 200;
 

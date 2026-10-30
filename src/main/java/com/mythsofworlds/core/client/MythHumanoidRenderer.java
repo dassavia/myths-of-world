@@ -1,4 +1,4 @@
-package com.mythsofworlds.mythology.greek.client;
+package com.mythsofworlds.core.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mythsofworlds.MythsOfWorlds;
@@ -11,12 +11,12 @@ import net.minecraft.world.entity.Mob;
 import org.jetbrains.annotations.Nullable;
 
 /** Humanoid mob with held items, one texture, optional scale, optionally see-through (uses the texture's alpha). */
-public class GreekHumanoidRenderer<T extends Mob, M extends HumanoidModel<T>> extends HumanoidMobRenderer<T, M> {
+public class MythHumanoidRenderer<T extends Mob, M extends HumanoidModel<T>> extends HumanoidMobRenderer<T, M> {
     private final ResourceLocation texture;
     private final float scale;
     private final boolean translucent;
 
-    public GreekHumanoidRenderer(EntityRendererProvider.Context context, M model, String name, float scale, boolean translucent) {
+    public MythHumanoidRenderer(EntityRendererProvider.Context context, M model, String name, float scale, boolean translucent) {
         super(context, model, 0.5F * scale);
         this.texture = MythsOfWorlds.id("textures/entity/" + name + ".png");
         this.scale = scale;

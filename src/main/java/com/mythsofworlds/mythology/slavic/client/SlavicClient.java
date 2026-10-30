@@ -1,16 +1,14 @@
 package com.mythsofworlds.mythology.slavic.client;
 
+import com.mythsofworlds.core.client.MythMerchantRenderer;
 import com.mythsofworlds.MythsOfWorlds;
-import com.mythsofworlds.mythology.greek.client.BeastModel;
-import com.mythsofworlds.mythology.greek.client.GreekClient;
-import com.mythsofworlds.mythology.greek.client.GreekHumanoidRenderer;
-import com.mythsofworlds.mythology.greek.client.GreekMobRenderer;
+import com.mythsofworlds.core.client.BeastModel;
+import com.mythsofworlds.core.client.MythHumanoidRenderer;
+import com.mythsofworlds.core.client.MythMobRenderer;
+import com.mythsofworlds.core.client.MythModels;
 import com.mythsofworlds.mythology.greek.client.HydraModel;
-import com.mythsofworlds.mythology.greek.client.ZombieArmsModel;
-import com.mythsofworlds.mythology.norse.client.NorseClient;
-import com.mythsofworlds.mythology.norse.client.NorseMerchantRenderer;
+import com.mythsofworlds.core.client.ZombieArmsModel;
 import com.mythsofworlds.mythology.norse.client.RavenRenderer;
-import com.mythsofworlds.mythology.norse.entity.NorseMerchant;
 import com.mythsofworlds.mythology.slavic.SlavicEntities;
 import com.mythsofworlds.mythology.slavic.entity.Volkolak;
 import com.mythsofworlds.mythology.slavic.entity.ZmeyGorynych;
@@ -38,27 +36,26 @@ public final class SlavicClient {
 
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        ModelLayerLocation humanoid = GreekClient.HUMANOID;
+        ModelLayerLocation humanoid = MythModels.HUMANOID;
         event.registerEntityRenderer(SlavicEntities.LESHY.get(),
-                ctx -> new GreekHumanoidRenderer<>(ctx, new HumanoidModel<>(ctx.bakeLayer(humanoid)), "leshy", 1.35F, false));
+                ctx -> new MythHumanoidRenderer<>(ctx, new HumanoidModel<>(ctx.bakeLayer(humanoid)), "leshy", 1.35F, false));
         event.registerEntityRenderer(SlavicEntities.KIKIMORA.get(),
-                ctx -> new GreekHumanoidRenderer<>(ctx, new ZombieArmsModel<>(ctx.bakeLayer(humanoid)), "kikimora", 0.8F, false));
+                ctx -> new MythHumanoidRenderer<>(ctx, new ZombieArmsModel<>(ctx.bakeLayer(humanoid)), "kikimora", 0.8F, false));
         event.registerEntityRenderer(SlavicEntities.UPYR.get(),
-                ctx -> new GreekHumanoidRenderer<>(ctx, new ZombieArmsModel<>(ctx.bakeLayer(humanoid)), "upyr", 1.0F, false));
+                ctx -> new MythHumanoidRenderer<>(ctx, new ZombieArmsModel<>(ctx.bakeLayer(humanoid)), "upyr", 1.0F, false));
         event.registerEntityRenderer(SlavicEntities.RUSALKA.get(),
-                ctx -> new GreekHumanoidRenderer<>(ctx, new HumanoidModel<>(ctx.bakeLayer(humanoid)), "rusalka", 1.0F, true));
+                ctx -> new MythHumanoidRenderer<>(ctx, new HumanoidModel<>(ctx.bakeLayer(humanoid)), "rusalka", 1.0F, true));
         event.registerEntityRenderer(SlavicEntities.SOLOVEI.get(),
-                ctx -> new GreekHumanoidRenderer<>(ctx, new HumanoidModel<>(ctx.bakeLayer(humanoid)), "solovei", 1.1F, false));
+                ctx -> new MythHumanoidRenderer<>(ctx, new HumanoidModel<>(ctx.bakeLayer(humanoid)), "solovei", 1.1F, false));
         event.registerEntityRenderer(SlavicEntities.KOSCHEI.get(),
-                ctx -> new GreekHumanoidRenderer<>(ctx, new HumanoidModel<>(ctx.bakeLayer(humanoid)), "koschei", 1.25F, false));
+                ctx -> new MythHumanoidRenderer<>(ctx, new HumanoidModel<>(ctx.bakeLayer(humanoid)), "koschei", 1.25F, false));
         event.registerEntityRenderer(SlavicEntities.VOLKOLAK.get(),
-                ctx -> new GreekMobRenderer<Volkolak, BeastModel<Volkolak>>(ctx, new BeastModel<>(ctx.bakeLayer(NorseClient.WOLF), 1),
+                ctx -> new MythMobRenderer<Volkolak, BeastModel<Volkolak>>(ctx, new BeastModel<>(ctx.bakeLayer(MythModels.WOLF), 1),
                         "volkolak", 1.1F));
         event.registerEntityRenderer(SlavicEntities.ZMEY_GORYNYCH.get(),
-                ctx -> new GreekMobRenderer<ZmeyGorynych, HydraModel<ZmeyGorynych>>(ctx,
+                ctx -> new MythMobRenderer<ZmeyGorynych, HydraModel<ZmeyGorynych>>(ctx,
                         new HydraModel<>(ctx.bakeLayer(ZMEY), ZmeyGorynych.HEADS), "zmey_gorynych", 2.0F));
         event.<Parrot>registerEntityRenderer(SlavicEntities.FIREBIRD.get(), ctx -> new RavenRenderer(ctx, "firebird"));
-        event.<NorseMerchant>registerEntityRenderer(SlavicEntities.SLAVIC_MERCHANT.get(),
-                ctx -> new NorseMerchantRenderer(ctx, "slavic_merchant"));
+        event.registerEntityRenderer(SlavicEntities.SLAVIC_MERCHANT.get(), ctx -> new MythMerchantRenderer<>(ctx, "slavic_merchant"));
     }
 }

@@ -1,5 +1,6 @@
 package com.mythsofworlds.mythology.greek.entity;
 
+import com.mythsofworlds.core.entity.MythBoss;
 import com.mythsofworlds.mythology.greek.GreekSounds;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -18,7 +19,7 @@ import net.minecraft.world.level.Level;
  * Neutral: it tends its sheep and ignores travellers until someone attacks it. Then it hits very hard,
  * and stomps the ground, hurting and tossing everyone nearby.
  */
-public class Cyclops extends GreekBoss {
+public class Cyclops extends MythBoss {
     private static final double STOMP_RADIUS = 5.0;
 
     private int stompCooldown = 60;
@@ -59,7 +60,7 @@ public class Cyclops extends GreekBoss {
 
     private void stomp() {
         for (LivingEntity victim : level().getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(STOMP_RADIUS),
-                e -> e != this && !(e instanceof GreekBoss))) {
+                e -> e != this && !(e instanceof MythBoss))) {
             victim.hurt(damageSources().mobAttack(this), 8.0F);
             victim.setDeltaMovement(victim.getDeltaMovement().add(0.0, 0.8, 0.0));
             victim.hurtMarked = true;

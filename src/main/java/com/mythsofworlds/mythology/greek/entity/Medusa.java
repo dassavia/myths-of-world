@@ -1,5 +1,6 @@
 package com.mythsofworlds.mythology.greek.entity;
 
+import com.mythsofworlds.core.entity.MythBoss;
 import com.mythsofworlds.mythology.greek.GreekContent;
 import com.mythsofworlds.mythology.greek.GreekSounds;
 import com.mythsofworlds.mythology.greek.item.MedusaHeadItem;
@@ -31,7 +32,7 @@ import net.minecraft.world.phys.Vec3;
  * holding a shield is safe from the gaze, and so is one who wears a carved pumpkin over their eyes. Her snake hair poisons on every bite. The harpe, the sickle-sword
  * Perseus beheaded her with, deals her double damage.
  */
-public class Medusa extends GreekBoss {
+public class Medusa extends MythBoss {
     private static final double GAZE_RANGE = 24.0;
     /** Ticks of eye contact before the gaze starts to hurt. */
     private static final int PETRIFY_AFTER = 60;

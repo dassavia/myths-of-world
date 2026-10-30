@@ -1,4 +1,4 @@
-package com.mythsofworlds.mythology.greek.client;
+package com.mythsofworlds.core.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mythsofworlds.MythsOfWorlds;
@@ -9,11 +9,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Mob;
 
 /** Renders any mob with one texture (textures/entity/&lt;name&gt;.png), optionally scaled up; babies at half size. */
-public class GreekMobRenderer<T extends Mob, M extends EntityModel<T>> extends MobRenderer<T, M> {
+public class MythMobRenderer<T extends Mob, M extends EntityModel<T>> extends MobRenderer<T, M> {
     private final ResourceLocation texture;
     private final float scale;
 
-    public GreekMobRenderer(EntityRendererProvider.Context context, M model, String name, float scale) {
+    public MythMobRenderer(EntityRendererProvider.Context context, M model, String name, float scale) {
         super(context, model, 0.5F * scale);
         this.texture = MythsOfWorlds.id("textures/entity/" + name + ".png");
         this.scale = scale;

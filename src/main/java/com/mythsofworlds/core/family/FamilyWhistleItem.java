@@ -1,7 +1,6 @@
 package com.mythsofworlds.core.family;
 
 import com.mythsofworlds.MythsOfWorlds;
-import com.mythsofworlds.mythology.greek.entity.Amazon;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -83,7 +82,7 @@ public class FamilyWhistleItem extends Item {
     /** Brings {@code entity} to {@code player} if it is still one of the family. */
     private static boolean bring(Entity entity, Player player) {
         ServerLevel here = (ServerLevel) player.level();
-        if (!(entity instanceof Amazon amazon) || !amazon.isAlive() || !amazon.isFamily(player)) {
+        if (!(entity instanceof WarriorMaiden amazon) || !amazon.isAlive() || !amazon.isFamily(player)) {
             FamilyRegistry.get(here.getServer()).remove(entity.getUUID());
             return false;
         }
@@ -94,7 +93,7 @@ public class FamilyWhistleItem extends Item {
             arrived = amazon.changeDimension(new DimensionTransition(here, player.position(), Vec3.ZERO,
                     amazon.getYRot(), amazon.getXRot(), DimensionTransition.DO_NOTHING));
         }
-        if (arrived instanceof Amazon wife) {
+        if (arrived instanceof WarriorMaiden wife) {
             wife.answerWhistle();
             FamilyRegistry.get(here.getServer()).update(wife, player.getUUID());
             here.sendParticles(ParticleTypes.PORTAL, wife.getX(), wife.getY() + 1.0, wife.getZ(), 30, 0.4, 0.8, 0.4, 0.2);

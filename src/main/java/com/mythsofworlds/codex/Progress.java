@@ -3,16 +3,13 @@ package com.mythsofworlds.codex;
 import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.core.PlayerData;
 import com.mythsofworlds.core.ServerConfig;
-import com.mythsofworlds.mythology.greek.GreekContent;
-import com.mythsofworlds.mythology.norse.NorseContent;
-import com.mythsofworlds.mythology.slavic.SlavicContent;
+import com.mythsofworlds.mythology.Mythology;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -21,7 +18,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -42,11 +38,8 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
  */
 @EventBusSubscriber(modid = MythsOfWorlds.MODID)
 public final class Progress {
-    /** Bosses and half-bosses whose death is a milestone, by entity id path. */
-    public static final Set<String> BOSSES = Set.of("cyclops", "medusa", "nemean_lion", "minotaur", "hydra", "cerberus",
-            "solovei", "zmey_gorynych", "koschei", "draugr_chieftain", "garm", "heimdall", "thrym", "fenrir", "surtr");
-    public static final Map<ResourceKey<Level>, String> WORLDS = Map.of(
-            GreekContent.HELLAS, "hellas", NorseContent.JOTUNHEIM, "jotunheim", SlavicContent.NAV, "nav");
+    /** Bosses and half-bosses whose death is a milestone, by entity id path (listed per mythology in {@link Mythology}). */
+    public static final Set<String> BOSSES = Mythology.allBosses();
     /** Players this close to a boss when it falls share the victory (blocks; {@code bossShareRange} in the server config). */
     public static double shareRange() {
         return ServerConfig.get(ServerConfig.BOSS_SHARE_RANGE);
@@ -94,9 +87,9 @@ public final class Progress {
 
     @SubscribeEvent
     public static void onChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
-        String world = WORLDS.get(event.getTo());
-        if (world != null && event.getEntity() instanceof ServerPlayer player) {
-            award(player, "enter." + world);
+        Optional<Mythology> mythology = Mythology.of(event.getTo()).filter(Mythology::hasPortal);
+        if (mythology.isPresent() && event.getEntity() instanceof ServerPlayer player) {
+            award(player, "enter." + mythology.get().world());
         }
     }
 

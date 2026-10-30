@@ -1,6 +1,6 @@
 package com.mythsofworlds.mythology.norse.entity;
 
-import com.mythsofworlds.mythology.greek.entity.GreekBoss;
+import com.mythsofworlds.core.entity.MythBoss;
 import com.mythsofworlds.mythology.norse.NorseEntities;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -28,7 +28,7 @@ import org.jetbrains.annotations.Nullable;
  * The barrow-king, mini-boss of the burial mounds. Arrows glance off his old mail, every few seconds he calls the dead
  * of his barrow to rise, and like every draugr he gets up again unless he is felled with an axe or by fire.
  */
-public class DraugrChieftain extends GreekBoss {
+public class DraugrChieftain extends MythBoss {
     public static final int MAX_GUARDS = 6;
 
     private int summonCooldown = 100;

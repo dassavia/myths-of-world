@@ -1,6 +1,6 @@
 package com.mythsofworlds.mythology.norse.entity;
 
-import com.mythsofworlds.mythology.greek.entity.Amazon;
+import com.mythsofworlds.core.family.WarriorMaiden;
 import com.mythsofworlds.mythology.norse.NorseContent;
 import com.mythsofworlds.mythology.norse.NorseEntities;
 import net.minecraft.tags.ItemTags;
@@ -18,12 +18,12 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Valkyrie, shield-maiden of Odin, in the halls of the valkyries in Jotunheim. In the sagas valkyries wed heroes:
  * Brynhild and Sigurd, Svanhvit and Volund's brother, Sigrun and Helgi. Courted and married like an amazon (see
- * {@link Amazon}), with the wedding ring: she likes gold and jewels, weapons, trophies of the monsters of the North
+ * {@link WarriorMaiden}), with the wedding ring: she likes gold and jewels, weapons, trophies of the monsters of the North
  * and a good feast, flowers leave her cold; Brisingamen, Freyja's necklace, wins her heart at once and the horn of
  * Vingolf calls her home. Give your wife mead and a daughter is born, once a day; she grows up a
  * valkyrie loyal to your family.
  */
-public class Valkyrie extends Amazon {
+public class Valkyrie extends WarriorMaiden {
     public static final int LOOKS = 8;
 
     private static final String[] NAMES = {"Brynhild", "Sigrun", "Svanhvit", "Hildr", "Gondul", "Skogul", "Hrist",
@@ -37,7 +37,7 @@ public class Valkyrie extends Amazon {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Amazon.createAttributes()
+        return WarriorMaiden.createAttributes()
                 .add(Attributes.MAX_HEALTH, 46.0)
                 .add(Attributes.ATTACK_DAMAGE, 9.0)
                 .add(Attributes.ARMOR, 12.0)
@@ -82,7 +82,7 @@ public class Valkyrie extends Amazon {
 
     @Nullable
     @Override
-    protected Amazon newChild() {
+    protected WarriorMaiden newChild() {
         return NorseEntities.VALKYRIE.get().create(level());
     }
 

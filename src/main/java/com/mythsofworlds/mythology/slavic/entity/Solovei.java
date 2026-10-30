@@ -1,6 +1,6 @@
 package com.mythsofworlds.mythology.slavic.entity;
 
-import com.mythsofworlds.mythology.greek.entity.GreekBoss;
+import com.mythsofworlds.core.entity.MythBoss;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -32,7 +32,7 @@ import org.jetbrains.annotations.Nullable;
  * every few seconds everyone within {@link #WHISTLE_RADIUS} blocks is hurt, thrown far back and dazed. He drops the
  * seven-league boots.
  */
-public class Solovei extends GreekBoss {
+public class Solovei extends MythBoss {
     public static final double WHISTLE_RADIUS = 16.0;
 
     private int whistleCooldown = 120;

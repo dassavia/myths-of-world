@@ -1,6 +1,6 @@
 package com.mythsofworlds.mythology.norse.entity;
 
-import com.mythsofworlds.mythology.greek.entity.GreekBoss;
+import com.mythsofworlds.core.entity.MythBoss;
 import com.mythsofworlds.mythology.norse.NorseEntities;
 import com.mythsofworlds.mythology.norse.item.MjolnirItem;
 import net.minecraft.core.particles.ParticleTypes;
@@ -26,7 +26,7 @@ import net.minecraft.world.phys.Vec3;
  * back. Breathes a cone of frost that freezes everyone in front of him, stamps the ice, and at half health calls two
  * frost giants of his court. Fire hurts him twice as much, and the hammer he stole three times.
  */
-public class Thrym extends GreekBoss {
+public class Thrym extends MythBoss {
     public static final double BREATH_RANGE = 10.0;
     public static final double STOMP_RADIUS = 5.0;
 

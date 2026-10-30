@@ -1,5 +1,6 @@
 package com.mythsofworlds.mythology.greek.entity;
 
+import com.mythsofworlds.core.entity.MythBoss;
 import com.mythsofworlds.mythology.greek.GreekContent;
 import com.mythsofworlds.mythology.greek.GreekSounds;
 import net.minecraft.sounds.SoundEvent;
@@ -22,7 +23,7 @@ import net.minecraft.world.level.Level;
  * glances off. Poison, harming and wither potions (thrown, or on tipped arrows) still work, and so does a dagger
  * made from one of its own claws, which drop when it dies. Pounces at its prey.
  */
-public class NemeanLion extends GreekBoss {
+public class NemeanLion extends MythBoss {
     /** Damage a tipped arrow does on its own; the potion on it does the rest. */
     private static final float TIPPED_ARROW_DAMAGE = 0.5F;
 

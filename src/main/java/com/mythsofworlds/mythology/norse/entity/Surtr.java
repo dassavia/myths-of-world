@@ -1,6 +1,6 @@
 package com.mythsofworlds.mythology.norse.entity;
 
-import com.mythsofworlds.mythology.greek.entity.GreekBoss;
+import com.mythsofworlds.core.entity.MythBoss;
 import com.mythsofworlds.mythology.norse.NorseContent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -39,7 +39,7 @@ import org.jetbrains.annotations.Nullable;
  * strikes him twice as hard. His heat blunts every blade and arrow, which bite him only half as deep, unless the
  * fighter holds a frost heart in the other hand.
  */
-public class Surtr extends GreekBoss {
+public class Surtr extends MythBoss {
     public static final int FIRE_RING_RADIUS = 4;
 
     private int fireballCooldown = 60;

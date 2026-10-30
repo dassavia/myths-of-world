@@ -1,5 +1,6 @@
 package com.mythsofworlds.mythology.greek.entity;
 
+import com.mythsofworlds.core.entity.MythBoss;
 import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.mythology.greek.GreekSounds;
 import net.minecraft.sounds.SoundEvent;
@@ -19,7 +20,7 @@ import net.minecraft.world.phys.Vec3;
  * 5-18 blocks away, throwing them back. Hitting a wall ends the charge. Below half health it is enraged:
  * faster, and it charges twice as often.
  */
-public class Minotaur extends GreekBoss {
+public class Minotaur extends MythBoss {
     private static final int CHARGE_TICKS = 20;
     private static final int CHARGE_COOLDOWN = 120;
     private static final AttributeModifier ENRAGED_SPEED = new AttributeModifier(MythsOfWorlds.id("enraged"), 0.3,

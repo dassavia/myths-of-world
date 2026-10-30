@@ -17,7 +17,7 @@ public final class ServerConfig {
     static {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
         builder.push("bosses");
-        BOSS_HEALTH = builder.comment("Multiplies the health of every boss and half-boss of the myths")
+        BOSS_HEALTH = builder.comment("Multiplies the health of every boss and half-boss of the myths (Minecraft caps any health at 1024)")
                 .translation("mythsofworlds.configuration.bossHealth").defineInRange("bossHealth", 1.0, 0.1, 10.0);
         BOSS_DAMAGE = builder.comment("Multiplies all the damage bosses deal: blows, fire and missiles")
                 .translation("mythsofworlds.configuration.bossDamage").defineInRange("bossDamage", 1.0, 0.1, 10.0);

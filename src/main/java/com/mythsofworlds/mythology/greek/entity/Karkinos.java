@@ -1,5 +1,6 @@
 package com.mythsofworlds.mythology.greek.entity;
 
+import com.mythsofworlds.core.entity.MythBoss;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.BossEvent;
@@ -22,7 +23,7 @@ import net.minecraft.world.level.Level;
  * turns arrows. Heracles crushed it under his foot: a blow struck while falling (a jump attack) does double damage.
  * A small crab at the hero's heel, so it has no health bar.
  */
-public class Karkinos extends GreekBoss {
+public class Karkinos extends MythBoss {
     public Karkinos(EntityType<? extends Monster> type, Level level) {
         super(type, level, BossEvent.BossBarColor.RED, true);
     }

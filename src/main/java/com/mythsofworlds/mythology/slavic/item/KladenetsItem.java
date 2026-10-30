@@ -1,6 +1,6 @@
 package com.mythsofworlds.mythology.slavic.item;
 
-import com.mythsofworlds.mythology.greek.entity.Amazon;
+import com.mythsofworlds.core.family.WarriorMaiden;
 import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
@@ -35,7 +35,7 @@ public class KladenetsItem extends SwordItem {
             for (LivingEntity other : server.getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(REACH),
                     e -> e != target && e != attacker && e.isAlive() && !(e instanceof Player)
                             && !(e instanceof OwnableEntity pet && pet.getOwnerUUID() != null)
-                            && !(e instanceof Amazon && attacker instanceof Player player && ((Amazon) e).isFamily(player)))) {
+                            && !(e instanceof WarriorMaiden && attacker instanceof Player player && ((WarriorMaiden) e).isFamily(player)))) {
                 other.hurt(source, SPLASH);
             }
             server.sendParticles(ParticleTypes.SWEEP_ATTACK, target.getX(), target.getY(0.5), target.getZ(), 3, 1.0, 0.2, 1.0, 0.0);

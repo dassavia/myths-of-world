@@ -1,6 +1,6 @@
 package com.mythsofworlds.mythology.norse.entity;
 
-import com.mythsofworlds.mythology.greek.entity.GreekBoss;
+import com.mythsofworlds.core.entity.MythBoss;
 import com.mythsofworlds.mythology.norse.NorseEntities;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -31,7 +31,7 @@ import net.minecraft.world.phys.Vec3;
  * much harm: every wound is a quarter of what it would be. Only Gleipnir holds him: bound, he cannot move or bite,
  * stops healing and takes half again as much damage, until he tears loose.
  */
-public class Fenrir extends GreekBoss {
+public class Fenrir extends MythBoss {
     public static final int BOUND_TICKS = 160;
     public static final int REBIND_TICKS = 200;
     public static final float FREE_DAMAGE = 0.25F;

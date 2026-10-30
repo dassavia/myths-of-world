@@ -1,7 +1,7 @@
 package com.mythsofworlds.core;
 
 import com.mythsofworlds.MythsOfWorlds;
-import com.mythsofworlds.mythology.greek.entity.GreekBoss;
+import com.mythsofworlds.core.entity.MythBoss;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -25,13 +25,13 @@ public final class BossBalance {
 
     @SubscribeEvent
     public static void onJoin(EntityJoinLevelEvent event) {
-        if (!event.getLevel().isClientSide && event.getEntity() instanceof GreekBoss boss) {
+        if (!event.getLevel().isClientSide && event.getEntity() instanceof MythBoss boss) {
             scaleHealth(boss, ServerConfig.get(ServerConfig.BOSS_HEALTH));
         }
     }
 
     /** Sets the boss's maximum health to {@code multiplier} times its own, keeping how wounded it is. */
-    public static void scaleHealth(GreekBoss boss, double multiplier) {
+    public static void scaleHealth(MythBoss boss, double multiplier) {
         AttributeInstance health = boss.getAttribute(Attributes.MAX_HEALTH);
         if (health == null) {
             return;
@@ -51,7 +51,7 @@ public final class BossBalance {
 
     @SubscribeEvent
     public static void onDamage(LivingIncomingDamageEvent event) {
-        if (event.getSource().getEntity() instanceof GreekBoss) {
+        if (event.getSource().getEntity() instanceof MythBoss) {
             double multiplier = ServerConfig.get(ServerConfig.BOSS_DAMAGE);
             if (multiplier != 1.0) {
                 event.setAmount((float) (event.getAmount() * multiplier));

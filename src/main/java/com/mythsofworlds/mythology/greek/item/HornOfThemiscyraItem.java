@@ -1,7 +1,7 @@
 package com.mythsofworlds.mythology.greek.item;
 
 import com.mythsofworlds.MythsOfWorlds;
-import com.mythsofworlds.mythology.greek.entity.Amazon;
+import com.mythsofworlds.core.family.WarriorMaiden;
 import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -23,7 +23,7 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 
 /**
  * The war horn of Themiscyra (and its Norse twin, the horn of Vingolf). Blow it and every amazon or valkyrie within
- * {@value #RANGE} blocks who answers this horn ({@link Amazon#horn()}) and has no family goes back to the camp or hall
+ * {@value #RANGE} blocks who answers this horn ({@link WarriorMaiden#horn()}) and has no family goes back to the camp or hall
  * she came from (she comes at once if she wandered far). Wives and daughters stay with you.
  */
 public class HornOfThemiscyraItem extends Item {
@@ -55,9 +55,9 @@ public class HornOfThemiscyraItem extends Item {
         int called = 0;
         BlockPos outpost = null;
         boolean searched = false;
-        for (Amazon amazon : level.getEntitiesOfClass(Amazon.class, player.getBoundingBox().inflate(RANGE),
+        for (WarriorMaiden amazon : level.getEntitiesOfClass(WarriorMaiden.class, player.getBoundingBox().inflate(RANGE),
                 each -> each.horn() == horn)) {
-            if (amazon.home() == null && amazon.bond() == Amazon.Bond.NONE) {
+            if (amazon.home() == null && amazon.bond() == WarriorMaiden.Bond.NONE) {
                 // Amazons from before 0.5 did not remember their camp: send them to the nearest one.
                 if (!searched) {
                     searched = true;
@@ -67,7 +67,7 @@ public class HornOfThemiscyraItem extends Item {
                     }
                 }
                 if (outpost != null) {
-                    amazon.setHome(outpost, Amazon.HOME_RADIUS);
+                    amazon.setHome(outpost, WarriorMaiden.HOME_RADIUS);
                 }
             }
             if (amazon.callHome()) {

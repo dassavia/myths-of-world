@@ -1,6 +1,6 @@
 package com.mythsofworlds.mythology.slavic.entity;
 
-import com.mythsofworlds.mythology.greek.entity.GreekBoss;
+import com.mythsofworlds.core.entity.MythBoss;
 import com.mythsofworlds.mythology.norse.entity.FireGiant;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -24,7 +24,7 @@ import net.minecraft.world.phys.Vec3;
  * while no one wounds him his heads heal the wounds of the body, {@link #REGEN} health a second. He drops the
  * sword-kladenets and his scales.
  */
-public class ZmeyGorynych extends GreekBoss {
+public class ZmeyGorynych extends MythBoss {
     public static final int HEADS = 3;
     public static final float REGEN = 2.0F;
     public static final int CALM_TICKS = 100;

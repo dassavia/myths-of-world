@@ -1,5 +1,6 @@
 package com.mythsofworlds.mythology.greek.client;
 
+import com.mythsofworlds.core.client.ZombieArmsModel;
 import com.mythsofworlds.mythology.greek.entity.Minotaur;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;

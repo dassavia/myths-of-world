@@ -4,17 +4,15 @@ import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.codex.CodexBook;
 import com.mythsofworlds.core.PlayerData;
 import com.mythsofworlds.core.ServerConfig;
-import com.mythsofworlds.mythology.greek.GreekContent;
-import com.mythsofworlds.mythology.norse.NorseContent;
-import com.mythsofworlds.mythology.slavic.SlavicContent;
+import com.mythsofworlds.mythology.Mythology;
 import java.util.HashSet;
-import java.util.Map;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -22,7 +20,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -32,15 +29,6 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 /** Writes journal entries (shown in the Codex of Myths) as players explore the worlds. */
 @EventBusSubscriber(modid = MythsOfWorlds.MODID)
 public final class JournalEvents {
-    /** Which world each volume belongs to. */
-    private static final Map<ResourceKey<Level>, Volume> VOLUMES = Map.of(
-            GreekContent.HELLAS, new Volume("greek"),
-            NorseContent.JOTUNHEIM, new Volume("norse"),
-            SlavicContent.NAV, new Volume("slavic"));
-
-    private record Volume(String id) {
-    }
-
     private JournalEvents() {
     }
 
@@ -62,8 +50,8 @@ public final class JournalEvents {
             return;
         }
         ServerLevel level = player.serverLevel();
-        Volume volume = VOLUMES.get(level.dimension());
-        if (volume == null) {
+        Optional<String> volume = Mythology.of(level.dimension()).flatMap(Mythology::journal);
+        if (volume.isEmpty()) {
             return;
         }
         // One look around per check, however many entries are still closed: the structures the player stands in,
@@ -76,7 +64,7 @@ public final class JournalEvents {
         }
         Set<EntityType<?>> seen = new HashSet<>();
         var structures = level.registryAccess().registryOrThrow(Registries.STRUCTURE);
-        for (Journal.Entry entry : Journal.volume(volume.id())) {
+        for (Journal.Entry entry : Journal.volume(volume.get())) {
             if (PlayerData.hasEntry(player, entry.id())) {
                 continue;
             }
@@ -109,8 +97,8 @@ public final class JournalEvents {
             return;
         }
         var id = BuiltInRegistries.ENTITY_TYPE.getKey(event.getEntity().getType());
-        for (Volume volume : VOLUMES.values()) {
-            for (Journal.Entry entry : Journal.volume(volume.id())) {
+        for (Mythology mythology : Mythology.values()) {
+            for (Journal.Entry entry : mythology.journal().map(Journal::volume).orElse(List.of())) {
                 if (entry.entity().isPresent() && entry.entity().get().equals(id)) {
                     unlock(player, entry);
                 }

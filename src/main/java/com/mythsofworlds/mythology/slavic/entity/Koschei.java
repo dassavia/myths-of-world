@@ -1,6 +1,6 @@
 package com.mythsofworlds.mythology.slavic.entity;
 
-import com.mythsofworlds.mythology.greek.entity.GreekBoss;
+import com.mythsofworlds.core.entity.MythBoss;
 import com.mythsofworlds.mythology.slavic.SlavicContent;
 import com.mythsofworlds.mythology.slavic.SlavicEntities;
 import net.minecraft.core.particles.ParticleTypes;
@@ -36,7 +36,7 @@ import org.jetbrains.annotations.Nullable;
  * all his strength, unless his killer carries the needle with his death (from the egg on the old oak). Then he dies,
  * and the needle breaks. His touch withers; below half health he raises upyri from the earth to fight for him.
  */
-public class Koschei extends GreekBoss {
+public class Koschei extends MythBoss {
     public static final int SUMMON_COOLDOWN = 300;
 
     private int summonCooldown = 100;
