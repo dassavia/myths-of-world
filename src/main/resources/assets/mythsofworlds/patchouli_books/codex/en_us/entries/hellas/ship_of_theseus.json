@@ -1,0 +1,13 @@
+{
+  "name": "Ship of Theseus",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_place",
+  "sortnum": 35,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A long ship with a black sail in the Aegean Sea, the one that carried Theseus home from Crete. A crew of shades on deck; in the hold a chest with a map, a compass and sometimes a trident."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_ship_of_theseus"
+}

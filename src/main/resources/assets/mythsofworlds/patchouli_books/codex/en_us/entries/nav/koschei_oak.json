@@ -1,0 +1,13 @@
+{
+  "name": "Koschei's Oak",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_place",
+  "sortnum": 20,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "An old black oak guarded by volkolaks. High in its branches stands a chest, and in it is the egg with Koschei's death."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_koschei_oak"
+}

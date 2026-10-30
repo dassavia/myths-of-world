@@ -1,7 +1,7 @@
 package com.mythsofworlds.journal;
 
 import com.mythsofworlds.MythsOfWorlds;
-import com.mythsofworlds.codex.Progress;
+import com.mythsofworlds.codex.CodexBook;
 import com.mythsofworlds.core.PlayerData;
 import com.mythsofworlds.mythology.greek.GreekContent;
 import com.mythsofworlds.mythology.norse.NorseContent;
@@ -49,7 +49,7 @@ public final class JournalEvents {
                     .withStyle(ChatFormatting.GOLD), false);
             player.level().playSound(null, player.blockPosition(), SoundEvents.BOOK_PAGE_TURN, SoundSource.PLAYERS, 1.0F, 1.0F);
             if (player instanceof ServerPlayer serverPlayer) {
-                Progress.sync(serverPlayer);
+                CodexBook.sync(serverPlayer);
             }
         }
     }

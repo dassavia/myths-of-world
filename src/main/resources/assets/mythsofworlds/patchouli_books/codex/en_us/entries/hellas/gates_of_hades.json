@@ -1,0 +1,13 @@
+{
+  "name": "Gates of Hades",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_place",
+  "sortnum": 29,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Black basalt pillars and a sealed obsidian door in the Asphodel Meadows, lit by blue soul fire. Guarded by Cerberus; the chest holds obsidian, diamonds and netherite scrap."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_gates_of_hades"
+}

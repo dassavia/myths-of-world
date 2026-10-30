@@ -1,0 +1,26 @@
+{
+  "name": "Heimdall",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_boss",
+  "sortnum": 21,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:heimdall",
+      "name": "Heimdall"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Watchman of the gods at the Bifrost bridge in Himinbjorg, 450 health. He sees a hundred leagues and hears the grass grow: arrows hurt him only a third as much."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "He blows the Gjallarhorn: everyone near is thrown back, slowed and stunned. At half health he blows it twice as often. Fight up close and step back when he raises the horn."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Drops the eye of Heimdall. The eye, gold and a dark iron helmet make the helmet of Heimdall: night vision, and every creature within 100 blocks glows through the walls."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_heimdall"
+}

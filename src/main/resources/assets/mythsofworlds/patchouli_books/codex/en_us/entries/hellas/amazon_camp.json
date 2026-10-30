@@ -1,0 +1,13 @@
+{
+  "name": "Amazon Camp",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_place",
+  "sortnum": 37,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A palisade on the plain with tents, a fire, targets and a horse pen. Amazons live here. The chest sometimes holds a wedding ring."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_amazon_camp"
+}

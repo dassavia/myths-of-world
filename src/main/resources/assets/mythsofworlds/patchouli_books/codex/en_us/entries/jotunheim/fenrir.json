@@ -1,0 +1,26 @@
+{
+  "name": "Fenrir",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_boss",
+  "sortnum": 20,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:fenrir",
+      "name": "Fenrir"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The monstrous wolf, son of Loki, on the isle of Lyngvi. His bite withers, and a free Fenrir heals his wounds fast and calls wargs."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Bind him with Gleipnir (use it on the wolf): for 8 seconds he cannot bite, barely moves and takes half again as much damage. Then the fetter snaps."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "While the wolf is free, the weapons of men barely wound him: every blow does only a quarter of its damage. Without Gleipnir he cannot be beaten - buy the fetter from the dwarf."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_fenrir"
+}

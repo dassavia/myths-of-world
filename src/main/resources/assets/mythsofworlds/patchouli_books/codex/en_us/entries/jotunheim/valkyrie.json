@@ -1,0 +1,34 @@
+{
+  "name": "Valkyrie",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_creature",
+  "sortnum": 15,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:valkyrie",
+      "name": "Valkyrie"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "A shield-maiden of Odin (46 health, damage 9, armour 12). She lives in the halls of the valkyries in the fjords, the taiga and the wastes. She fights monsters and answers an insult together with her sisters."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "As with an amazon, give her gifts once every 20 seconds: gold, weapons and shields, trophies of the North or a feast (mead, meat, Idunn's apples). Right-click with an empty hand: she says what she likes."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "At affection 100 give her a wedding ring. Your valkyrie wife follows you into battle. Give her mead and once a day a daughter is born, who grows up a valkyrie."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Brisingamen, Freyja's necklace, wins a valkyrie's heart at once (affection 100). It cannot be crafted: look in the dwarf forges, Utgard and Himinbjorg."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The horn of Vingolf (goat horn, gold, raven feather) calls the valkyries home; the family whistle calls your wives and daughters to you from any world."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_valkyrie"
+}

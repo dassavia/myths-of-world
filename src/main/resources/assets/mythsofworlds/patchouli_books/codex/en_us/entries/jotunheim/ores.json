@@ -1,0 +1,17 @@
+{
+  "name": "Ores of Jotunheim",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_intro",
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Dark Iron ore: y -56 to 56, about 9 veins a chunk of up to 6 blocks, in stone and deepslate. Needs a diamond pickaxe; Fortune gives more."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Muspel embers: y -30 to 160, about 14 veins a chunk. Burns 240 seconds (coal 80) and smelts 24 items."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/jotunheim"
+}

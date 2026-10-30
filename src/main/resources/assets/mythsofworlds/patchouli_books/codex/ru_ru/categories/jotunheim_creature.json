@@ -1,0 +1,7 @@
+{
+  "name": "Существа",
+  "description": "",
+  "icon": "minecraft:spider_eye",
+  "parent": "mythsofworlds:jotunheim",
+  "sortnum": 1
+}

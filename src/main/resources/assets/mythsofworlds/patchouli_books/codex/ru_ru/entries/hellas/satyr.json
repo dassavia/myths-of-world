@@ -1,0 +1,22 @@
+{
+  "name": "Сатир",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_creature",
+  "sortnum": 9,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:satyr",
+      "name": "Сатир"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Козлоногий спутник Диониса в Аркадии и на полях. Днём играет на свирели и никого не трогает, ночью нападает. Его свирель ускоряет других сатиров, удар вызывает тошноту."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Как победить: бейте того, кто играет, первым, и не дайте стае окружить себя. Роняет кожу и пшеницу."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_satyr"
+}

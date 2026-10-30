@@ -1,0 +1,25 @@
+{
+  "name": "Weapons and Armour of the Gods",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_intro",
+  "sortnum": 7,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Mjolnir: damage 12.5, attack speed 1, durability 400. Right-click: lightning where you look; sand melts into glass, earth is scorched."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Surtr's sword: damage 10.5, attack speed 1.6, durability 2400, fireproof. Sets whatever it strikes on fire.$(br)Gleipnir: 4 uses, binds Fenrir."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Helmet of Heimdall: armour 4, toughness 2.5, knockback -10%, durability 418. Night vision, every creature within 100 blocks glows through walls."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Elytra and the wings of Daedalus can go in the back slot (right of the player in the inventory) together with a chestplate: they fly and work just the same."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/jotunheim"
+}

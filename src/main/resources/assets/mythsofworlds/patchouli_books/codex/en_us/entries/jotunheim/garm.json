@@ -1,0 +1,26 @@
+{
+  "name": "Garm",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_boss",
+  "sortnum": 18,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:garm",
+      "name": "Garm"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The hound that guards the gates of Hel in the mists of Niflheim. His howl brings darkness and slows you, his bite weakens and freezes."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "How to beat: bring milk against the darkness and fight near walls where he cannot charge. Drops Garm's fang."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The hound of the cold mists dreads fire: while Garm burns, every blow hurts him twice as much. Bring a Fire Aspect sword or flaming arrows."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_garm"
+}

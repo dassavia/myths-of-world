@@ -1,0 +1,16 @@
+{
+  "name": "Orichalcum Armour",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_intro",
+  "sortnum": 6,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Helmet: armour 2, durability 242$(br)Chestplate: armour 7, durability 352$(br)Leggings: armour 5, durability 330$(br)Boots: armour 2, durability 286"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Whole set: armour 16, toughness 1 a piece. Enchantability 22."
+    }
+  ]
+}

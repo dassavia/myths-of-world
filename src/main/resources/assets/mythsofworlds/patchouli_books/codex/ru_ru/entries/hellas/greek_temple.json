@@ -1,0 +1,13 @@
+{
+  "name": "Храм Олимпийцев",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_place",
+  "sortnum": 26,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Мраморный храм с колоннадой и золотым фризом на Олимпе и Елисейских полях, как Парфенон. Внутри сундуки с золотом, амброзией и иногда факелом Прометея."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_greek_temple"
+}

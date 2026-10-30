@@ -1,0 +1,13 @@
+{
+  "name": "Farmstead",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_place",
+  "sortnum": 39,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A white house with a flat roof and blue shutters, as on the islands. A vine pergola, an olive tree, a beehive, amphorae, a well and a goat pen. Olives, honey and bread in the chest."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_greek_farmstead"
+}

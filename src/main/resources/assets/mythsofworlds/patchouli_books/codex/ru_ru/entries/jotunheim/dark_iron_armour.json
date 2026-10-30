@@ -1,0 +1,17 @@
+{
+  "name": "Тёмножелезная броня",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_intro",
+  "sortnum": 6,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Шлем: броня 3, прочность 440$(br)Нагрудник: броня 8, прочность 640$(br)Поножи: броня 6, прочность 600$(br)Сапоги: броня 3, прочность 520"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Весь комплект: броня 20, твёрдость 3.5 за вещь, отбрасывание -10% за вещь. Зачаровываемость 14."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/jotunheim"
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Kapishche",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_place",
+  "sortnum": 19,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A ring of wooden idols of the old gods: Perun, Veles, Mokosh and Dazhbog look at the sacred fire. Firebirds live here."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_kapishche"
+}

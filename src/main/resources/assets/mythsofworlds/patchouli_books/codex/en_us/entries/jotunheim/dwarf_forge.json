@@ -1,0 +1,13 @@
+{
+  "name": "Dwarven Forge",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_place",
+  "sortnum": 31,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A workshop in the rock where dwarves forge weapons. Gleipnir and diamond gear are sold here."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_dwarf_forge"
+}

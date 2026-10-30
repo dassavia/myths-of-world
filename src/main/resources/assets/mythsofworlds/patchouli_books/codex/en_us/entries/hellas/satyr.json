@@ -1,0 +1,22 @@
+{
+  "name": "Satyr",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_creature",
+  "sortnum": 9,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:satyr",
+      "name": "Satyr"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Goat-legged follower of Dionysus, in Arcadia and the fields. By day he plays his pipes and leaves you be, at night he attacks. His pipes speed up other satyrs; his blow makes you sick."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "How to beat: strike the piper first and do not let the herd surround you. Drops leather and wheat."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_satyr"
+}

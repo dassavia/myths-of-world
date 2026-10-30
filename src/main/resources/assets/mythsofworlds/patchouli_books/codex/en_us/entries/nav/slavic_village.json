@@ -1,0 +1,13 @@
+{
+  "name": "Village",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_place",
+  "sortnum": 17,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Log izbas with stoves and carved shutters, a well and vegetable gardens. A merchant and a smith live here."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_slavic_village"
+}

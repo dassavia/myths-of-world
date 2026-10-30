@@ -1,0 +1,22 @@
+{
+  "name": "Traders of Nav",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_creature",
+  "sortnum": 13,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:slavic_merchant",
+      "name": "Traders of Nav"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "A merchant and a smith live in the villages. The merchant takes trophies and sells karavai, honey and acorns. The smith forges trophies into diamond weapons and armour."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Baba Yaga lives in a hut on chicken legs. She sells the water of life and dead water, acorns of the World Tree and potions."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_slavic_merchant"
+}

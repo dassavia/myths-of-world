@@ -1,0 +1,21 @@
+{
+  "name": "The World Tree",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_intro",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "No gate is built to Nav: you go down along the roots of the World Tree. Make an acorn of the World Tree: an oak sapling, a gold ingot, glow berries and a horn of the Minotaur."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Plant the acorn on grass or dirt (right-click the top of the block). A great oak grows, with a hollow at its roots facing you. It needs a 3x3 space 11 blocks high."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Step into the hollow and stand for 3 seconds: you go down to Nav and come out by an oak just like it. Come back the same way. Cut the trunk by the hollow and it closes."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/nav"
+}

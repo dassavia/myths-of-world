@@ -1,0 +1,13 @@
+{
+  "name": "Viking Village",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_place",
+  "sortnum": 23,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A mead hall, longhouses, a smithy and the volva's hut above a fjord. The merchants of the North live here, and the chests keep supplies and mead."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_viking_village"
+}

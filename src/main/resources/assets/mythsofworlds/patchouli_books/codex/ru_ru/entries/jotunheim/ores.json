@@ -1,0 +1,17 @@
+{
+  "name": "Руды Йотунхейма",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_intro",
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Руда тёмного железа: высота от -56 до 56, около 9 жил на чанк по 6 блоков, в камне и глубинном сланце. Нужна алмазная кирка, удача увеличивает добычу."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Угли Муспельхейма: высота от -30 до 160, около 14 жил на чанк. Горит 240 секунд (уголь 80) и плавит 24 предметов."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/jotunheim"
+}

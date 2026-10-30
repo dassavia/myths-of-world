@@ -1,0 +1,22 @@
+{
+  "name": "Fire Giant",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_creature",
+  "sortnum": 12,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:fire_giant",
+      "name": "Fire Giant"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "A son of Muspelheim from the fiery rift. He throws fireballs and his blow sets you alight. Fire and lava do not harm him."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "How to beat: snowballs hurt him badly and water burns him. A water bucket and a stack of snowballs are the best weapons. Sometimes drops a Muspel ember."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_fire_giant"
+}

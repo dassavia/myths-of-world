@@ -1,0 +1,22 @@
+{
+  "name": "Соловей-разбойник",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_boss",
+  "sortnum": 14,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:solovei",
+      "name": "Соловей-разбойник"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Сидит в гнезде на девяти дубах над дорогой. Его свист - буря: всех вокруг ранит, отбрасывает далеко и оглушает. Раненый, свистит чаще."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Держитесь вплотную или стреляйте издалека, за 16 блоками свист не достанет. С него падают сапоги-скороходы."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_solovei"
+}

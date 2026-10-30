@@ -1,0 +1,26 @@
+{
+  "name": "Немейский лев",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_boss",
+  "sortnum": 20,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:nemean_lion",
+      "name": "Немейский лев"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Огромный золотой лев в логове посреди Немейского леса. Прыгает на добычу."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Способности: шкура неуязвима для мечей, стрел и кулаков. Ранят его только зелья (яд, урон, иссушение, в том числе на стрелах) и кинжал из его когтя."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Как победить: первого льва одолейте зельями. Из когтя (коготь над палкой) сделайте кинжал. Роняет шкуру и когти."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_nemean_lion"
+}

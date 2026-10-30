@@ -1,0 +1,22 @@
+{
+  "name": "Merchants of the North",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_creature",
+  "sortnum": 14,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:norse_merchant",
+      "name": "Merchants of the North"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "They live in Viking villages and forges. The steward of the mead hall buys trophies and sells mead. The dwarven smith trades trophies for diamond gear."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The dwarf also sells Gleipnir, the fetter for Fenrir. The volva sells Idunn's apples, the Rune Igniter, potions and carved runestones."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_norse_merchant"
+}

@@ -2,7 +2,6 @@ package com.mythsofworlds.core.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mythsofworlds.MythsOfWorlds;
-import com.mythsofworlds.codex.client.CodexScreen;
 import com.mythsofworlds.core.ClientConfig;
 import java.util.Set;
 import net.minecraft.client.KeyMapping;
@@ -42,6 +41,8 @@ import org.lwjgl.glfw.GLFW;
  * switches it at any time ({@link ClientConfig}).
  */
 public final class MythHud {
+    /** The font of the myths: titles and numbers of the HUD. */
+    public static final ResourceLocation MYTH_FONT = MythsOfWorlds.id("myth");
     private static final ResourceLocation TEXTURE = MythsOfWorlds.id("textures/gui/hud.png");
     private static final int TEX_W = 256;
     private static final int TEX_H = 96;
@@ -135,7 +136,7 @@ public final class MythHud {
     }
 
     private static Component myth(String text) {
-        return Component.literal(text).withStyle(Style.EMPTY.withFont(CodexScreen.MYTH_FONT));
+        return Component.literal(text).withStyle(Style.EMPTY.withFont(MYTH_FONT));
     }
 
     /** Text centred on (cx, y), small, with a dark outline so it reads over any fill. */
@@ -281,7 +282,7 @@ public final class MythHud {
         }
         sprite(graphics, 4, 4, 24, 22, 104, 18);
         Component name = Component.translatable("hud.mythsofworlds.world." + dimension.getPath())
-                .withStyle(Style.EMPTY.withFont(CodexScreen.MYTH_FONT));
+                .withStyle(Style.EMPTY.withFont(MYTH_FONT));
         int x = 4 + 52 - minecraft.font.width(name) / 2;
         graphics.drawString(minecraft.font, name, x, 9, 0xFF4A2410, false);
     }

@@ -1,0 +1,26 @@
+{
+  "name": "Кощей Бессмертный",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_boss",
+  "sortnum": 16,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:koschei",
+      "name": "Кощей Бессмертный"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Костлявый царь-колдун в чёрном замке. Его удар иссушает, а раненый, он поднимает из земли упырей."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Убить Кощея нельзя: он встаёт снова. Его смерть - на конце иглы, игла - в яйце, яйцо - в сундуке на старом дубе. Найдите Кощеев дуб."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Разбейте яйцо (ПКМ) и носите иглу с собой. Тогда последний удар убьёт Кощея, а игла сломается. С него падает шапка-невидимка."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_koschei"
+}

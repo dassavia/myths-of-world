@@ -1,0 +1,13 @@
+{
+  "name": "Den of the Nemean Lion",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_place",
+  "sortnum": 33,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A cave of granite and moss deep in the Nemean Forest, strewn with bones. A pride of ordinary lions roams around."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_nemean_lion_den"
+}

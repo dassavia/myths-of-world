@@ -1,0 +1,13 @@
+{
+  "name": "Oracle of Delphi",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_place",
+  "sortnum": 27,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Round sanctuary of Apollo in Arcadia and the mountains. In the Pythia's chests: bottles, glowstone, amethyst, enchanted books and bottles of experience."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_oracle_of_delphi"
+}

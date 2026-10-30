@@ -1,0 +1,22 @@
+{
+  "name": "Hydra Hatchling",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_creature",
+  "sortnum": 14,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:hydra_hatchling",
+      "name": "Hydra Hatchling"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Hatches from the egg the Lernaean Hydra always drops: right-click the ground with it. Tame from birth."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Follows its owner, sits on right-click, bites with poison and is immune to it. Heals on fish."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_hydra_hatchling"
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Логово гидры",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_place",
+  "sortnum": 30,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Круглое болото с чёрной водой и кувшинками в Стигийских топях, обнесённое разбитой стеной и упавшими колоннами. В середине сундук, в воде гидра, на берегу Каркин."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_hydra_lair"
+}

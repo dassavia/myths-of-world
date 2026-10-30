@@ -1,0 +1,20 @@
+{
+  "name": "Tiers of Gear",
+  "icon": "mythsofworlds:codex",
+  "category": "mythsofworlds:path_intro",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Iron: sword 6, armour 15.$(br)I. Orichalcum (Hellas): sword 6.5, armour 16, toughness 1, durability 900. Reflection."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "II. Bulat (Nav, ore deep below): sword 7.5, armour 20, toughness 2, durability 1700. Lifesteal and divine ward. Its pickaxe mines dark iron."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "III. Dark iron (Jotunheim, needs a diamond or bulat pickaxe): sword 8.5, armour 20, toughness 3.5, durability 2400. Monster slaying and divine ward.$(br)The gifts of the bosses beat the metal of their world: kladenets 8.5, Surtr's sword 10.5, Mjolnir 12.5."
+    }
+  ]
+}

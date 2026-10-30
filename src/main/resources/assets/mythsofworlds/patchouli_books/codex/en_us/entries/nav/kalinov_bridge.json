@@ -1,0 +1,13 @@
+{
+  "name": "Kalinov Bridge",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_place",
+  "sortnum": 22,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A stone bridge over the fiery river Smorodina. On the far bank wait Zmey Gorynych and his hoard."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_kalinov_bridge"
+}

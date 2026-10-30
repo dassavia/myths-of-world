@@ -1,0 +1,13 @@
+{
+  "name": "Утгард",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_place",
+  "sortnum": 27,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Ледяной чертог великанов среди пустошей. На троне сидит Трим, у дверей стоят инеистые великаны. Сундуки полны трофеев."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_utgard"
+}

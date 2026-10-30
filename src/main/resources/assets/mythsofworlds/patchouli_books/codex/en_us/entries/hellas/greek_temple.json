@@ -1,0 +1,13 @@
+{
+  "name": "Temple of the Olympians",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_place",
+  "sortnum": 26,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A marble temple with a colonnade and a golden frieze, on Olympus and the Elysian Fields, like the Parthenon. Inside are chests with gold, ambrosia and sometimes a Promethean Torch."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_greek_temple"
+}

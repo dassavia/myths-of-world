@@ -1,0 +1,7 @@
+{
+  "name": "Введение",
+  "description": "",
+  "icon": "minecraft:writable_book",
+  "parent": "mythsofworlds:nav",
+  "sortnum": 0
+}

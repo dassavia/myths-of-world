@@ -1,0 +1,13 @@
+{
+  "name": "Калинов мост",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_place",
+  "sortnum": 22,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Каменный мост над огненной рекой Смородиной. На том берегу ждёт Змей Горыныч и его клад."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_kalinov_bridge"
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Лагерь амазонок",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_place",
+  "sortnum": 37,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Частокол на равнине: шатры, костёр, мишени и загон с лошадьми. Здесь живут амазонки. В сундуке бывает обручальное кольцо."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_amazon_camp"
+}

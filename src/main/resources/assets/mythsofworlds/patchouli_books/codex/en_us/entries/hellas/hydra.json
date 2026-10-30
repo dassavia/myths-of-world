@@ -1,0 +1,26 @@
+{
+  "name": "Lernaean Hydra",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_boss",
+  "sortnum": 23,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:hydra",
+      "name": "Lernaean Hydra"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Five-headed serpent of the Stygian Marsh, 400 health. Its heads spit poison and its wounds close by themselves."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Weakness: fire. It stops the regeneration for 10 seconds and burns three times as hard. A fire aspect blade cuts 2.5 times as deep at level I and 4 times at II."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "How to beat: fire aspect, flame arrows, lava. Beware of Karkinos nearby. Drops scales, emeralds, diamonds and a hydra egg."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_hydra"
+}

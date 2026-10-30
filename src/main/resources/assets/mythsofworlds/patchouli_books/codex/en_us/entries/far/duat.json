@@ -1,0 +1,13 @@
+{
+  "name": "Duat",
+  "icon": "minecraft:recovery_compass",
+  "category": "mythsofworlds:far_intro",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A desert of everlasting night where the barque of Ra sails. No way there has been found yet."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/far"
+}

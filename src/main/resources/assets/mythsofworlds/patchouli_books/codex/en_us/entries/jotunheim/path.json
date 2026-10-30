@@ -1,0 +1,14 @@
+{
+  "name": "Path of the World",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim",
+  "priority": true,
+  "sortnum": -1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The steps of this world in order. Each one opens new pages.$(br)$(li)You crossed Bifrost into Jotunheim$(li)The Draugr Chieftain is slain$(li)Garm is slain$(li)Heimdall is defeated$(li)Thrym is slain$(li)Fenrir is slain$(li)Surtr is slain: the hero's path is walked"
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/jotunheim"
+}

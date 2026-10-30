@@ -1,0 +1,13 @@
+{
+  "name": "Themiscyra",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_place",
+  "sortnum": 38,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "City of the Amazons behind marble walls with towers. A statue of Ares and olive trees in the courtyard, and in the north the throne hall with braziers, where Hippolyta sits. Gold and rings in the treasury."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_themiscyra"
+}

@@ -3,6 +3,7 @@ package com.mythsofworlds.codex;
 import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -12,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
-/** The Codex of Myths: right-click to open the book (a screen of its own, drawn on the client). */
+/** The Codex of Myths: right-click to open the book (a Patchouli book, see {@link CodexBook}). */
 public class CodexItem extends Item {
     public CodexItem(Properties properties) {
         super(properties);
@@ -20,10 +21,9 @@ public class CodexItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-        if (level.isClientSide) {
-            com.mythsofworlds.codex.client.CodexClient.open(null);
-        } else {
+        if (player instanceof ServerPlayer serverPlayer) {
             player.awardStat(Stats.ITEM_USED.get(this));
+            CodexBook.open(serverPlayer);
         }
         return InteractionResultHolder.sidedSuccess(player.getItemInHand(hand), level.isClientSide());
     }

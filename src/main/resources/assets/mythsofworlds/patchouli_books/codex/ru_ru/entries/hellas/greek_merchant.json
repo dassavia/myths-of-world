@@ -1,0 +1,22 @@
+{
+  "name": "Торговец агоры",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_creature",
+  "sortnum": 15,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:greek_merchant",
+      "name": "Торговец агоры"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Живёт на агоре. Скупщик трофеев платит изумруды за рога, клыки, шкуры и чешую чудовищ. Кузнец Гефеста меняет трофеи на оружие и броню."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Жрица продаёт амброзию, факел Прометея, олимпийский мрамор и зелья."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_greek_merchant"
+}

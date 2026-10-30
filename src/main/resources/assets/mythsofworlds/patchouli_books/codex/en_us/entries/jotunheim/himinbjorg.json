@@ -1,0 +1,13 @@
+{
+  "name": "Himinbjorg",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_place",
+  "sortnum": 32,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Heimdall's hall on a high terrace, with a watchtower. The rainbow bridge Bifrost runs down from the gate, and the watchman of the gods stands at its head."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_himinbjorg"
+}

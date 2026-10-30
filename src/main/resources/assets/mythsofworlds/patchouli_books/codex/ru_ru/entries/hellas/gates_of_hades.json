@@ -1,0 +1,13 @@
+{
+  "name": "Врата Аида",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_place",
+  "sortnum": 29,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Чёрные колонны из базальта и запечатанная дверь из обсидиана среди Асфоделевых лугов. Горит синий огонь душ. Сторож - Цербер, в сундуке обсидиан, алмазы и незеритовый лом."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_gates_of_hades"
+}

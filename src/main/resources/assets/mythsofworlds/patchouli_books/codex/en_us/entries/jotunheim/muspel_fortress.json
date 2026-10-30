@@ -1,0 +1,13 @@
+{
+  "name": "Fortress of Surtr",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_place",
+  "sortnum": 29,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A black fortress behind a lava moat in the rift of Muspelheim. Surtr and the fire giants wait inside. Bring water, snowballs and fire resistance."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_muspel_fortress"
+}

@@ -1,0 +1,24 @@
+{
+  "name": "Order of the Worlds",
+  "icon": "mythsofworlds:codex",
+  "category": "mythsofworlds:path_intro",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "I. Hellas is open from the start: iron is enough. Half-bosses: the Nemean Lion, Medusa, the Cyclops. Bosses: the Minotaur (300), the Hydra (400), Cerberus (450)."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "II. Nav is opened by the Minotaur's horn: the acorn of the World Tree needs it. The two worlds can be travelled side by side. Bosses: Solovei (300), Zmey Gorynych (500), Koschei (550)."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "III. Jotunheim is the harshest. The rune igniter needs a fang of Cerberus and a scale of Zmey Gorynych. Bosses: the Draugr Chieftain (350), Garm (400), Heimdall (450), Thrym (550), Fenrir (650), Surtr (800).$(br)IV. Victory over Surtr opens the chapter of the far worlds."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "A boss counts for every player within 64 blocks of it: on a server, friends walk the path together."
+    }
+  ]
+}

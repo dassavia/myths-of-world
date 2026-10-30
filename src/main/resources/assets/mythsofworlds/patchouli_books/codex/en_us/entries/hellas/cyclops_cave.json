@@ -1,0 +1,13 @@
+{
+  "name": "Cyclops Cave",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_place",
+  "sortnum": 32,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A stone dome in the mountains and on the coast. Inside: Polyphemus' sheep pen, a bed of hay, a hearth and a chest of wool, meat and iron."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_cyclops_cave"
+}

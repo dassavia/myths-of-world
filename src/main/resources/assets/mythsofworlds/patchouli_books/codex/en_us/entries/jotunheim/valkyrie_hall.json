@@ -1,0 +1,13 @@
+{
+  "name": "Hall of the Valkyries",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_place",
+  "sortnum": 33,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A long hall hung with shields, with a stable of winged horses and a training ground. The valkyries live here, and they can be wed."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_valkyrie_hall"
+}

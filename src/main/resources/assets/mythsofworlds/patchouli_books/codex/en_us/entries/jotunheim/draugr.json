@@ -1,0 +1,22 @@
+{
+  "name": "Draugr",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_creature",
+  "sortnum": 8,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:draugr",
+      "name": "Draugr"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "A dead man from the barrows in rusted armour. He walks the fjords, the wastes and the mists of Niflheim. The sun does not burn him; his blow freezes and slows."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Killed with a sword, a draugr rises once more at half strength. To lay him to rest for good, finish him with an axe or with fire. Drops rotten flesh and bones."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_draugr"
+}

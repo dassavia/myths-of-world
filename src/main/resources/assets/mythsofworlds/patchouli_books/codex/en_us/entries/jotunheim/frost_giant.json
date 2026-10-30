@@ -1,0 +1,22 @@
+{
+  "name": "Frost Giant",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_creature",
+  "sortnum": 11,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:frost_giant",
+      "name": "Frost Giant"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "A rime-thurs of the frost wastes, tall as two houses. His blow freezes: you move slowly and frost covers you."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "How to beat: fire hurts him twice as much. Take a Fire Aspect sword and flaming arrows. Sometimes drops a frost heart."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_frost_giant"
+}

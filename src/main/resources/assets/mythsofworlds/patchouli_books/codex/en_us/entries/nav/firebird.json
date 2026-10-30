@@ -1,0 +1,22 @@
+{
+  "name": "Firebird",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_creature",
+  "sortnum": 12,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:firebird",
+      "name": "Firebird"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "A bird with feathers like embers. Stroke her with an empty hand and she lets fall a feather, once every two minutes. A feather in your hand lights the dusk: Night Vision."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Tame her with seeds, like a raven: she flies after you and lights up the monsters around. She lives in the groves and by the shrines."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_firebird"
+}

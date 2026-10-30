@@ -1,0 +1,13 @@
+{
+  "name": "Корабль Тесея",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_place",
+  "sortnum": 35,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Длинный корабль с чёрным парусом в Эгейском море: тот, что вёз Тесея с Крита. На палубе команда теней, в трюме сундук с картой, компасом и иногда трезубцем."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_ship_of_theseus"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Spartoi",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_creature",
+  "sortnum": 11,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:spartoi",
+      "name": "Spartoi"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Bronze warrior grown from the dragon's teeth Cadmus sowed. Walks the fields of the dead at night and guards the dead ends of the labyrinth."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Special: once, he rises again after death. Strike him down a second time. Drops bones and iron nuggets."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_spartoi"
+}

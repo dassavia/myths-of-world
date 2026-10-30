@@ -2,6 +2,7 @@ package com.mythsofworlds.gametest;
 
 import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.codex.Codex;
+import com.mythsofworlds.codex.CodexBook;
 import com.mythsofworlds.codex.Progress;
 import com.mythsofworlds.core.PlayerData;
 import com.mythsofworlds.journal.Journal;
@@ -17,6 +18,9 @@ import java.util.Set;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.ServerAdvancementManager;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.monster.Zombie;
@@ -65,6 +69,52 @@ public class ProgressTests {
         helper.assertTrue(PlayerData.addMilestone(player, "kill.minotaur") && !PlayerData.addMilestone(player, "kill.minotaur"),
                 "a milestone is earned once");
         helper.succeed();
+    }
+
+    /**
+     * The Codex is a Patchouli book whose pages are locked by hidden advancements: each lock exists, a chapter opens
+     * when the path reaches it, and creative mode opens everything until the player leaves it.
+     */
+    @GameTest(template = "empty")
+    public static void codexBookLocks(GameTestHelper helper) {
+        ServerAdvancementManager advancements = helper.getLevel().getServer().getAdvancements();
+        for (Codex.Chapter chapter : Codex.chapters()) {
+            if (!chapter.requires().isEmpty()) {
+                helper.assertTrue(advancements.get(CodexBook.lock("chapter", chapter.id())) != null,
+                        "no lock for the chapter " + chapter.id());
+            }
+            for (Codex.Step step : chapter.steps()) {
+                helper.assertTrue(advancements.get(CodexBook.lock("milestone", step.milestone())) != null,
+                        "no lock for the step " + step.milestone());
+            }
+            for (Journal.Entry entry : Journal.volume(chapter.volume())) {
+                if (entry.entity().isPresent() || entry.structure().isPresent()) {
+                    helper.assertTrue(advancements.get(CodexBook.lock("entry", entry.id())) != null,
+                            "no lock for the entry " + entry.id());
+                }
+            }
+        }
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        player.setGameMode(GameType.SURVIVAL);
+        ResourceLocation nav = CodexBook.lock("chapter", "nav");
+        CodexBook.sync(player);
+        helper.assertTrue(!done(helper, player, nav), "Nav is locked at the start");
+        PlayerData.addMilestone(player, "kill.minotaur");
+        CodexBook.sync(player);
+        helper.assertTrue(done(helper, player, nav), "the Minotaur opens Nav");
+        ResourceLocation jotunheim = CodexBook.lock("chapter", "jotunheim");
+        helper.assertTrue(!done(helper, player, jotunheim), "Jotunheim is still locked");
+        player.setGameMode(GameType.CREATIVE);
+        helper.assertTrue(done(helper, player, jotunheim), "creative mode opens the whole book");
+        player.setGameMode(GameType.SURVIVAL);
+        helper.assertTrue(!done(helper, player, jotunheim) && done(helper, player, nav),
+                "leaving creative locks again only what was not earned");
+        helper.succeed();
+    }
+
+    private static boolean done(GameTestHelper helper, ServerPlayer player, ResourceLocation id) {
+        var holder = helper.getLevel().getServer().getAdvancements().get(id);
+        return holder != null && player.getAdvancements().getOrStartProgress(holder).isDone();
     }
 
     /** The acorn of the World Tree needs the Minotaur's horn, the rune igniter a fang of Cerberus and a scale of Zmey. */

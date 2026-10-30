@@ -1,0 +1,46 @@
+{
+  "name": "Amazon",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_creature",
+  "sortnum": 17,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:amazon",
+      "name": "Amazon"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Warrior woman of Themiscyra (40 health, damage 8, armour 10), in the camps and the city. She fights monsters, and if you hurt her she answers together with her sisters."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Courtship: give flowers, gold, weapons, trophies or food, once every 20 seconds. Right-click with an empty hand: she says what she likes best, and that gift counts double."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "At affection 100, give her a wedding ring (a diamond over three gold ingots). Your wife follows you and fights at your side. Shift + right-click: follow, stay or wander nearby."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Give your wife a cake and a daughter is born, once a day. In 20 minutes she grows into an amazon loyal to your family. Hitting an amazon costs a lot of affection."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Above all, amazons love the necklace of Harmonia: give it and she falls in love at once (affection 100). It cannot be crafted; it lies in the treasuries of temples, the labyrinth and the monsters' lairs."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Amazons keep to their camp. If they have wandered off, blow the horn of Themiscyra (a goat horn, gold and leather): everyone around goes back home."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Cannot wait for your daughter to grow up? Throw a splash potion of growth at her (a glass bottle, bone meal, a golden carrot and gunpowder): she is grown at once. The potion grows up any other young creature too."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The family whistle (gold, an iron nugget and an ender pearl): right-click and all your wives and daughters come to you at once, even from another world."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_amazon"
+}

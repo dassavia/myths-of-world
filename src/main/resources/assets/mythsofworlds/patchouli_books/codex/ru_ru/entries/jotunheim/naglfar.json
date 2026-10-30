@@ -1,0 +1,13 @@
+{
+  "name": "Нагльфар",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_place",
+  "sortnum": 25,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Корабль мертвецов, сложенный из ногтей. Плавает в открытом море с командой драугров. Захватите его - богатый сундук стоит того."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_naglfar"
+}

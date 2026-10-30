@@ -1,0 +1,17 @@
+{
+  "name": "Labyrinth of the Minotaur",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_place",
+  "sortnum": 28,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "On the surface you see only the entrance: a porch with red columns, black capitals and horns on the roof. Under it a spiral stair goes 20 blocks down."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Below is a 61x61 maze of bricks nothing can break. The entrance is in the middle, the Minotaur's arena in a far corner. Spartoi and hidden treasure wait in the dead ends."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_labyrinth"
+}

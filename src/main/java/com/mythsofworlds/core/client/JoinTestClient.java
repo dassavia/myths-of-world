@@ -1,8 +1,7 @@
 package com.mythsofworlds.core.client;
 
 import com.mythsofworlds.MythsOfWorlds;
-import com.mythsofworlds.codex.CodexState;
-import com.mythsofworlds.codex.client.CodexScreen;
+import com.mythsofworlds.codex.CodexBook;
 import com.mythsofworlds.gametest.JoinTest;
 import com.mythsofworlds.mythology.relic.MythAttributes;
 import net.minecraft.client.CameraType;
@@ -15,6 +14,8 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
+import vazkii.patchouli.api.PatchouliAPI;
+import vazkii.patchouli.client.base.ClientAdvancements;
 
 /**
  * The client half of the join test ({@code ./gradlew runJoinClient}, see {@link JoinTest}): joins the dedicated
@@ -71,7 +72,7 @@ public final class JoinTestClient {
             return;
         }
         if (since < 0) {
-            if (CodexState.milestones().contains("kill.minotaur")) {
+            if (ClientAdvancements.hasDone(CodexBook.lock("milestone", "kill.minotaur").toString())) {
                 report("milestone synced from the server");
                 since = 0;
             }
@@ -105,7 +106,7 @@ public final class JoinTestClient {
         }
         int after = since - stages * JoinTest.STAGE_TICKS;
         switch (after) {
-            case 5 -> mc.setScreen(CodexScreen.atChapter("hellas"));
+            case 5 -> PatchouliAPI.get().openBookEntry(CodexBook.ID, MythsOfWorlds.id("hellas/path"), 0);
             case 25 -> screenshot(mc, "codex_hellas");
             case 30 -> mc.setScreen(null);
             case 50 -> {

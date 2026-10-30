@@ -4,8 +4,6 @@
   "package": "com.mythsofworlds.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "AbstractContainerMenuAccessor",
-    "InventoryMenuMixin",
     "LivingEntityMixin",
     "PlayerMixin"
   ],

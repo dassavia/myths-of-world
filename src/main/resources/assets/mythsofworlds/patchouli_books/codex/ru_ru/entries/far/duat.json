@@ -1,0 +1,13 @@
+{
+  "name": "Дуат",
+  "icon": "minecraft:recovery_compass",
+  "category": "mythsofworlds:far_intro",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Пустыня вечной ночи, где странствует ладья Ра. Путь туда ещё не найден."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/far"
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Пещера циклопа",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_place",
+  "sortnum": 32,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Каменный купол в горах и на побережье. Внутри загон с овцами Полифема, постель из сена, очаг и сундук с шерстью, мясом и железом."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_cyclops_cave"
+}

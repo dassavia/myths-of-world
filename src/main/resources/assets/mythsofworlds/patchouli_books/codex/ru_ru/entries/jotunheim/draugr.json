@@ -1,0 +1,22 @@
+{
+  "name": "Драугр",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_creature",
+  "sortnum": 8,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:draugr",
+      "name": "Драугр"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Мертвец из кургана в ржавой броне. Бродит по фьордам, пустошам и туманам Нифльхейма. Солнце его не жжёт, а удар морозит и замедляет."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Убитый мечом, драугр встаёт ещё раз с половиной сил. Чтобы упокоить его навсегда, добейте его топором или огнём. Роняет гнилую плоть и кости."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_draugr"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "Creatures",
+  "description": "",
+  "icon": "minecraft:spider_eye",
+  "parent": "mythsofworlds:nav",
+  "sortnum": 1
+}

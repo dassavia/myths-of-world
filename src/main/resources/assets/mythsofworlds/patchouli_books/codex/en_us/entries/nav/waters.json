@@ -1,0 +1,17 @@
+{
+  "name": "Water of Life and Dead Water",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_intro",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Dead water closes wounds: Resistance II and Absorption III for a minute. The water of life heals at once and gives Regeneration II."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Baba Yaga sells both, and they turn up in chests. Karavai is a filling loaf: three wheat, an egg and honey."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/nav"
+}

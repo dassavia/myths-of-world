@@ -1,0 +1,18 @@
+{
+  "name": "Упырь",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_creature",
+  "sortnum": 9,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:upyr",
+      "name": "Упырь"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Мертвец, что пьёт кровь живых: каждый укус лечит его. Солнце жжёт упыря, но в сумерках Нави ему ничего не грозит. Из клыков упыря кузнец выкует меч."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_upyr"
+}

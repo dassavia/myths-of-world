@@ -1,0 +1,13 @@
+{
+  "name": "Агора",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_place",
+  "sortnum": 34,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Рынок Эллады: фонтан с железным стражем, четыре лавки торговцев, белые дома с сундуками, храм Гермеса и оливы. Здесь продают трофеи чудовищ."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_agora"
+}

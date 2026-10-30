@@ -1,0 +1,26 @@
+{
+  "name": "Minotaur",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_boss",
+  "sortnum": 22,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:minotaur",
+      "name": "Minotaur"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Man with the head of a bull, 300 health. Shut in the arena in a far corner of the underground labyrinth."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Abilities: charges with his horns. Below half health he rages: runs faster and charges twice as often."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "How to beat: sidestep the charge and strike his back. Take a thread, that is, leave marks, to find the way out. Drops his horn, gold and diamonds."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_minotaur"
+}

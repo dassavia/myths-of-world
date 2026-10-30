@@ -1,0 +1,22 @@
+{
+  "name": "Zmey Gorynych",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_boss",
+  "sortnum": 15,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:zmey_gorynych",
+      "name": "Zmey Gorynych"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The three-headed dragon guards the Kalinov bridge over the fiery Smorodina. Up close all three heads spit fire at once, from afar he hurls fireballs."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Fire does not hurt him. While no one wounds him, his heads heal his body. Strike without a pause and bring potions of fire resistance. He drops the sword-kladenets."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_zmey_gorynych"
+}

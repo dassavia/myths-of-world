@@ -1,0 +1,13 @@
+{
+  "name": "Деревня",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_place",
+  "sortnum": 17,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Бревенчатые избы с печами и резными ставнями, колодец и огороды. Здесь живут купец и кузнец."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_slavic_village"
+}

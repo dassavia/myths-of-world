@@ -1,0 +1,30 @@
+{
+  "name": "Цербер",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_boss",
+  "sortnum": 24,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:cerberus",
+      "name": "Цербер"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Трёхглавый пёс у Врат Аида на Асфоделевых лугах, 450 здоровья. Не боится огня."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Способности: укус поджигает, дышит огнём. На половине здоровья призывает три тени."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Как победить: зелье огнестойкости и хорошая броня. Сначала разберитесь с тенями. Роняет клыки, огненные стержни и алмазы."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "В крепостях и бастионах Незера лежит двузубец Аида, хозяина пса. Ударьте им Цербера или нажмите ПКМ, и пёс сразу падает. Двузубец срабатывает один раз."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_cerberus"
+}

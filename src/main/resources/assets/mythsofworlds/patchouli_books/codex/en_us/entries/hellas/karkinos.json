@@ -1,0 +1,22 @@
+{
+  "name": "Karkinos",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_creature",
+  "sortnum": 21,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:karkinos",
+      "name": "Karkinos"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The crab Hera sent to help the Hydra: small but vicious. Sits on the bank of its lair. In the myth it pinched Heracles by the heel, so he beat the Hydra only with Iolaus."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Abilities: its pinch holds you in place, its shell halves arrows. How to beat: Heracles crushed it under his foot. A jump attack does double damage. Drops a claw."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_karkinos"
+}

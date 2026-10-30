@@ -1,0 +1,13 @@
+{
+  "name": "Кощеев замок",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_place",
+  "sortnum": 23,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Чёрный замок с башнями и воротами в решётках. В тронном зале на костяном троне сидит Кощей, его стерегут упыри."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_koschei_castle"
+}

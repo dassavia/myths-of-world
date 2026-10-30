@@ -1,0 +1,22 @@
+{
+  "name": "Гарпия",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_creature",
+  "sortnum": 10,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:harpy",
+      "name": "Гарпия"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Женщина-птица с медными перьями, в горах Олимпа и на побережье. Нападает сверху и крадёт еду прямо из сумки, а потом улетает."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Как победить: стреляйте из лука, пока она кружит. Убейте воровку, чтобы вернуть еду. Роняет перья гарпии: из них и сот делают крылья Дедала."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_harpy"
+}

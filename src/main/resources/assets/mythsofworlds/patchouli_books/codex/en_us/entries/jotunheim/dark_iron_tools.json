@@ -1,0 +1,17 @@
+{
+  "name": "Dark Iron Tools",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_intro",
+  "sortnum": 5,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Durability 2400, mining speed 8.5 (diamond 8), enchantability 14. Mines everything a netherite pickaxe does.$(br)Sword: damage 8.5, attack speed 1.6$(br)Axe: damage 10.5, attack speed 1"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Pickaxe: damage 6.5, attack speed 1.2$(br)Shovel: damage 7, attack speed 1$(br)Hoe: damage 1, attack speed 4"
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/jotunheim"
+}

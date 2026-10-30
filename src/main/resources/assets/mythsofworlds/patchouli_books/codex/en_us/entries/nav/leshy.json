@@ -1,0 +1,22 @@
+{
+  "name": "Leshy",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_creature",
+  "sortnum": 7,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:leshy",
+      "name": "Leshy"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Master of the forest, a tall old man of bark and moss. Leave him alone, and he leaves you alone."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "An angry leshy hits hard, and every blow blinds you and leads you astray: you find yourself somewhere else in his woods. Sometimes he drops an acorn of the World Tree."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_leshy"
+}

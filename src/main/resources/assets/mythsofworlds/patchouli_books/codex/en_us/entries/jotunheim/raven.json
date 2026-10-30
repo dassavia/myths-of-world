@@ -1,0 +1,22 @@
+{
+  "name": "Raven",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_creature",
+  "sortnum": 13,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:raven",
+      "name": "Raven"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "A black bird, like Huginn and Muninn, the ravens of Odin. It lives in the taiga, the fjords and Idunn's orchard and harms no one."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Tame a raven with seeds, like a parrot. A tame raven flies nearby and makes the monsters around its owner glow, so none can sneak up. Drops feathers."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_raven"
+}

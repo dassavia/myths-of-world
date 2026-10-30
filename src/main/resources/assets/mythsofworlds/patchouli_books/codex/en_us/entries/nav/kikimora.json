@@ -1,0 +1,18 @@
+{
+  "name": "Kikimora",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_creature",
+  "sortnum": 8,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:kikimora",
+      "name": "Kikimora"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "A small crooked bog spirit with moss for hair. She leaps out of the mire, and her grip drags you into the mud: strong Slowness and Hunger."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_kikimora"
+}

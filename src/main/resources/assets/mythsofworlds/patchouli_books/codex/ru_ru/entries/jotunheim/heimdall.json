@@ -1,0 +1,26 @@
+{
+  "name": "Хеймдалль",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_boss",
+  "sortnum": 21,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:heimdall",
+      "name": "Хеймдалль"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Страж богов у моста Биврёст в Химинбьёрге, 450 здоровья. Видит за сто миль и слышит, как растёт трава: стрелы ранят его втрое слабее."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Трубит в Гьяллархорн: всех рядом отбрасывает, замедляет и оглушает. На половине здоровья трубит вдвое чаще. Бейтесь вблизи, отходите, когда он поднимает рог."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Роняет око Хеймдалля. Око, золото и тёмножелезный шлем дают шлем Хеймдалля: ночное зрение, и все существа в 100 блоках светятся сквозь стены."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_heimdall"
+}

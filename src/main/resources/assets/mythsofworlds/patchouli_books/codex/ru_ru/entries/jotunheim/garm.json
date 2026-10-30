@@ -1,0 +1,26 @@
+{
+  "name": "Гарм",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_boss",
+  "sortnum": 18,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:garm",
+      "name": "Гарм"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Пёс, что стережёт врата Хель в туманах Нифльхейма. Его вой окутывает тьмой и замедляет, укус ослабляет и морозит."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Как победить: возьмите молоко против тьмы и сражайтесь у стен, где он не разгонится. Роняет клык Гарма."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Пёс холодных туманов боится огня: пока Гарм горит, любой удар ранит его вдвое сильнее. Берите меч с заговором огня или горящие стрелы."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_garm"
+}

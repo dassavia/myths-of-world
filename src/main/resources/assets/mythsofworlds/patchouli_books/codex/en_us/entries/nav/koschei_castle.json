@@ -1,0 +1,13 @@
+{
+  "name": "Koschei's Castle",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_place",
+  "sortnum": 23,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A black castle with towers and a barred gate. In the throne hall Koschei sits on a throne of bones, guarded by upyri."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_koschei_castle"
+}

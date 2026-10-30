@@ -1,0 +1,22 @@
+{
+  "name": "Draugr Chieftain",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_boss",
+  "sortnum": 17,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:draugr_chieftain",
+      "name": "Draugr Chieftain"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "A king buried in a barrow with his warband. He wears a golden helm and wields an axe; arrows barely pierce his armour."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "He raises draugr from the ground and, like them, rises after his first death. Strike with an axe or fire. Drops the barrow crown."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_draugr_chieftain"
+}

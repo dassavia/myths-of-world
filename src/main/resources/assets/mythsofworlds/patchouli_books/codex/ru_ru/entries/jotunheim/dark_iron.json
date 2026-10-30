@@ -1,0 +1,17 @@
+{
+  "name": "Тёмное железо и угли",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_intro",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Глубоко в камне Йотунхейма лежит руда тёмного железа двергов. Нужна железная кирка; переплавьте сырьё в слитки. Из них куют самое прочное оружие, инструменты и броню."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "В разломе Муспельхейма в камне тлеют угли Муспельхейма. В печи они горят втрое дольше угля, а валькирии ценят их как трофей."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/jotunheim"
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Signs of the Myths",
+  "icon": "mythsofworlds:codex",
+  "category": "mythsofworlds:path_intro",
+  "sortnum": 6,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Health, armour, hunger, air and experience are shown as carved bars with old-style numbers, and in the worlds of the myths a scroll at the top names the world."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The H key (change it in the controls) or a button in the pause menu turns this look on and off right in the game. Finer settings are in the mod list, the Config button."
+    }
+  ]
+}

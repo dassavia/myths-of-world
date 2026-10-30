@@ -1,0 +1,26 @@
+{
+  "name": "Лернейская гидра",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_boss",
+  "sortnum": 23,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:hydra",
+      "name": "Лернейская гидра"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Пятиглавый змей Стигийских топей, 400 здоровья. Головы плюются ядом, раны затягиваются сами."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Слабость: огонь. Он останавливает регенерацию на 10 секунд и жжёт втрое сильнее. Меч с заговором огня режет её в 2,5 раза глубже на I уровне и в 4 раза на II."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Как победить: заговор огня, огненные стрелы, лава. Берегитесь Каркина рядом. Роняет чешую, изумруды, алмазы и яйцо гидры."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_hydra"
+}

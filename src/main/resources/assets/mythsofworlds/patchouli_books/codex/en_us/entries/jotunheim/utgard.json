@@ -1,0 +1,13 @@
+{
+  "name": "Utgard",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_place",
+  "sortnum": 27,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The ice hall of the giants out in the wastes. Thrym sits on the throne, frost giants stand by the doors. The chests are full of trophies."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/norse_utgard"
+}

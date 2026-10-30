@@ -1,0 +1,16 @@
+{
+  "name": "Weapons of the Heroes",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_intro",
+  "sortnum": 7,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Nemean claw dagger: damage 6, attack speed 2.2, durability 1561. It wounds the Nemean Lion.$(br)Harpe of Perseus: damage 7, attack speed 1.6, durability 250. Double damage to Medusa."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Bident of Hades: one blow or right-click fells Cerberus at once, then it is gone.$(br)Promethean torch and Medusa's head: 32 uses."
+    }
+  ]
+}

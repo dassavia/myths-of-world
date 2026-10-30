@@ -39,6 +39,8 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
@@ -49,8 +51,8 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Arrow;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tiers;
@@ -63,6 +65,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
+import top.theillusivec4.curios.api.CuriosApi;
 
 /** Norse content: data files, structures, mobs, the relics of the gods and the saga. */
 @GameTestHolder(MythsOfWorlds.MODID)
@@ -391,19 +394,19 @@ public class NorseTests {
         helper.succeed();
     }
 
-    /** An elytra on the back flies over a chestplate, and the back slot is in the inventory menu. */
+    /** An elytra on the back flies over a chestplate; the back slot is the "back" slot of Curios. */
     @GameTest(template = "empty")
     public static void elytraOnTheBack(GameTestHelper helper) {
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
         ItemStack chestplate = new ItemStack(Items.DIAMOND_CHESTPLATE);
         player.setItemSlot(EquipmentSlot.CHEST, chestplate);
-        helper.assertTrue(player.inventoryMenu.slots.size() == 47
-                && player.inventoryMenu.slots.get(46) instanceof BackSlot.BackSlotUI, "the inventory should have a back slot");
-        Slot back = player.inventoryMenu.slots.get(46);
-        helper.assertTrue(!back.mayPlace(new ItemStack(Items.DIAMOND)) && back.mayPlace(new ItemStack(Items.ELYTRA))
-                && back.mayPlace(new ItemStack(GreekContent.WINGS_OF_DAEDALUS.get())), "only wings go on the back");
+        helper.assertTrue(CuriosApi.getCuriosInventory(player).flatMap(inventory -> inventory.getStacksHandler(BackSlot.CURIOS_SLOT))
+                .isPresent(), "players should have the Curios back slot");
+        TagKey<Item> back = ItemTags.create(ResourceLocation.fromNamespaceAndPath("curios", BackSlot.CURIOS_SLOT));
+        helper.assertTrue(!new ItemStack(Items.DIAMOND).is(back) && new ItemStack(Items.ELYTRA).is(back)
+                && new ItemStack(GreekContent.WINGS_OF_DAEDALUS.get()).is(back), "only wings go on the back");
         helper.assertTrue(BackSlot.flyingStack(player, chestplate) == chestplate, "nothing on the back: the chest decides");
-        back.set(new ItemStack(Items.ELYTRA));
+        BackSlot.set(player, new ItemStack(Items.ELYTRA));
         helper.assertTrue(BackSlot.get(player).is(Items.ELYTRA), "the slot keeps the elytra");
         helper.assertTrue(BackSlot.flyingStack(player, chestplate).is(Items.ELYTRA), "the elytra on the back should fly");
         helper.succeed();

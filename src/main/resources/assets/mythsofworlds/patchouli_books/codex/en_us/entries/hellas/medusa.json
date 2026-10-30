@@ -1,0 +1,26 @@
+{
+  "name": "Medusa",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_boss",
+  "sortnum": 19,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:medusa",
+      "name": "Medusa"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "A woman with snakes for hair, in a ruined temple on the coast. Her bite poisons."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Abilities: her gaze slows you, and after 3 seconds it starts to turn you to stone. Protection: a shield in hand, a carved pumpkin on your head, or simply do not look at her."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "How to beat: the harpe of Perseus hurts her twice as much. Drops the head of Medusa: right-click it to turn everything in front of you to stone."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_medusa"
+}

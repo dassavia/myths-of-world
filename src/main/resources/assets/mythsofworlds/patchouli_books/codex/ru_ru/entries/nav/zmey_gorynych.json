@@ -1,0 +1,22 @@
+{
+  "name": "Змей Горыныч",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_boss",
+  "sortnum": 15,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:zmey_gorynych",
+      "name": "Змей Горыныч"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Трёхглавый змей стережёт Калинов мост над огненной Смородиной. Вблизи все три головы разом плюются огнём, издалека он мечет огненные шары."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Огонь ему не страшен. Пока его не ранят, головы залечивают тело. Бейте без передышки и запаситесь зельем огнестойкости. С него падает меч-кладенец."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_zmey_gorynych"
+}

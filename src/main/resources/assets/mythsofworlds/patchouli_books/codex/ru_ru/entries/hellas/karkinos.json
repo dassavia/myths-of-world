@@ -1,0 +1,22 @@
+{
+  "name": "Каркин",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_creature",
+  "sortnum": 21,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:karkinos",
+      "name": "Каркин"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Рак, посланный Герой на помощь гидре: маленький, но злой. Сидит на берегу её логова. В мифе он ущипнул Геракла за пятку, и тот одолел гидру лишь с Иолаем."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Способности: щипок держит жертву на месте, панцирь вдвое ослабляет стрелы. Как победить: Геракл раздавил его ногой. Удар в прыжке наносит двойной урон. Роняет клешню."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_karkinos"
+}

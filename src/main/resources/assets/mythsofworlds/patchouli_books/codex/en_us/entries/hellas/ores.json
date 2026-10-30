@@ -1,0 +1,16 @@
+{
+  "name": "Ores of Hellas",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_intro",
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Orichalcum ore: y -48 to 64, about 8 veins a chunk of up to 7 blocks, in stone and deepslate. Needs an iron pickaxe; Fortune gives more."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Hephaestus coal: y 0 to 192, about 16 veins a chunk. Burns 160 seconds (coal 80) and smelts 16 items."
+    }
+  ]
+}

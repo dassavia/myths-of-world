@@ -1,0 +1,30 @@
+{
+  "name": "Cerberus",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_boss",
+  "sortnum": 24,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:cerberus",
+      "name": "Cerberus"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Three-headed hound at the Gates of Hades in the Asphodel Meadows, 450 health. Fire does not harm it."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Abilities: its bite sets you on fire, it breathes fire. At half health it calls up three shades."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "How to beat: a fire resistance potion and good armour. Deal with the shades first. Drops fangs, blaze rods and diamonds."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "In the fortresses and bastions of the Nether lies the bident of Hades, his master. Strike Cerberus with it or use it on him, and the hound falls at once. The bident works only once."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_cerberus"
+}

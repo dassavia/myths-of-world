@@ -1,0 +1,22 @@
+{
+  "name": "Торговцы Нави",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_creature",
+  "sortnum": 13,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:slavic_merchant",
+      "name": "Торговцы Нави"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "В деревнях живут купец и кузнец. Купец берёт трофеи и продаёт каравай, мёд и жёлуди. Кузнец куёт из трофеев алмазное оружие и броню."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Баба-яга живёт в избушке на курьих ножках. Она продаёт живую и мёртвую воду, жёлуди Мирового древа и зелья."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/slavic_slavic_merchant"
+}

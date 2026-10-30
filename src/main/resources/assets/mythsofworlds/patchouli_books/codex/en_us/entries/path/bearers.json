@@ -1,0 +1,20 @@
+{
+  "name": "Who Gives What",
+  "icon": "mythsofworlds:codex",
+  "category": "mythsofworlds:path_intro",
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Orichalcum: reflection 5% a piece. Titan's breastplate: reflection 15%.$(br)Bulat: lifesteal 2.5% and divine ward 3% a piece. Kladenets: lifesteal 10%."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Dark iron: monster slaying 5% and divine ward 5% a piece. Heimdall's helmet 10%, Mjolnir and Surtr's sword 15%, the harpe 10% monster slaying.$(br)Nemean set: fury 5% a piece. Girdle of Hippolyta: fury 15% and lifesteal 5%."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Talaria: evasion 10%. Seven-league boots: 8%. Cap of invisibility: evasion 5% and divine ward 8%."
+    }
+  ]
+}

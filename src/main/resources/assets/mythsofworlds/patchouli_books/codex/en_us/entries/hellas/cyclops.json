@@ -1,0 +1,22 @@
+{
+  "name": "Cyclops",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_boss",
+  "sortnum": 18,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:cyclops",
+      "name": "Cyclops"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "One-eyed giant as tall as a house. Herds sheep in his cave and leaves travellers alone until struck."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Abilities: stomps and throws everyone around into the air, hits very hard. How to beat: keep your distance, shoot, and step back when he lifts his foot. Drops the cyclops eye."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/greek_cyclops"
+}

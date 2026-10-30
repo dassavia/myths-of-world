@@ -1,8 +1,10 @@
 package com.mythsofworlds.journal;
 
+import com.mythsofworlds.codex.CodexBook;
 import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -13,8 +15,8 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
 /**
- * A journal of one mythology, from before the Codex of Myths gathered them all: right-click opens the Codex at the
- * chapter of its world. No longer made or handed out, it stays so that old copies keep working.
+ * A journal of one mythology, from before the Codex of Myths gathered them all: right-click opens the Codex. No longer
+ * made or handed out, it stays so that old copies keep working.
  */
 public class JournalItem extends Item {
     private final String volume;
@@ -32,10 +34,9 @@ public class JournalItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-        if (level.isClientSide) {
-            com.mythsofworlds.codex.client.CodexClient.open(volume);
-        } else {
+        if (player instanceof ServerPlayer serverPlayer) {
             player.awardStat(Stats.ITEM_USED.get(this));
+            CodexBook.open(serverPlayer);
         }
         return InteractionResultHolder.sidedSuccess(player.getItemInHand(hand), level.isClientSide());
     }
