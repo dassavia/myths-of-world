@@ -52,8 +52,8 @@ public class Surtr extends GreekBoss {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, 550.0)
-                .add(Attributes.ATTACK_DAMAGE, 16.0)
+                .add(Attributes.MAX_HEALTH, 800.0)
+                .add(Attributes.ATTACK_DAMAGE, 18.0)
                 .add(Attributes.ATTACK_KNOCKBACK, 1.5)
                 .add(Attributes.MOVEMENT_SPEED, 0.27)
                 .add(Attributes.ARMOR, 12.0)

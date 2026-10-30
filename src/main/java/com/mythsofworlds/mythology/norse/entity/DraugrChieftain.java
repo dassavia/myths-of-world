@@ -40,8 +40,8 @@ public class DraugrChieftain extends GreekBoss {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, 150.0)
-                .add(Attributes.ATTACK_DAMAGE, 9.0)
+                .add(Attributes.MAX_HEALTH, 350.0)
+                .add(Attributes.ATTACK_DAMAGE, 13.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.27)
                 .add(Attributes.ARMOR, 10.0)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.6)

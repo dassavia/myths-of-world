@@ -24,6 +24,7 @@ import java.util.List;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -185,10 +186,11 @@ public final class GreekContent {
 
     // ---- Metals and fuel ----
 
-    /** Orichalcum, the red-gold metal of Atlantis: deep in the stone of Hellas. Between iron and diamond, and it takes
-     * enchantments as well as gold. */
+    /** Orichalcum, the red-gold metal of Atlantis: deep in the stone of Hellas. The first metal of the myths (tier I):
+     * a little better than iron, and it takes enchantments as well as gold. */
     public static final MetalSet ORICHALCUM = new MetalSet("orichalcum", MapColor.COLOR_ORANGE, new MetalSet.Stats(
-            1100, 9.0F, 3.0F, 22, new int[]{3, 7, 6, 3}, 28, 1.0F, 0.0F, SoundEvents.ARMOR_EQUIP_GOLD));
+            900, 7.0F, 2.5F, 22, new int[]{2, 7, 5, 2}, 22, 1.0F, 0.0F, SoundEvents.ARMOR_EQUIP_GOLD,
+            BlockTags.INCORRECT_FOR_IRON_TOOL));
     /** Coal from the forges of Hephaestus under the mountains of Hellas: burns twice as long as coal. */
     public static final DeferredBlock<DropExperienceBlock> HEPHAESTUS_COAL_ORE = BLOCKS.registerBlock("hephaestus_coal_ore",
             props -> new DropExperienceBlock(UniformInt.of(1, 3), props), BlockBehaviour.Properties.of()
@@ -316,15 +318,15 @@ public final class GreekContent {
                     new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(30)).rarity(Rarity.EPIC)));
     /** Breastplate forged for the Titans who held up the sky: strength, resistance and a firm stance. */
     public static final DeferredHolder<ArmorMaterial, ArmorMaterial> TITAN_MATERIAL = RelicArmorItem.material("titan_breastplate",
-            ArmorItem.Type.CHESTPLATE, 9, 15, SoundEvents.ARMOR_EQUIP_NETHERITE, () -> Ingredient.of(ORICHALCUM.ingot.get()),
-            3.0F, 0.3F);
+            ArmorItem.Type.CHESTPLATE, 7, 15, SoundEvents.ARMOR_EQUIP_NETHERITE, () -> Ingredient.of(ORICHALCUM.ingot.get()),
+            1.5F, 0.2F);
     public static final DeferredItem<RelicArmorItem> TITAN_BREASTPLATE = ITEMS.register("titan_breastplate",
             () -> new RelicArmorItem(TITAN_MATERIAL, ArmorItem.Type.CHESTPLATE, Mythology.GREEK, Relics::titan,
                     new Item.Properties().durability(ArmorItem.Type.CHESTPLATE.getDurability(40)).rarity(Rarity.EPIC).fireResistant()));
 
     /** The hide of the Nemean lion, which no arrow could pierce, worn by Heracles: a whole set of armour. */
     public static final DeferredHolder<ArmorMaterial, ArmorMaterial> NEMEAN_MATERIAL = RelicArmorItem.setMaterial("nemean",
-            3, 8, 6, 3, 15, SoundEvents.ARMOR_EQUIP_LEATHER, () -> Ingredient.of(NEMEAN_PELT.get()), 2.0F, 0.1F);
+            2, 7, 5, 2, 15, SoundEvents.ARMOR_EQUIP_LEATHER, () -> Ingredient.of(NEMEAN_PELT.get()), 1.5F, 0.1F);
     public static final DeferredItem<RelicArmorItem> NEMEAN_HELMET = nemean("nemean_helmet", ArmorItem.Type.HELMET);
     public static final DeferredItem<RelicArmorItem> NEMEAN_CHESTPLATE = nemean("nemean_chestplate", ArmorItem.Type.CHESTPLATE);
     public static final DeferredItem<RelicArmorItem> NEMEAN_LEGGINGS = nemean("nemean_leggings", ArmorItem.Type.LEGGINGS);

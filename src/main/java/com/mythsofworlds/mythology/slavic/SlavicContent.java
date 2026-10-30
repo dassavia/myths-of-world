@@ -11,7 +11,9 @@ import com.mythsofworlds.mythology.slavic.item.WorldTreeAcornItem;
 import java.util.List;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import com.mythsofworlds.registry.MetalSet;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
@@ -110,20 +112,26 @@ public final class SlavicContent {
     public static final DeferredItem<Item> KOSCHEI_NEEDLE = ITEMS.registerSimpleItem("koschei_needle",
             new Item.Properties().stacksTo(1).rarity(Rarity.EPIC));
 
+    /** Bulat, the patterned steel of the bogatyrs, forged from ore deep under Nav: the metal of tier II, as strong as
+     * diamond. */
+    public static final MetalSet BULAT = new MetalSet("bulat", MapColor.COLOR_LIGHT_BLUE, new MetalSet.Stats(
+            1700, 8.0F, 3.5F, 16, new int[]{3, 8, 6, 3}, 34, 2.0F, 0.0F, SoundEvents.ARMOR_EQUIP_IRON,
+            BlockTags.INCORRECT_FOR_DIAMOND_TOOL));
+
     /** Kladenets, the sword-of-itself of the bogatyrs: every blow also cuts down the foes around. */
     public static final DeferredItem<KladenetsItem> KLADENETS = ITEMS.register("kladenets",
-            () -> new KladenetsItem(Tiers.NETHERITE, new Item.Properties().rarity(Rarity.EPIC).fireResistant()
-                    .attributes(SwordItem.createAttributes(Tiers.NETHERITE, 4, -2.4F))));
+            () -> new KladenetsItem(BULAT.tier, new Item.Properties().rarity(Rarity.EPIC).fireResistant()
+                    .attributes(SwordItem.createAttributes(BULAT.tier, 4, -2.4F))));
 
     /** Seven-league boots, taken from Solovei the Robber: run like the wind. */
     public static final DeferredHolder<ArmorMaterial, ArmorMaterial> SKOROKHODY_MATERIAL = RelicArmorItem.material("skorokhody",
-            ArmorItem.Type.BOOTS, 3, 18, SoundEvents.ARMOR_EQUIP_LEATHER, () -> Ingredient.of(Items.LEATHER), 1.0F, 0.0F);
+            ArmorItem.Type.BOOTS, 3, 18, SoundEvents.ARMOR_EQUIP_LEATHER, () -> Ingredient.of(Items.LEATHER), 2.0F, 0.0F);
     public static final DeferredItem<RelicArmorItem> SKOROKHODY = ITEMS.register("skorokhody",
             () -> new RelicArmorItem(SKOROKHODY_MATERIAL, ArmorItem.Type.BOOTS, Mythology.SLAVIC, SlavicRelics::skorokhody,
                     new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(30)).rarity(Rarity.EPIC)));
     /** Cap of invisibility from the treasury of Koschei: crouch and no one sees you. */
     public static final DeferredHolder<ArmorMaterial, ArmorMaterial> SHAPKA_MATERIAL = RelicArmorItem.material("shapka_nevidimka",
-            ArmorItem.Type.HELMET, 2, 25, SoundEvents.ARMOR_EQUIP_LEATHER, () -> Ingredient.of(Items.LEATHER), 0.0F, 0.0F);
+            ArmorItem.Type.HELMET, 3, 25, SoundEvents.ARMOR_EQUIP_LEATHER, () -> Ingredient.of(Items.LEATHER), 2.0F, 0.0F);
     public static final DeferredItem<RelicArmorItem> SHAPKA_NEVIDIMKA = ITEMS.register("shapka_nevidimka",
             () -> new RelicArmorItem(SHAPKA_MATERIAL, ArmorItem.Type.HELMET, Mythology.SLAVIC, SlavicRelics::shapka,
                     new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(30)).rarity(Rarity.EPIC)));

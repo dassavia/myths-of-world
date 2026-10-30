@@ -3,9 +3,9 @@
   "category": "equipment",
   "ingredients": [
     {"item": "minecraft:flint"},
-    {"item": "minecraft:iron_ingot"},
     {"item": "mythsofworlds:runestone"},
-    {"item": "minecraft:amethyst_shard"}
+    {"item": "mythsofworlds:cerberus_fang"},
+    {"item": "mythsofworlds:zmey_scale"}
   ],
   "result": {"id": "mythsofworlds:rune_igniter", "count": 1}
 }
