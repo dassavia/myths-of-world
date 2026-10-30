@@ -163,6 +163,7 @@ public class Fenrir extends MythBoss {
             server.addFreshEntity(warg);
         }
         playSound(SoundEvents.WOLF_HOWL, 4.0F, 0.5F);
+        playSpecial();
     }
 
     @Override

@@ -3,14 +3,19 @@ package com.mythsofworlds.gametest;
 import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.codex.CodexContent;
 import com.mythsofworlds.codex.Progress;
+import com.mythsofworlds.core.entity.MythBoss;
 import com.mythsofworlds.mythology.greek.GreekContent;
 import com.mythsofworlds.mythology.norse.NorseContent;
+import com.mythsofworlds.mythology.norse.NorseEntities;
 import com.mythsofworlds.mythology.relic.MythAttributes;
 import com.mythsofworlds.mythology.slavic.SlavicContent;
+import com.mythsofworlds.mythology.slavic.SlavicEntities;
 import com.mythsofworlds.registry.MetalSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -24,8 +29,9 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
  * The server half of the join test ({@code ./gradlew runJoinServer} with {@code runJoinClient}, used by CI): a real
  * dedicated server that a real client joins over the network. The server gives the player the Codex, awards a
  * milestone and dresses them in each suit of the myths in turn, checking that the Codex was handed out and that the
- * armour powers reach the player; the client (JoinTestClient) checks that the milestone and the powers arrived,
- * draws the armour, the swings, the HUD and the Codex, and takes a screenshot of each. When the client leaves, the
+ * armour powers reach the player; then it shows each boss drawn with GeckoLib in turn and has it play its special
+ * animation. The client (JoinTestClient) checks that the milestone and the powers arrived, draws the armour, the
+ * swings, the bosses, the HUD and the Codex, and takes a screenshot of each. When the client leaves, the
  * server exits with 0 if everything held, else 1. Does nothing unless the system property {@value #PROPERTY} is set.
  */
 @EventBusSubscriber(modid = MythsOfWorlds.MODID)
@@ -33,6 +39,10 @@ public final class JoinTest {
     public static final String PROPERTY = "mythsofworlds.joinTest";
     /** Ticks each suit is worn; the client times its screenshots by the same clock. */
     public static final int STAGE_TICKS = 80;
+    /** Ticks each boss of the gallery stands before the player; the client times its screenshots by the same clock. */
+    public static final int BOSS_TICKS = 60;
+    /** Ticks after a boss appears when it plays its special animation (sent to the client by GeckoLib). */
+    public static final int BOSS_SPECIAL = 22;
     /** Ticks after joining when the first suit is put on and the milestone awarded. */
     public static final int FIRST_STAGE = 20;
     private static final int GIVE_UP = 20 * 60 * 6;
@@ -42,6 +52,7 @@ public final class JoinTest {
     private static int ticks;
     private static int joinedAt = -1;
     private static boolean checkedCodex;
+    private static MythBoss shown;
 
     private JoinTest() {
     }
@@ -71,6 +82,29 @@ public final class JoinTest {
                         SlavicContent.SKOROKHODY.get(), GreekContent.BIDENT_OF_HADES.get()),
                 List.of(SlavicContent.SHAPKA_NEVIDIMKA.get(), dark.chestplate.get(), dark.leggings.get(),
                         GreekContent.NEMEAN_BOOTS.get(), SlavicContent.KLADENETS.get()));
+    }
+
+    /** The bosses drawn with GeckoLib, shown to the client one after another after the suits. */
+    public static List<Supplier<? extends EntityType<? extends MythBoss>>> gallery() {
+        return List.of(SlavicEntities.KOSCHEI, SlavicEntities.SOLOVEI, SlavicEntities.ZMEY_GORYNYCH, NorseEntities.HEIMDALL,
+                NorseEntities.DRAUGR_CHIEFTAIN, NorseEntities.THRYM, NorseEntities.SURTR, NorseEntities.FENRIR, NorseEntities.GARM);
+    }
+
+    /** The boss stands far enough north of the player, facing them, to be seen whole. */
+    private static MythBoss showBoss(ServerPlayer player, EntityType<? extends MythBoss> type) {
+        MythBoss boss = type.create(player.serverLevel());
+        if (boss == null) {
+            failures.add("could not create " + type);
+            return null;
+        }
+        double distance = 3.0 + boss.getBbHeight() * 1.4 + boss.getBbWidth();
+        boss.moveTo(player.getX(), player.getY(), player.getZ() - distance, 0.0F, 0.0F);
+        boss.setYHeadRot(0.0F);
+        boss.setYBodyRot(0.0F);
+        boss.setNoAi(true);
+        boss.setPersistenceRequired();
+        player.serverLevel().addFreshEntity(boss);
+        return boss;
     }
 
     private static void dress(ServerPlayer player, List<Item> suit) {
@@ -125,6 +159,27 @@ public final class JoinTest {
         if (t == FIRST_STAGE + 10 && player.getAttributeValue(MythAttributes.REFLECTION) < 0.19) {
             failures.add("orichalcum armour gives reflection " + player.getAttributeValue(MythAttributes.REFLECTION));
         }
+        int galleryStart = FIRST_STAGE + STAGE_TICKS * stages.size();
+        if (t >= galleryStart) {
+            int index = (t - galleryStart) / BOSS_TICKS;
+            int at = (t - galleryStart) % BOSS_TICKS;
+            var gallery = gallery();
+            if (index < gallery.size()) {
+                if (index == 0 && at == 0) {
+                    player.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
+                    player.teleportTo(player.serverLevel(), player.getX(), player.getY(), player.getZ(), 180.0F, 0.0F);
+                }
+                if (at == 0) {
+                    shown = showBoss(player, gallery.get(index).get());
+                    report("boss " + index + ": " + gallery.get(index).get());
+                } else if (at == BOSS_SPECIAL && shown != null) {
+                    shown.triggerAnim("action", "special");
+                } else if (at == BOSS_TICKS - 2 && shown != null) {
+                    shown.discard();
+                    shown = null;
+                }
+            }
+        }
         if (t > GIVE_UP) {
             report("FAIL: the client did not finish");
             Runtime.getRuntime().halt(1);
@@ -136,7 +191,7 @@ public final class JoinTest {
         if (!active() || event.getEntity() != player) {
             return;
         }
-        if (ticks - joinedAt < FIRST_STAGE + STAGE_TICKS * stages().size()) {
+        if (ticks - joinedAt < FIRST_STAGE + STAGE_TICKS * stages().size() + BOSS_TICKS * gallery().size()) {
             failures.add("the client left early, after " + (ticks - joinedAt) + " ticks");
         }
         if (failures.isEmpty()) {

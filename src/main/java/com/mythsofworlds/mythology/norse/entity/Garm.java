@@ -70,6 +70,7 @@ public class Garm extends MythBoss {
         }
         server.sendParticles(ParticleTypes.SCULK_SOUL, getX(), getY() + 1.5, getZ(), 20, 1.0, 0.6, 1.0, 0.02);
         playSound(SoundEvents.WOLF_HOWL, 4.0F, 0.4F);
+        playSpecial();
     }
 
     @Override

@@ -843,5 +843,8 @@
   "mythsofworlds.configuration.heimdallRange": "Sight of Heimdall's helmet, blocks",
   "mythsofworlds.configuration.heimdallRange.tooltip": "Creatures closer than this glow through the walls",
   "mythsofworlds.configuration.journalSightRange": "Codex sight range, blocks",
-  "mythsofworlds.configuration.journalSightRange.tooltip": "A creature enters the Codex once you see it this close"
+  "mythsofworlds.configuration.journalSightRange.tooltip": "A creature enters the Codex once you see it this close",
+  "boss.mythsofworlds.bar": "%s · %s",
+  "boss.mythsofworlds.bar.enraged": "%s · %s · enraged",
+  "boss.mythsofworlds.enraged": "%s flies into a rage!"
 }

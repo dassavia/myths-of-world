@@ -104,6 +104,7 @@ public class Heimdall extends MythBoss {
 
     /** The Gjallarhorn: everyone within {@link #HORN_RADIUS} blocks is thrown back, slowed and stunned. */
     public void blowHorn(ServerLevel server) {
+        playSpecial();
         server.playSound(null, blockPosition(), SoundEvents.RAID_HORN.value(), getSoundSource(), 4.0F, 1.0F);
         server.sendParticles(ParticleTypes.SONIC_BOOM, getX(), getY(0.6), getZ(), 1, 0.0, 0.0, 0.0, 0.0);
         for (Player player : server.getEntitiesOfClass(Player.class, getBoundingBox().inflate(HORN_RADIUS),

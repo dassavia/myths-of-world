@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.Screenshot;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.neoforged.api.distmarker.Dist;
@@ -21,7 +22,8 @@ import vazkii.patchouli.client.base.ClientAdvancements;
 /**
  * The client half of the join test ({@code ./gradlew runJoinClient}, see {@link JoinTest}): joins the dedicated
  * server, waits for the milestone the server awards, checks that the armour powers arrived, then for each suit takes a
- * screenshot from the front and one in the middle of a swing in first person, opens the Codex, and leaves. Any
+ * screenshot from the front and one in the middle of a swing in first person, photographs each boss the server shows
+ * at rest and in its special animation, opens the Codex, and leaves. Any
  * rendering error crashes the game, which fails the CI step; the screenshots are kept as a CI artifact.
  */
 @EventBusSubscriber(modid = MythsOfWorlds.MODID, value = Dist.CLIENT)
@@ -105,7 +107,19 @@ public final class JoinTestClient {
             }
             return;
         }
-        int after = since - stages * JoinTest.STAGE_TICKS;
+        int gallery = JoinTest.gallery().size();
+        int shown = since - stages * JoinTest.STAGE_TICKS;
+        if (shown < gallery * JoinTest.BOSS_TICKS) {
+            String name = BuiltInRegistries.ENTITY_TYPE.getKey(JoinTest.gallery().get(shown / JoinTest.BOSS_TICKS).get()).getPath();
+            int at = shown % JoinTest.BOSS_TICKS;
+            if (at == JoinTest.BOSS_SPECIAL - 4) {
+                screenshot(mc, "boss_" + name);
+            } else if (at == JoinTest.BOSS_SPECIAL + 16) {
+                screenshot(mc, "boss_" + name + "_special");
+            }
+            return;
+        }
+        int after = shown - gallery * JoinTest.BOSS_TICKS;
         switch (after) {
             case 5 -> PatchouliAPI.get().openBookEntry(CodexBook.ID, MythsOfWorlds.id("hellas/path"), 0);
             case 25 -> screenshot(mc, "codex_hellas");
@@ -113,7 +127,7 @@ public final class JoinTestClient {
             case 45 -> screenshot(mc, "inventory");
             case 50 -> mc.setScreen(null);
             case 70 -> {
-                report("OK: joined, synced, every suit and swing drawn, the Codex and the inventory opened");
+                report("OK: joined, synced, every suit, swing and boss drawn, the Codex and the inventory opened");
                 leftAt = ticks;
                 if (mc.getConnection() != null) {
                     mc.getConnection().getConnection().disconnect(Component.literal("done"));

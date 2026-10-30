@@ -18,11 +18,14 @@ repositories {
     maven { url = 'https://maven.theillusivec4.top/' }
     // Patchouli: the book library the Codex of Myths is built with.
     maven { url = 'https://maven.blamejared.com/' }
+    // GeckoLib: the animated models of the bosses.
+    maven { url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
 }
 
 dependencies {
     implementation "top.theillusivec4.curios:curios-neoforge:${curios_version}"
     implementation "vazkii.patchouli:Patchouli:${patchouli_version}"
+    implementation "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
 }
 
 neoForge {

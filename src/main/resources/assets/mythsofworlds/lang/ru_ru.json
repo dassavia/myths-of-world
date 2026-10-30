@@ -843,5 +843,8 @@
   "mythsofworlds.configuration.heimdallRange": "Зоркость шлема Хеймдалля, блоков",
   "mythsofworlds.configuration.heimdallRange.tooltip": "Существа ближе этого расстояния светятся сквозь стены",
   "mythsofworlds.configuration.journalSightRange": "Дальность записи в Кодекс, блоков",
-  "mythsofworlds.configuration.journalSightRange.tooltip": "Существо попадает в Кодекс, когда вы видите его ближе этого"
+  "mythsofworlds.configuration.journalSightRange.tooltip": "Существо попадает в Кодекс, когда вы видите его ближе этого",
+  "boss.mythsofworlds.bar": "%s · %s",
+  "boss.mythsofworlds.bar.enraged": "%s · %s · в ярости",
+  "boss.mythsofworlds.enraged": "%s приходит в ярость!"
 }

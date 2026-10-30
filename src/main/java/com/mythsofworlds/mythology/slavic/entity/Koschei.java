@@ -169,6 +169,7 @@ public class Koschei extends MythBoss {
             server.sendParticles(ParticleTypes.SOUL, upyr.getX(), upyr.getY(), upyr.getZ(), 15, 0.4, 0.2, 0.4, 0.02);
         }
         playSound(SoundEvents.EVOKER_PREPARE_SUMMON, 1.5F, 0.8F);
+        playSpecial();
     }
 
     @Override

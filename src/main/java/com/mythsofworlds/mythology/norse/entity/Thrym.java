@@ -127,6 +127,7 @@ public class Thrym extends MythBoss {
         }
         server.sendParticles(ParticleTypes.EXPLOSION, getX(), getY() + 0.2, getZ(), 8, 2.0, 0.2, 2.0, 0.0);
         playSound(SoundEvents.GLASS_BREAK, 2.0F, 0.5F);
+        playSpecial();
     }
 
     private void callCourt(ServerLevel server) {

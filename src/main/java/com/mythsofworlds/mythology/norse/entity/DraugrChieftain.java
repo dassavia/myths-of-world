@@ -122,6 +122,7 @@ public class DraugrChieftain extends MythBoss {
                 server.sendParticles(ParticleTypes.SOUL, draugr.getX(), draugr.getY() + 0.5, draugr.getZ(), 10, 0.3, 0.5, 0.3, 0.02);
             }
             playSound(SoundEvents.ZOMBIE_AMBIENT, 2.0F, 0.4F);
+            playSpecial();
         }
     }
 

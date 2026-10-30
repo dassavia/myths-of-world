@@ -92,6 +92,7 @@ public class ZmeyGorynych extends MythBoss {
         }
         server.sendParticles(ParticleTypes.FLAME, getX() + aim.x * 2.0, getY(0.8), getZ() + aim.z * 2.0, 30, 0.6, 0.4, 0.6, 0.05);
         playSound(SoundEvents.ENDER_DRAGON_SHOOT, 2.0F, 0.6F);
+        playSpecial();
     }
 
     @Override

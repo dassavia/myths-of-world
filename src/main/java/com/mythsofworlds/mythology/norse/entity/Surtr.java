@@ -162,6 +162,7 @@ public class Surtr extends MythBoss {
         }
         server.sendParticles(ParticleTypes.LAVA, getX(), getY() + 0.5, getZ(), 20, 2.0, 0.2, 2.0, 0.0);
         playSound(SoundEvents.FIRECHARGE_USE, 2.0F, 0.5F);
+        playSpecial();
     }
 
     /** A fireball falling on the player from high above. */
