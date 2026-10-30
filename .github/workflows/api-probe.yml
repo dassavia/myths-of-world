@@ -1,0 +1,54 @@
+name: API probe (temporary)
+
+on:
+  push:
+    branches: [claude/project-thread-va3x3y]
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Dump the APIs of Curios and Patchouli
+        shell: bash {0}
+        run: |
+          exec > /tmp/api.txt 2>&1
+          curl -sSLo /tmp/vf.jar https://repo1.maven.org/maven2/org/vineflower/vineflower/1.10.1/vineflower-1.10.1.jar
+          probe() { # name metadata-url base-url artifact filter-regex classes-regex decompile-regex
+            echo "########## $1"
+            curl -sSL "$2" > /tmp/meta.xml
+            grep -o '<version>[^<]*</version>' /tmp/meta.xml | sed 's/<[^>]*>//g' | grep -E "$5" | tail -n 8
+            V=$(grep -o '<version>[^<]*</version>' /tmp/meta.xml | sed 's/<[^>]*>//g' | grep -E "$5" | tail -n 1)
+            echo "CHOSEN $1 $V"
+            curl -sSLo /tmp/$1.jar "$3/$V/$4-$V.jar" || return
+            curl -sSL "$3/$V/$4-$V.pom" | head -c 3000; echo
+            rm -rf /tmp/c && mkdir -p /tmp/c /tmp/o && (cd /tmp/c && unzip -q -o /tmp/$1.jar)
+            find /tmp/c -name 'neoforge.mods.toml' -exec cat {} \;
+            (cd /tmp/c && find . -name '*.class' | sed 's|^\./||; s|\.class$||' | sort) > /tmp/classes.txt
+            echo "---- classes: $(wc -l < /tmp/classes.txt)"
+            grep -E "$6" /tmp/classes.txt | grep -v '\$[0-9]' | while read cls; do
+              echo "=== sig $cls"; javap -p -cp /tmp/$1.jar "${cls//\//.}" 2>&1 | grep -v 'lambda\$'
+            done
+            grep -E "$7" /tmp/classes.txt | grep -v '\$' | while read cls; do
+              echo "=== src $cls"; java -jar /tmp/vf.jar -log=ERROR "/tmp/c/$cls.class" /tmp/o >/dev/null 2>&1; cat "/tmp/o/$(basename $cls).java"
+            done
+            ls /tmp/c/data/*/ /tmp/c/assets/*/ 2>/dev/null | head -40
+          }
+          probe curios https://maven.theillusivec4.top/top/theillusivec4/curios/curios-neoforge/maven-metadata.xml \
+            https://maven.theillusivec4.top/top/theillusivec4/curios/curios-neoforge curios-neoforge '\+1\.21\.1$' \
+            '^top/theillusivec4/curios/api/(CuriosApi|SlotContext|type/capability/ICurio(Item)?|client/ICurioRenderer|client/CuriosRendererRegistry|CuriosCapability|type/ISlotType|event/CurioChangeEvent|type/inventory/ICurioStacksHandler|type/capability/ICuriosItemHandler)$' \
+            '^top/theillusivec4/curios/api/(type/capability/ICurioItem|CuriosApi)$'
+          probe patchouli https://maven.blamejared.com/vazkii/patchouli/Patchouli/maven-metadata.xml \
+            https://maven.blamejared.com/vazkii/patchouli/Patchouli Patchouli '^1\.21\.1-[0-9]+-NEOFORGE$' \
+            '^vazkii/patchouli/api/(PatchouliAPI|IPatchouliAPI)$' \
+            '^vazkii/patchouli/(client/book/(BookEntry|BookCategory|AbstractReadStateHolder)|common/util/FlagHelper|common/book/BookRegistry|common/item/ItemModBook)$'
+      - name: Publish the dump on a side branch
+        run: |
+          mkdir -p /tmp/pub && cd /tmp/pub && git init -q -b ci-probe && cp /tmp/api.txt .
+          git add -A && git -c user.name=ci -c user.email=ci@users.noreply.github.com commit -q -m "API dump"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" ci-probe
