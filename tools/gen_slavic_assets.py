@@ -67,7 +67,7 @@ FEATURE_ORDER = [
     ["minecraft:monster_room", "minecraft:monster_room_deep"],
     [f"{NS}:basalt_spire", f"{NS}:nav_dead_trunk", f"{NS}:nav_bone_pile"],
     [],
-    g.COMMON_ORES + [f"{NS}:muspel_magma", f"{NS}:nav_bog_mud"] + g.DISKS,
+    g.COMMON_ORES + [f"{NS}:muspel_magma", f"{NS}:nav_bog_mud"] + g.DISKS + [f"{NS}:ore_bulat"],
     [],
     ["minecraft:spring_water", "minecraft:spring_lava"],
     ["minecraft:glow_lichen", f"{NS}:nav_old_oak", "minecraft:dark_forest_vegetation", "minecraft:birch_tall",
@@ -80,7 +80,7 @@ FEATURE_ORDER = [
      "minecraft:seagrass_swamp", "minecraft:seagrass_normal", "minecraft:kelp_warm"],
     ["minecraft:freeze_top_layer"],
 ]
-COMMON = g.COMMON
+COMMON = g.COMMON + [f"{NS}:ore_bulat"]
 
 
 def music(name):
@@ -351,10 +351,9 @@ def recipes():
             "ingredients": [{"item": i} if not i.startswith("#") else {"tag": i[1:]} for i in ingredients],
             "result": {"id": result, "count": count}})
 
-    # The acorn of the World Tree: a sapling, gold for the sun, glow berries for the light below, bone meal for the dead.
+    # The acorn of the World Tree: a sapling, gold for the sun, glow berries for the light below, the Minotaur's horn as proof of a hero.
     shapeless("world_tree_acorn", ["minecraft:oak_sapling", "minecraft:gold_ingot", "minecraft:glow_berries",
-                                   "minecraft:bone_meal"], f"{NS}:world_tree_acorn")
-    shapeless("slavic_journal", ["minecraft:book", "minecraft:feather", "minecraft:oak_sapling"], f"{NS}:slavic_journal")
+                                   f"{NS}:minotaur_horn"], f"{NS}:world_tree_acorn")
     shapeless("karavai", ["minecraft:wheat", "minecraft:wheat", "minecraft:wheat", "minecraft:egg", "minecraft:honey_bottle"],
               f"{NS}:karavai", 2, "misc")
     g.add_tag("item", "foot_armor", ["skorokhody"])

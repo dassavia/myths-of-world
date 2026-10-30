@@ -45,7 +45,10 @@ public final class ModRegistries {
                     .icon(() -> BuiltInRegistries.ITEM.getOptional(MythsOfWorlds.id("surtr_sword"))
                             .map(Item::getDefaultInstance)
                             .orElse(Items.BOOK.getDefaultInstance()))
-                    .displayItems((params, output) -> ITEMS.getEntries().forEach(item -> output.accept(item.get())))
+                    // The old journals of each world are replaced by the Codex of Myths: kept registered, not listed.
+                    .displayItems((params, output) -> ITEMS.getEntries().stream()
+                            .filter(item -> !(item.get() instanceof com.mythsofworlds.journal.JournalItem))
+                            .forEach(item -> output.accept(item.get())))
                     .build());
 
     private ModRegistries() {
@@ -59,6 +62,7 @@ public final class ModRegistries {
         FEATURES.register(modBus);
         ATTACHMENT_TYPES.register(modBus);
         ARMOR_MATERIALS.register(modBus);
+        com.mythsofworlds.mythology.relic.MythAttributes.ATTRIBUTES.register(modBus);
         TABS.register(modBus);
     }
 }

@@ -5,7 +5,7 @@ import java.util.EnumMap;
 import java.util.List;
 import net.minecraft.core.Holder;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
@@ -39,9 +39,13 @@ import static com.mythsofworlds.registry.ModRegistries.ITEMS;
  * by tools/gen_metals.py; the armour is drawn from textures/models/armor/&lt;name&gt;_layer_1/2.png.
  */
 public final class MetalSet {
-    /** How strong a metal is, compared with iron (250 uses, speed 6, +2 damage) and diamond (1561, 8, +3). */
+    /**
+     * How strong a metal is, compared with iron (250 uses, speed 6, +2 damage) and diamond (1561, 8, +3).
+     * {@code incorrect} is the tag of blocks its pickaxe cannot mine, as for the vanilla tiers.
+     */
     public record Stats(int uses, float speed, float damage, int enchantment, int[] armour, int armourDurability,
-                        float toughness, float knockbackResistance, Holder<SoundEvent> equipSound) {
+                        float toughness, float knockbackResistance, Holder<SoundEvent> equipSound,
+                        TagKey<Block> incorrect) {
     }
 
     public final String name;
@@ -73,7 +77,7 @@ public final class MetalSet {
         block = BLOCKS.registerSimpleBlock(name + "_block", BlockBehaviour.Properties.of().mapColor(color)
                 .strength(5.0F, 6.0F).requiresCorrectToolForDrops().sound(SoundType.METAL));
         blockItem = ITEMS.registerSimpleBlockItem(block);
-        tier = new SimpleTier(BlockTags.INCORRECT_FOR_DIAMOND_TOOL, stats.uses(), stats.speed(), stats.damage(),
+        tier = new SimpleTier(stats.incorrect(), stats.uses(), stats.speed(), stats.damage(),
                 stats.enchantment(), () -> Ingredient.of(ingot.get()));
         material = ARMOR_MATERIALS.register(name, () -> {
             EnumMap<ArmorItem.Type, Integer> defense = new EnumMap<>(ArmorItem.Type.class);

@@ -5,6 +5,7 @@ import com.mythsofworlds.mythology.Mythology;
 import com.mythsofworlds.mythology.greek.GreekContent;
 import com.mythsofworlds.mythology.greek.item.GirdleItem;
 import com.mythsofworlds.mythology.norse.NorseContent;
+import com.mythsofworlds.mythology.slavic.SlavicContent;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -21,9 +22,11 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Set bonuses of the armour of the myths. Greek pieces: orichalcum armour, the armour of the Nemean lion, the girdle of
  * Hippolyta, the talaria and the Titan's breastplate. Norse pieces: dark iron armour and the helmet of Heimdall.
+ * Slavic pieces: bulat armour, the seven-league boots and the cap of invisibility.
  * <ul>
- *   <li>Union of the pantheons (both mythologies worn): 2 pieces give Haste, 3 also Fire Resistance, 4 also
- *       Regeneration; two of each also give Resistance.</li>
+ *   <li>Union of the pantheons (two or three mythologies worn): 2 pieces give Haste, 3 also Fire Resistance, 4 also
+ *       Regeneration; two and two also give Resistance.</li>
+ *   <li>Wisdom of the tales (4 Slavic pieces): Night Vision and Water Breathing.</li>
  *   <li>Blessing of Olympus (4 Greek pieces): Speed and Jump Boost.</li>
  *   <li>Fury of the berserker (4 Norse pieces): Strength and Resistance.</li>
  *   <li>Hide of the Nemean lion (the whole Nemean set, Greek too): Strength, and no arrow or other projectile can
@@ -53,19 +56,24 @@ public final class ArmourSets {
             if (armour.getMaterial().value() == NorseContent.DARK_IRON.material.value()) {
                 return Mythology.NORSE;
             }
+            if (armour.getMaterial().value() == SlavicContent.BULAT.material.value()) {
+                return Mythology.SLAVIC;
+            }
         }
         return null;
     }
 
-    /** Pieces worn of each mythology: {Greek, Norse}. */
+    /** Pieces worn of each mythology: {Greek, Norse, Slavic}. */
     public static int[] count(Player player) {
-        int[] counts = new int[2];
+        int[] counts = new int[3];
         for (EquipmentSlot slot : ARMOUR) {
             Mythology mythology = mythologyOf(player.getItemBySlot(slot));
             if (mythology == Mythology.GREEK) {
                 counts[0]++;
             } else if (mythology == Mythology.NORSE) {
                 counts[1]++;
+            } else if (mythology == Mythology.SLAVIC) {
+                counts[2]++;
             }
         }
         return counts;
@@ -110,8 +118,10 @@ public final class ArmourSets {
         int[] counts = count(player);
         int greek = counts[0];
         int norse = counts[1];
-        int total = greek + norse;
-        if (greek > 0 && norse > 0) {
+        int slavic = counts[2];
+        int total = greek + norse + slavic;
+        int kinds = (greek > 0 ? 1 : 0) + (norse > 0 ? 1 : 0) + (slavic > 0 ? 1 : 0);
+        if (kinds >= 2) {
             RelicArmorItem.keep(player, MobEffects.DIG_SPEED, 0);
             if (total >= 3) {
                 RelicArmorItem.keep(player, MobEffects.FIRE_RESISTANCE, 0);
@@ -119,7 +129,7 @@ public final class ArmourSets {
             if (total == 4) {
                 RelicArmorItem.keep(player, MobEffects.REGENERATION, 0);
             }
-            if (greek == 2 && norse == 2) {
+            if (greek == 2 && norse == 2 || greek == 2 && slavic == 2 || norse == 2 && slavic == 2) {
                 RelicArmorItem.keep(player, MobEffects.DAMAGE_RESISTANCE, 0);
             }
         } else if (greek == 4) {
@@ -128,6 +138,9 @@ public final class ArmourSets {
         } else if (norse == 4) {
             RelicArmorItem.keep(player, MobEffects.DAMAGE_BOOST, 0);
             RelicArmorItem.keep(player, MobEffects.DAMAGE_RESISTANCE, 0);
+        } else if (slavic == 4) {
+            RelicArmorItem.keep(player, MobEffects.NIGHT_VISION, 0);
+            RelicArmorItem.keep(player, MobEffects.WATER_BREATHING, 0);
         }
         if (wearsNemean(player)) {
             RelicArmorItem.keep(player, MobEffects.DAMAGE_BOOST, 0);

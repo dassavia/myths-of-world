@@ -16,6 +16,21 @@
       "pages": 2
     },
     {
+      "id": "slavic.ores",
+      "category": "intro",
+      "pages": 1
+    },
+    {
+      "id": "slavic.bulat_tools",
+      "category": "intro",
+      "pages": 2
+    },
+    {
+      "id": "slavic.bulat_armour",
+      "category": "intro",
+      "pages": 2
+    },
+    {
       "id": "slavic.gods_gear",
       "category": "intro",
       "pages": 3

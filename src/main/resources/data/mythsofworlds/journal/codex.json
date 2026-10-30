@@ -1,0 +1,125 @@
+{
+  "chapters": [
+    {
+      "id": "path",
+      "volume": "path",
+      "icon": "mythsofworlds:codex",
+      "requires": [],
+      "steps": []
+    },
+    {
+      "id": "hellas",
+      "volume": "greek",
+      "icon": "mythsofworlds:promethean_torch",
+      "requires": [],
+      "steps": [
+        {
+          "milestone": "enter.hellas",
+          "icon": "mythsofworlds:promethean_torch"
+        },
+        {
+          "milestone": "kill.nemean_lion",
+          "icon": "mythsofworlds:nemean_pelt"
+        },
+        {
+          "milestone": "kill.medusa",
+          "icon": "mythsofworlds:medusa_head"
+        },
+        {
+          "milestone": "kill.cyclops",
+          "icon": "mythsofworlds:cyclops_eye"
+        },
+        {
+          "milestone": "kill.minotaur",
+          "icon": "mythsofworlds:minotaur_horn"
+        },
+        {
+          "milestone": "kill.hydra",
+          "icon": "mythsofworlds:hydra_scale"
+        },
+        {
+          "milestone": "kill.hippolyta",
+          "icon": "mythsofworlds:girdle_of_hippolyta"
+        },
+        {
+          "milestone": "kill.cerberus",
+          "icon": "mythsofworlds:cerberus_fang"
+        }
+      ]
+    },
+    {
+      "id": "nav",
+      "volume": "slavic",
+      "icon": "mythsofworlds:world_tree_acorn",
+      "requires": [
+        "kill.minotaur"
+      ],
+      "steps": [
+        {
+          "milestone": "enter.nav",
+          "icon": "mythsofworlds:world_tree_acorn"
+        },
+        {
+          "milestone": "kill.solovei",
+          "icon": "mythsofworlds:skorokhody"
+        },
+        {
+          "milestone": "kill.zmey_gorynych",
+          "icon": "mythsofworlds:zmey_scale"
+        },
+        {
+          "milestone": "kill.koschei",
+          "icon": "mythsofworlds:shapka_nevidimka"
+        }
+      ]
+    },
+    {
+      "id": "jotunheim",
+      "volume": "norse",
+      "icon": "mythsofworlds:rune_igniter",
+      "requires": [
+        "kill.cerberus",
+        "kill.zmey_gorynych"
+      ],
+      "steps": [
+        {
+          "milestone": "enter.jotunheim",
+          "icon": "mythsofworlds:rune_igniter"
+        },
+        {
+          "milestone": "kill.draugr_chieftain",
+          "icon": "mythsofworlds:barrow_crown"
+        },
+        {
+          "milestone": "kill.garm",
+          "icon": "mythsofworlds:garm_fang"
+        },
+        {
+          "milestone": "kill.heimdall",
+          "icon": "mythsofworlds:heimdall_eye"
+        },
+        {
+          "milestone": "kill.thrym",
+          "icon": "mythsofworlds:mjolnir"
+        },
+        {
+          "milestone": "kill.fenrir",
+          "icon": "mythsofworlds:fenrir_fang"
+        },
+        {
+          "milestone": "kill.surtr",
+          "icon": "mythsofworlds:surtr_sword"
+        }
+      ]
+    },
+    {
+      "id": "far",
+      "volume": "far",
+      "icon": "minecraft:recovery_compass",
+      "requires": [
+        "kill.surtr"
+      ],
+      "steps": []
+    }
+  ]
+}

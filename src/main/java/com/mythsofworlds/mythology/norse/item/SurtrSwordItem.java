@@ -14,7 +14,7 @@ public class SurtrSwordItem extends SwordItem {
     public static final float BURN_SECONDS = 6.0F;
 
     public SurtrSwordItem(Properties properties) {
-        super(Tiers.NETHERITE, properties);
+        super(com.mythsofworlds.mythology.norse.NorseContent.DARK_IRON.tier, properties);
     }
 
     @Override

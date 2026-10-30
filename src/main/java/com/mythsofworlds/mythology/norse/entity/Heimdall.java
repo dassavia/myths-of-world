@@ -44,7 +44,7 @@ public class Heimdall extends GreekBoss {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, 320.0)
+                .add(Attributes.MAX_HEALTH, 450.0)
                 .add(Attributes.ATTACK_DAMAGE, 13.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.3)
                 .add(Attributes.ARMOR, 12.0)

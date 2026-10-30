@@ -130,6 +130,7 @@ public class Hippolyta extends Amazon {
 
     /** The fight is over: she kneels, gives up her girdle and respects the victor. */
     public void yieldTo(Player player) {
+        com.mythsofworlds.codex.Progress.awardAround(this, "kill.hippolyta");
         yielded = true;
         worthy.add(player.getUUID());
         // The blows of an honest duel are forgiven: courtship starts afresh.

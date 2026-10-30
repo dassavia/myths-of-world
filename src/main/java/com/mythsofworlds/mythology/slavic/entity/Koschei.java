@@ -47,7 +47,7 @@ public class Koschei extends GreekBoss {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, 400.0)
+                .add(Attributes.MAX_HEALTH, 550.0)
                 .add(Attributes.ATTACK_DAMAGE, 13.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.3)
                 .add(Attributes.ARMOR, 10.0)

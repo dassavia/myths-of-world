@@ -963,10 +963,11 @@ def recipes():
     })
     write_json(data("tags", "worldgen", "structure", "amazon_homes.json"),
                {"replace": False, "values": [f"{NS}:amazon_camp", f"{NS}:themiscyra"]})
-    write_json(data("recipe", "greek_journal.json"), {
+    # The Codex of Myths, the one book of the mod (the old journals are no longer made).
+    write_json(data("recipe", "codex.json"), {
         "type": "minecraft:crafting_shapeless", "category": "misc",
         "ingredients": [{"item": "minecraft:book"}, {"item": "minecraft:feather"}, {"item": "minecraft:gold_nugget"}],
-        "result": {"id": f"{NS}:greek_journal", "count": 1},
+        "result": {"id": f"{NS}:codex", "count": 1},
     })
     add_tag("block", "mineable/pickaxe", ["marble", "marble_bricks", "marble_pillar", "olympian_marble", "brazier"])
     fruit_leaves = ["golden_leaves", "olive_leaves", "pomegranate_leaves"]

@@ -233,14 +233,14 @@ ENTRIES = [
       "a hydra egg."]),
     ("cerberus", "boss", mob("cerberus"),
      ["Цербер",
-      "Трёхглавый пёс у Врат Аида на Асфоделевых лугах, 350 здоровья. Не боится огня.",
+      "Трёхглавый пёс у Врат Аида на Асфоделевых лугах, 450 здоровья. Не боится огня.",
       "Способности: укус поджигает, дышит огнём. На половине здоровья призывает три тени.",
       "Как победить: зелье огнестойкости и хорошая броня. Сначала разберитесь с тенями. Роняет клыки, огненные "
       "стержни и алмазы.",
       "В крепостях и бастионах Незера лежит двузубец Аида, хозяина пса. Ударьте им Цербера или нажмите ПКМ, "
       "и пёс сразу падает. Двузубец срабатывает один раз."],
      ["Cerberus",
-      "Three-headed hound at the Gates of Hades in the Asphodel Meadows, 350 health. Fire does not harm it.",
+      "Three-headed hound at the Gates of Hades in the Asphodel Meadows, 450 health. Fire does not harm it.",
       "Abilities: its bite sets you on fire, it breathes fire. At half health it calls up three shades.",
       "How to beat: a fire resistance potion and good armour. Deal with the shades first. Drops fangs, blaze rods "
       "and diamonds.",

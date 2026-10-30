@@ -23,14 +23,14 @@ ENTRIES = [
     ("portal", "intro", None,
      ["Мировое древо",
       "В Навь не строят врат: туда спускаются по корням Мирового древа. Сделайте жёлудь Мирового древа: "
-      "саженец дуба, золотой слиток, светящиеся ягоды и костная мука.",
+      "саженец дуба, золотой слиток, светящиеся ягоды и рог Минотавра.",
       "Посадите жёлудь на траву или землю (ПКМ по верху блока). Вырастет великий дуб, а у его корней - дупло, "
       "обращённое к вам. Нужно место 3x3 и 11 блоков в высоту.",
       "Войдите в дупло и постойте 3 секунды: вы спуститесь в Навь и выйдете у такого же дуба. Обратно - тем же "
       "путём. Срубите ствол у дупла, и оно закроется."],
      ["The World Tree",
       "No gate is built to Nav: you go down along the roots of the World Tree. Make an acorn of the World Tree: "
-      "an oak sapling, a gold ingot, glow berries and bone meal.",
+      "an oak sapling, a gold ingot, glow berries and a horn of the Minotaur.",
       "Plant the acorn on grass or dirt (right-click the top of the block). A great oak grows, with a hollow at "
       "its roots facing you. It needs a 3x3 space 11 blocks high.",
       "Step into the hollow and stand for 3 seconds: you go down to Nav and come out by an oak just like it. "

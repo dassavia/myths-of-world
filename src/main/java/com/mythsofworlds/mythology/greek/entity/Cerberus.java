@@ -34,7 +34,7 @@ public class Cerberus extends GreekBoss {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, 350.0)
+                .add(Attributes.MAX_HEALTH, 450.0)
                 .add(Attributes.ATTACK_DAMAGE, 12.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.32)
                 .add(Attributes.ARMOR, 6.0)

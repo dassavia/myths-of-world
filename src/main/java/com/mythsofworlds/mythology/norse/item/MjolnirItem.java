@@ -43,7 +43,7 @@ public class MjolnirItem extends SwordItem {
     public static final int COOLDOWN_TICKS = 50;
 
     public MjolnirItem(Properties properties) {
-        super(Tiers.NETHERITE, properties);
+        super(com.mythsofworlds.mythology.norse.NorseContent.DARK_IRON.tier, properties);
     }
 
     @Override

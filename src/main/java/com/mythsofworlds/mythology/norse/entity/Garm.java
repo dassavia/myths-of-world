@@ -35,8 +35,8 @@ public class Garm extends GreekBoss {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, 220.0)
-                .add(Attributes.ATTACK_DAMAGE, 12.0)
+                .add(Attributes.MAX_HEALTH, 400.0)
+                .add(Attributes.ATTACK_DAMAGE, 14.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.33)
                 .add(Attributes.ARMOR, 6.0)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.8)

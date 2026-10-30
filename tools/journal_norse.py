@@ -24,12 +24,12 @@ ENTRIES = [
      ["Врата Биврёста",
       "Сложите рамку из рунных камней, как для портала в Незер: внутри от 2 до 21x21 блоков пустоты. "
       "Рунный камень: 8 каменных кирпичей вокруг лазурита.",
-      "Зажгите рамку рунным огнивом (кремень, железо, рунный камень и аметист). Внутри засияет радуга "
+      "Зажгите рамку рунным огнивом (кремень, рунный камень, клык Цербера и чешуя Змея Горыныча). Внутри засияет радуга "
       "Биврёста: войдите в неё. Ломаете рамку - гаснет портал."],
      ["The Gate of Bifrost",
       "Build a frame of runestone like a Nether portal: from 2 up to 21x21 empty blocks inside. "
       "Runestone: 8 stone bricks around lapis lazuli.",
-      "Light the frame with the Rune Igniter (flint, iron, runestone and amethyst). The rainbow of Bifrost "
+      "Light the frame with the Rune Igniter (flint, runestone, a fang of Cerberus and a scale of Zmey Gorynych). The rainbow of Bifrost "
       "shines inside: step into it. Break the frame and the portal goes out."]),
     ("lands", "intro", None,
      ["Земли Йотунхейма",
@@ -235,14 +235,14 @@ ENTRIES = [
       "damage. Without Gleipnir he cannot be beaten - buy the fetter from the dwarf."]),
     ("heimdall", "boss", mob("heimdall"),
      ["Хеймдалль",
-      "Страж богов у моста Биврёст в Химинбьёрге, 320 здоровья. Видит за сто миль и слышит, как растёт трава: "
+      "Страж богов у моста Биврёст в Химинбьёрге, 450 здоровья. Видит за сто миль и слышит, как растёт трава: "
       "стрелы ранят его втрое слабее.",
       "Трубит в Гьяллархорн: всех рядом отбрасывает, замедляет и оглушает. На половине здоровья трубит вдвое чаще. "
       "Бейтесь вблизи, отходите, когда он поднимает рог.",
       "Роняет око Хеймдалля. Око, золото и тёмножелезный шлем дают шлем Хеймдалля: ночное зрение, и все "
       "существа в 100 блоках светятся сквозь стены."],
      ["Heimdall",
-      "Watchman of the gods at the Bifrost bridge in Himinbjorg, 320 health. He sees a hundred leagues and hears "
+      "Watchman of the gods at the Bifrost bridge in Himinbjorg, 450 health. He sees a hundred leagues and hears "
       "the grass grow: arrows hurt him only a third as much.",
       "He blows the Gjallarhorn: everyone near is thrown back, slowed and stunned. At half health he blows it twice "
       "as often. Fight up close and step back when he raises the horn.",

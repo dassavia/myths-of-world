@@ -1,4 +1,5 @@
-"""Metals and fuels of the myths: orichalcum and Hephaestus coal in Hellas, dark iron and Muspel embers in Jotunheim.
+"""Metals and fuels of the myths: orichalcum and Hephaestus coal in Hellas, bulat in Nav, dark iron and Muspel embers
+in Jotunheim.
 
 Writes the ore features (the biomes list them in gen_greek_assets.py and gen_norse_assets.py), block states, models,
 loot, recipes, fuel values, tags and lang entries; with --textures also the block, item and armour textures.
@@ -20,7 +21,10 @@ METALS = {
                    "style": "greek"},
     "dark_iron": {"ru": "Тёмное железо", "ru_gen": "тёмного железа", "en": "Dark Iron",
                   "light": 0x9AA2B4, "mid": 0x5A6074, "dark": 0x2A2C38, "count": 9, "size": 6, "y": (-56, 56),
-                  "style": "norse"},
+                  "style": "norse", "needs": "diamond"},
+    "bulat": {"ru": "Булат", "ru_gen": "булата", "en": "Bulat",
+              "light": 0xD6E2EE, "mid": 0x8A9CB4, "dark": 0x3A4458, "count": 8, "size": 7, "y": (-56, 48),
+              "style": "slavic"},
 }
 # Fuels: the item, its ore, burn time in ticks (coal burns 1600), ore count, vein size, heights.
 FUELS = {
@@ -36,7 +40,10 @@ TOOL_RU = {"sword": ("Меч", "м"), "pickaxe": ("Кирка", "ж"), "axe": ("
            "hoe": ("Мотыга", "ж"), "helmet": ("Шлем", "м"), "chestplate": ("Нагрудник", "м"),
            "leggings": ("Поножи", "мн"), "boots": ("Сапоги", "мн")}
 ADJ_RU = {"orichalcum": {"м": "Орихалковый", "ж": "Орихалковая", "мн": "Орихалковые"},
-          "dark_iron": {"м": "Тёмножелезный", "ж": "Тёмножелезная", "мн": "Тёмножелезные"}}
+          "dark_iron": {"м": "Тёмножелезный", "ж": "Тёмножелезная", "мн": "Тёмножелезные"},
+          "bulat": {"м": "Булатный", "ж": "Булатная", "мн": "Булатные"}}
+RAW_RU = {"orichalcum": "Необработанный орихалк", "dark_iron": "Необработанное тёмное железо",
+          "bulat": "Сырой булат"}
 
 
 def items(metal):
@@ -127,7 +134,8 @@ def tags():
     ores = [f"{m}_ore" for m in METALS] + [s["ore"] for s in FUELS.values()]
     blocks = [f"{m}_block" for m in METALS]
     g.add_tag("block", "mineable/pickaxe", ores + blocks)
-    g.add_tag("block", "needs_iron_tool", [f"{m}_ore" for m in METALS] + blocks)
+    g.add_tag("block", "needs_iron_tool", [f"{m}_ore" for m, spec in METALS.items() if "needs" not in spec] + blocks)
+    g.add_tag("block", "needs_diamond_tool", [f"{m}_ore" for m, spec in METALS.items() if spec.get("needs") == "diamond"])
     g.add_tag("block", "needs_stone_tool", [s["ore"] for s in FUELS.values()])
     for kind, values in (("swords", "sword"), ("pickaxes", "pickaxe"), ("axes", "axe"), ("shovels", "shovel"),
                          ("hoes", "hoe"), ("head_armor", "helmet"), ("chest_armor", "chestplate"),
@@ -165,8 +173,7 @@ def lang():
     for metal, spec in METALS.items():
         entries[f"block.{NS}.{metal}_ore"] = (f"Руда {spec['ru_gen']}", f"{spec['en']} Ore")
         entries[f"block.{NS}.{metal}_block"] = (f"Блок {spec['ru_gen']}", f"Block of {spec['en']}")
-        entries[f"item.{NS}.raw_{metal}"] = (f"Необработанный {spec['ru'].lower()}" if metal == "orichalcum"
-                                            else "Необработанное тёмное железо", f"Raw {spec['en']}")
+        entries[f"item.{NS}.raw_{metal}"] = (RAW_RU[metal], f"Raw {spec['en']}")
         entries[f"item.{NS}.{metal}_ingot"] = (f"Слиток {spec['ru_gen']}", f"{spec['en']} Ingot")
         for piece in TOOLS + ARMOUR:
             noun, gender = TOOL_RU[piece]

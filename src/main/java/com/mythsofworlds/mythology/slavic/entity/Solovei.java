@@ -43,8 +43,8 @@ public class Solovei extends GreekBoss {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, 180.0)
-                .add(Attributes.ATTACK_DAMAGE, 9.0)
+                .add(Attributes.MAX_HEALTH, 300.0)
+                .add(Attributes.ATTACK_DAMAGE, 11.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.3)
                 .add(Attributes.ARMOR, 6.0)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.6)

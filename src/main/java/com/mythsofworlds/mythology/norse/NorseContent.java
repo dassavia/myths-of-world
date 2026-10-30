@@ -19,6 +19,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -139,9 +140,11 @@ public final class NorseContent {
 
     // ---- Metals and fuel ----
 
-    /** Dark iron of the dwarves of Svartalfheim, deep in the stone of Jotunheim: the toughest of the metals. */
+    /** Dark iron of the dwarves of Svartalfheim, deep in the stone of Jotunheim: the toughest of the metals (tier III),
+     * above netherite. Its ore needs a diamond (or bulat) pickaxe. */
     public static final MetalSet DARK_IRON = new MetalSet("dark_iron", MapColor.COLOR_GRAY, new MetalSet.Stats(
-            1900, 7.0F, 3.5F, 12, new int[]{3, 8, 6, 3}, 37, 2.5F, 0.05F, SoundEvents.ARMOR_EQUIP_NETHERITE));
+            2400, 8.5F, 4.5F, 14, new int[]{3, 8, 6, 3}, 40, 3.5F, 0.1F, SoundEvents.ARMOR_EQUIP_NETHERITE,
+            BlockTags.INCORRECT_FOR_NETHERITE_TOOL));
     /** Embers of Muspelheim locked in the stone of the fire rift: they burn three times as long as coal. */
     public static final DeferredBlock<DropExperienceBlock> MUSPEL_EMBER_ORE = BLOCKS.registerBlock("muspel_ember_ore",
             props -> new DropExperienceBlock(UniformInt.of(2, 4), props), BlockBehaviour.Properties.of()
@@ -211,14 +214,14 @@ public final class NorseContent {
     /** Thor's hammer, stolen by Thrym, king of the frost giants. Calls down lightning where you point it. */
     public static final DeferredItem<MjolnirItem> MJOLNIR = ITEMS.register("mjolnir",
             () -> new MjolnirItem(new Item.Properties().rarity(Rarity.EPIC).durability(400)
-                    .attributes(SwordItem.createAttributes(Tiers.NETHERITE, 7, -3.0F))));
+                    .attributes(SwordItem.createAttributes(DARK_IRON.tier, 7, -3.0F))));
     /** The dwarf-made ribbon that bound Fenrir: use it on the wolf to hold him fast for a while. */
     public static final DeferredItem<GleipnirItem> GLEIPNIR = ITEMS.register("gleipnir",
             () -> new GleipnirItem(new Item.Properties().rarity(Rarity.EPIC).durability(4)));
     /** Flaming sword of Surtr, lord of Muspelheim. Sets whatever it strikes on fire. */
     public static final DeferredItem<SurtrSwordItem> SURTR_SWORD = ITEMS.register("surtr_sword",
             () -> new SurtrSwordItem(new Item.Properties().rarity(Rarity.EPIC).fireResistant()
-                    .attributes(SwordItem.createAttributes(Tiers.NETHERITE, 4, -2.4F))));
+                    .attributes(SwordItem.createAttributes(DARK_IRON.tier, 5, -2.4F))));
 
     /** Eye of Heimdall, watchman of the gods, who sees a hundred leagues by night and day. Dropped by Heimdall. */
     public static final DeferredItem<Item> HEIMDALL_EYE = ITEMS.registerSimpleItem("heimdall_eye",

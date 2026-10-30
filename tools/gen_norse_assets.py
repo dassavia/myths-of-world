@@ -468,7 +468,6 @@ def recipes():
     shapeless("ironwood_planks", [f"{NS}:ironwood_log"], f"{NS}:ironwood_planks", 4, "building")
     shapeless("carved_runestone", [f"{NS}:runestone", "minecraft:red_dye"], f"{NS}:carved_runestone", 1, "building")
     shapeless("mead", ["minecraft:honey_bottle", "minecraft:wheat", "minecraft:sweet_berries"], f"{NS}:mead", 1, "misc")
-    shapeless("norse_journal", ["minecraft:book", "minecraft:feather", "minecraft:lapis_lazuli"], f"{NS}:norse_journal")
     # The six things the dwarves made Gleipnir of: the sound of a cat's footfall, a woman's beard, the roots of a
     # mountain, the sinews of a bear, the breath of a fish and the spittle of a bird.
     shapeless("gleipnir", ["minecraft:rabbit_foot", "minecraft:string", "minecraft:hanging_roots", "minecraft:leather",

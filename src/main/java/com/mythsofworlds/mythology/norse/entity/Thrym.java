@@ -40,7 +40,7 @@ public class Thrym extends GreekBoss {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, 450.0)
+                .add(Attributes.MAX_HEALTH, 550.0)
                 .add(Attributes.ATTACK_DAMAGE, 17.0)
                 .add(Attributes.ATTACK_KNOCKBACK, 2.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.25)

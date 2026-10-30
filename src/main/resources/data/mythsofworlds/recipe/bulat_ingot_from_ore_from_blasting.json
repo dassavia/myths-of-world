@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "ingredient": {
+    "item": "mythsofworlds:bulat_ore"
+  },
+  "result": {
+    "id": "mythsofworlds:bulat_ingot"
+  },
+  "experience": 1.0,
+  "cookingtime": 100
+}
