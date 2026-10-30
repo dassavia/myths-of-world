@@ -1,0 +1,124 @@
+{
+ "items": [
+  "talaria"
+ ],
+ "texture_height": 64,
+ "parts": [
+  {
+   "bone": "right_leg",
+   "name": "right_wing",
+   "uv": [
+    0,
+    32
+   ],
+   "origin": [
+    -4,
+    7,
+    -1
+   ],
+   "size": [
+    1,
+    4,
+    5
+   ],
+   "inflate": 0.0,
+   "pivot": [
+    0,
+    0,
+    0
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "bone": "left_leg",
+   "name": "left_wing",
+   "uv": [
+    12,
+    32
+   ],
+   "origin": [
+    3,
+    7,
+    -1
+   ],
+   "size": [
+    1,
+    4,
+    5
+   ],
+   "inflate": 0.0,
+   "pivot": [
+    0,
+    0,
+    0
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "bone": "right_leg",
+   "name": "right_wing_tip",
+   "uv": [
+    24,
+    32
+   ],
+   "origin": [
+    -4,
+    5,
+    1
+   ],
+   "size": [
+    1,
+    3,
+    4
+   ],
+   "inflate": 0.0,
+   "pivot": [
+    0,
+    0,
+    0
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "bone": "left_leg",
+   "name": "left_wing_tip",
+   "uv": [
+    34,
+    32
+   ],
+   "origin": [
+    3,
+    5,
+    1
+   ],
+   "size": [
+    1,
+    3,
+    4
+   ],
+   "inflate": 0.0,
+   "pivot": [
+    0,
+    0,
+    0
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ]
+  }
+ ]
+}

@@ -48,6 +48,20 @@ neoForge {
             systemProperty 'mythsofworlds.clientSmokeTest', 'true'
             gameDirectory = project.file('run/client-smoke')
         }
+        // A dedicated server and a client that joins it over the network (see JoinTest and JoinTestClient); used by CI.
+        joinServer {
+            server()
+            programArgument '--nogui'
+            systemProperty 'mythsofworlds.joinTest', 'true'
+            gameDirectory = project.file('run/join-server')
+        }
+        joinClient {
+            client()
+            programArgument '--quickPlayMultiplayer'
+            programArgument 'localhost:25565'
+            systemProperty 'mythsofworlds.joinTestClient', 'true'
+            gameDirectory = project.file('run/join-client')
+        }
     }
 
     mods {

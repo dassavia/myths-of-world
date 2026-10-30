@@ -33,6 +33,37 @@ jobs:
           echo "onboardAccessibility:false" > run/client-smoke/options.txt
           sudo apt-get update -q && sudo apt-get install -y -q xvfb
           xvfb-run -a -s "-screen 0 1280x720x24" ./gradlew runClientSmokeTest --stacktrace
+      - name: Join test (a client joins a dedicated server, syncs, draws the gear and takes screenshots)
+        timeout-minutes: 20
+        run: |
+          mkdir -p run/join-server run/join-client
+          echo "eula=true" > run/join-server/eula.txt
+          printf "online-mode=false\nenforce-secure-profile=false\nlevel-type=minecraft\\:flat\nspawn-protection=0\nview-distance=4\nsimulation-distance=4\nmax-tick-time=-1\n" > run/join-server/server.properties
+          printf "onboardAccessibility:false\nskipMultiplayerWarning:true\njoinedFirstServer:true\ntutorialStep:none\nrenderDistance:4\nguiScale:2\n" > run/join-client/options.txt
+          ./gradlew runJoinServer --stacktrace > run/join-server.log 2>&1 &
+          SERVER=$!
+          for i in $(seq 1 120); do
+            if grep -q 'Done (' run/join-server.log; then break; fi
+            if ! kill -0 $SERVER 2>/dev/null; then cat run/join-server.log; exit 1; fi
+            sleep 5
+          done
+          grep -q 'Done (' run/join-server.log || { tail -n 200 run/join-server.log; exit 1; }
+          CLIENT=0
+          xvfb-run -a -s "-screen 0 1280x720x24" ./gradlew runJoinClient --stacktrace > run/join-client.log 2>&1 || CLIENT=$?
+          SERVER_EXIT=0
+          wait $SERVER || SERVER_EXIT=$?
+          grep -h '\[join-test' run/join-server.log run/join-client.log || true
+          if [ $CLIENT -ne 0 ] || [ $SERVER_EXIT -ne 0 ]; then
+            tail -n 150 run/join-client.log
+            tail -n 80 run/join-server.log
+            exit 1
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: join-test-screenshots
+          path: run/join-client/screenshots/
+          if-no-files-found: ignore
       - uses: actions/upload-artifact@v4
         with:
           name: mythsofworlds-jar

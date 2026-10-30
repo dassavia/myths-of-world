@@ -1,0 +1,242 @@
+{
+ "items": [
+  "nemean_helmet",
+  "nemean_chestplate",
+  "nemean_boots"
+ ],
+ "texture_height": 64,
+ "parts": [
+  {
+   "bone": "head",
+   "name": "snout",
+   "uv": [
+    0,
+    43
+   ],
+   "origin": [
+    -3,
+    -10,
+    -7
+   ],
+   "size": [
+    6,
+    2,
+    3
+   ],
+   "inflate": 0.0,
+   "pivot": [
+    0,
+    0,
+    0
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "bone": "head",
+   "name": "nose",
+   "uv": [
+    0,
+    48
+   ],
+   "origin": [
+    -1,
+    -10.6,
+    -7.4
+   ],
+   "size": [
+    2,
+    1,
+    1
+   ],
+   "inflate": 0.0,
+   "pivot": [
+    0,
+    0,
+    0
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "bone": "head",
+   "name": "right_ear",
+   "uv": [
+    50,
+    43
+   ],
+   "origin": [
+    -5,
+    -11,
+    0
+   ],
+   "size": [
+    2,
+    2,
+    1
+   ],
+   "inflate": 0.0,
+   "pivot": [
+    0,
+    0,
+    0
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "bone": "head",
+   "name": "left_ear",
+   "uv": [
+    56,
+    43
+   ],
+   "origin": [
+    3,
+    -11,
+    0
+   ],
+   "size": [
+    2,
+    2,
+    1
+   ],
+   "inflate": 0.0,
+   "pivot": [
+    0,
+    0,
+    0
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "bone": "head",
+   "name": "mane_back",
+   "uv": [
+    0,
+    32
+   ],
+   "origin": [
+    -5,
+    -7,
+    4
+   ],
+   "size": [
+    10,
+    9,
+    2
+   ],
+   "inflate": 0.0,
+   "pivot": [
+    0,
+    0,
+    0
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "bone": "body",
+   "name": "mane",
+   "uv": [
+    24,
+    32
+   ],
+   "origin": [
+    -6,
+    -1.5,
+    -3.6
+   ],
+   "size": [
+    12,
+    3,
+    7
+   ],
+   "inflate": 0.2,
+   "pivot": [
+    0,
+    0,
+    0
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "bone": "right_leg",
+   "name": "right_paw",
+   "uv": [
+    18,
+    43
+   ],
+   "origin": [
+    -3,
+    10,
+    -3.6
+   ],
+   "size": [
+    6,
+    2,
+    2
+   ],
+   "inflate": 0.1,
+   "pivot": [
+    0,
+    0,
+    0
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "bone": "left_leg",
+   "name": "left_paw",
+   "uv": [
+    34,
+    43
+   ],
+   "origin": [
+    -3,
+    10,
+    -3.6
+   ],
+   "size": [
+    6,
+    2,
+    2
+   ],
+   "inflate": 0.1,
+   "pivot": [
+    0,
+    0,
+    0
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ]
+  }
+ ]
+}
