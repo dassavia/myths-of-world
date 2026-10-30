@@ -1,13 +1,13 @@
 package com.mythsofworlds.journal;
 
 import com.mythsofworlds.MythsOfWorlds;
+import com.mythsofworlds.codex.Progress;
 import com.mythsofworlds.core.PlayerData;
 import com.mythsofworlds.mythology.greek.GreekContent;
 import com.mythsofworlds.mythology.norse.NorseContent;
 import com.mythsofworlds.mythology.slavic.SlavicContent;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Supplier;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -19,27 +19,24 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
-/** Writes journal entries as players explore, and hands out a journal on the first visit to each world. */
+/** Writes journal entries (shown in the Codex of Myths) as players explore the worlds. */
 @EventBusSubscriber(modid = MythsOfWorlds.MODID)
 public final class JournalEvents {
-    /** Which world each volume belongs to, and the journal given on arrival there. */
+    /** Which world each volume belongs to. */
     private static final Map<ResourceKey<Level>, Volume> VOLUMES = Map.of(
-            GreekContent.HELLAS, new Volume("greek", GreekContent.GREEK_JOURNAL),
-            NorseContent.JOTUNHEIM, new Volume("norse", NorseContent.NORSE_JOURNAL),
-            SlavicContent.NAV, new Volume("slavic", SlavicContent.SLAVIC_JOURNAL));
+            GreekContent.HELLAS, new Volume("greek"),
+            NorseContent.JOTUNHEIM, new Volume("norse"),
+            SlavicContent.NAV, new Volume("slavic"));
     private static final double SIGHT_RANGE = 20.0;
 
-    private record Volume(String id, Supplier<? extends Item> journal) {
+    private record Volume(String id) {
     }
 
     private JournalEvents() {
@@ -51,6 +48,9 @@ public final class JournalEvents {
             player.displayClientMessage(Component.translatable("journal.mythsofworlds.new_entry", entry.title())
                     .withStyle(ChatFormatting.GOLD), false);
             player.level().playSound(null, player.blockPosition(), SoundEvents.BOOK_PAGE_TURN, SoundSource.PLAYERS, 1.0F, 1.0F);
+            if (player instanceof ServerPlayer serverPlayer) {
+                Progress.sync(serverPlayer);
+            }
         }
     }
 
@@ -99,23 +99,6 @@ public final class JournalEvents {
                     unlock(player, entry);
                 }
             }
-        }
-    }
-
-    /** The first time a player arrives in a world of the myths they find its journal in their pack. */
-    @SubscribeEvent
-    public static void onChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
-        Volume volume = VOLUMES.get(event.getTo());
-        Player player = event.getEntity();
-        if (volume != null && PlayerData.addEntry(player, volume.id() + "._given")) {
-            ItemStack journal = new ItemStack(volume.journal().get());
-            // Take the name first: adding the book to the inventory empties this stack (its name would read "Air").
-            Component name = journal.getHoverName();
-            if (!player.getInventory().add(journal)) {
-                player.drop(journal, false);
-            }
-            player.displayClientMessage(Component.translatable("journal.mythsofworlds.given", name)
-                    .withStyle(ChatFormatting.GOLD), false);
         }
     }
 }

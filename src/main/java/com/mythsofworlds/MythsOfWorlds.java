@@ -1,5 +1,7 @@
 package com.mythsofworlds;
 
+import com.mythsofworlds.codex.CodexContent;
+import com.mythsofworlds.core.ClientConfig;
 import com.mythsofworlds.core.PlayerData;
 import com.mythsofworlds.core.back.BackSlot;
 import com.mythsofworlds.mythology.egyptian.EgyptianContent;
@@ -14,18 +16,25 @@ import com.mythsofworlds.mythology.oceanic.OceanicContent;
 import com.mythsofworlds.mythology.slavic.SlavicContent;
 import com.mythsofworlds.mythology.slavic.SlavicEntities;
 import com.mythsofworlds.registry.ModRegistries;
+import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import org.slf4j.Logger;
 
 @Mod(MythsOfWorlds.MODID)
 public final class MythsOfWorlds {
     public static final String MODID = "mythsofworlds";
+    public static final Logger LOGGER = LogUtils.getLogger();
 
-    public MythsOfWorlds(IEventBus modBus) {
+    public MythsOfWorlds(IEventBus modBus, ModContainer container) {
+        container.registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
         // One line per mythology (see mythology/Mythology.java for the list).
         PlayerData.init();
         BackSlot.init();
+        CodexContent.init();
         GreekContent.init();
         GreekSounds.init();
         GreekFeatures.init();

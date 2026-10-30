@@ -1,0 +1,39 @@
+{
+  "entries": [
+    {
+      "id": "path.welcome",
+      "category": "intro",
+      "pages": 2
+    },
+    {
+      "id": "path.order",
+      "category": "intro",
+      "pages": 4
+    },
+    {
+      "id": "path.tiers",
+      "category": "intro",
+      "pages": 3
+    },
+    {
+      "id": "path.powers",
+      "category": "intro",
+      "pages": 3
+    },
+    {
+      "id": "path.bearers",
+      "category": "intro",
+      "pages": 3
+    },
+    {
+      "id": "path.sets",
+      "category": "intro",
+      "pages": 2
+    },
+    {
+      "id": "path.hud",
+      "category": "intro",
+      "pages": 2
+    }
+  ]
+}

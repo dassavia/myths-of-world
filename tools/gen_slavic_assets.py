@@ -354,7 +354,6 @@ def recipes():
     # The acorn of the World Tree: a sapling, gold for the sun, glow berries for the light below, the Minotaur's horn as proof of a hero.
     shapeless("world_tree_acorn", ["minecraft:oak_sapling", "minecraft:gold_ingot", "minecraft:glow_berries",
                                    f"{NS}:minotaur_horn"], f"{NS}:world_tree_acorn")
-    shapeless("slavic_journal", ["minecraft:book", "minecraft:feather", "minecraft:oak_sapling"], f"{NS}:slavic_journal")
     shapeless("karavai", ["minecraft:wheat", "minecraft:wheat", "minecraft:wheat", "minecraft:egg", "minecraft:honey_bottle"],
               f"{NS}:karavai", 2, "misc")
     g.add_tag("item", "foot_armor", ["skorokhody"])
