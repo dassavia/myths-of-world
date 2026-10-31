@@ -18,6 +18,7 @@ public final class SlavicSounds {
     public static final DeferredHolder<SoundEvent, SoundEvent> KOSCHEI_SUMMON = sound("entity.koschei.summon");
     public static final DeferredHolder<SoundEvent, SoundEvent> RUSALKA_SONG = sound("entity.rusalka.song");
     public static final DeferredHolder<SoundEvent, SoundEvent> LESHY_AMBIENT = sound("entity.leshy.ambient");
+    public static final DeferredHolder<SoundEvent, SoundEvent> GUSLI = sound("item.gusli.play");
     // Biome music (data/mythsofworlds/worldgen/biome/*.json).
     public static final DeferredHolder<SoundEvent, SoundEvent> MUSIC_FOREST = sound("music.nav.forest");
     public static final DeferredHolder<SoundEvent, SoundEvent> MUSIC_DARK = sound("music.nav.dark");

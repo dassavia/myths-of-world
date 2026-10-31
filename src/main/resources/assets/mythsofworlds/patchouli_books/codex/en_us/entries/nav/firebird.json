@@ -2,7 +2,7 @@
   "name": "Firebird",
   "icon": "mythsofworlds:world_tree_acorn",
   "category": "mythsofworlds:nav_creature",
-  "sortnum": 12,
+  "sortnum": 13,
   "pages": [
     {
       "type": "patchouli:entity",

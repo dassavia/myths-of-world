@@ -5,7 +5,12 @@ import com.mythsofworlds.journal.JournalItem;
 import com.mythsofworlds.mythology.Mythology;
 import com.mythsofworlds.mythology.relic.RelicArmorItem;
 import com.mythsofworlds.mythology.slavic.block.WorldTreeHollowBlock;
+import com.mythsofworlds.mythology.slavic.effect.DanceEffect;
+import com.mythsofworlds.mythology.slavic.item.FernFlowerItem;
+import com.mythsofworlds.mythology.slavic.item.GusliItem;
 import com.mythsofworlds.mythology.slavic.item.KladenetsItem;
+import com.mythsofworlds.mythology.slavic.item.KlubokItem;
+import com.mythsofworlds.mythology.slavic.item.SamobrankaItem;
 import com.mythsofworlds.mythology.slavic.item.KoscheiEggItem;
 import com.mythsofworlds.mythology.slavic.item.WorldTreeAcornItem;
 import java.util.List;
@@ -14,6 +19,7 @@ import net.minecraft.resources.ResourceKey;
 import com.mythsofworlds.registry.MetalSet;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
@@ -27,6 +33,7 @@ import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -37,6 +44,7 @@ import net.neoforged.neoforge.registries.DeferredItem;
 
 import static com.mythsofworlds.registry.ModRegistries.BLOCKS;
 import static com.mythsofworlds.registry.ModRegistries.ITEMS;
+import static com.mythsofworlds.registry.ModRegistries.MOB_EFFECTS;
 
 /**
  * Slavic mythology: Nav, the world of spirits and the dead under the roots of the World Tree. The way there is not built
@@ -135,6 +143,25 @@ public final class SlavicContent {
     public static final DeferredItem<RelicArmorItem> SHAPKA_NEVIDIMKA = ITEMS.register("shapka_nevidimka",
             () -> new RelicArmorItem(SHAPKA_MATERIAL, ArmorItem.Type.HELMET, Mythology.SLAVIC, SlavicRelics::shapka,
                     new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(30)).rarity(Rarity.EPIC)));
+
+    /** The flower of the fern, blooming on Kupala night in the deep forest: raised to the sky, it shows hidden treasure. */
+    public static final DeferredBlock<FlowerBlock> FERN_FLOWER = BLOCKS.register("fern_flower",
+            () -> new FlowerBlock(MobEffects.LUCK, 10.0F, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE)
+                    .noCollission().instabreak().sound(SoundType.GRASS).lightLevel(state -> 10)
+                    .offsetType(BlockBehaviour.OffsetType.XZ).pushReaction(PushReaction.DESTROY)));
+    public static final DeferredItem<FernFlowerItem> FERN_FLOWER_ITEM = ITEMS.register("fern_flower",
+            () -> new FernFlowerItem(FERN_FLOWER.get(), new Item.Properties().rarity(Rarity.RARE)));
+    /** The self-laying tablecloth: a feast once a day. */
+    public static final DeferredItem<SamobrankaItem> SAMOBRANKA = ITEMS.register("samobranka",
+            () -> new SamobrankaItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE)));
+    /** Self-playing gusli: the monsters around break into a dance. */
+    public static final DeferredItem<GusliItem> GUSLI = ITEMS.register("gusli",
+            () -> new GusliItem(new Item.Properties().durability(48).rarity(Rarity.RARE)));
+    /** Baba Yaga's yarn ball: it rolls the way to the next foe. */
+    public static final DeferredItem<KlubokItem> KLUBOK = ITEMS.register("klubok",
+            () -> new KlubokItem(new Item.Properties().durability(24).rarity(Rarity.UNCOMMON)));
+    /** The dance the gusli play into whoever hears them. */
+    public static final DeferredHolder<MobEffect, DanceEffect> DANCE = MOB_EFFECTS.register("dance", DanceEffect::new);
 
     private SlavicContent() {
     }

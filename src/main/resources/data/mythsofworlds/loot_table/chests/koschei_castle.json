@@ -117,6 +117,11 @@
               }
             }
           ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "mythsofworlds:samobranka",
+          "weight": 2
         }
       ]
     }

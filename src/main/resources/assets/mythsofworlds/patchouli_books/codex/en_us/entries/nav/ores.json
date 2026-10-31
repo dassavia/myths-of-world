@@ -2,7 +2,7 @@
   "name": "Ores of Nav",
   "icon": "mythsofworlds:world_tree_acorn",
   "category": "mythsofworlds:nav_intro",
-  "sortnum": 3,
+  "sortnum": 4,
   "pages": [
     {
       "type": "patchouli:text",

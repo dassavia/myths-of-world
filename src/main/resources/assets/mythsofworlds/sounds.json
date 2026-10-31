@@ -431,6 +431,13 @@
       "mythsofworlds:leshy/creak2"
     ]
   },
+  "item.gusli.play": {
+    "subtitle": "subtitles.mythsofworlds.item.gusli.play",
+    "sounds": [
+      "mythsofworlds:gusli/play1",
+      "mythsofworlds:gusli/play2"
+    ]
+  },
   "music.nav.forest": {
     "sounds": [
       {

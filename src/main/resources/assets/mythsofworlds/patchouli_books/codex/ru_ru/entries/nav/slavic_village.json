@@ -2,7 +2,7 @@
   "name": "Деревня",
   "icon": "mythsofworlds:world_tree_acorn",
   "category": "mythsofworlds:nav_place",
-  "sortnum": 17,
+  "sortnum": 18,
   "pages": [
     {
       "type": "patchouli:text",

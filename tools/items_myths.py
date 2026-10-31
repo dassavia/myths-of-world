@@ -10,6 +10,11 @@ from items_relics import DARK_GOLD, DARK_WOOD, GOLD, SAPPHIRE, STEEL, WOOD, at, 
 
 D = Diagonal()
 
+# Items whose picture is also a block texture (a flower is drawn the same in the hand and on the ground).
+BLOCK_TEXTURES = ["fern_flower"]
+# Icons of the mod's status effects, 18x18 (textures/mob_effect).
+EFFECT_ICONS = {}
+
 RED_WOOL = mat(0xB8282E, spread=0.4, glint=False)
 LINEN = mat(0xEDE6D2, spread=0.25, glint=False)
 EMBROIDERY = mat(0xC8202A, spread=0.3, glint=False)
@@ -158,3 +163,22 @@ def register(items):
         gem(s, *D(27.3, 0), 1.1, SAPPHIRE)
         return s
 
+
+# ---------------------------------------------------------------- status effect icons (18x18)
+
+def _dance():
+    s = Sprite("effect_dance", size=18)
+    s.stroke([(6, 14), (6, 4), (14, 2), (14, 12)], 1.4, GOLD, bevel=0.5)       # two beamed notes
+    s.ellipse((2, 12, 8, 17), GOLD)
+    s.ellipse((10, 10, 16, 15), GOLD)
+    return s
+
+
+def _thurisaz():
+    s = Sprite("effect_thurisaz", size=18)
+    s.stroke([(6, 2), (6, 16)], 1.8, RUNE_GLOW, bevel=0.5, edge=False)
+    s.stroke([(6, 5), (12, 9), (6, 13)], 1.8, RUNE_GLOW, bevel=0.5, edge=False)
+    return s
+
+
+EFFECT_ICONS.update(dance=_dance, thurisaz=_thurisaz)

@@ -1,0 +1,21 @@
+{
+  "name": "Wonders of Nav",
+  "icon": "mythsofworlds:world_tree_acorn",
+  "category": "mythsofworlds:nav_intro",
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The fern flower blooms in the dense forest and glows in the dusk. Pick it and raise it to the sky (right-click the air): every ore and chest within 16 blocks sparkles, and luck comes to you."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The self-laying tablecloth lays itself with a feast once a day. The self-playing gusli set every monster around dancing: for 8 seconds they forget whom they were after. Look for them at shrines and in Koschei's castle."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Baba Yaga sells the guiding yarn ball. Drop it (right-click): it rolls toward the lair of the nearest foe you have not beaten yet, and leaves a golden trail."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/nav"
+}

@@ -2,7 +2,7 @@
   "name": "Капище",
   "icon": "mythsofworlds:world_tree_acorn",
   "category": "mythsofworlds:nav_place",
-  "sortnum": 19,
+  "sortnum": 20,
   "pages": [
     {
       "type": "patchouli:text",

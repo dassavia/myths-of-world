@@ -2,7 +2,7 @@
   "name": "Upyr",
   "icon": "mythsofworlds:world_tree_acorn",
   "category": "mythsofworlds:nav_creature",
-  "sortnum": 9,
+  "sortnum": 10,
   "pages": [
     {
       "type": "patchouli:entity",

@@ -75,6 +75,16 @@
         },
         {
           "type": "minecraft:item",
+          "name": "mythsofworlds:samobranka",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "mythsofworlds:gusli",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
           "name": "minecraft:book",
           "weight": 3,
           "functions": [

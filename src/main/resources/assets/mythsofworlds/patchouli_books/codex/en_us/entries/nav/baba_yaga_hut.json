@@ -2,7 +2,7 @@
   "name": "Hut on Chicken Legs",
   "icon": "mythsofworlds:world_tree_acorn",
   "category": "mythsofworlds:nav_place",
-  "sortnum": 18,
+  "sortnum": 19,
   "pages": [
     {
       "type": "patchouli:text",

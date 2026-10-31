@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "random_sequence": "mythsofworlds:blocks/fern_flower",
+  "pools": [
+    {
+      "rolls": 1,
+      "bonus_rolls": 0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "mythsofworlds:fern_flower"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ]
+    }
+  ]
+}

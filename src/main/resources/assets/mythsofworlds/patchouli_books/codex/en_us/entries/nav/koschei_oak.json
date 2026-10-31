@@ -2,7 +2,7 @@
   "name": "Koschei's Oak",
   "icon": "mythsofworlds:world_tree_acorn",
   "category": "mythsofworlds:nav_place",
-  "sortnum": 20,
+  "sortnum": 21,
   "pages": [
     {
       "type": "patchouli:text",

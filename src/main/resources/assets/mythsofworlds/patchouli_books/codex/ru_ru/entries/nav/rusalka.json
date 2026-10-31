@@ -2,7 +2,7 @@
   "name": "Русалка",
   "icon": "mythsofworlds:world_tree_acorn",
   "category": "mythsofworlds:nav_creature",
-  "sortnum": 11,
+  "sortnum": 12,
   "pages": [
     {
       "type": "patchouli:entity",

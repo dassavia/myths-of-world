@@ -2,7 +2,7 @@
   "name": "Кощеев замок",
   "icon": "mythsofworlds:world_tree_acorn",
   "category": "mythsofworlds:nav_place",
-  "sortnum": 23,
+  "sortnum": 24,
   "pages": [
     {
       "type": "patchouli:text",

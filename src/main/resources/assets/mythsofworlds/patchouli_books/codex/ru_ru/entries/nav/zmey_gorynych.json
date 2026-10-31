@@ -2,7 +2,7 @@
   "name": "Змей Горыныч",
   "icon": "mythsofworlds:world_tree_acorn",
   "category": "mythsofworlds:nav_boss",
-  "sortnum": 15,
+  "sortnum": 16,
   "pages": [
     {
       "type": "patchouli:entity",

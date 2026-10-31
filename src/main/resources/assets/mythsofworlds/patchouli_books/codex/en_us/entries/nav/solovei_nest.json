@@ -2,7 +2,7 @@
   "name": "Solovei's Nest",
   "icon": "mythsofworlds:world_tree_acorn",
   "category": "mythsofworlds:nav_place",
-  "sortnum": 21,
+  "sortnum": 22,
   "pages": [
     {
       "type": "patchouli:text",

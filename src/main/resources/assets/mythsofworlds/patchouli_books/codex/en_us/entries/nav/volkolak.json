@@ -2,7 +2,7 @@
   "name": "Volkolak",
   "icon": "mythsofworlds:world_tree_acorn",
   "category": "mythsofworlds:nav_creature",
-  "sortnum": 10,
+  "sortnum": 11,
   "pages": [
     {
       "type": "patchouli:entity",

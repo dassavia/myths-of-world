@@ -264,6 +264,12 @@ def main(names):
     for name in names or sorted(ITEMS):
         # Marked as full resolution, so that hd_textures.py leaves them alone.
         save_marked(ITEMS[name]().render(), os.path.join(ROOT, name + ".png"))
+    for name in items_myths.BLOCK_TEXTURES:
+        if not names or name in names:
+            save_marked(ITEMS[name]().render(), os.path.join(ROOT, "..", "block", name + ".png"))
+    for name, draw in items_myths.EFFECT_ICONS.items():
+        os.makedirs(os.path.join(ROOT, "..", "mob_effect"), exist_ok=True)
+        save_marked(draw().render(), os.path.join(ROOT, "..", "mob_effect", name + ".png"))
     print(f"items: {len(names or ITEMS)} drawn at 32x32")
 
 

@@ -2,7 +2,7 @@
   "name": "Kalinov Bridge",
   "icon": "mythsofworlds:world_tree_acorn",
   "category": "mythsofworlds:nav_place",
-  "sortnum": 22,
+  "sortnum": 23,
   "pages": [
     {
       "type": "patchouli:text",

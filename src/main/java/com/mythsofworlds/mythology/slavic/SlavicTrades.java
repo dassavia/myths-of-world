@@ -43,13 +43,15 @@ public final class SlavicTrades {
             buy(2, () -> new ItemStack(SlavicContent.KARAVAI.get(), 2), 16),
             buy(2, () -> new ItemStack(Items.HONEY_BOTTLE, 3), 12),
             buy(1, () -> new ItemStack(Items.BREAD, 6), 16),
-            buy(12, () -> new ItemStack(SlavicContent.WORLD_TREE_ACORN.get()), 2));
+            buy(12, () -> new ItemStack(SlavicContent.WORLD_TREE_ACORN.get()), 2),
+            buy(20, () -> new ItemStack(SlavicContent.GUSLI.get()), 1));
 
     /** Kind 1, Baba Yaga in her hut on chicken legs: the waters of life and death, acorns of the World Tree, brews. */
     public static final List<Trade> BABA_YAGA = List.of(
             buy(10, () -> new ItemStack(SlavicContent.LIVING_WATER.get()), 4),
             buy(8, () -> new ItemStack(SlavicContent.DEAD_WATER.get()), 4),
             buy(8, () -> new ItemStack(SlavicContent.WORLD_TREE_ACORN.get()), 4),
+            buy(6, () -> new ItemStack(SlavicContent.KLUBOK.get()), 3),
             buy(4, () -> PotionContents.createItemStack(Items.POTION, Potions.STRONG_HEALING), 8),
             buy(4, () -> PotionContents.createItemStack(Items.POTION, Potions.NIGHT_VISION), 8),
             buy(5, () -> PotionContents.createItemStack(Items.POTION, Potions.INVISIBILITY), 6),

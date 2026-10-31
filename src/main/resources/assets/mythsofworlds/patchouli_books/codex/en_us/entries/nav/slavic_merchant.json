@@ -2,7 +2,7 @@
   "name": "Traders of Nav",
   "icon": "mythsofworlds:world_tree_acorn",
   "category": "mythsofworlds:nav_creature",
-  "sortnum": 13,
+  "sortnum": 14,
   "pages": [
     {
       "type": "patchouli:entity",

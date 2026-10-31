@@ -1,5 +1,6 @@
 package com.mythsofworlds.registry;
 
+import net.minecraft.world.effect.MobEffect;
 import com.mythsofworlds.MythsOfWorlds;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -33,6 +34,8 @@ public final class ModRegistries {
     /** Data the mod keeps on players (journal entries, spouse); see {@link com.mythsofworlds.core.PlayerData}. */
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES =
             DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, MythsOfWorlds.MODID);
+    public static final DeferredRegister<MobEffect> MOB_EFFECTS =
+            DeferredRegister.create(Registries.MOB_EFFECT, MythsOfWorlds.MODID);
     public static final DeferredRegister<ArmorMaterial> ARMOR_MATERIALS =
             DeferredRegister.create(Registries.ARMOR_MATERIAL, MythsOfWorlds.MODID);
     public static final DeferredRegister<CreativeModeTab> TABS =
@@ -61,6 +64,7 @@ public final class ModRegistries {
         SOUNDS.register(modBus);
         FEATURES.register(modBus);
         ATTACHMENT_TYPES.register(modBus);
+        MOB_EFFECTS.register(modBus);
         ARMOR_MATERIALS.register(modBus);
         com.mythsofworlds.mythology.relic.MythAttributes.ATTRIBUTES.register(modBus);
         TABS.register(modBus);

@@ -55,6 +55,22 @@ ENTRIES = [
       "and gives Regeneration II.",
       "Baba Yaga sells both, and they turn up in chests. Karavai is a filling loaf: three wheat, an egg and honey."]),
 
+    ("wonders", "intro", None,
+     ["Чудеса Нави",
+      "Цвет папоротника светится в дремучем лесу. Сорвите и поднимите к небу (ПКМ в воздух): засверкают руды "
+      "и сундуки в 16 блоках, и придёт удача.",
+      "Скатерть-самобранка раз в день сама собой накрывает пир. Гусли-самогуды пускают в пляс всех чудищ "
+      "вокруг: 8 секунд они не помнят, на кого шли. Ищите их на капищах и в Кощеевом замке.",
+      "Клубок-путеводитель продаёт Баба-яга. Бросьте его (ПКМ): он покатится к логову ближайшего врага, "
+      "которого вы ещё не одолели, и оставит золотой след."],
+     ["Wonders of Nav",
+      "The fern flower blooms in the dense forest and glows in the dusk. Pick it and raise it to the sky "
+      "(right-click the air): every ore and chest within 16 blocks sparkles, and luck comes to you.",
+      "The self-laying tablecloth lays itself with a feast once a day. The self-playing gusli set every monster "
+      "around dancing: for 8 seconds they forget whom they were after. Look for them at shrines and in Koschei's castle.",
+      "Baba Yaga sells the guiding yarn ball. Drop it (right-click): it rolls toward the lair of the nearest foe "
+      "you have not beaten yet, and leaves a golden trail."]),
+
     ("leshy", "creature", mob("leshy"),
      ["Леший",
       "Хозяин леса, высокий старик из коры и мха. Не трогайте его, и он не тронет вас.",

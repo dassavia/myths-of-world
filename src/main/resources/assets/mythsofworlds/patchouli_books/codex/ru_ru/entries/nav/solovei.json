@@ -2,7 +2,7 @@
   "name": "Соловей-разбойник",
   "icon": "mythsofworlds:world_tree_acorn",
   "category": "mythsofworlds:nav_boss",
-  "sortnum": 14,
+  "sortnum": 15,
   "pages": [
     {
       "type": "patchouli:entity",

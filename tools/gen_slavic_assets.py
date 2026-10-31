@@ -74,7 +74,7 @@ FEATURE_ORDER = [
      "minecraft:trees_birch", "minecraft:trees_swamp", "minecraft:trees_plains", "minecraft:forest_flowers",
      "minecraft:flower_default", "minecraft:flower_plains", "minecraft:flower_swamp", "minecraft:patch_sunflower",
      "minecraft:patch_pumpkin", "minecraft:patch_grass_forest", "minecraft:patch_grass_plain", "minecraft:patch_tall_grass_2",
-     "minecraft:patch_large_fern", "minecraft:patch_berry_common", "minecraft:patch_dead_bush",
+     "minecraft:patch_large_fern", f"{NS}:nav_fern_flower", "minecraft:patch_berry_common", "minecraft:patch_dead_bush",
      "minecraft:brown_mushroom_normal", "minecraft:red_mushroom_normal", "minecraft:brown_mushroom_swamp",
      "minecraft:red_mushroom_swamp", "minecraft:patch_sugar_cane_swamp", "minecraft:patch_waterlily",
      "minecraft:seagrass_swamp", "minecraft:seagrass_normal", "minecraft:kelp_warm"],
@@ -100,7 +100,8 @@ BIOMES = {
         "sky": 0x6A5A8A, "fog": 0x6E6A7A, "water": 0x3A5A6A, "water_fog": 0x0A1A20, "grass": 0x4E7A3A, "foliage": 0x3E6A2E,
         "particle": ("minecraft:spore_blossom_air", 0.004), "music": FOREST_MUSIC,
         "features": COMMON + ["minecraft:forest_rock", f"{NS}:nav_old_oak", "minecraft:dark_forest_vegetation",
-                              "minecraft:patch_grass_forest", "minecraft:patch_large_fern", "minecraft:patch_berry_common",
+                              "minecraft:patch_grass_forest", "minecraft:patch_large_fern", f"{NS}:nav_fern_flower",
+                              "minecraft:patch_berry_common",
                               "minecraft:brown_mushroom_normal", "minecraft:red_mushroom_normal"],
         "spawners": {
             "monster": [spawn(f"{NS}:leshy", 15, 1, 1), spawn(f"{NS}:volkolak", 25, 1, 2), spawn(f"{NS}:upyr", 40, 1, 3),
@@ -213,6 +214,15 @@ def features():
     column("nav_dead_trunk", [(2, 6, simple("minecraft:stripped_dark_oak_log", axis="y"))], 3)
     column("nav_bone_pile", [(1, 2, simple("minecraft:bone_block", axis="y"))], 6)
 
+    # The fern flower of Kupala night: a few glowing blooms here and there in the deep forest, and rarely.
+    write_json(data("worldgen", "configured_feature", "nav_fern_flower.json"), {"type": "minecraft:flower", "config": {
+        "tries": 6, "xz_spread": 5, "y_spread": 2,
+        "feature": {"feature": {"type": "minecraft:simple_block", "config": {"to_place": simple(f"{NS}:fern_flower")}},
+                    "placement": [{"type": "minecraft:block_predicate_filter",
+                                   "predicate": {"type": "minecraft:matching_blocks", "blocks": "minecraft:air"}}]}}})
+    write_json(data("worldgen", "placed_feature", "nav_fern_flower.json"),
+               {"feature": f"{NS}:nav_fern_flower", "placement": surface_placement(rarity=24)})
+
     write_json(data("worldgen", "configured_feature", "nav_bog_mud.json"), {
         "type": "minecraft:vegetation_patch",
         "config": {
@@ -310,7 +320,8 @@ def loot():
     ])
     chest("kapishche", (2, 5), [
         entry("minecraft:honey_bottle", 8, 1, 3), entry(f"{NS}:karavai", 8, 1, 2), entry("minecraft:gold_ingot", 6, 1, 3),
-        entry("minecraft:honeycomb", 6, 1, 4), entry(f"{NS}:firebird_feather", 3),
+        entry("minecraft:honeycomb", 6, 1, 4), entry(f"{NS}:firebird_feather", 3), entry(f"{NS}:samobranka", 1),
+        entry(f"{NS}:gusli", 1),
         entry("minecraft:book", 3, enchant=True), entry(f"{NS}:world_tree_acorn", 2),
     ])
     # The chest on the old oak always holds the egg with Koschei's death.
@@ -329,7 +340,7 @@ def loot():
     chest("koschei_castle", (4, 8), gold + [
         entry("minecraft:diamond", 4, 1, 3), entry("minecraft:gold_block", 3), entry("minecraft:echo_shard", 3),
         entry("minecraft:book", 4, enchant=True), entry("minecraft:golden_apple", 3), entry(f"{NS}:dead_water", 3),
-        entry(f"{NS}:living_water", 3), entry("minecraft:soul_lantern", 4, 1, 3),
+        entry(f"{NS}:living_water", 3), entry("minecraft:soul_lantern", 4, 1, 3), entry(f"{NS}:samobranka", 2),
     ])
 
     mob("leshy", [("minecraft:oak_log", 1, 4, None), ("minecraft:moss_block", 0, 2, None), ("minecraft:oak_sapling", 0, 2, None),
@@ -374,7 +385,7 @@ def recipes():
 
 ITEMS = ["world_tree_acorn", "slavic_journal", "slavic_journal_complete", "living_water", "dead_water", "karavai",
          "firebird_feather", "upyr_fang", "volkolak_pelt", "zmey_scale", "koschei_egg", "koschei_needle", "kladenets",
-         "skorokhody", "shapka_nevidimka"]
+         "skorokhody", "shapka_nevidimka", "fern_flower", "samobranka", "gusli", "klubok"]
 HANDHELD = {"kladenets"}
 MOBS = ["leshy", "kikimora", "upyr", "volkolak", "rusalka", "firebird", "slavic_merchant", "solovei", "zmey_gorynych", "koschei"]
 
@@ -388,6 +399,14 @@ def models():
         "parent": "minecraft:block/orientable",
         "textures": {"front": f"{NS}:block/world_tree_hollow", "side": "minecraft:block/oak_log",
                      "top": "minecraft:block/oak_log_top", "particle": "minecraft:block/oak_log"}})
+    # The fern flower: a glowing plant, drawn crosswise like any flower, and its loot (the flower itself).
+    write_json(assets("blockstates", "fern_flower.json"), {"variants": {"": {"model": f"{NS}:block/fern_flower"}}})
+    write_json(assets("models", "block", "fern_flower.json"), {
+        "parent": "minecraft:block/cross", "render_type": "minecraft:cutout", "textures": {"cross": f"{NS}:block/fern_flower"}})
+    write_json(data("loot_table", "blocks", "fern_flower.json"), {
+        "type": "minecraft:block", "random_sequence": f"{NS}:blocks/fern_flower",
+        "pools": [{"rolls": 1, "bonus_rolls": 0, "entries": [{"type": "minecraft:item", "name": f"{NS}:fern_flower"}],
+                   "conditions": [{"condition": "minecraft:survives_explosion"}]}]})
     for item in ITEMS:
         parent = "minecraft:item/handheld" if item in HANDHELD else "minecraft:item/generated"
         write_json(assets("models", "item", f"{item}.json"), {"parent": parent, "textures": {"layer0": f"{NS}:item/{item}"}})
@@ -412,6 +431,24 @@ LANG = {
     "item.mythsofworlds.living_water": ("Живая вода", "Water of Life"),
     "item.mythsofworlds.dead_water": ("Мёртвая вода", "Dead Water"),
     "item.mythsofworlds.karavai": ("Каравай", "Karavai"),
+    "block.mythsofworlds.fern_flower": ("Цвет папоротника", "Fern Flower"),
+    "item.mythsofworlds.fern_flower.desc": ("ПКМ в воздух: показать руды и сундуки вокруг (16 блоков) и обрести удачу",
+                                           "Right-click the air: show the ores and chests around (16 blocks) and gain luck"),
+    "item.mythsofworlds.fern_flower.reveal": ("Цвет папоротника открывает клады: %s", "The fern flower reveals treasures: %s"),
+    "item.mythsofworlds.samobranka": ("Скатерть-самобранка", "Self-Laying Tablecloth"),
+    "item.mythsofworlds.samobranka.desc": ("ПКМ: раз в день накрывает пир", "Right-click: lays out a feast once a day"),
+    "item.mythsofworlds.samobranka.feast": ("Скатерть сама собой накрылась!", "The tablecloth lays itself with a feast!"),
+    "item.mythsofworlds.samobranka.resting": ("Скатерть отдыхает до завтра", "The tablecloth rests until tomorrow"),
+    "item.mythsofworlds.gusli": ("Гусли-самогуды", "Self-Playing Gusli"),
+    "item.mythsofworlds.gusli.desc": ("ПКМ: чудища вокруг (12 блоков) пускаются в пляс на 8 секунд",
+                                     "Right-click: the monsters around (12 blocks) break into a dance for 8 seconds"),
+    "item.mythsofworlds.gusli.played": ("Гусли заиграли, пляшут: %s", "The gusli play, dancing: %s"),
+    "item.mythsofworlds.klubok": ("Клубок-путеводитель", "Guiding Yarn Ball"),
+    "item.mythsofworlds.klubok.desc": ("ПКМ: покатится к логову ближайшего непобеждённого врага",
+                                      "Right-click: rolls toward the lair of the nearest foe you have not beaten"),
+    "item.mythsofworlds.klubok.rolls": ("Клубок катится к логову: %s", "The ball rolls toward the lair of %s"),
+    "item.mythsofworlds.klubok.still": ("Клубок лежит: здесь не к кому идти", "The ball lies still: no foe to seek here"),
+    "effect.mythsofworlds.dance": ("Пляска", "Dance"),
     "item.mythsofworlds.firebird_feather": ("Перо Жар-птицы", "Firebird Feather"),
     "item.mythsofworlds.upyr_fang": ("Клык упыря", "Upyr Fang"),
     "item.mythsofworlds.volkolak_pelt": ("Шкура волколака", "Volkolak Pelt"),

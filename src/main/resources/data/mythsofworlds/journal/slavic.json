@@ -16,6 +16,11 @@
       "pages": 2
     },
     {
+      "id": "slavic.wonders",
+      "category": "intro",
+      "pages": 3
+    },
+    {
       "id": "slavic.ores",
       "category": "intro",
       "pages": 1

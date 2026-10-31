@@ -18,6 +18,7 @@ SOUNDS = {
     "entity.koschei.summon": (own("koschei/summon"), "Кощей поднимает мёртвых", "Koschei raises the dead"),
     "entity.rusalka.song": (own("rusalka/song", 2), "Русалка поёт", "Rusalka sings"),
     "entity.leshy.ambient": (own("leshy/creak", 2), "Леший скрипит", "Leshy creaks"),
+    "item.gusli.play": (own("gusli/play", 2), "Гусли играют плясовую", "Gusli play a dance tune"),
     "music.nav.forest": ([{"name": f"{NS}:music/nav_forest", "stream": True}], None, None),
     "music.nav.dark": ([{"name": f"{NS}:music/nav_dark", "stream": True}], None, None),
     # ---- Jotunheim
@@ -180,6 +181,20 @@ def reed(freq, seconds, rng):
     return lowpass(tone, 0.3) * envelope(len(x), 0.04, seconds * 0.4)
 
 
+def gusli(rng, seed):
+    """A quick dance tune on the gusli: plucked strings in D dorian, a strummed chord on every beat."""
+    out = np.zeros(int(RATE * 3.2))
+    scale = [293.7, 329.6, 349.2, 392.0, 440.0, 493.9, 523.3, 587.3]
+    tune = [[0, 2, 4, 2, 5, 4, 2, 0, 4, 5, 7, 5, 4, 2, 1, 0], [4, 5, 4, 2, 4, 5, 7, 4, 2, 1, 2, 4, 5, 4, 2, 0]][seed]
+    for k, degree in enumerate(tune):
+        at = 0.18 * k
+        place(out, pluck(scale[degree], 0.9, rng, 0.995) * 0.8, at)
+        if k % 4 == 0:
+            for j, f in enumerate((146.8, 220.0, 293.7)):
+                place(out, pluck(f, 1.2, rng, 0.996) * 0.35, at + 0.015 * j)
+    return out
+
+
 def nav_forest(rng, seed):
     """About a minute of gusli and a reed pipe in D dorian over a soft fifth: the deep forests of Nav."""
     seconds = 62.0
@@ -261,6 +276,7 @@ SYNTHS = {
     "koschei/summon": koschei_summon,
     "rusalka/song": song,
     "leshy/creak": creak,
+    "gusli/play": gusli,
     "music/nav_forest": nav_forest,
     "music/nav_dark": nav_dark,
     "heimdall/gjallarhorn": gjallarhorn,

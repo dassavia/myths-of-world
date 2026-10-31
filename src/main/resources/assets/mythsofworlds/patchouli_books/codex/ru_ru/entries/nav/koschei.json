@@ -2,7 +2,7 @@
   "name": "Кощей Бессмертный",
   "icon": "mythsofworlds:world_tree_acorn",
   "category": "mythsofworlds:nav_boss",
-  "sortnum": 16,
+  "sortnum": 17,
   "pages": [
     {
       "type": "patchouli:entity",

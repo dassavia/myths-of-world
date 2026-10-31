@@ -2,7 +2,7 @@
   "name": "Дары из сказок",
   "icon": "mythsofworlds:world_tree_acorn",
   "category": "mythsofworlds:nav_intro",
-  "sortnum": 6,
+  "sortnum": 7,
   "pages": [
     {
       "type": "patchouli:text",
