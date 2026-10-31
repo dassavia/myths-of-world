@@ -2,7 +2,7 @@
   "name": "Пещера циклопа",
   "icon": "mythsofworlds:promethean_torch",
   "category": "mythsofworlds:hellas_place",
-  "sortnum": 32,
+  "sortnum": 34,
   "pages": [
     {
       "type": "patchouli:text",

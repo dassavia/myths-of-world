@@ -2,7 +2,7 @@
   "name": "Lion",
   "icon": "mythsofworlds:promethean_torch",
   "category": "mythsofworlds:hellas_creature",
-  "sortnum": 16,
+  "sortnum": 18,
   "pages": [
     {
       "type": "patchouli:entity",

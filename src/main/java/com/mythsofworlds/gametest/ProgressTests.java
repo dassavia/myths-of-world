@@ -1,6 +1,5 @@
 package com.mythsofworlds.gametest;
 
-import com.mojang.authlib.GameProfile;
 import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.codex.Codex;
 import com.mythsofworlds.codex.CodexBook;
@@ -13,21 +12,15 @@ import com.mythsofworlds.mythology.relic.MythAttributes;
 import com.mythsofworlds.mythology.relic.MythPowers;
 import com.mythsofworlds.mythology.slavic.SlavicContent;
 import com.mythsofworlds.registry.MetalSet;
-import io.netty.channel.embedded.EmbeddedChannel;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.minecraft.network.Connection;
-import net.minecraft.network.protocol.PacketFlow;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.ServerAdvancementManager;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.network.CommonListenerCookie;
-import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.monster.Zombie;
@@ -101,14 +94,7 @@ public class ProgressTests {
                 }
             }
         }
-        // A server player with a mock connection that never joins the server: joining would send it the packets of
-        // Curios, which a mock connection cannot carry.
-        CommonListenerCookie cookie = CommonListenerCookie.createInitial(new GameProfile(UUID.randomUUID(), "codex-test"), false);
-        ServerPlayer player = new ServerPlayer(helper.getLevel().getServer(), helper.getLevel(), cookie.gameProfile(),
-                cookie.clientInformation());
-        Connection connection = new Connection(PacketFlow.SERVERBOUND);
-        new EmbeddedChannel(connection);
-        new ServerGamePacketListenerImpl(helper.getLevel().getServer(), connection, player, cookie);
+        ServerPlayer player = TestPlayers.serverPlayer(helper, "codex-test");
         ResourceLocation nav = CodexBook.lock("chapter", "nav");
         CodexBook.sync(player);
         helper.assertTrue(!done(helper, player, nav), "Nav is locked at the start");

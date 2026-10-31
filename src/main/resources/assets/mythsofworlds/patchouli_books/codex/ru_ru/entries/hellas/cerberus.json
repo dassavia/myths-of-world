@@ -2,7 +2,7 @@
   "name": "Цербер",
   "icon": "mythsofworlds:promethean_torch",
   "category": "mythsofworlds:hellas_boss",
-  "sortnum": 24,
+  "sortnum": 26,
   "pages": [
     {
       "type": "patchouli:entity",

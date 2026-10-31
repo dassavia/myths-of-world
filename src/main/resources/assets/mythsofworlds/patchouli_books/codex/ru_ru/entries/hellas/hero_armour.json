@@ -2,7 +2,7 @@
   "name": "Доспехи героев",
   "icon": "mythsofworlds:promethean_torch",
   "category": "mythsofworlds:hellas_intro",
-  "sortnum": 8,
+  "sortnum": 10,
   "pages": [
     {
       "type": "patchouli:text",

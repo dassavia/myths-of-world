@@ -21,6 +21,16 @@
       "pages": 3
     },
     {
+      "id": "greek.offerings",
+      "category": "intro",
+      "pages": 3
+    },
+    {
+      "id": "greek.thread_laurel",
+      "category": "intro",
+      "pages": 2
+    },
+    {
       "id": "greek.ores",
       "category": "intro",
       "pages": 2

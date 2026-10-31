@@ -2,7 +2,7 @@
   "name": "Minotaur",
   "icon": "mythsofworlds:promethean_torch",
   "category": "mythsofworlds:hellas_boss",
-  "sortnum": 22,
+  "sortnum": 24,
   "pages": [
     {
       "type": "patchouli:entity",

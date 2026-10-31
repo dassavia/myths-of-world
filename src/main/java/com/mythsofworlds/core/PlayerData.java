@@ -28,6 +28,9 @@ public final class PlayerData {
                     .serialize(Codec.STRING.listOf())
                     .copyOnDeath()
                     .build());
+    /** Game time of the player's last offering to the gods of Hellas (see Offerings), 0 if none yet. */
+    public static final Supplier<AttachmentType<Long>> LAST_OFFERING = ATTACHMENT_TYPES.register("last_offering",
+            () -> AttachmentType.builder(() -> 0L).serialize(Codec.LONG).copyOnDeath().build());
     /** UUID of the player's wife (an amazon or Hippolyta), empty if unmarried. */
     public static final Supplier<AttachmentType<String>> SPOUSE = ATTACHMENT_TYPES.register("spouse",
             () -> AttachmentType.builder(() -> "").serialize(Codec.STRING).copyOnDeath().build());

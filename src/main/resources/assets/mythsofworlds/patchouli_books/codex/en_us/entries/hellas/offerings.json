@@ -1,0 +1,20 @@
+{
+  "name": "Offerings to the Gods",
+  "icon": "mythsofworlds:promethean_torch",
+  "category": "mythsofworlds:hellas_intro",
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Hold a gift over a lit brazier and right-click: the god it pleases burns it and blesses you for 5 minutes. The gods hear one gift every 3 minutes."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Zeus takes a gold ingot: strength and resistance. Athena, olives: luck and experience. Hermes, a feather: speed and jumping. Poseidon, a fish: water breathing and dolphin's grace."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Demeter takes wheat or bread: a full belly and healing. Hephaestus, Hephaestus coal: fire resistance and haste."
+    }
+  ]
+}

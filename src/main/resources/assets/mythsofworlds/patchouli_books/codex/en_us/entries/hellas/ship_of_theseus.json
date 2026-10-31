@@ -2,7 +2,7 @@
   "name": "Ship of Theseus",
   "icon": "mythsofworlds:promethean_torch",
   "category": "mythsofworlds:hellas_place",
-  "sortnum": 35,
+  "sortnum": 37,
   "pages": [
     {
       "type": "patchouli:text",

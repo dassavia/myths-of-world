@@ -2,7 +2,7 @@
   "name": "Гарпия",
   "icon": "mythsofworlds:promethean_torch",
   "category": "mythsofworlds:hellas_creature",
-  "sortnum": 10,
+  "sortnum": 12,
   "pages": [
     {
       "type": "patchouli:entity",

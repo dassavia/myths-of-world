@@ -2,7 +2,7 @@
   "name": "Hydra Hatchling",
   "icon": "mythsofworlds:promethean_torch",
   "category": "mythsofworlds:hellas_creature",
-  "sortnum": 14,
+  "sortnum": 16,
   "pages": [
     {
       "type": "patchouli:entity",

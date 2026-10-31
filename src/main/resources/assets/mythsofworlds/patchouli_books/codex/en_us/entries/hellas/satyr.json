@@ -2,7 +2,7 @@
   "name": "Satyr",
   "icon": "mythsofworlds:promethean_torch",
   "category": "mythsofworlds:hellas_creature",
-  "sortnum": 9,
+  "sortnum": 11,
   "pages": [
     {
       "type": "patchouli:entity",

@@ -2,7 +2,7 @@
   "name": "Логово Немейского льва",
   "icon": "mythsofworlds:promethean_torch",
   "category": "mythsofworlds:hellas_place",
-  "sortnum": 33,
+  "sortnum": 35,
   "pages": [
     {
       "type": "patchouli:text",

@@ -2,7 +2,7 @@
   "name": "Каркин",
   "icon": "mythsofworlds:promethean_torch",
   "category": "mythsofworlds:hellas_creature",
-  "sortnum": 21,
+  "sortnum": 23,
   "pages": [
     {
       "type": "patchouli:entity",

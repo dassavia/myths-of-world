@@ -2,7 +2,7 @@
   "name": "Фемискира",
   "icon": "mythsofworlds:promethean_torch",
   "category": "mythsofworlds:hellas_place",
-  "sortnum": 38,
+  "sortnum": 40,
   "pages": [
     {
       "type": "patchouli:text",

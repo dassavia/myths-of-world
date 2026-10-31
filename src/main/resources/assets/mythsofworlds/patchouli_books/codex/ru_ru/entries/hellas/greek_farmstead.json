@@ -2,7 +2,7 @@
   "name": "Усадьба",
   "icon": "mythsofworlds:promethean_torch",
   "category": "mythsofworlds:hellas_place",
-  "sortnum": 39,
+  "sortnum": 41,
   "pages": [
     {
       "type": "patchouli:text",

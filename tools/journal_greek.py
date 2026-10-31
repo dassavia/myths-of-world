@@ -53,6 +53,31 @@ ENTRIES = [
      ['Сеты богов', 'Броня из разных мифологий складывается в сет. Эллада: орихалк, сет Немейского льва, пояс Ипполиты, таларии, нагрудник титана. Йотунхейм: тёмное железо, шлем Хеймдалля.', 'Союз пантеонов (обе мифологии): 2 вещи дают спешку, 3 - ещё огнестойкость, 4 - ещё регенерацию. Две и две - ещё и стойкость.', 'Только Эллада, 4 вещи: скорость и прыжок. Только Йотунхейм, 4 вещи: сила и стойкость.'],
      ['Sets of the Gods', "Armour of different mythologies adds up to a set. Hellas: orichalcum, the Nemean lion set, the girdle of Hippolyta, the talaria, the Titan's breastplate. Jotunheim: dark iron, the helmet of Heimdall.", 'Union of the pantheons (both mythologies): 2 pieces give Haste, 3 also Fire Resistance, 4 also Regeneration. Two and two also give Resistance.', 'Hellas only, 4 pieces: Speed and Jump Boost. Jotunheim only, 4 pieces: Strength and Resistance.']),
 
+    ("offerings", "intro", None,
+     ["Жертвы богам",
+      "Поднесите дар к зажжённой жертвенной чаше (ПКМ): бог, которому он мил, сожжёт его и благословит вас на "
+      "5 минут. Боги слышат один дар в 3 минуты.",
+      "Зевсу - золотой слиток: сила и стойкость. Афине - оливки: удача и опыт. Гермесу - перо: скорость и прыжок. "
+      "Посейдону - рыба: дыхание под водой и грация дельфина.",
+      "Деметре - пшеница или хлеб: сытость и исцеление. Гефесту - уголь Гефеста: огнестойкость и спешка."],
+     ["Offerings to the Gods",
+      "Hold a gift over a lit brazier and right-click: the god it pleases burns it and blesses you for 5 minutes. "
+      "The gods hear one gift every 3 minutes.",
+      "Zeus takes a gold ingot: strength and resistance. Athena, olives: luck and experience. Hermes, a feather: "
+      "speed and jumping. Poseidon, a fish: water breathing and dolphin's grace.",
+      "Demeter takes wheat or bread: a full belly and healing. Hephaestus, Hephaestus coal: fire resistance and haste."]),
+    ("thread_laurel", "intro", None,
+     ["Нить и лавр",
+      "Нить Ариадны вывела Тесея из Лабиринта. Shift+ПКМ привязывает её конец там, где вы стоите; ПКМ в том же "
+      "мире возвращает к нему. Три нити, красный краситель и золото, или в лабиринте.",
+      "Лавр Дельф жевала пифия перед пророчеством. Сожгите лист (ПКМ), и она назовёт ближайшее чудовище, которого "
+      "вы ещё не одолели, и укажет путь. Лавр продаёт жрица и хранит оракул."],
+     ["Thread and Laurel",
+      "Ariadne's thread led Theseus out of the Labyrinth. Shift + right-click ties its end where you stand; "
+      "right-click in the same world brings you back to it. Three string, red dye and gold, or the labyrinth.",
+      "The Pythia chewed Delphic laurel before she prophesied. Burn a leaf (right-click), and she names the nearest "
+      "monster you have not beaten yet and shows the way. The priestess sells it, the oracle keeps it."]),
+
     # ---------------------------------------------------------------- creatures
     ("satyr", "creature", mob("satyr"),
      ["Сатир",

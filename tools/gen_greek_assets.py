@@ -775,12 +775,12 @@ def loot():
     chest("oracle_of_delphi", (2, 5), [
         entry("minecraft:glass_bottle", 6, 1, 3), entry("minecraft:glowstone_dust", 6, 1, 4), entry("minecraft:amethyst_shard", 6, 1, 4),
         entry("minecraft:ender_eye", 2), entry("minecraft:book", 5, enchant=True), entry(f"{NS}:ambrosia", 3),
-        entry("minecraft:experience_bottle", 4, 1, 3),
+        entry("minecraft:experience_bottle", 4, 1, 3), entry(f"{NS}:delphic_laurel", 8, 1, 3),
     ])
     chest("labyrinth", (4, 8), gold + [
         entry("minecraft:iron_ingot", 8, 2, 6), entry("minecraft:diamond", 3, 1, 2), entry("minecraft:string", 6, 4, 12),
         entry("minecraft:iron_sword", 3, enchant=True), entry("minecraft:golden_apple", 3), entry(f"{NS}:ambrosia", 2),
-        entry(f"{NS}:necklace_of_harmonia", 1), entry(f"{NS}:titan_breastplate", 1),
+        entry(f"{NS}:necklace_of_harmonia", 1), entry(f"{NS}:titan_breastplate", 1), entry(f"{NS}:ariadne_thread", 3),
     ])
     chest("gates_of_hades", (4, 7), [
         entry("minecraft:soul_lantern", 4, 1, 3), entry("minecraft:obsidian", 6, 2, 6), entry("minecraft:diamond", 4, 1, 3),
@@ -929,6 +929,13 @@ def recipes():
                         {"item": "minecraft:torch"}],
         "result": {"id": f"{NS}:promethean_torch", "count": 1},
     })
+    # Ariadne's thread: a ball of red wool wound on a golden spindle.
+    write_json(data("recipe", "ariadne_thread.json"), {
+        "type": "minecraft:crafting_shapeless", "category": "tools",
+        "ingredients": [{"item": "minecraft:string"}, {"item": "minecraft:string"}, {"item": "minecraft:string"},
+                        {"item": "minecraft:red_dye"}, {"item": "minecraft:gold_ingot"}],
+        "result": {"id": f"{NS}:ariadne_thread", "count": 1},
+    })
     write_json(data("recipe", "brazier.json"), {
         "type": "minecraft:crafting_shaped", "category": "building",
         "pattern": ["C C", "CCC", " M "],
@@ -998,7 +1005,7 @@ ITEMS = ["promethean_torch", "ambrosia", "harpy_feather", "minotaur_horn", "hydr
          "nemean_pelt", "cyclops_eye", "medusa_head", "nemean_claw", "nemean_claw_dagger", "harpe", "hydra_egg",
          "olives", "pomegranate", "wings_of_daedalus", "karkinos_claw", "girdle_of_hippolyta", "wedding_ring",
          "necklace_of_harmonia", "horn_of_themiscyra", "growth_potion",
-         "greek_journal", "greek_journal_complete"]
+         "greek_journal", "greek_journal_complete", "ariadne_thread", "delphic_laurel"]
 HANDHELD = {"promethean_torch", "nemean_claw_dagger", "harpe"}
 MOBS = ["satyr", "harpy", "spartoi", "shade", "pegasus", "golden_hind", "hydra_hatchling", "greek_merchant",
         "cyclops", "medusa", "nemean_lion", "minotaur", "hydra", "cerberus", "lion", "amazon", "karkinos", "hippolyta"]
@@ -1121,6 +1128,34 @@ LANG = {
                                                     "Worn in the legs slot: Strength II, Resistance II, Speed and Regeneration"),
     "item.mythsofworlds.necklace_of_harmonia": ("Ожерелье Гармонии", "Necklace of Harmonia"),
     "item.mythsofworlds.horn_of_themiscyra": ("Горн Фемискиры", "Horn of Themiscyra"),
+    "item.mythsofworlds.ariadne_thread": ("Нить Ариадны", "Ariadne's Thread"),
+    "item.mythsofworlds.ariadne_thread.desc": ("Shift+ПКМ: привязать конец здесь. ПКМ: вернуться к нему",
+                                              "Shift + right-click: tie the end here. Right-click: return to it"),
+    "item.mythsofworlds.ariadne_thread.knot": ("Конец привязан: %s, %s, %s", "Tied at %s, %s, %s"),
+    "item.mythsofworlds.ariadne_thread.tied": ("Вы привязали конец нити", "You tie the end of the thread"),
+    "item.mythsofworlds.ariadne_thread.untied": ("Сначала привяжите конец нити (Shift+ПКМ)",
+                                                "First tie the end of the thread (shift + right-click)"),
+    "item.mythsofworlds.ariadne_thread.other_world": ("Нить привязана в другом мире", "The thread is tied in another world"),
+    "item.mythsofworlds.delphic_laurel": ("Лавр Дельф", "Laurel of Delphi"),
+    "item.mythsofworlds.delphic_laurel.desc": ("Сожгите (ПКМ): пифия назовёт ближайшее непобеждённое чудовище этого мира",
+                                              "Burn it (right-click): the Pythia names the nearest unbeaten monster of this world"),
+    "item.mythsofworlds.delphic_laurel.prophecy": ("Пифия: «Ищи %s в %s блоках, на %s»",
+                                                  "The Pythia: \"Seek %s %s blocks away, to the %s\""),
+    "item.mythsofworlds.delphic_laurel.silent": ("Пифия молчит: здесь нет чудовищ, которых вы не одолели",
+                                                "The Pythia is silent: no monster you have not beaten waits here"),
+    "offering.mythsofworlds.wait": ("Боги ещё не приняли прошлого дара", "The gods have not yet taken your last gift"),
+    "offering.mythsofworlds.zeus": ("Зевс принимает золото: сила и стойкость с вами",
+                                    "Zeus accepts the gold: strength and endurance are with you"),
+    "offering.mythsofworlds.athena": ("Афина принимает оливки: удача и мудрость с вами",
+                                      "Athena accepts the olives: luck and wisdom are with you"),
+    "offering.mythsofworlds.hermes": ("Гермес принимает перо: ваши ноги легки",
+                                      "Hermes accepts the feather: your feet are light"),
+    "offering.mythsofworlds.poseidon": ("Посейдон принимает рыбу: море примет вас",
+                                        "Poseidon accepts the fish: the sea will take you in"),
+    "offering.mythsofworlds.demeter": ("Деметра принимает хлеб: вы сыты и здоровы",
+                                       "Demeter accepts the bread: you are fed and whole"),
+    "offering.mythsofworlds.hephaestus": ("Гефест принимает уголь: огонь вам не страшен, руки спорые",
+                                          "Hephaestus accepts the coal: fire cannot harm you, and your hands are quick"),
     "item.mythsofworlds.growth_potion": ("Взрывное зелье роста", "Splash Potion of Growth"),
     "item.mythsofworlds.growth_potion.desc": ("Бросьте: малыши вокруг (и маленькие амазонки) сразу вырастают",
                                               "Throw it: the young around (little amazons too) grow up at once"),

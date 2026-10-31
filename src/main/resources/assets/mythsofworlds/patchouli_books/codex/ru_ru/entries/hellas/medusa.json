@@ -2,7 +2,7 @@
   "name": "Медуза Горгона",
   "icon": "mythsofworlds:promethean_torch",
   "category": "mythsofworlds:hellas_boss",
-  "sortnum": 19,
+  "sortnum": 21,
   "pages": [
     {
       "type": "patchouli:entity",

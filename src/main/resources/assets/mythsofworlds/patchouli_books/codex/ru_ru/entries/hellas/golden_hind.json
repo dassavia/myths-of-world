@@ -2,7 +2,7 @@
   "name": "Керинейская лань",
   "icon": "mythsofworlds:promethean_torch",
   "category": "mythsofworlds:hellas_creature",
-  "sortnum": 13,
+  "sortnum": 15,
   "pages": [
     {
       "type": "patchouli:entity",

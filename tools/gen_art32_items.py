@@ -258,7 +258,9 @@ for _metal in METALS:
 
 def main(names):
     from items_relics import register  # noqa: E402  the relics, trophies, foods and books
+    import items_myths  # noqa: E402  the wonders added in 0.14
     register(ITEMS)
+    items_myths.register(ITEMS)
     for name in names or sorted(ITEMS):
         # Marked as full resolution, so that hd_textures.py leaves them alone.
         save_marked(ITEMS[name]().render(), os.path.join(ROOT, name + ".png"))

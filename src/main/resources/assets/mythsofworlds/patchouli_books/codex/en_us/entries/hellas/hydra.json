@@ -2,7 +2,7 @@
   "name": "Lernaean Hydra",
   "icon": "mythsofworlds:promethean_torch",
   "category": "mythsofworlds:hellas_boss",
-  "sortnum": 23,
+  "sortnum": 25,
   "pages": [
     {
       "type": "patchouli:entity",

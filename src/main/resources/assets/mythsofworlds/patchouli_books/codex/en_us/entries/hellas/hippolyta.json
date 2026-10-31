@@ -2,7 +2,7 @@
   "name": "Hippolyta",
   "icon": "mythsofworlds:promethean_torch",
   "category": "mythsofworlds:hellas_boss",
-  "sortnum": 25,
+  "sortnum": 27,
   "pages": [
     {
       "type": "patchouli:entity",

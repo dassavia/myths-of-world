@@ -2,7 +2,7 @@
   "name": "Амазонка",
   "icon": "mythsofworlds:promethean_torch",
   "category": "mythsofworlds:hellas_creature",
-  "sortnum": 17,
+  "sortnum": 19,
   "pages": [
     {
       "type": "patchouli:entity",

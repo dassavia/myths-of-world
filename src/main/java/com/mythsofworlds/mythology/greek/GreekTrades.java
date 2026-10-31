@@ -64,6 +64,8 @@ public final class GreekTrades {
             buy(6, () -> new ItemStack(GreekContent.AMBROSIA.get()), 8),
             buy(10, () -> new ItemStack(GreekContent.PROMETHEAN_TORCH.get()), 3),
             buy(3, () -> new ItemStack(GreekContent.OLYMPIAN_MARBLE_ITEM.get(), 8), 16),
+            buy(4, () -> new ItemStack(GreekContent.DELPHIC_LAUREL.get(), 2), 12),
+            buy(8, () -> new ItemStack(GreekContent.ARIADNE_THREAD.get()), 3),
             buy(4, () -> PotionContents.createItemStack(Items.POTION, Potions.STRONG_HEALING), 8),
             buy(4, () -> PotionContents.createItemStack(Items.SPLASH_POTION, Potions.STRONG_POISON), 8),
             buy(5, () -> PotionContents.createItemStack(Items.POTION, Potions.FIRE_RESISTANCE), 8),

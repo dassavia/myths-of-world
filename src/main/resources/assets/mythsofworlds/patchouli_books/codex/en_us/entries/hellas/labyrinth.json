@@ -2,7 +2,7 @@
   "name": "Labyrinth of the Minotaur",
   "icon": "mythsofworlds:promethean_torch",
   "category": "mythsofworlds:hellas_place",
-  "sortnum": 28,
+  "sortnum": 30,
   "pages": [
     {
       "type": "patchouli:text",

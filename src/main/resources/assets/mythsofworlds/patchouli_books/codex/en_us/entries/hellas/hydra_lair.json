@@ -2,7 +2,7 @@
   "name": "Lair of the Hydra",
   "icon": "mythsofworlds:promethean_torch",
   "category": "mythsofworlds:hellas_place",
-  "sortnum": 30,
+  "sortnum": 32,
   "pages": [
     {
       "type": "patchouli:text",

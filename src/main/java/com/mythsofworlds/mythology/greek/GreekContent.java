@@ -7,7 +7,9 @@ import com.mythsofworlds.mythology.greek.item.MedusaHeadItem;
 import com.mythsofworlds.journal.JournalItem;
 import com.mythsofworlds.mythology.greek.block.CloudBlock;
 import com.mythsofworlds.mythology.greek.block.FruitLeavesBlock;
+import com.mythsofworlds.mythology.greek.item.AriadneThreadItem;
 import com.mythsofworlds.mythology.greek.item.BidentOfHadesItem;
+import com.mythsofworlds.mythology.greek.item.DelphicLaurelItem;
 import com.mythsofworlds.mythology.greek.item.GirdleItem;
 import com.mythsofworlds.mythology.greek.item.GrowthPotionItem;
 import com.mythsofworlds.mythology.greek.item.HornOfThemiscyraItem;
@@ -331,6 +333,13 @@ public final class GreekContent {
     public static final DeferredItem<RelicArmorItem> NEMEAN_CHESTPLATE = nemean("nemean_chestplate", ArmorItem.Type.CHESTPLATE);
     public static final DeferredItem<RelicArmorItem> NEMEAN_LEGGINGS = nemean("nemean_leggings", ArmorItem.Type.LEGGINGS);
     public static final DeferredItem<RelicArmorItem> NEMEAN_BOOTS = nemean("nemean_boots", ArmorItem.Type.BOOTS);
+
+    /** Ariadne's thread: tie it where you stand, and follow it back there from anywhere in the same world. */
+    public static final DeferredItem<AriadneThreadItem> ARIADNE_THREAD = ITEMS.register("ariadne_thread",
+            () -> new AriadneThreadItem(new Item.Properties().durability(16).rarity(Rarity.UNCOMMON)));
+    /** Laurel of Delphi: burnt, it makes the Pythia name the nearest monster you have not beaten and where it waits. */
+    public static final DeferredItem<DelphicLaurelItem> DELPHIC_LAUREL = ITEMS.register("delphic_laurel",
+            () -> new DelphicLaurelItem(new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
 
     private GreekContent() {
     }

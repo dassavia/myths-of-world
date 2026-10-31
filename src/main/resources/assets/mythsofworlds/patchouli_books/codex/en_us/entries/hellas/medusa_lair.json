@@ -2,7 +2,7 @@
   "name": "Lair of Medusa",
   "icon": "mythsofworlds:promethean_torch",
   "category": "mythsofworlds:hellas_place",
-  "sortnum": 31,
+  "sortnum": 33,
   "pages": [
     {
       "type": "patchouli:text",

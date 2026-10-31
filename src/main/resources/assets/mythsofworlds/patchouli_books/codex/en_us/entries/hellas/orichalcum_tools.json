@@ -2,7 +2,7 @@
   "name": "Orichalcum Tools",
   "icon": "mythsofworlds:promethean_torch",
   "category": "mythsofworlds:hellas_intro",
-  "sortnum": 5,
+  "sortnum": 7,
   "pages": [
     {
       "type": "patchouli:text",

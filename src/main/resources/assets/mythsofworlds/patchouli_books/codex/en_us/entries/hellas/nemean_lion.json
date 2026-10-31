@@ -2,7 +2,7 @@
   "name": "Nemean Lion",
   "icon": "mythsofworlds:promethean_torch",
   "category": "mythsofworlds:hellas_boss",
-  "sortnum": 20,
+  "sortnum": 22,
   "pages": [
     {
       "type": "patchouli:entity",

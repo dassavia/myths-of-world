@@ -2,7 +2,7 @@
   "name": "Refuge of Perseus",
   "icon": "mythsofworlds:promethean_torch",
   "category": "mythsofworlds:hellas_place",
-  "sortnum": 36,
+  "sortnum": 38,
   "pages": [
     {
       "type": "patchouli:text",

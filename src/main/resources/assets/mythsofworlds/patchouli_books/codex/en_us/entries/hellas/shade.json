@@ -2,7 +2,7 @@
   "name": "Shade",
   "icon": "mythsofworlds:promethean_torch",
   "category": "mythsofworlds:hellas_creature",
-  "sortnum": 12,
+  "sortnum": 14,
   "pages": [
     {
       "type": "patchouli:entity",

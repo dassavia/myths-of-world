@@ -1,7 +1,12 @@
 package com.mythsofworlds.mythology.greek.portal;
 
 import net.minecraft.core.BlockPos;
+import com.mythsofworlds.mythology.greek.Offerings;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -21,7 +26,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
  * Bronze bowl on a marble foot. Placed on the four corners of a sacred pool and lit with the Promethean Torch,
- * it opens the way to Hellas (see {@link PoolPortal}). Right-click with an empty hand to put the fire out.
+ * it opens the way to Hellas (see {@link PoolPortal}). Right-click with an empty hand to put the fire out; hold a gift
+ * over a lit one to make an offering to the gods.
  */
 public class BrazierBlock extends Block {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
@@ -55,6 +61,23 @@ public class BrazierBlock extends Block {
             level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.8F, 1.0F);
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    /** A gift held over a lit brazier is an offering to the god it pleases (see {@link Offerings}). */
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
+                                              InteractionHand hand, BlockHitResult hit) {
+        if (!state.getValue(LIT)) {
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        }
+        var god = Offerings.godOf(stack);
+        if (god.isEmpty()) {
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        }
+        if (level instanceof ServerLevel server) {
+            Offerings.offer(server, pos, player, stack, god.get());
+        }
+        return ItemInteractionResult.sidedSuccess(level.isClientSide);
     }
 
     /** A pool portal closes as soon as one of its fires goes out or its brazier is removed. */
