@@ -2,7 +2,7 @@
   "name": "Ores of Jotunheim",
   "icon": "mythsofworlds:rune_igniter",
   "category": "mythsofworlds:jotunheim_intro",
-  "sortnum": 4,
+  "sortnum": 6,
   "pages": [
     {
       "type": "patchouli:text",

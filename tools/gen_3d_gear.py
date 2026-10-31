@@ -17,7 +17,7 @@ ROOT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources",
 
 METALS = ["orichalcum", "bulat", "dark_iron"]
 TOOLS = ["sword", "axe", "pickaxe", "shovel", "hoe"]
-RELICS = ["harpe", "kladenets", "mjolnir", "surtr_sword", "bident_of_hades", "nemean_claw_dagger"]
+RELICS = ["harpe", "kladenets", "mjolnir", "surtr_sword", "bident_of_hades", "nemean_claw_dagger", "gungnir"]
 GEAR = [f"{metal}_{tool}" for metal in METALS for tool in TOOLS] + RELICS
 
 # Half the thickness, in model units (16 per item), of each layer: the silhouette, then the pixels at least

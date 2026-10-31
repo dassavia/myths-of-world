@@ -2,7 +2,7 @@
   "name": "Fortress of Surtr",
   "icon": "mythsofworlds:rune_igniter",
   "category": "mythsofworlds:jotunheim_place",
-  "sortnum": 29,
+  "sortnum": 31,
   "pages": [
     {
       "type": "patchouli:text",

@@ -3,6 +3,7 @@ package com.mythsofworlds.mythology.norse.entity;
 import com.mythsofworlds.core.family.WarriorMaiden;
 import com.mythsofworlds.mythology.norse.NorseContent;
 import com.mythsofworlds.mythology.norse.NorseEntities;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
@@ -32,8 +33,37 @@ public class Valkyrie extends WarriorMaiden {
             "Svipul", "Thogn", "Hervor", "Svava", "Brynja", "Astrid", "Ingrid", "Sigrid", "Freydis", "Ragnhild",
             "Gunnhild", "Solveig", "Thora", "Ylva", "Alfhild", "Dagny", "Eydis", "Halla", "Runa", "Sigyn", "Tove"};
 
+    /** How long a valkyrie rests after carrying her husband out of a deadly fight, in ticks (a day). */
+    public static final long RESCUE_COOLDOWN = 24000L;
+    /** How near she must be to see him fall, in blocks. */
+    public static final double RESCUE_RANGE = 64.0;
+
+    /** Game time of the last time she carried her husband out of battle, 0 if never. */
+    private long lastRescue;
+
     public Valkyrie(EntityType<? extends AgeableMob> type, Level level) {
         super(type, level);
+    }
+
+    /** Whether she can carry her husband from the field now: a chooser of the slain will not let hers fall. */
+    public boolean canRescue(long now) {
+        return isAlive() && !isBaby() && bond() == Bond.WIFE && (lastRescue == 0 || now - lastRescue >= RESCUE_COOLDOWN);
+    }
+
+    public void markRescue(long now) {
+        lastRescue = now;
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putLong("LastRescue", lastRescue);
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        lastRescue = tag.getLong("LastRescue");
     }
 
     public static AttributeSupplier.Builder createAttributes() {

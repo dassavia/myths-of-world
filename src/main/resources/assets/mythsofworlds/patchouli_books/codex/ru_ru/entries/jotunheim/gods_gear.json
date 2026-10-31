@@ -2,7 +2,7 @@
   "name": "Оружие и доспехи богов",
   "icon": "mythsofworlds:rune_igniter",
   "category": "mythsofworlds:jotunheim_intro",
-  "sortnum": 7,
+  "sortnum": 9,
   "pages": [
     {
       "type": "patchouli:text",

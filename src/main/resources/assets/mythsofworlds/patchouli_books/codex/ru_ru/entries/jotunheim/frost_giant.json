@@ -2,7 +2,7 @@
   "name": "Инеистый великан",
   "icon": "mythsofworlds:rune_igniter",
   "category": "mythsofworlds:jotunheim_creature",
-  "sortnum": 11,
+  "sortnum": 13,
   "pages": [
     {
       "type": "patchouli:entity",

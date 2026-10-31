@@ -2,7 +2,7 @@
   "name": "Longship",
   "icon": "mythsofworlds:rune_igniter",
   "category": "mythsofworlds:jotunheim_place",
-  "sortnum": 24,
+  "sortnum": 26,
   "pages": [
     {
       "type": "patchouli:text",

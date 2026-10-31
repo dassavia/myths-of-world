@@ -132,6 +132,41 @@
           "type": "minecraft:item",
           "name": "mythsofworlds:idunn_apple",
           "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "mythsofworlds:rune_algiz",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "mythsofworlds:rune_raidho",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "mythsofworlds:gungnir",
+          "weight": 1
         }
       ]
     }

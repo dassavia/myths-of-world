@@ -16,6 +16,16 @@
       "pages": 2
     },
     {
+      "id": "norse.runes",
+      "category": "intro",
+      "pages": 5
+    },
+    {
+      "id": "norse.odin_treasures",
+      "category": "intro",
+      "pages": 3
+    },
+    {
       "id": "norse.god_sets",
       "category": "intro",
       "pages": 3

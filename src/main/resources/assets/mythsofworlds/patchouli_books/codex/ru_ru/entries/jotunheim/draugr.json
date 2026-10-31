@@ -2,7 +2,7 @@
   "name": "Драугр",
   "icon": "mythsofworlds:rune_igniter",
   "category": "mythsofworlds:jotunheim_creature",
-  "sortnum": 8,
+  "sortnum": 10,
   "pages": [
     {
       "type": "patchouli:entity",

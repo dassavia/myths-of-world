@@ -2,7 +2,7 @@
   "name": "Врата Хель",
   "icon": "mythsofworlds:rune_igniter",
   "category": "mythsofworlds:jotunheim_place",
-  "sortnum": 30,
+  "sortnum": 32,
   "pages": [
     {
       "type": "patchouli:text",

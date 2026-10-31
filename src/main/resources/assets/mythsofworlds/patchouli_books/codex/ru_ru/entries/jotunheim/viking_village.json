@@ -2,7 +2,7 @@
   "name": "Поселение викингов",
   "icon": "mythsofworlds:rune_igniter",
   "category": "mythsofworlds:jotunheim_place",
-  "sortnum": 23,
+  "sortnum": 25,
   "pages": [
     {
       "type": "patchouli:text",

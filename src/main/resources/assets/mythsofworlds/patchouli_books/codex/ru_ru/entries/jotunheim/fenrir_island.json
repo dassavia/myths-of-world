@@ -2,7 +2,7 @@
   "name": "Остров Люнгви",
   "icon": "mythsofworlds:rune_igniter",
   "category": "mythsofworlds:jotunheim_place",
-  "sortnum": 28,
+  "sortnum": 30,
   "pages": [
     {
       "type": "patchouli:text",

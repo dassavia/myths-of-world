@@ -146,7 +146,7 @@ python3 tools/gen_greek_assets.py && python3 tools/gen_norse_assets.py && python
 - Кодекс мифов — книга Patchouli: `tools/gen_book.py` пишет `data/mythsofworlds/patchouli_books/codex/book.json`, главы и записи в `assets/mythsofworlds/patchouli_books/codex/<язык>/` и скрытые достижения-замки `advancement/codex/{entry,chapter,milestone}`. Выдаёт и забирает замки `codex/CodexBook.java` (в творческом режиме открыто всё).
 - Слот за спиной (`core/back/BackSlot.java`) — слот `back` из Curios: сам слот, кому он положен и какие предметы туда можно, описаны в `data/mythsofworlds/curios/` и теге `data/curios/tags/item/back.json` (их пишет `tools/gen_relics.py`). Элитры на спине летают через `mixin/LivingEntityMixin`, `PlayerMixin` и клиентский `LocalPlayerMixin` (список в `src/main/resources/mythsofworlds.mixins.json`). Какие предметы можно надеть, решает `BackSlot.canWear`.
 - Свои пакеты регистрирует `core/ModNetwork.java`: `DoubleJumpPayload` (двойной прыжок талариев).
-- Иконки предметов и текстуры блоков рисуют `tools/gen_art32_items.py` (реликвии в `tools/items_relics.py`) и `tools/gen_art32_blocks.py` средствами `tools/art32.py`: фигуры в координатах сетки 32x32, у каждой материал (палитра от тени до блика), объём, свет слева сверху и контур. Новый предмет — функция с `@item("имя")`.
+- Иконки предметов и текстуры блоков рисуют `tools/gen_art32_items.py` (реликвии в `tools/items_relics.py`, чудеса 0.14 и иконки эффектов в `tools/items_myths.py`) и `tools/gen_art32_blocks.py` средствами `tools/art32.py`: фигуры в координатах сетки 32x32, у каждой материал (палитра от тени до блика), объём, свет слева сверху и контур. Новый предмет — функция с `@item("имя")`.
 - Панель предметов и фон инвентаря при включённом HUD рисуют `core/client/MythHud.java` и миксин `mixin/InventoryScreenMixin` (текстуры `textures/gui/hud.png` и `inventory.png` из `tools/gen_gui.py`).
 - Жёны и дочери записываются в `core/family/FamilyRegistry` (данные мира), по нему их находит семейный свисток.
 - Страницы журнала о рудах и снаряжении собирает `tools/journal_gear.py`; цифры в нём держите такими же, как в Java.
@@ -175,6 +175,14 @@ python3 tools/gen_greek_assets.py && python3 tools/gen_norse_assets.py && python
 4. Чтобы CI сфотографировал босса, добавьте его в `JoinTest.gallery()`.
 
 Модель можно открыть и доработать в Blockbench (формат GeckoLib), но следующий запуск скрипта её перезапишет.
+
+## Предмет, который что-то помнит
+
+Нить Ариадны помнит узел, скатерть-самобранка — день последнего пира, Драупнир — когда капал. Такие значения хранятся
+в самом предмете через `core/StackData` (`getLong/putLong`, `getString/putString`). Свой эффект зелья — наследник
+`MobEffect`, регистрируется через `ModRegistries.MOB_EFFECTS` (пример: `slavic/effect/DanceEffect`), иконка 18x18 —
+в `EFFECT_ICONS` в `tools/items_myths.py`. Поиск ближайшего логова непобеждённого босса — `core/Prophecy`
+(логова перечислены в `Mythology.java`).
 
 ## Новая сделка у торговцев агоры
 

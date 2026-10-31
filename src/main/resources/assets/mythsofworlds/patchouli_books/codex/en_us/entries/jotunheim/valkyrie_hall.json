@@ -2,7 +2,7 @@
   "name": "Hall of the Valkyries",
   "icon": "mythsofworlds:rune_igniter",
   "category": "mythsofworlds:jotunheim_place",
-  "sortnum": 33,
+  "sortnum": 35,
   "pages": [
     {
       "type": "patchouli:text",

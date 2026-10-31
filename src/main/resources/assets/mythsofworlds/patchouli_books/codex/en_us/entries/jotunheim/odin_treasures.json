@@ -1,0 +1,21 @@
+{
+  "name": "Treasures of Odin",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_intro",
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Draupnir, Odin's ring: every day 8 gold nuggets drip from it. Gungnir, his spear, never misses: right-click strikes the creature you look at within 48 blocks, and the spear is back in your hand."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The dwarf smith forges Draupnir for a fang of Garm, and Gungnir for a fang of Fenrir. The spear also lies in the valkyrie halls."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "A valkyrie wife is a chooser of the slain. While she is within 64 blocks a deadly blow does not kill you: she carries you out of the battle. Once a day."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/jotunheim"
+}

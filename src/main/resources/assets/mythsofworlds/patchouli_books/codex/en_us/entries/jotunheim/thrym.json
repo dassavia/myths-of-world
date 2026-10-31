@@ -2,7 +2,7 @@
   "name": "Thrym, King of Giants",
   "icon": "mythsofworlds:rune_igniter",
   "category": "mythsofworlds:jotunheim_boss",
-  "sortnum": 19,
+  "sortnum": 21,
   "pages": [
     {
       "type": "patchouli:entity",

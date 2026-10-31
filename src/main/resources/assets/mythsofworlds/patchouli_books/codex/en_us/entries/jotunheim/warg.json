@@ -2,7 +2,7 @@
   "name": "Warg",
   "icon": "mythsofworlds:rune_igniter",
   "category": "mythsofworlds:jotunheim_creature",
-  "sortnum": 9,
+  "sortnum": 11,
   "pages": [
     {
       "type": "patchouli:entity",

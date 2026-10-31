@@ -2,7 +2,7 @@
   "name": "Valkyrie",
   "icon": "mythsofworlds:rune_igniter",
   "category": "mythsofworlds:jotunheim_creature",
-  "sortnum": 15,
+  "sortnum": 17,
   "pages": [
     {
       "type": "patchouli:entity",

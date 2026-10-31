@@ -2,7 +2,7 @@
   "name": "Торговцы Севера",
   "icon": "mythsofworlds:rune_igniter",
   "category": "mythsofworlds:jotunheim_creature",
-  "sortnum": 14,
+  "sortnum": 16,
   "pages": [
     {
       "type": "patchouli:entity",

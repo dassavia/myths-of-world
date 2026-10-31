@@ -2,7 +2,7 @@
   "name": "Тёмножелезное оружие",
   "icon": "mythsofworlds:rune_igniter",
   "category": "mythsofworlds:jotunheim_intro",
-  "sortnum": 5,
+  "sortnum": 7,
   "pages": [
     {
       "type": "patchouli:text",

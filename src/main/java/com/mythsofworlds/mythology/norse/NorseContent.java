@@ -1,5 +1,13 @@
 package com.mythsofworlds.mythology.norse;
 
+import com.mythsofworlds.mythology.norse.effect.ThurisazEffect;
+import com.mythsofworlds.mythology.norse.item.DraupnirItem;
+import com.mythsofworlds.mythology.norse.item.GungnirItem;
+import com.mythsofworlds.mythology.norse.item.RuneItem;
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.Map;
+import net.minecraft.world.effect.MobEffect;
 import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.core.portal.MythPortalBlock;
 import com.mythsofworlds.core.portal.PortalIgniterItem;
@@ -50,6 +58,7 @@ import net.neoforged.neoforge.registries.DeferredItem;
 
 import static com.mythsofworlds.registry.ModRegistries.BLOCKS;
 import static com.mythsofworlds.registry.ModRegistries.ITEMS;
+import static com.mythsofworlds.registry.ModRegistries.MOB_EFFECTS;
 
 /**
  * Norse mythology: the Bifrost portal to Jotunheim, the land of the giants, with its blocks and the treasures of its
@@ -241,7 +250,28 @@ public final class NorseContent {
             () -> new HornOfThemiscyraItem(HornOfThemiscyraItem.VALKYRIE_HOMES,
                     new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
 
+    /** Runes of the Elder Futhark cut into runestones: spoken, each gives its power for three minutes. */
+    public static final Map<RuneItem.Rune, DeferredItem<RuneItem>> RUNES = runes();
+    /** Thurisaz, the thorn of the giants: attackers are pricked in return. */
+    public static final DeferredHolder<MobEffect, ThurisazEffect> THURISAZ = MOB_EFFECTS.register("thurisaz", ThurisazEffect::new);
+    /** Draupnir, Odin's ring: carried, it drips gold every day. Forged by the dwarf smiths. */
+    public static final DeferredItem<DraupnirItem> DRAUPNIR = ITEMS.register("draupnir",
+            () -> new DraupnirItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    /** Gungnir, Odin's spear: cast, it strikes the creature you look at and never misses. */
+    public static final DeferredItem<GungnirItem> GUNGNIR = ITEMS.register("gungnir",
+            () -> new GungnirItem(new Item.Properties().durability(640).rarity(Rarity.EPIC).fireResistant()
+                    .attributes(GungnirItem.attributes())));
+
     private NorseContent() {
+    }
+
+    private static Map<RuneItem.Rune, DeferredItem<RuneItem>> runes() {
+        Map<RuneItem.Rune, DeferredItem<RuneItem>> runes = new EnumMap<>(RuneItem.Rune.class);
+        for (RuneItem.Rune rune : RuneItem.Rune.values()) {
+            runes.put(rune, ITEMS.register("rune_" + rune.id(),
+                    () -> new RuneItem(rune, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON))));
+        }
+        return Collections.unmodifiableMap(runes);
     }
 
     /** Called from the mod constructor so the fields above are registered. */

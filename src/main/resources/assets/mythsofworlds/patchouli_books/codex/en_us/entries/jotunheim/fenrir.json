@@ -2,7 +2,7 @@
   "name": "Fenrir",
   "icon": "mythsofworlds:rune_igniter",
   "category": "mythsofworlds:jotunheim_boss",
-  "sortnum": 20,
+  "sortnum": 22,
   "pages": [
     {
       "type": "patchouli:entity",

@@ -2,7 +2,7 @@
   "name": "Кузня двергов",
   "icon": "mythsofworlds:rune_igniter",
   "category": "mythsofworlds:jotunheim_place",
-  "sortnum": 31,
+  "sortnum": 33,
   "pages": [
     {
       "type": "patchouli:text",

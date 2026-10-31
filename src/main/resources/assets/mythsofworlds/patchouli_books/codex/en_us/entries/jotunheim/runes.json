@@ -1,0 +1,29 @@
+{
+  "name": "The Runes of Odin",
+  "icon": "mythsofworlds:rune_igniter",
+  "category": "mythsofworlds:jotunheim_intro",
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Nine nights Odin hung on the World Tree and won the runes. A carved runestone and the sign of a rune make two runes."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The signs: Fehu - gold, Uruz - leather, Thurisaz - a frost heart, Ansuz - a raven feather, Raidho - a rabbit's foot, Algiz - a shield."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Speak a rune (right-click) and its power is yours for 3 minutes; the stone crumbles. Fehu - luck, Uruz - strength and health, Thurisaz - whoever strikes you is pricked."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Ansuz - night vision, and every creature around is shown. Raidho - speed and leaps, Algiz - resistance and absorption. The runes rest a minute after each one."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Find them in rune circles and valkyrie halls; the volva sells Ansuz and Algiz."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/jotunheim"
+}

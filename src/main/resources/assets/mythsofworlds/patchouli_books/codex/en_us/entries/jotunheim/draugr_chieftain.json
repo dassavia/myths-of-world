@@ -2,7 +2,7 @@
   "name": "Draugr Chieftain",
   "icon": "mythsofworlds:rune_igniter",
   "category": "mythsofworlds:jotunheim_boss",
-  "sortnum": 17,
+  "sortnum": 19,
   "pages": [
     {
       "type": "patchouli:entity",

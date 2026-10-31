@@ -2,7 +2,7 @@
   "name": "Утгард",
   "icon": "mythsofworlds:rune_igniter",
   "category": "mythsofworlds:jotunheim_place",
-  "sortnum": 27,
+  "sortnum": 29,
   "pages": [
     {
       "type": "patchouli:text",

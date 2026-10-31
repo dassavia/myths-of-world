@@ -2,7 +2,7 @@
   "name": "Barrow",
   "icon": "mythsofworlds:rune_igniter",
   "category": "mythsofworlds:jotunheim_place",
-  "sortnum": 26,
+  "sortnum": 28,
   "pages": [
     {
       "type": "patchouli:text",

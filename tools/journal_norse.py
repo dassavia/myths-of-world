@@ -55,6 +55,39 @@ ENTRIES = [
       "In the rift of Muspelheim, embers smoulder in the stone. In a furnace they burn three times as long as "
       "coal, and valkyries prize them as trophies."]),
 
+    ("runes", "intro", None,
+     ["Руны Одина",
+      "Девять ночей Один висел на Мировом древе и добыл руны. Резной рунный камень и знак руны дают две руны.",
+      "Знаки: Феху - золото, Уруз - кожа, Турисаз - сердце инея, Ансуз - перо ворона, Райдо - кроличья лапка, "
+      "Альгиз - щит.",
+      "Произнесите руну (ПКМ), и её сила с вами 3 минуты; камень рассыпается. Феху - удача, Уруз - сила и "
+      "здоровье, Турисаз - кто ударит, уколется.",
+      "Ансуз - ночное зрение, и все существа вокруг видны. Райдо - скорость и прыжок, Альгиз - сопротивление и "
+      "поглощение. Руны отдыхают минуту после каждой.",
+      "Ищите их в рунных кругах и чертогах валькирий; Ансуз и Альгиз продаёт вёльва."],
+     ["The Runes of Odin",
+      "Nine nights Odin hung on the World Tree and won the runes. A carved runestone and the sign of a rune make two runes.",
+      "The signs: Fehu - gold, Uruz - leather, Thurisaz - a frost heart, Ansuz - a raven feather, Raidho - a rabbit's "
+      "foot, Algiz - a shield.",
+      "Speak a rune (right-click) and its power is yours for 3 minutes; the stone crumbles. Fehu - luck, Uruz - "
+      "strength and health, Thurisaz - whoever strikes you is pricked.",
+      "Ansuz - night vision, and every creature around is shown. Raidho - speed and leaps, Algiz - resistance and "
+      "absorption. The runes rest a minute after each one.",
+      "Find them in rune circles and valkyrie halls; the volva sells Ansuz and Algiz."]),
+    ("odin_treasures", "intro", None,
+     ["Сокровища Одина",
+      "Драупнир, кольцо Одина: каждый день с него капают 8 золотых самородков. Гунгнир, его копьё, не знает "
+      "промаха: ПКМ поражает существо, на которое вы смотрите, в 48 блоках, и копьё сразу в руке.",
+      "Двергкузнец скуёт Драупнир за клык Гарма, а Гунгнир за клык Фенрира. Копьё лежит и в чертогах валькирий.",
+      "Жена-валькирия - выбирающая павших. Пока она в 64 блоках, смертельный удар не убьёт вас: она вынесет вас из "
+      "битвы. Раз в день."],
+     ["Treasures of Odin",
+      "Draupnir, Odin's ring: every day 8 gold nuggets drip from it. Gungnir, his spear, never misses: right-click "
+      "strikes the creature you look at within 48 blocks, and the spear is back in your hand.",
+      "The dwarf smith forges Draupnir for a fang of Garm, and Gungnir for a fang of Fenrir. The spear also lies in "
+      "the valkyrie halls.",
+      "A valkyrie wife is a chooser of the slain. While she is within 64 blocks a deadly blow does not kill you: she "
+      "carries you out of the battle. Once a day."]),
     ("god_sets", "intro", None,
      ['Сеты богов', 'Броня из разных мифологий складывается в сет. Эллада: орихалк, сет Немейского льва, пояс Ипполиты, таларии, нагрудник титана. Йотунхейм: тёмное железо, шлем Хеймдалля.', 'Союз пантеонов (обе мифологии): 2 вещи дают спешку, 3 - ещё огнестойкость, 4 - ещё регенерацию. Две и две - ещё и стойкость.', 'Только Эллада, 4 вещи: скорость и прыжок. Только Йотунхейм, 4 вещи: сила и стойкость.'],
      ['Sets of the Gods', "Armour of different mythologies adds up to a set. Hellas: orichalcum, the Nemean lion set, the girdle of Hippolyta, the talaria, the Titan's breastplate. Jotunheim: dark iron, the helmet of Heimdall.", 'Union of the pantheons (both mythologies): 2 pieces give Haste, 3 also Fire Resistance, 4 also Regeneration. Two and two also give Resistance.', 'Hellas only, 4 pieces: Speed and Jump Boost. Jotunheim only, 4 pieces: Strength and Resistance.']),

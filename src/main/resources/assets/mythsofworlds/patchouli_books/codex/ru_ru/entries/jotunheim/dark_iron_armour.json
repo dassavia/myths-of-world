@@ -2,7 +2,7 @@
   "name": "Тёмножелезная броня",
   "icon": "mythsofworlds:rune_igniter",
   "category": "mythsofworlds:jotunheim_intro",
-  "sortnum": 6,
+  "sortnum": 8,
   "pages": [
     {
       "type": "patchouli:text",

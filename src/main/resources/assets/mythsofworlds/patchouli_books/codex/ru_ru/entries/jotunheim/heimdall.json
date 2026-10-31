@@ -2,7 +2,7 @@
   "name": "Хеймдалль",
   "icon": "mythsofworlds:rune_igniter",
   "category": "mythsofworlds:jotunheim_boss",
-  "sortnum": 21,
+  "sortnum": 23,
   "pages": [
     {
       "type": "patchouli:entity",

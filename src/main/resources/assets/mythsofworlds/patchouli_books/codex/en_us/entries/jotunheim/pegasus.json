@@ -2,7 +2,7 @@
   "name": "Pegasus of the Valkyries",
   "icon": "mythsofworlds:rune_igniter",
   "category": "mythsofworlds:jotunheim_creature",
-  "sortnum": 16,
+  "sortnum": 18,
   "pages": [
     {
       "type": "patchouli:entity",

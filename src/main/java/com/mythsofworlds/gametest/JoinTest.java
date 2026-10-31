@@ -92,6 +92,15 @@ public final class JoinTest {
                 NorseEntities.DRAUGR_CHIEFTAIN, NorseEntities.THRYM, NorseEntities.SURTR, NorseEntities.FENRIR, NorseEntities.GARM);
     }
 
+    /** The relics and gifts added with the wonders of the three worlds. */
+    public static List<Item> wonders() {
+        List<Item> items = new ArrayList<>(List.of(GreekContent.ARIADNE_THREAD.get(), GreekContent.DELPHIC_LAUREL.get(),
+                SlavicContent.FERN_FLOWER_ITEM.get(), SlavicContent.SAMOBRANKA.get(), SlavicContent.GUSLI.get(),
+                SlavicContent.KLUBOK.get(), NorseContent.DRAUPNIR.get(), NorseContent.GUNGNIR.get()));
+        NorseContent.RUNES.values().forEach(rune -> items.add(rune.get()));
+        return items;
+    }
+
     /** The boss stands far enough north of the player, facing them, to be seen whole. */
     private static MythBoss showBoss(ServerPlayer player, EntityType<? extends MythBoss> type) {
         MythBoss boss = type.create(player.serverLevel());
@@ -181,6 +190,15 @@ public final class JoinTest {
                     shown = null;
                 }
             }
+        }
+        if (t == galleryStart + BOSS_TICKS * gallery().size()) {
+            // The wonders of the three worlds, for the screenshot of the inventory.
+            player.getInventory().clearContent();
+            for (Item wonder : wonders()) {
+                player.getInventory().add(new ItemStack(wonder));
+            }
+            player.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(NorseContent.GUNGNIR.get()));
+            report("wonders given");
         }
         if (t > GIVE_UP) {
             report("FAIL: the client did not finish");

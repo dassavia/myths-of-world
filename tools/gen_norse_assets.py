@@ -429,6 +429,7 @@ def loot():
         entry(f"{NS}:mead", 8, 1, 3), entry("minecraft:iron_sword", 5, enchant=True), entry("minecraft:shield", 4),
         entry(f"{NS}:dark_iron_ingot", 4, 1, 3), entry("minecraft:golden_apple", 2), entry(f"{NS}:raven_feather", 5, 1, 3),
         entry("minecraft:saddle", 3), entry("minecraft:golden_horse_armor", 1), entry(f"{NS}:idunn_apple", 2),
+        entry(f"{NS}:rune_algiz", 3, 1, 2), entry(f"{NS}:rune_raidho", 3, 1, 2), entry(f"{NS}:gungnir", 1),
     ])
     chest("himinbjorg", (4, 7), gold + [
         entry("minecraft:gold_ingot", 6, 2, 6), entry("minecraft:golden_apple", 4), entry(f"{NS}:mead", 6, 1, 3),
@@ -439,7 +440,9 @@ def loot():
     chest("rune_circle", (2, 4), [
         entry(f"{NS}:raven_feather", 8, 1, 4), entry("minecraft:lapis_lazuli", 8, 2, 6), entry("minecraft:amethyst_shard", 6, 1, 3),
         entry(f"{NS}:carved_runestone", 4, 1, 2), entry(f"{NS}:idunn_apple", 2), entry("minecraft:book", 3, enchant=True),
-        entry("minecraft:wheat_seeds", 6, 2, 6),
+        entry("minecraft:wheat_seeds", 6, 2, 6), entry(f"{NS}:rune_fehu", 4, 1, 2), entry(f"{NS}:rune_uruz", 4, 1, 2),
+        entry(f"{NS}:rune_thurisaz", 3, 1, 2), entry(f"{NS}:rune_ansuz", 4, 1, 2), entry(f"{NS}:rune_raidho", 3, 1, 2),
+        entry(f"{NS}:rune_algiz", 3, 1, 2),
     ])
 
     mob("draugr", [("minecraft:rotten_flesh", 0, 2, None), ("minecraft:bone", 0, 2, None), ("minecraft:iron_nugget", 0, 2, None),
@@ -469,6 +472,10 @@ def loot():
 
 # ====================================================================== recipes and tags
 
+RUNE_TOKENS = {"fehu": "minecraft:gold_ingot", "uruz": "minecraft:leather", "thurisaz": f"{NS}:frost_heart",
+               "ansuz": f"{NS}:raven_feather", "raidho": "minecraft:rabbit_foot", "algiz": "minecraft:shield"}
+
+
 def recipes():
     def shapeless(name, ingredients, result, count=1, category="misc"):
         write_json(data("recipe", f"{name}.json"), {
@@ -479,6 +486,10 @@ def recipes():
     shapeless("ironwood_planks", [f"{NS}:ironwood_log"], f"{NS}:ironwood_planks", 4, "building")
     shapeless("carved_runestone", [f"{NS}:runestone", "minecraft:red_dye"], f"{NS}:carved_runestone", 1, "building")
     shapeless("mead", ["minecraft:honey_bottle", "minecraft:wheat", "minecraft:sweet_berries"], f"{NS}:mead", 1, "misc")
+    # The runes: a carved runestone and what each rune stands for (wealth, the aurochs, the giants, Odin's ravens,
+    # the swift journey, the shield).
+    for rune, token in RUNE_TOKENS.items():
+        shapeless(f"rune_{rune}", [f"{NS}:carved_runestone", token], f"{NS}:rune_{rune}", 2, "misc")
     # The six things the dwarves made Gleipnir of: the sound of a cat's footfall, a woman's beard, the roots of a
     # mountain, the sinews of a bear, the breath of a fish and the spittle of a bird.
     shapeless("gleipnir", ["minecraft:rabbit_foot", "minecraft:string", "minecraft:hanging_roots", "minecraft:leather",
@@ -498,8 +509,9 @@ def recipes():
 # ====================================================================== models
 
 ITEMS = ["norse_journal", "norse_journal_complete", "idunn_apple", "mead", "raven_feather", "frost_heart", "muspel_ember",
-         "troll_tusk", "fenrir_fang", "garm_fang", "barrow_crown", "mjolnir", "gleipnir", "surtr_sword"]
-HANDHELD = {"mjolnir", "surtr_sword"}
+         "troll_tusk", "fenrir_fang", "garm_fang", "barrow_crown", "mjolnir", "gleipnir", "surtr_sword", "draupnir",
+         "gungnir"] + [f"rune_{rune}" for rune in RUNE_TOKENS]
+HANDHELD = {"mjolnir", "surtr_sword", "gungnir"}
 MOBS = ["draugr", "warg", "troll", "frost_giant", "fire_giant", "raven", "norse_merchant", "valkyrie", "draugr_chieftain", "garm",
         "thrym", "fenrir", "surtr", "heimdall"]
 
@@ -576,6 +588,34 @@ LANG = {
     "entity.mythsofworlds.raven": ("Ворон", "Raven"),
     "entity.mythsofworlds.norse_merchant": ("Торговец викингов", "Viking Trader"),
     "entity.mythsofworlds.valkyrie": ("Валькирия", "Valkyrie"),
+    "item.mythsofworlds.rune_fehu": ("Руна Феху", "Fehu Rune"),
+    "item.mythsofworlds.rune_fehu.desc": ("ПКМ: богатство: удача II на 3 минуты", "Right-click: wealth: Luck II for 3 minutes"),
+    "item.mythsofworlds.rune_fehu.spoken": ("Феху шепчет о богатстве", "Fehu whispers of wealth"),
+    "item.mythsofworlds.rune_uruz": ("Руна Уруз", "Uruz Rune"),
+    "item.mythsofworlds.rune_uruz.desc": ("ПКМ: сила тура: сила и здоровье на 3 минуты", "Right-click: the strength of the aurochs: Strength and Health Boost for 3 minutes"),
+    "item.mythsofworlds.rune_uruz.spoken": ("В вас сила тура", "The strength of the aurochs is in you"),
+    "item.mythsofworlds.rune_thurisaz": ("Руна Турисаз", "Thurisaz Rune"),
+    "item.mythsofworlds.rune_thurisaz.desc": ("ПКМ: шип великанов: кто ударит, уколется на 3 минуты", "Right-click: the thorn of the giants: whoever strikes you is pricked for 3 minutes"),
+    "item.mythsofworlds.rune_thurisaz.spoken": ("Шип великанов хранит вас", "The thorn of the giants guards you"),
+    "item.mythsofworlds.rune_ansuz": ("Руна Ансуз", "Ansuz Rune"),
+    "item.mythsofworlds.rune_ansuz.desc": ("ПКМ: руна Одина: ночное зрение, существа в 32 блоках видны на 3 минуты", "Right-click: Odin's rune: Night Vision, creatures within 32 blocks are shown for 3 minutes"),
+    "item.mythsofworlds.rune_ansuz.spoken": ("Одноглазый смотрит вашими глазами", "The One-Eyed looks through your eyes"),
+    "item.mythsofworlds.rune_raidho": ("Руна Райдо", "Raidho Rune"),
+    "item.mythsofworlds.rune_raidho.desc": ("ПКМ: путь: скорость и прыжок на 3 минуты", "Right-click: the journey: Speed and Jump Boost for 3 minutes"),
+    "item.mythsofworlds.rune_raidho.spoken": ("Дорога ложится под ноги", "The road runs under your feet"),
+    "item.mythsofworlds.rune_algiz": ("Руна Альгиз", "Algiz Rune"),
+    "item.mythsofworlds.rune_algiz.desc": ("ПКМ: защита: сопротивление и поглощение на 3 минуты", "Right-click: protection: Resistance and Absorption for 3 minutes"),
+    "item.mythsofworlds.rune_algiz.spoken": ("Альгиз укрывает вас", "Algiz shelters you"),
+    "effect.mythsofworlds.thurisaz": ("Турисаз", "Thurisaz"),
+    "item.mythsofworlds.draupnir": ("Драупнир", "Draupnir"),
+    "item.mythsofworlds.draupnir.desc": ("Кольцо Одина: каждый день с него капают 8 золотых самородков",
+                                        "Odin's ring: every day 8 gold nuggets drip from it"),
+    "item.mythsofworlds.draupnir.drip": ("С Драупнира капает золото", "Gold drips from Draupnir"),
+    "item.mythsofworlds.gungnir": ("Гунгнир", "Gungnir"),
+    "item.mythsofworlds.gungnir.desc": ("Копьё Одина не знает промаха: ПКМ поражает существо, на которое вы смотрите (48 блоков)",
+                                       "Odin's spear never misses: right-click strikes the creature you look at (48 blocks)"),
+    "item.mythsofworlds.gungnir.no_mark": ("Гунгниру некуда лететь", "Gungnir has no mark"),
+    "entity.mythsofworlds.valkyrie.rescue": ("%s выносит вас из битвы!", "%s carries you out of the battle!"),
     "entity.mythsofworlds.draugr_chieftain": ("Курганный король", "Barrow-King"),
     "entity.mythsofworlds.garm": ("Гарм", "Garm"),
     "entity.mythsofworlds.thrym": ("Трюм, король ётунов", "Thrym, King of the Jotnar"),

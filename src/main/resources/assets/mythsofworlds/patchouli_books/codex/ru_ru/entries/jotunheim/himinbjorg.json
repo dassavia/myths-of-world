@@ -2,7 +2,7 @@
   "name": "Химинбьёрг",
   "icon": "mythsofworlds:rune_igniter",
   "category": "mythsofworlds:jotunheim_place",
-  "sortnum": 32,
+  "sortnum": 34,
   "pages": [
     {
       "type": "patchouli:text",

@@ -1,5 +1,6 @@
 package com.mythsofworlds.mythology.norse;
 
+import com.mythsofworlds.mythology.norse.item.RuneItem;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -45,7 +46,8 @@ public final class NorseTrades {
             sell(Items.ROTTEN_FLESH, 24, 1),
             buy(3, () -> new ItemStack(NorseContent.MEAD.get(), 2), 12));
 
-    /** Kind 1, the dwarf smith, a kinsman of Brokkr and Sindri: forges trophies into weapons, and makes Gleipnir. */
+    /** Kind 1, the dwarf smith, a kinsman of Brokkr and Sindri: forges trophies into weapons, makes Gleipnir, and for
+     *  the fangs of the great wolves the treasures of Odin, Draupnir and Gungnir. */
     public static final List<Trade> DWARF_SMITH = List.of(
             swap(NorseContent.FENRIR_FANG.get(), 16, () -> new ItemStack(Items.DIAMOND_SWORD)),
             swap(NorseContent.TROLL_TUSK.get(), 8, () -> new ItemStack(Items.DIAMOND_PICKAXE)),
@@ -53,6 +55,8 @@ public final class NorseTrades {
             swap(NorseContent.MUSPEL_EMBER.get(), 6, () -> new ItemStack(Items.DIAMOND_CHESTPLATE)),
             swap(NorseContent.BARROW_CROWN.get(), 12, () -> new ItemStack(Items.NETHERITE_SCRAP, 2)),
             buy(24, () -> new ItemStack(NorseContent.GLEIPNIR.get()), 1),
+            swap(NorseContent.GARM_FANG.get(), 32, () -> new ItemStack(NorseContent.DRAUPNIR.get())),
+            swap(NorseContent.FENRIR_FANG.get(), 48, () -> new ItemStack(NorseContent.GUNGNIR.get())),
             buy(5, () -> new ItemStack(Items.IRON_AXE), 6),
             buy(6, () -> new ItemStack(Items.SHIELD), 6),
             buy(2, () -> new ItemStack(NorseContent.RUNESTONE_ITEM.get(), 8), 16));
@@ -62,6 +66,8 @@ public final class NorseTrades {
             buy(8, () -> new ItemStack(NorseContent.IDUNN_APPLE.get()), 6),
             buy(10, () -> new ItemStack(NorseContent.RUNE_IGNITER.get()), 3),
             buy(3, () -> new ItemStack(NorseContent.CARVED_RUNESTONE_ITEM.get(), 4), 16),
+            buy(4, () -> new ItemStack(NorseContent.RUNES.get(RuneItem.Rune.ANSUZ).get(), 2), 8),
+            buy(4, () -> new ItemStack(NorseContent.RUNES.get(RuneItem.Rune.ALGIZ).get(), 2), 8),
             buy(4, () -> PotionContents.createItemStack(Items.POTION, Potions.FIRE_RESISTANCE), 8),
             buy(4, () -> PotionContents.createItemStack(Items.POTION, Potions.STRONG_HEALING), 8),
             buy(5, () -> PotionContents.createItemStack(Items.POTION, Potions.NIGHT_VISION), 8),

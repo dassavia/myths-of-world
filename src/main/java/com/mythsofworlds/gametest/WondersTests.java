@@ -2,7 +2,15 @@ package com.mythsofworlds.gametest;
 
 import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.core.Prophecy;
+import com.mythsofworlds.core.family.WarriorMaiden;
 import com.mythsofworlds.mythology.greek.GreekContent;
+import com.mythsofworlds.mythology.norse.NorseContent;
+import com.mythsofworlds.mythology.norse.NorseEntities;
+import com.mythsofworlds.mythology.norse.ValkyrieRescue;
+import com.mythsofworlds.mythology.norse.entity.Valkyrie;
+import com.mythsofworlds.mythology.norse.item.DraupnirItem;
+import com.mythsofworlds.mythology.norse.item.GungnirItem;
+import com.mythsofworlds.mythology.norse.item.RuneItem;
 import com.mythsofworlds.mythology.greek.Offerings;
 import com.mythsofworlds.mythology.greek.item.AriadneThreadItem;
 import com.mythsofworlds.mythology.greek.item.DelphicLaurelItem;
@@ -129,5 +137,76 @@ public class WondersTests {
             koschei.discard();
             helper.succeed();
         });
+    }
+
+    // ---------------------------------------------------------------- Jotunheim
+
+    /** Each rune gives its power; Thurisaz pricks whoever strikes its bearer. */
+    @GameTest(template = "empty")
+    public static void runesGiveTheirPower(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        RuneItem.speak(level, player, RuneItem.Rune.FEHU);
+        RuneItem.speak(level, player, RuneItem.Rune.ALGIZ);
+        helper.assertTrue(player.hasEffect(MobEffects.LUCK) && player.hasEffect(MobEffects.DAMAGE_RESISTANCE), "Fehu and Algiz");
+        Zombie bearer = helper.spawn(EntityType.ZOMBIE, new BlockPos(1, 2, 1));
+        Zombie attacker = helper.spawn(EntityType.ZOMBIE, new BlockPos(2, 2, 1));
+        bearer.addEffect(new net.minecraft.world.effect.MobEffectInstance(NorseContent.THURISAZ, 200, 0));
+        bearer.hurt(level.damageSources().mobAttack(attacker), 2.0F);
+        helper.assertTrue(attacker.getHealth() < attacker.getMaxHealth(), "Thurisaz pricks the attacker");
+        bearer.discard();
+        attacker.discard();
+        helper.succeed();
+    }
+
+    /** Draupnir starts counting when it comes to you, and drips eight nuggets a day. */
+    @GameTest(template = "empty")
+    public static void draupnirDripsGold(GameTestHelper helper) {
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        ItemStack ring = new ItemStack(NorseContent.DRAUPNIR.get());
+        helper.assertTrue(DraupnirItem.drip(helper.getLevel(), player, ring) == 0, "nothing drips at once");
+        StackData.putLong(ring, DraupnirItem.LAST_DRIP, helper.getLevel().getGameTime() - DraupnirItem.PERIOD);
+        helper.assertTrue(DraupnirItem.drip(helper.getLevel(), player, ring) == DraupnirItem.DRIP, "a day later it drips");
+        helper.assertTrue(player.getInventory().countItem(Items.GOLD_NUGGET) == DraupnirItem.DRIP, "eight nuggets in the bag");
+        helper.assertTrue(DraupnirItem.drip(helper.getLevel(), player, ring) == 0, "and not again the same day");
+        helper.succeed();
+    }
+
+    /** Gungnir finds the creature the thrower looks at, not the one beside, and strikes it. */
+    @GameTest(template = "empty")
+    public static void gungnirNeverMisses(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        ServerPlayer player = TestPlayers.serverPlayer(helper, "odin");
+        // The empty template is 5 x 6 x 3: the thrower stands at one end, the mark at the other, a decoy to the side.
+        Vec3 eye = helper.absoluteVec(new Vec3(2.5, 2, 0.5));
+        player.moveTo(eye.x, eye.y, eye.z, 0.0F, 0.0F);
+        Zombie ahead = helper.spawn(EntityType.ZOMBIE, new BlockPos(2, 2, 2));
+        Zombie aside = helper.spawn(EntityType.ZOMBIE, new BlockPos(4, 2, 0));
+        player.setYRot(0.0F);
+        player.setXRot(0.0F);
+        var mark = GungnirItem.findMark(level, player);
+        helper.assertTrue(mark == ahead, "the mark is the zombie straight ahead, got " + mark);
+        GungnirItem.strike(level, player, ahead);
+        helper.assertTrue(ahead.getHealth() < ahead.getMaxHealth() && aside.getHealth() == aside.getMaxHealth(), "only the mark is hit");
+        ahead.discard();
+        aside.discard();
+        helper.succeed();
+    }
+
+    /** A valkyrie wife carries her husband out of a deadly fight, once a day. */
+    @GameTest(template = "empty")
+    public static void valkyrieCarriesHerHusband(GameTestHelper helper) {
+        ServerPlayer player = TestPlayers.serverPlayer(helper, "sigurd");
+        player.moveTo(helper.absoluteVec(new Vec3(1.5, 2, 1.5)));
+        Valkyrie valkyrie = helper.spawn(NorseEntities.VALKYRIE.get(), new BlockPos(3, 2, 3));
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(GreekContent.WEDDING_RING.get()));
+        valkyrie.setAffection(player, WarriorMaiden.LOVE);
+        valkyrie.mobInteract(player, InteractionHand.MAIN_HAND);
+        helper.assertTrue(valkyrie.bond() == WarriorMaiden.Bond.WIFE, "she should be his wife");
+        player.setHealth(0.5F);
+        helper.assertTrue(ValkyrieRescue.rescue(player, valkyrie) && player.getHealth() == 6.0F, "she carries him out");
+        helper.assertTrue(!ValkyrieRescue.rescue(player, valkyrie), "not twice the same day");
+        valkyrie.discard();
+        helper.succeed();
     }
 }
