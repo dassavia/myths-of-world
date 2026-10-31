@@ -1,8 +1,9 @@
 package com.mythsofworlds.core;
 
 import com.mythsofworlds.MythsOfWorlds;
-import com.mythsofworlds.core.entity.MythBoss;
+import com.mythsofworlds.core.entity.BalancedBoss;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -12,7 +13,7 @@ import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 /**
- * Applies the boss settings of the server config: {@code bossHealth} as a saved modifier of the boss's maximum health
+ * Applies the boss settings of the server config to every {@link BalancedBoss}: {@code bossHealth} as a saved modifier of the boss's maximum health
  * (updated when the setting changes, keeping the share of health the boss has left), {@code bossDamage} to every hit
  * whose source is a boss, its fireballs and arrows included.
  */
@@ -25,13 +26,13 @@ public final class BossBalance {
 
     @SubscribeEvent
     public static void onJoin(EntityJoinLevelEvent event) {
-        if (!event.getLevel().isClientSide && event.getEntity() instanceof MythBoss boss) {
+        if (!event.getLevel().isClientSide && event.getEntity() instanceof BalancedBoss && event.getEntity() instanceof LivingEntity boss) {
             scaleHealth(boss, ServerConfig.get(ServerConfig.BOSS_HEALTH));
         }
     }
 
     /** Sets the boss's maximum health to {@code multiplier} times its own, keeping how wounded it is. */
-    public static void scaleHealth(MythBoss boss, double multiplier) {
+    public static void scaleHealth(LivingEntity boss, double multiplier) {
         AttributeInstance health = boss.getAttribute(Attributes.MAX_HEALTH);
         if (health == null) {
             return;
@@ -51,7 +52,7 @@ public final class BossBalance {
 
     @SubscribeEvent
     public static void onDamage(LivingIncomingDamageEvent event) {
-        if (event.getSource().getEntity() instanceof MythBoss) {
+        if (event.getSource().getEntity() instanceof BalancedBoss) {
             double multiplier = ServerConfig.get(ServerConfig.BOSS_DAMAGE);
             if (multiplier != 1.0) {
                 event.setAmount((float) (event.getAmount() * multiplier));

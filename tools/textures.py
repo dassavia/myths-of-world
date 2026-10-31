@@ -489,93 +489,6 @@ def shade(rng):
     return img
 
 
-def cyclops(rng):
-    img, parts = humanoid(rng, 0xB08A63, 0x6B4A2B, 0xB08A63, hair=0x4E3B2A, sleeves=0)
-    face(img, parts["head"], iris=0x3B5E2B, eye_row=4, single_eye=True, mouth=0x5A3A2A, brow=0x3A2A1C)
-    # Bare chest with a sheepskin over one shoulder and a loincloth.
-    for rect in side_faces(parts["body"]):
-        x, y, w, h = rect
-        fill_rect(img, x, y, w, h, rgb(0xB08A63), rng, 8)
-        fill_rect(img, x, y + 7, w, 5, rgb(0x6B4A2B), rng, 10)
-        for j in range(7):
-            k = j if rect == parts["body"]["front"] else -1
-            if 0 <= k < w:
-                img.putpixel((x + k, y + j), rgb(0xE8E2D4))
-                if k + 1 < w:
-                    img.putpixel((x + k + 1, y + j), rgb(0xD8D0C0))
-    x, y, w, h = parts["body"]["front"]
-    for px, py in ((2, 3), (5, 3), (3, 5), (4, 5)):
-        img.putpixel((x + px, y + py), scale(img.getpixel((x + px, y + py)), 0.85))
-    # A thick beard.
-    hx, hy, hw, hh = parts["head"]["front"]
-    fill_rect(img, hx + 1, hy + 6, 6, 2, rgb(0x4E3B2A), rng, 10)
-    band(img, parts["leg"], 10, 2, rgb(0x5A3A22), rng, 4)
-    shade_parts(img, parts)
-    return img
-
-
-def medusa(rng):
-    img, parts = humanoid(rng, 0x9DB884, 0xD4B85A, 0xC2A64A, hair=0x3F6B2E, sandals=0x8A6A2A)
-    face(img, parts["head"], iris=0xE8D44D, eye_row=4, mouth=0x5A2A3A, brow=0x2F5A22)
-    # Scales on her skin, a golden chiton with a meander border.
-    for rect in side_faces(parts["arm"]) + [parts["head"]["right"], parts["head"]["left"]]:
-        x, y, w, h = rect
-        for j in range(4 if rect in side_faces(parts["arm"]) else 5, h, 2):
-            for i in range(j % 2, w, 2):
-                img.putpixel((x + i, y + j), rgb(0x7C9A66))
-    for rect in side_faces(parts["body"]) + side_faces(parts["leg"]):
-        x, y, w, h = rect
-        if rect in side_faces(parts["leg"]):
-            for i in range(w):
-                img.putpixel((x + i, y + 7), rgb(0x7A5A1A))
-                img.putpixel((x + i, y + 8 + (i % 2)), rgb(0x7A5A1A))
-    band(img, parts["body"], 6, 1, rgb(0x7A5A1A), rng, 4)
-    # Snakes on the hat layer, with yellow eyes.
-    for name, (x, y, w, h) in box_faces(32, 0, 8, 8, 8).items():
-        for i in range(w):
-            for j in range(h):
-                if name == "front" and j >= 2:
-                    continue
-                if name == "bottom":
-                    continue
-                if (i + j * 2) % 3 != 2 or name == "top":
-                    img.putpixel((x + i, y + j), scale(jitter(rgb(0x4F7A3A), rng, 18), 1.0 - 0.25 * ((i + j) % 2)))
-        if name in ("right", "left", "back", "front"):
-            for i in range(1, w, 3):
-                img.putpixel((x + i, y + (0 if name == "front" else rng.randrange(h))), rgb(0xE8D44D))
-    shade_parts(img, parts)
-    return img
-
-
-def minotaur(rng):
-    img, parts = humanoid(rng, 0x4A2E1E, 0x5C3A26, 0x3B2416, arms=0x5C3A26, sandals=0x1A100A)
-    face(img, parts["head"], iris=0xC0392B, eye_row=3, brow=0x1A100A)
-    # Shaggy fur everywhere, a lighter muzzle and a bronze kilt with studs.
-    for part in ("head", "body", "arm", "leg"):
-        for rect in side_faces(parts[part]):
-            speckle(img, rect, rgb(0x2E1C12), rng, rect[2] * rect[3] // 5)
-    x, y, w, h = parts["head"]["front"]
-    fill_rect(img, x + 2, y + 5, 4, 3, rgb(0x7A5640), rng, 6)
-    for rect in side_faces(parts["body"]):
-        rx, ry, rw, rh = rect
-        fill_rect(img, rx, ry + 8, rw, 4, rgb(0xB07A2E), rng, 10)
-        for i in range(0, rw, 2):
-            img.putpixel((rx + i, ry + 8), rgb(0xE2B33C))
-            img.putpixel((rx + i + 1 if i + 1 < rw else rx + i, ry + 11), rgb(0x6A4416))
-    parts["horn_r"] = paint_box(img, 0, 32, 6, 2, 2, rgb(0xE8DCC0), rng, 6, shaded=False)
-    parts["horn_l"] = paint_box(img, 0, 36, 6, 2, 2, rgb(0xE8DCC0), rng, 6, shaded=False)
-    for horn in (parts["horn_r"], parts["horn_l"]):
-        for rect in side_faces(horn):
-            fill_rect(img, rect[0], rect[1], 2, rect[3], rgb(0x8A7A60), rng, 6)
-    parts["snout"] = paint_box(img, 16, 32, 5, 3, 2, rgb(0x7A5640), rng, 6, shaded=False)
-    x, y, w, h = parts["snout"]["front"]
-    img.putpixel((x + 1, y + 1), rgb(0x1A100A))
-    img.putpixel((x + 3, y + 1), rgb(0x1A100A))
-    fill_rect(img, x + 1, y + 2, 3, 1, rgb(0xE2B33C), rng, 0)  # nose ring
-    shade_parts(img, parts)
-    return img
-
-
 def spartoi(rng):
     img = Image.new("RGBA", (64, 32), (0, 0, 0, 0))
     bone = rgb(0xD8D3C4)
@@ -727,23 +640,6 @@ def beast(rng, fur, snout, eyes, mane=None, back=None, belly=None, claws=0x2A1C1
     return img
 
 
-def nemean_lion(rng):
-    return beast(rng, 0xC9962E, 0xE0B870, 0x2A1C12, mane=0x8A5A1C, back=0xA8741E, belly=0xE8CC8A)
-
-
-def cerberus(rng):
-    img = beast(rng, 0x241E1E, 0x3A2E2E, 0xFF4A1C, back=0x141010, belly=0x3A2E2E, claws=0x8A1C1C, glow=True)
-    # Glowing cracks of hellfire along the flanks.
-    for name in ("right", "left"):
-        x, y, w, h = box_faces(*BEAST_PARTS["body"])[name]
-        cx, cy = x + 2, y + rng.randrange(2, h - 2)
-        while cx < x + w - 1:
-            img.putpixel((cx, cy), rgb(0xE5501F))
-            cx += 1
-            cy = max(y + 1, min(y + h - 2, cy + rng.choice((-1, 0, 1))))
-    return img
-
-
 def hydra(rng, scales=0x2F5D3A, neck=0x3C7D46, belly=0x8BA86A, spines=0x8BC34A, eyes=0xE8D44D):
     img = Image.new("RGBA", (128, 64), (0, 0, 0, 0))
     parts = {
@@ -881,15 +777,9 @@ ENTITIES = {
     "satyr": satyr,
     "harpy": harpy,
     "shade": shade,
-    "cyclops": cyclops,
-    "medusa": medusa,
-    "minotaur": minotaur,
     "spartoi": spartoi,
     "pegasus": pegasus,
     "golden_hind": golden_hind,
-    "nemean_lion": nemean_lion,
-    "cerberus": cerberus,
-    "hydra": hydra,
     "hydra_hatchling": hydra_hatchling,
     # 0 trophy dealer, 1 smith of Hephaestus, 2 priestess (see GreekMerchant).
     "greek_merchant_0": lambda rng: greek_merchant(rng, 0x2E5FA8, 0xE2B33C, hat=0x8A6A3A),

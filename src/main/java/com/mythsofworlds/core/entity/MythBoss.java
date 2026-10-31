@@ -45,7 +45,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
  * The bosses drawn with GeckoLib (MythGeoRenderer) play the animations of their model: idle and walk, "attack" on
  * every blow and "special" when they use their power ({@link #playSpecial()}).
  */
-public abstract class MythBoss extends Monster implements GeoEntity {
+public abstract class MythBoss extends Monster implements GeoEntity, BalancedBoss {
     private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
     private static final RawAnimation WALK = RawAnimation.begin().thenLoop("walk");
     private static final RawAnimation ATTACK = RawAnimation.begin().thenPlay("attack");

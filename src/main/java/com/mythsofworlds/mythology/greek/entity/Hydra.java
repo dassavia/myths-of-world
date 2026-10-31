@@ -112,6 +112,7 @@ public class Hydra extends MythBoss {
         potion.shoot(dx, dy + horizontal * 0.2, dz, 0.9F, 6.0F);
         level().addFreshEntity(potion);
         playSound(GreekSounds.HYDRA_SPIT.get(), 1.5F, 1.0F);
+        playSpecial();
     }
 
     /** Its own venom does not harm it. */

@@ -263,41 +263,13 @@ def firebird(rng):
     return img
 
 
-def solovei(rng):
-    """The robber: a black beard, a brown caftan with a red sash, a fur hat."""
-    img = giant(rng, 0xC8956B, 0x6B4A2B, 0x2A2A2A, 0x1A1414, 0x3A2A1A, 0xC0262E)
-    hat = box_faces(32, 0, 8, 8, 8)
-    fill_rect(img, *hat["top"], rgb(0x8A1E2A), rng, 8)
-    for name in ("front", "back", "right", "left"):
-        x, y, w, h = hat[name]
-        fill_rect(img, x, y, w, 3, rgb(0x4A3A2A), rng, 14)
-    return img
-
-
-def koschei(rng):
-    """The deathless king: bony grey skin drawn over the skull, soul-blue eyes, a black and purple robe, a crown."""
-    img = giant(rng, 0xC8C0B0, 0x1E1A24, 0x14101A, 0x9A9A9A, 0x5AE8E8, 0x6A3A8A, crown=0xE2B33C)
-    body = box_faces(16, 16, 8, 12, 4)
-    x, y, w, h = body["front"]
-    for j in range(2, 8, 2):                                   # ribs showing through the open robe
-        for i in range(2, 6):
-            img.putpixel((x + i, y + j), rgb(0xD8D0C0))
-    x, y, w, h = box_faces(0, 0, 8, 8, 8)["front"]
-    img.putpixel((x + 3, y + 5), rgb(0x2A2420))
-    img.putpixel((x + 4, y + 5), rgb(0x2A2420))                # the sunken nose
-    return img
-
-
 ENTITIES = {
     "leshy": leshy,
     "kikimora": kikimora,
     "upyr": upyr,
     "rusalka": rusalka,
     "firebird": firebird,
-    "solovei": solovei,
-    "koschei": koschei,
     "volkolak": lambda rng: beast(rng, 0x5A4A3E, 0x7A6A5A, 0xE8C23A, back=0x3A2E26, belly=0xA89A86, claws=0xD8D0C0),
-    "zmey_gorynych": lambda rng: hydra(rng, scales=0x2E5A2A, neck=0x3E7A36, belly=0xC8A060, spines=0xE5501F, eyes=0xFFD040),
     # 0 the merchant in a red caftan, 1 Baba Yaga in a headscarf, 2 the smith in a leather apron (see SlavicMerchant).
     "slavic_merchant_0": lambda rng: norse_merchant(rng, 0xA8282E, 0xE2B33C, skin=0xE2B490, hair=0x6B4A2B),
     "slavic_merchant_1": lambda rng: norse_merchant(rng, 0x4A3A2A, 0x8A2A2A, skin=0xC8A88A, hair=0xD8D0C0, beard=False,

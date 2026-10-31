@@ -5,6 +5,7 @@ import com.mythsofworlds.codex.CodexContent;
 import com.mythsofworlds.codex.Progress;
 import com.mythsofworlds.core.entity.MythBoss;
 import com.mythsofworlds.mythology.greek.GreekContent;
+import com.mythsofworlds.mythology.greek.GreekEntities;
 import com.mythsofworlds.mythology.norse.NorseContent;
 import com.mythsofworlds.mythology.norse.NorseEntities;
 import com.mythsofworlds.mythology.relic.MythAttributes;
@@ -86,7 +87,8 @@ public final class JoinTest {
 
     /** The bosses drawn with GeckoLib, shown to the client one after another after the suits. */
     public static List<Supplier<? extends EntityType<? extends MythBoss>>> gallery() {
-        return List.of(SlavicEntities.KOSCHEI, SlavicEntities.SOLOVEI, SlavicEntities.ZMEY_GORYNYCH, NorseEntities.HEIMDALL,
+        return List.of(GreekEntities.MINOTAUR, GreekEntities.HYDRA, GreekEntities.CERBERUS, GreekEntities.MEDUSA,
+                GreekEntities.CYCLOPS, GreekEntities.NEMEAN_LION, SlavicEntities.KOSCHEI, SlavicEntities.SOLOVEI, SlavicEntities.ZMEY_GORYNYCH, NorseEntities.HEIMDALL,
                 NorseEntities.DRAUGR_CHIEFTAIN, NorseEntities.THRYM, NorseEntities.SURTR, NorseEntities.FENRIR, NorseEntities.GARM);
     }
 

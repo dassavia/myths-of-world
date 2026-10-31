@@ -340,20 +340,11 @@ ENTITIES = {
     **{f"valkyrie_{i}": (lambda spec: lambda rng: amazon(rng, outfit="valkyrie", **spec))(spec)
        for i, spec in enumerate(VALKYRIES)},
     "draugr": draugr,
-    "draugr_chieftain": lambda rng: draugr(rng, chief=True),
     "troll": troll,
     "frost_giant": lambda rng: giant(rng, 0xB8D4E8, 0x5A7A9A, 0x3A5A7A, 0xF0F4FF, 0x2E7AC8, 0xD8F0FF),
     "fire_giant": lambda rng: giant(rng, 0x6A3A2A, 0x2A1A14, 0x3A2A1E, 0xE5501F, 0xFFD040, 0x8A3A1E, glow=0xE5501F),
-    "thrym": lambda rng: giant(rng, 0xA8C8E0, 0x2E4A6E, 0x24384E, 0xE8F0FF, 0x5AB8E8, 0xC0C8D0, crown=0x8EC8E8),
-    "surtr": lambda rng: giant(rng, 0x2A1A14, 0x1A100C, 0x2A1A14, 0xFF7A1C, 0xFFF0A0, 0xE5501F, crown=0xFFD040,
-                               glow=0xFF7A1C),
     # Heimdall: fair-haired, in white and gold, a golden helmet; his eyes are gold too.
-    "heimdall": lambda rng: giant(rng, 0xF0D0B4, 0xE8E4D8, 0xC9963E, 0xE8D8A0, 0xE8B830, 0xE2B33C, crown=0xFFD34E),
     "warg": lambda rng: beast(rng, 0x4A4A4E, 0x6A6A6E, 0xE8C23A, back=0x2E2E32, belly=0x8A8A8E),
-    "fenrir": lambda rng: beast(rng, 0x2E2A2A, 0x4A4444, 0xFF4A1C, back=0x1A1616, belly=0x5A5050, claws=0xD8D0C0,
-                                glow=True),
-    "garm": lambda rng: beast(rng, 0x3A3030, 0x5A4A4A, 0xC0262E, mane=0x8A1C1C, back=0x241C1C, belly=0x4A3A3A,
-                              claws=0x8A1C1C, glow=True),
     "raven": raven,
     # 0 steward of the mead hall, 1 dwarven smith, 2 volva (see NorseMerchant).
     "norse_merchant_0": lambda rng: norse_merchant(rng, 0x2E5A3A, 0xC9962E),

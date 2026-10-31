@@ -1,5 +1,5 @@
 """
-Builds the GeckoLib models of the bosses of Nav and Jotunheim: geometry, animations and textures.
+Builds the GeckoLib models of the bosses of Hellas, Nav and Jotunheim: geometry, animations and textures.
 
     python3 tools/gen_geo_models.py
 
@@ -74,6 +74,23 @@ MATERIALS = {
     "mouth": ((96, 20, 24), 6, "plain", False),
     "teeth": ((240, 236, 220), 4, "plain", False),
     "chain": ((92, 94, 100), 10, "chain", False),
+    # Hellas
+    "bull_fur": ((92, 58, 36), 14, "strands", False),
+    "bull_skin": ((150, 96, 66), 8, "plain", False),
+    "hoof": ((40, 34, 30), 6, "plain", False),
+    "bronze": ((196, 130, 64), 10, "metal", False),
+    "hydra_scale": ((40, 98, 90), 12, "scales", False),
+    "hydra_belly": ((170, 176, 110), 8, "bands", False),
+    "snake": ((86, 140, 60), 12, "scales", False),
+    "medusa_skin": ((176, 196, 150), 8, "plain", False),
+    "chiton": ((214, 206, 180), 6, "folds", False),
+    "chiton_trim": ((140, 40, 40), 6, "plain", False),
+    "cyclops_skin": ((196, 150, 112), 8, "plain", False),
+    "fleece": ((232, 226, 210), 12, "strands", False),
+    "lion_fur": ((206, 154, 70), 12, "strands", False),
+    "lion_mane": ((140, 90, 36), 16, "strands", False),
+    "eye_gold": ((255, 210, 60), 0, "plain", True),
+    "eye_green": ((120, 255, 120), 0, "plain", True),
 }
 
 FACE_LIGHT = {"up": 1.12, "north": 1.0, "south": 0.86, "east": 0.94, "west": 0.94, "down": 0.72}
@@ -256,6 +273,28 @@ def face(eye, mouth=None, beard=None, glows=False):
             if abs(x - (x0 + w / 2)) > w * 0.06:
                 img.putpixel((x, by), shade(MATERIALS["leather"][0], 0.6) + (255,))
         draw_eyes(img, glow, x0, y0, w, h)
+    return draw
+
+
+def one_eye(colour):
+    """The Cyclops: a single great eye in the middle of the brow, a heavy brow above it and a grim mouth."""
+    def draw(img, glow, x0, y0, w, h):
+        ew, eh = max(4, round(w * 0.3)), max(4, round(h * 0.24))
+        ex, ey = x0 + w // 2 - ew // 2, y0 + round(h * 0.3)
+        for y in range(ey, ey + eh):
+            for x in range(ex, ex + ew):
+                edge = x in (ex, ex + ew - 1) or y in (ey, ey + eh - 1)
+                img.putpixel((x, y), (240, 236, 226, 255) if edge else (250, 248, 240, 255))
+        pw = max(2, ew // 3)
+        for y in range(ey + eh // 2 - pw // 2, ey + eh // 2 - pw // 2 + pw):
+            for x in range(ex + ew // 2 - pw // 2, ex + ew // 2 - pw // 2 + pw):
+                img.putpixel((x, y), colour + (255,))
+                glow.putpixel((x, y), colour + (255,))
+        for x in range(ex - 2, ex + ew + 2):
+            img.putpixel((x, ey - 2), (70, 44, 30, 255))
+        my = y0 + round(h * 0.75)
+        for x in range(x0 + round(w * 0.3), x0 + round(w * 0.7)):
+            img.putpixel((x, my), (90, 40, 30, 255))
     return draw
 
 
@@ -443,8 +482,14 @@ def humanoid_anims(m, stride=28.0, arm_swing=22.0, heavy=1.0, attack="arm_right"
                          .rot("torso", lambda t: (pulse(t, 0.3 * att_t, 0.6 * att_t, att_t, 12), pulse(t, 0, 0.35 * att_t, att_t, -18), 0)))
 
 
-def quadruped(m, body, leg, neck_y, head, materials, tail_len=10):
-    """A four-legged beast: body (w, h, d, height of its underside), legs (w, len), head (w, h, d)."""
+HEAD_SUFFIXES = {1: [""], 3: ["_left", "", "_right"]}
+
+
+def quadruped(m, body, leg, neck_y, head, materials, tail_len=10, heads=1):
+    """A four-legged beast: body (w, h, d, height of its underside), legs (w, len), head (w, h, d).
+
+    heads 3 gives Cerberus: necks neck_left, neck and neck_right spread apart, each with its head and jaw.
+    """
     bw, bh, bd, belly = body
     lw, ll = leg
     hw, hh, hd = head
@@ -459,48 +504,55 @@ def quadruped(m, body, leg, neck_y, head, materials, tail_len=10):
         m.centred(name, px, 0, pz - 0.6, lw + 0.6, 1.6, lw + 1.6, materials["paws"])
     m.bone("tail", "body", (0, belly + bh - 2, bd / 2))
     m.box("tail", (-1.5, belly + bh - 4, bd / 2), (3, 3, tail_len), materials["tail"], rotation=(-30, 0, 0), pivot=(0, belly + bh - 2, bd / 2))
-    m.bone("neck", "body", (0, neck_y, -bd / 2))
-    m.centred("neck", 0, neck_y - 3, -bd / 2 - 3, hw * 0.75, hh * 0.85, 6, materials["mane"])
-    m.bone("head", "neck", (0, neck_y + 1, -bd / 2 - 5))
-    hz = -bd / 2 - 5 - hd / 2
-    m.centred("head", 0, neck_y - 1, hz, hw, hh, hd, materials["head"], decal=materials["face"])
-    m.centred("head", 0, neck_y - 1, hz - hd / 2 - 3, hw * 0.55, hh * 0.35, 6, materials["head"])
-    m.centred("head", 0, neck_y - 1 + hh * 0.35 - 0.6, hz - hd / 2 - 3, hw * 0.45, 1.0, 5.6, "teeth")
-    for sx in (1, -1):
-        m.box("head", (sx * hw * 0.32 - 1.5, neck_y - 1 + hh, hz + hd * 0.2), (3, 4, 2), materials["head"],
-              rotation=(-15, 0, sx * 10), pivot=(sx * hw * 0.32, neck_y - 1 + hh, hz))
-    m.bone("jaw", "head", (0, neck_y - 1, hz - hd / 2))
-    m.centred("jaw", 0, neck_y - 1 - hh * 0.3, hz - hd / 2 - 2.5, hw * 0.5, hh * 0.3, 5, "mouth")
+    for i, suffix in enumerate(HEAD_SUFFIXES[heads]):
+        ox = 0 if heads == 1 else (1 - i) * (hw + 0.5)
+        neck, head_bone, jaw = "neck" + suffix, "head" + suffix, "jaw" + suffix
+        m.bone(neck, "body", (ox, neck_y, -bd / 2))
+        m.centred(neck, ox, neck_y - 3, -bd / 2 - 3, hw * 0.75, hh * 0.85, 6, materials["mane"])
+        m.bone(head_bone, neck, (ox, neck_y + 1, -bd / 2 - 5))
+        hz = -bd / 2 - 5 - hd / 2
+        m.centred(head_bone, ox, neck_y - 1, hz, hw, hh, hd, materials["head"], decal=materials["face"])
+        m.centred(head_bone, ox, neck_y - 1, hz - hd / 2 - 3, hw * 0.55, hh * 0.35, 6, materials["head"])
+        m.centred(head_bone, ox, neck_y - 1 + hh * 0.35 - 0.6, hz - hd / 2 - 3, hw * 0.45, 1.0, 5.6, "teeth")
+        for sx in (1, -1):
+            m.box(head_bone, (ox + sx * hw * 0.32 - 1.5, neck_y - 1 + hh, hz + hd * 0.2), (3, 4, 2), materials["head"],
+                  rotation=(-15, 0, sx * 10), pivot=(ox + sx * hw * 0.32, neck_y - 1 + hh, hz))
+        m.bone(jaw, head_bone, (ox, neck_y - 1, hz - hd / 2))
+        m.centred(jaw, ox, neck_y - 1 - hh * 0.3, hz - hd / 2 - 2.5, hw * 0.5, hh * 0.3, 5, "mouth")
 
 
-def quadruped_anims(m, stride=30.0, heavy=1.0):
+def quadruped_anims(m, stride=30.0, heavy=1.0, heads=1):
+    """Walk, idle, a bite and a howl (or a roar, or breathing fire): every head does it, a little apart."""
+    suffixes = HEAD_SUFFIXES[heads]
     walk_t = 0.9 * heavy
-    m.anims["walk"] = (Anim(walk_t, True)
-                       .rot("leg_front_left", lambda t: (wave(t, walk_t, stride), 0, 0))
-                       .rot("leg_back_right", lambda t: (wave(t, walk_t, stride), 0, 0))
-                       .rot("leg_front_right", lambda t: (wave(t, walk_t, -stride), 0, 0))
-                       .rot("leg_back_left", lambda t: (wave(t, walk_t, -stride), 0, 0))
-                       .pos("body", lambda t: (0, abs(wave(t, walk_t, 0.8)), 0))
-                       .rot("tail", lambda t: (wave(t, walk_t, 8), wave(t, walk_t, 14), 0))
-                       .rot("neck", lambda t: (wave(t, walk_t, 4, 0.25), 0, 0)))
+    w = (Anim(walk_t, True)
+         .rot("leg_front_left", lambda t: (wave(t, walk_t, stride), 0, 0))
+         .rot("leg_back_right", lambda t: (wave(t, walk_t, stride), 0, 0))
+         .rot("leg_front_right", lambda t: (wave(t, walk_t, -stride), 0, 0))
+         .rot("leg_back_left", lambda t: (wave(t, walk_t, -stride), 0, 0))
+         .pos("body", lambda t: (0, abs(wave(t, walk_t, 0.8)), 0))
+         .rot("tail", lambda t: (wave(t, walk_t, 8), wave(t, walk_t, 14), 0)))
     idle_t = 2.6
-    m.anims["idle"] = (Anim(idle_t, True)
-                       .pos("body", lambda t: (0, wave(t, idle_t, 0.3), 0))
-                       .rot("tail", lambda t: (0, wave(t, idle_t, 18), 0))
-                       .rot("neck", lambda t: (wave(t, idle_t, 3), wave(t, idle_t * 2, 8), 0))
-                       .rot("jaw", lambda t: (pulse(t % idle_t, 1.6, 1.9, 2.3, 12), 0, 0)))
+    i_ = (Anim(idle_t, True)
+          .pos("body", lambda t: (0, wave(t, idle_t, 0.3), 0))
+          .rot("tail", lambda t: (0, wave(t, idle_t, 18), 0)))
     att_t = 0.6
-    m.anims["attack"] = (Anim(att_t, False)
-                         .rot("neck", lambda t: (-pulse(t, 0, 0.2, 0.35, 15) + pulse(t, 0.2, 0.35, att_t, 25), 0, 0))
-                         .rot("jaw", lambda t: (pulse(t, 0.05, 0.25, 0.45, 40), 0, 0))
-                         .pos("body", lambda t: (0, 0, -pulse(t, 0.15, 0.32, att_t, 3))))
+    a = Anim(att_t, False).pos("body", lambda t: (0, 0, -pulse(t, 0.15, 0.32, att_t, 3)))
     howl_t = 1.6
-    m.anims["special"] = (Anim(howl_t, False)
-                          .rot("neck", lambda t: (-pulse(t, 0, 0.4, howl_t, 55), 0, 0))
-                          .rot("head", lambda t: (-pulse(t, 0, 0.4, howl_t, 15), 0, 0))
-                          .rot("jaw", lambda t: (pulse(t, 0.2, 0.5, howl_t, 35), 0, 0))
-                          .rot("leg_front_left", lambda t: (-pulse(t, 0, 0.4, howl_t, 10), 0, 0))
-                          .rot("leg_front_right", lambda t: (-pulse(t, 0, 0.4, howl_t, 10), 0, 0)))
+    h = (Anim(howl_t, False)
+         .rot("leg_front_left", lambda t: (-pulse(t, 0, 0.4, howl_t, 10), 0, 0))
+         .rot("leg_front_right", lambda t: (-pulse(t, 0, 0.4, howl_t, 10), 0, 0)))
+    for k, sfx in enumerate(suffixes):
+        lag = 0.07 * k
+        w.rot("neck" + sfx, lambda t, k=k: (wave(t, walk_t, 4, 0.25 + k / 5), 0, 0))
+        i_.rot("neck" + sfx, lambda t, k=k: (wave(t, idle_t, 3, k / 3), wave(t, idle_t * 2, 8, k / 4), 0))
+        i_.rot("jaw" + sfx, lambda t, k=k: (pulse((t + k * 0.7) % idle_t, 1.6, 1.9, 2.3, 12), 0, 0))
+        a.rot("neck" + sfx, lambda t, lag=lag: (-pulse(t, 0, 0.2, 0.35, 15) + pulse(t, 0.2 + lag, 0.35 + lag, att_t, 25), 0, 0))
+        a.rot("jaw" + sfx, lambda t, lag=lag: (pulse(t, 0.05 + lag, 0.25 + lag, 0.45 + lag, 40), 0, 0))
+        h.rot("neck" + sfx, lambda t, lag=lag: (-pulse(t, lag, 0.4 + lag, howl_t, 55), 0, 0))
+        h.rot("head" + sfx, lambda t, lag=lag: (-pulse(t, lag, 0.4 + lag, howl_t, 15), 0, 0))
+        h.rot("jaw" + sfx, lambda t, lag=lag: (pulse(t, 0.2 + lag, 0.5 + lag, howl_t, 35), 0, 0))
+    m.anims["walk"], m.anims["idle"], m.anims["attack"], m.anims["special"] = w, i_, a, h
 
 
 # ====================================================================== the bosses
@@ -584,11 +636,13 @@ def zmey():
         m.bone(side, "body", (sx * 10, 30, -4))
         m.box(side, (sx * 10 + (0 if sx > 0 else -26), 30, -6), (26, 1, 18), "membrane")
         m.box(side, (sx * 10 + (0 if sx > 0 else -26), 30.5, -7), (26, 1.5, 2), "scale_green")
-    for name, angle in (("neck_left", 28), ("neck_middle", 0), ("neck_right", -28)):
-        ox = math.sin(math.radians(angle)) * 6
-        m.bone(name, "body", (ox, 28, -14), rotation=(0, angle, 0))
-        m.centred(name, ox, 25, -18, 6, 7, 8, "scale_green")
-        m.centred(name, ox, 30, -22, 5.5, 6, 6, "scale_green")
+    # The three necks lean apart as they rise, so that the heads stand side by side.
+    for name, k in (("neck_left", 1), ("neck_middle", 0), ("neck_right", -1)):
+        base = k * 5
+        m.bone(name, "body", (base, 28, -14))
+        m.centred(name, base, 25, -18, 6, 7, 8, "scale_green")
+        m.centred(name, k * 9, 30, -22, 5.5, 6, 6, "scale_green")
+        ox = k * 12
         head = name.replace("neck", "head")
         m.bone(head, name, (ox, 35, -24))
         m.centred(head, ox, 33, -26, 7, 6, 8, "scale_green", decal=eyes((255, 170, 40), low=0.25, gap=0.26))
@@ -780,7 +834,179 @@ def garm():
     return m
 
 
-BOSSES = [koschei, solovei, zmey, heimdall, draugr_chieftain, thrym, surtr, fenrir, garm]
+# ---------------------------------------------------------------- Hellas
+
+def minotaur():
+    m = Model("minotaur")
+    sh = humanoid(m, hip=18, leg=(5, 5), torso=(14, 15, 7), arm=(5, 17), head=(9, 9, 10),
+                  materials={"legs": "bull_fur", "boots": "hoof", "torso": "bull_skin", "arms": "bull_skin", "hands": "bull_skin",
+                             "head": "bull_fur", "face": eyes((255, 40, 30), low=0.32, gap=0.28)})
+    m.centred("torso", 0, 18, 0, 14.6, 5, 7.6, "leather")            # loincloth and belt
+    m.centred("torso", 0, 29, -3.6, 10, 4, 0.4, "bull_fur")          # hair on the chest
+    m.centred("head", 0, sh + 1, -6.5, 6, 5, 4, "bull_skin")          # muzzle
+    m.centred("head", 0, sh + 2.5, -8.6, 2.5, 1, 0.6, "gold")        # nose ring
+    for sx in (1, -1):                                                # the horns, out and up
+        m.box("head", (sx * 4.5 - (0 if sx > 0 else 6), sh + 6, -2), (6, 2, 2), "horn")
+        m.box("head", (sx * 9.5 - (0 if sx > 0 else 2), sh + 6, -2), (2, 5, 2), "horn")
+    m.bone("labrys", "arm_right", (-9.5, sh - 16, 0))
+    m.box("labrys", (-10, sh - 17, -14), (1, 1, 18), "wood")
+    for z in (-15, -10):                                              # the double axe of Crete
+        m.box("labrys", (-10.5, sh - 20.5, z), (2, 8, 4), "bronze")
+    humanoid_anims(m, stride=30, arm_swing=22, heavy=1.1)
+    sp = 1.2
+    m.anims["special"] = (Anim(sp, False)                             # lowers the horns and charges
+                          .rot("torso", lambda t: (pulse(t, 0, 0.2, sp, 35), 0, 0))
+                          .rot("head", lambda t: (pulse(t, 0, 0.2, sp, 30), 0, 0))
+                          .rot("leg_left", lambda t: (wave(t, 0.4, 45), 0, 0))
+                          .rot("leg_right", lambda t: (wave(t, 0.4, -45), 0, 0))
+                          .rot("arm_left", lambda t: (pulse(t, 0, 0.2, sp, 40), 0, 0))
+                          .rot("arm_right", lambda t: (pulse(t, 0, 0.2, sp, 40), 0, 0)))
+    return m
+
+
+def hydra():
+    m = Model("hydra")
+    m.bone("root")
+    m.bone("body", "root", (0, 20, 0))
+    m.centred("body", 0, 10, 2, 22, 16, 26, "hydra_scale")
+    m.centred("body", 0, 9.6, 2, 16, 2, 22, "hydra_belly")
+    for i in range(4):
+        m.centred("body", 0, 26, -8 + i * 6, 2, 2.5, 3, "horn")
+    for name, x, z in (("leg_front_left", 1, -1), ("leg_front_right", -1, -1), ("leg_back_left", 1, 1), ("leg_back_right", -1, 1)):
+        px, pz = x * 10, 2 + z * 8
+        m.bone(name, "root", (px, 13, pz))
+        m.centred(name, px, 0, pz, 6, 14, 6, "hydra_scale")
+        m.centred(name, px, 0, pz - 1, 7, 2, 8, "horn")
+    m.bone("tail", "body", (0, 16, 15))
+    m.centred("tail", 0, 13, 21, 9, 7, 12, "hydra_scale")
+    m.bone("tail_tip", "tail", (0, 15, 27))
+    m.centred("tail_tip", 0, 13.5, 33, 5, 4, 12, "hydra_scale")
+    # Five heads on long necks, fanned out: the middle one tallest.
+    # Five necks fanning out as they rise, the middle one tallest, so that every head can be seen.
+    necks = [("neck_1", -2, 4), ("neck_2", -1, 7), ("neck_3", 0, 10), ("neck_4", 1, 7), ("neck_5", 2, 4)]
+    for name, k, extra in necks:
+        m.bone(name, "body", (k * 3.5, 24, -10))
+        m.centred(name, k * 3.5, 22, -13, 5, 6, 6, "hydra_scale")
+        m.centred(name, k * 5.5, 26, -16, 4.5, 6 + extra, 4.5, "hydra_scale")
+        ox = k * 7.5
+        top = 32 + extra
+        head = name.replace("neck", "head")
+        m.bone(head, name, (ox, top, -17))
+        m.centred(head, ox, top, -19, 6, 5, 7, "hydra_scale", decal=eyes((255, 230, 80), low=0.2, gap=0.26))
+        m.centred(head, ox, top, -24.5, 4, 3, 4, "hydra_scale")
+        jaw = name.replace("neck", "jaw")
+        m.bone(jaw, head, (ox, top, -22.5))
+        m.centred(jaw, ox, top - 1.2, -25, 3.6, 1.2, 5, "mouth")
+        m.centred(jaw, ox, top - 0.1, -25, 3.2, 0.5, 4.6, "teeth")
+    walk_t = 1.1
+    w = Anim(walk_t, True)
+    for leg, sign in (("leg_front_left", 1), ("leg_back_right", 1), ("leg_front_right", -1), ("leg_back_left", -1)):
+        w.rot(leg, lambda t, s=sign: (wave(t, walk_t, 22 * s), 0, 0))
+    w.rot("tail", lambda t: (0, wave(t, walk_t, 12), 0)).rot("tail_tip", lambda t: (0, wave(t, walk_t, 18, 0.2), 0))
+    w.pos("body", lambda t: (0, abs(wave(t, walk_t, 0.8)), 0))
+    idle_t = 3.0
+    i_ = Anim(idle_t, True).rot("tail", lambda t: (0, wave(t, idle_t, 10), 0)).pos("body", lambda t: (0, wave(t, idle_t, 0.4), 0))
+    att_t = 0.7
+    a = Anim(att_t, False)
+    sp = 1.2
+    s_ = Anim(sp, False)                                             # every head rears back, then spits
+    for k, (name, _, _) in enumerate(necks):
+        jaw = name.replace("neck", "jaw")
+        w.rot(name, lambda t, k=k: (wave(t, walk_t, 6, k / 5), wave(t, walk_t, 5, k / 3), 0))
+        i_.rot(name, lambda t, k=k: (wave(t, idle_t, 8, k / 5), wave(t, idle_t * 2, 12, k / 4), 0))
+        i_.rot(jaw, lambda t, k=k: (pulse((t + k * 0.6) % idle_t, 1.0, 1.3, 1.7, 22), 0, 0))
+        lag = 0.05 * abs(k - 2)
+        a.rot(name, lambda t, lag=lag: (-pulse(t, 0, 0.2, 0.35, 20) + pulse(t, 0.2 + lag, 0.4 + lag, att_t, 40), 0, 0))
+        a.rot(jaw, lambda t, lag=lag: (pulse(t, 0.1 + lag, 0.35 + lag, att_t, 45), 0, 0))
+        s_.rot(name, lambda t, lag=lag: (-pulse(t, lag, 0.4 + lag, 0.6 + lag, 30) + pulse(t, 0.5 + lag, 0.7 + lag, sp, 20), 0, 0))
+        s_.rot(jaw, lambda t, lag=lag: (pulse(t, 0.45 + lag, 0.6 + lag, sp, 50), 0, 0))
+    m.anims.update(walk=w, idle=i_, attack=a, special=s_)
+    return m
+
+
+def cerberus():
+    m = Model("cerberus")
+    quadruped(m, body=(16, 15, 28, 15), leg=(5, 13), neck_y=30, head=(8.5, 8.5, 9), heads=3,
+              materials={"body": "fur_black", "legs": "fur_black", "paws": "fur_dark", "tail": "snake",
+                         "mane": "fur_dark", "head": "fur_black", "face": eyes((255, 120, 30), low=0.3, gap=0.25)},
+              tail_len=16)
+    for i, z in enumerate((-10, -4, 2, 8)):                           # snakes rising from his back
+        m.box("body", (-1 + (i % 2) * 2 - 1, 30, z), (2, 4 + (i % 2) * 2, 2), "snake")
+    m.centred("neck", 0, 26, -17, 9, 2, 6, "bronze")                  # the collar of the hound of Hades
+    quadruped_anims(m, stride=32, heavy=1.0, heads=3)
+    return m
+
+
+def medusa():
+    m = Model("medusa")
+    sh = humanoid(m, hip=13, leg=(3, 3), torso=(8, 12, 4.5), arm=(2.6, 13), head=(7, 7.5, 7),
+                  materials={"legs": "chiton", "boots": "leather", "torso": "chiton", "arms": "medusa_skin",
+                             "hands": "medusa_skin", "head": "medusa_skin",
+                             "face": face((120, 255, 120), (90, 30, 40), glows=True)})
+    m.centred("torso", 0, 13, 0, 9, 1.6, 5, "chiton_trim")
+    m.centred("torso", 0, 24, 0, 8.6, 1.2, 5.1, "gold")
+    m.bone("skirt", "torso", (0, 13, 0))
+    m.centred("skirt", 0, 3, 0, 9, 10, 5.5, "chiton")
+    snakes = []                                                       # hair of living snakes
+    for i, (x, z) in enumerate(((-3, -2.5), (0, -3), (3, -2.5), (-4, 1), (4, 1), (-2, 3), (2, 3), (0, 1))):
+        name = f"snake_{i}"
+        m.bone(name, "head", (x, sh + 7, z))
+        m.box(name, (x - 0.6, sh + 6.5, z - 0.6), (1.2, 4 + (i % 3), 1.2), "snake")
+        m.box(name, (x - 0.8, sh + 10 + (i % 3), z - 1.2), (1.6, 1.4, 2), "snake")
+        snakes.append(name)
+    m.bone("bow", "arm_left", (5.3, sh - 12, 0))                       # a bronze shield-like bow of the Gorgons
+    m.box("bow", (5, sh - 20, -1), (0.8, 16, 1), "bronze")
+    humanoid_anims(m, stride=24, arm_swing=16)
+    for k, name in enumerate(snakes):
+        m.anims["idle"].rot(name, lambda t, k=k: (wave(t, 1.5, 20, k / 8), wave(t, 2.0, 25, k / 5), 0))
+        m.anims["walk"].rot(name, lambda t, k=k: (wave(t, 1.0, 25, k / 8), wave(t, 1.0, 20, k / 5), 0))
+    sp = 1.6
+    s_ = (Anim(sp, False)                                             # the gaze: she leans in and the snakes rise
+          .rot("head", lambda t: (pulse(t, 0, 0.3, sp, 15), 0, 0))
+          .rot("torso", lambda t: (pulse(t, 0, 0.3, sp, 10), 0, 0))
+          .rot("arm_left", lambda t: (-pulse(t, 0, 0.3, sp, 30), 0, -pulse(t, 0, 0.3, sp, 25)))
+          .rot("arm_right", lambda t: (-pulse(t, 0, 0.3, sp, 30), 0, pulse(t, 0, 0.3, sp, 25))))
+    for k, name in enumerate(snakes):
+        s_.rot(name, lambda t, k=k: (-pulse(t, 0, 0.25, sp, 45) + wave(t, 0.4, 10, k / 8), 0, 0))
+    m.anims["special"] = s_
+    return m
+
+
+def cyclops():
+    m = Model("cyclops")
+    sh = humanoid(m, hip=26, leg=(8, 8), torso=(20, 24, 11), arm=(7, 28), head=(12, 13, 12),
+                  materials={"legs": "cyclops_skin", "boots": "leather", "torso": "cyclops_skin", "arms": "cyclops_skin",
+                             "hands": "cyclops_skin", "head": "cyclops_skin", "face": one_eye((60, 120, 200))})
+    m.centred("torso", 0, 24, 0, 21, 8, 12, "fleece")                 # a sheepskin about the hips
+    m.centred("head", 0, sh - 2, -6.5, 10, 6, 1.6, "beard_brown")
+    m.centred("head", 0, sh + 12, 0, 12.4, 2, 12.4, "beard_brown")    # shaggy hair
+    m.bone("club", "arm_right", (-13.5, sh - 26, 0))
+    m.box("club", (-14.5, sh - 27, -16), (2, 2, 18), "wood")
+    m.box("club", (-15.5, sh - 28, -22), (4, 4, 8), "wood")
+    humanoid_anims(m, stride=22, arm_swing=14, heavy=1.5)
+    sp = 1.6
+    m.anims["special"] = (Anim(sp, False)                             # stamps: everyone around flies up
+                          .rot("leg_right", lambda t: (-pulse(t, 0, 0.5, 0.7, 50), 0, 0))
+                          .rot("arm_left", lambda t: (-pulse(t, 0, 0.5, sp, 40), 0, -pulse(t, 0, 0.5, sp, 35)))
+                          .rot("arm_right", lambda t: (-pulse(t, 0, 0.5, sp, 40), 0, pulse(t, 0, 0.5, sp, 35)))
+                          .pos("root", lambda t: (0, pulse(t, 0.1, 0.5, 0.7, 2) - pulse(t, 0.65, 0.75, 1.0, 1.2), 0)))
+    return m
+
+
+def nemean_lion():
+    m = Model("nemean_lion")
+    quadruped(m, body=(15, 14, 30, 11), leg=(5, 10), neck_y=25, head=(11, 10, 10),
+              materials={"body": "lion_fur", "legs": "lion_fur", "paws": "lion_mane", "tail": "lion_fur",
+                         "mane": "lion_mane", "head": "lion_fur", "face": eyes((255, 210, 60), low=0.3, gap=0.25)},
+              tail_len=14)
+    m.centred("neck", 0, 19, -19, 17, 15, 8, "lion_mane")             # the great mane
+    m.centred("tail", 0, 13, 30, 3.4, 3.4, 3, "lion_mane")
+    quadruped_anims(m, stride=30, heavy=1.0)
+    return m
+
+
+BOSSES = [koschei, solovei, zmey, heimdall, draugr_chieftain, thrym, surtr, fenrir, garm,
+          minotaur, hydra, cerberus, medusa, cyclops, nemean_lion]
 
 
 def write_json(path, value):
@@ -803,7 +1029,7 @@ def main():
         write_json(os.path.join(ROOT, "geo", "entity", "boss", model.name + ".geo.json"), geo_json(model, width, height))
         write_json(os.path.join(ROOT, "animations", "entity", "boss", model.name + ".animation.json"), anim_json(model))
         save_png(img, os.path.join(ROOT, "textures", "entity", "boss", model.name + ".png"))
-        # Only a model with glowing parts gets a glow mask (MythGeoRenderer is told so in Java: GLOWING there).
+        # Only a model with glowing parts gets a glow mask (MythGeoRenderer adds the glow layer only where one exists).
         mask = os.path.join(ROOT, "textures", "entity", "boss", model.name + "_glowmask.png")
         if glow.getbbox():
             save_png(glow, mask)

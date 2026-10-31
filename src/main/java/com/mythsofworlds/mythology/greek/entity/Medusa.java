@@ -91,6 +91,7 @@ public class Medusa extends MythBoss {
             player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 2));
             if (ticks == PETRIFY_AFTER) {
                 playSound(GreekSounds.MEDUSA_GAZE.get(), 1.5F, 1.0F);
+                playSpecial();
                 player.displayClientMessage(Component.translatable("entity.mythsofworlds.medusa.petrify"), true);
             }
             if (ticks >= PETRIFY_AFTER) {

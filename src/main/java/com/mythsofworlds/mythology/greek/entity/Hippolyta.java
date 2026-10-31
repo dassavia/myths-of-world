@@ -1,5 +1,6 @@
 package com.mythsofworlds.mythology.greek.entity;
 
+import com.mythsofworlds.core.entity.BalancedBoss;
 import com.mythsofworlds.mythology.greek.GreekContent;
 import java.util.HashSet;
 import java.util.Set;
@@ -42,7 +43,7 @@ import net.minecraft.world.level.Level;
  * who is already married is turned away. A child with her asks for ambrosia, not every night is right, and she
  * rests three days between children; her daughters are princesses.
  */
-public class Hippolyta extends Amazon {
+public class Hippolyta extends Amazon implements BalancedBoss {
     private static final int GIFT_POINTS = 20;
     private static final int REPEAT_POINTS = 10;
 

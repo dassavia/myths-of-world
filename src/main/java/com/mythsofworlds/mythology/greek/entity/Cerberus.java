@@ -83,6 +83,7 @@ public class Cerberus extends MythBoss {
             server.sendParticles(ParticleTypes.SOUL, shade.getX(), shade.getY() + 1.0, shade.getZ(), 12, 0.3, 0.6, 0.3, 0.02);
         }
         playSound(GreekSounds.CERBERUS_AMBIENT.get(), 3.0F, 0.6F);
+        playSpecial();
     }
 
     @Override
@@ -110,6 +111,7 @@ public class Cerberus extends MythBoss {
             level().addFreshEntity(fireball);
         }
         playSound(GreekSounds.CERBERUS_BREATH.get(), 2.0F, 1.0F);
+        playSpecial();
     }
 
     @Override

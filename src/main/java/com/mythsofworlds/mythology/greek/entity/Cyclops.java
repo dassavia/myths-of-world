@@ -69,6 +69,7 @@ public class Cyclops extends MythBoss {
             server.sendParticles(ParticleTypes.EXPLOSION, getX(), getY() + 0.2, getZ(), 8, 2.0, 0.2, 2.0, 0.0);
         }
         playSound(GreekSounds.CYCLOPS_STOMP.get(), 2.0F, 1.0F);
+        playSpecial();
     }
 
     @Override

@@ -78,6 +78,7 @@ public class Minotaur extends MythBoss {
                     chargeCooldown = enraged() ? CHARGE_COOLDOWN / 2 : CHARGE_COOLDOWN;
                     getNavigation().stop();
                     playSound(GreekSounds.MINOTAUR_ROAR.get(), 2.0F, 1.0F);
+                    playSpecial();
                 }
             }
         }
