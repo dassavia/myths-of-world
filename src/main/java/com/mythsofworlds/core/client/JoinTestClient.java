@@ -11,10 +11,14 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
+import top.theillusivec4.curios.client.gui.CuriosScreen;
+import top.theillusivec4.curios.common.network.client.CPacketOpenCurios;
 import vazkii.patchouli.api.PatchouliAPI;
 import vazkii.patchouli.client.base.ClientAdvancements;
 
@@ -112,8 +116,21 @@ public final class JoinTestClient {
             case 30 -> mc.setScreen(new InventoryScreen(player));
             case 45 -> screenshot(mc, "inventory");
             case 50 -> mc.setScreen(null);
-            case 70 -> {
-                report("OK: joined, synced, every suit and swing drawn, the Codex and the inventory opened");
+            // The Curios screen (the back slot) is opened by the server, as its button does.
+            case 55 -> PacketDistributor.sendToServer(new CPacketOpenCurios(ItemStack.EMPTY));
+            case 75 -> {
+                if (!(mc.screen instanceof CuriosScreen)) {
+                    fail("the Curios screen did not open: " + mc.screen);
+                }
+                screenshot(mc, "curios");
+            }
+            case 80 -> {
+                if (mc.player != null) {
+                    mc.player.closeContainer();
+                }
+            }
+            case 100 -> {
+                report("OK: joined, synced, every suit and swing drawn, the Codex, the inventory and the Curios screen opened");
                 leftAt = ticks;
                 if (mc.getConnection() != null) {
                     mc.getConnection().getConnection().disconnect(Component.literal("done"));

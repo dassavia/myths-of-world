@@ -61,6 +61,7 @@ public final class GreekClient {
                 ctx -> new GreekHumanoidRenderer<>(ctx, new HarpyModel(ctx.bakeLayer(HARPY)), "harpy", 0.9F, false));
         event.registerEntityRenderer(GreekEntities.SPARTOI.get(), SpartoiRenderer::new);
         event.registerEntityRenderer(GreekEntities.GROWTH_POTION.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(GreekEntities.LIONBANE_POTION.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(GreekEntities.SHADE.get(),
                 ctx -> new GreekHumanoidRenderer<>(ctx, new ZombieArmsModel<>(ctx.bakeLayer(HUMANOID)), "shade", 1.0F, true));
         event.registerEntityRenderer(GreekEntities.PEGASUS.get(), PegasusRenderer::new);

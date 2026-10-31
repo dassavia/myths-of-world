@@ -19,7 +19,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "How to beat: bring down the first lion with potions. Make a dagger from its claw (a claw over a stick). Drops its pelt and claws."
+      "text": "How to beat: six splash potions of lionbane (gold ingot, ghast tear, gold ingot over a bottle, blaze powder and a bottle, gunpowder below) kill the lion. Make a dagger from its claw (a claw over a stick). Drops its pelt and claws."
     }
   ],
   "advancement": "mythsofworlds:codex/entry/greek_nemean_lion"

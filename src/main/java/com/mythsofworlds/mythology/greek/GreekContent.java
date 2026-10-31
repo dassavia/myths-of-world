@@ -10,6 +10,7 @@ import com.mythsofworlds.mythology.greek.block.FruitLeavesBlock;
 import com.mythsofworlds.mythology.greek.item.BidentOfHadesItem;
 import com.mythsofworlds.mythology.greek.item.GirdleItem;
 import com.mythsofworlds.mythology.greek.item.GrowthPotionItem;
+import com.mythsofworlds.mythology.greek.item.LionbanePotionItem;
 import com.mythsofworlds.mythology.greek.item.HornOfThemiscyraItem;
 import com.mythsofworlds.mythology.greek.item.WingsItem;
 import com.mythsofworlds.mythology.greek.portal.BrazierBlock;
@@ -303,6 +304,9 @@ public final class GreekContent {
     /** Thrown, it makes every young creature where it bursts grow up at once. */
     public static final DeferredItem<GrowthPotionItem> GROWTH_POTION = ITEMS.register("growth_potion",
             () -> new GrowthPotionItem(new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
+    /** Thrown at the Nemean Lion, it burns through the golden hide: six bottles kill it. */
+    public static final DeferredItem<LionbanePotionItem> LIONBANE_POTION = ITEMS.register("lionbane_potion",
+            () -> new LionbanePotionItem(new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
     /** Medusa's head still petrifies: right-click to freeze the creatures in front of you. */
     public static final DeferredItem<MedusaHeadItem> MEDUSA_HEAD = ITEMS.register("medusa_head",
             () -> new MedusaHeadItem(new Item.Properties().durability(32).rarity(Rarity.EPIC)));

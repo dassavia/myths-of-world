@@ -267,6 +267,14 @@ def register(items):
     def _():
         return bottle("growth_potion", mat(0x4CC23A, spread=0.45), glow=(220, 255, 180))
 
+    @item("lionbane_potion")
+    def _():
+        s = bottle("lionbane_potion", mat(0xE8A21E, spread=0.5), glow=(255, 240, 160))
+        # A lion's claw mark scratched across the bottle.
+        for x in (12, 15.5, 19):
+            s.stroke([(x + 1.5, 16), (x - 1, 26)], 1.1, mat(0x7A1E10, glint=False), bevel=0.3, edge=False)
+        return s
+
     @item("mead")
     def _():
         s = Sprite("mead")

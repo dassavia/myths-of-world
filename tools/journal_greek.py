@@ -188,14 +188,16 @@ ENTRIES = [
       "Огромный золотой лев в логове посреди Немейского леса. Прыгает на добычу.",
       "Способности: шкура неуязвима для мечей, стрел и кулаков. Ранят его только зелья (яд, урон, иссушение, в том "
       "числе на стрелах) и кинжал из его когтя.",
-      "Как победить: первого льва одолейте зельями. Из когтя (коготь над палкой) сделайте кинжал. Роняет шкуру и "
-      "когти."],
+      "Как победить: шесть взрывных зелий львиной погибели (слиток золота, слеза гаста, слиток золота над бутылкой, "
+      "огненным порошком и бутылкой, под ними порох) убивают льва. Из когтя (коготь над палкой) сделайте кинжал. "
+      "Роняет шкуру и когти."],
      ["Nemean Lion",
       "Huge golden lion in a den at the heart of the Nemean Forest. Pounces on its prey.",
       "Abilities: its hide turns swords, arrows and fists. Only potions (poison, harming, wither, also on arrows) and a "
       "dagger made from its own claw hurt it.",
-      "How to beat: bring down the first lion with potions. Make a dagger from its claw (a claw over a stick). Drops "
-      "its pelt and claws."]),
+      "How to beat: six splash potions of lionbane (gold ingot, ghast tear, gold ingot over a bottle, blaze powder "
+      "and a bottle, gunpowder below) kill the lion. Make a dagger from its claw (a claw over a stick). Drops its pelt "
+      "and claws."]),
     ("karkinos", "creature", mob("karkinos"),
      ["Каркин",
       "Рак, посланный Герой на помощь гидре: маленький, но злой. Сидит на берегу её логова. В мифе он ущипнул Геракла за "

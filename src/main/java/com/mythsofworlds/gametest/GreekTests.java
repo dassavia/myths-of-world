@@ -18,6 +18,7 @@ import com.mythsofworlds.mythology.greek.entity.Medusa;
 import com.mythsofworlds.mythology.greek.entity.NemeanLion;
 import com.mythsofworlds.mythology.greek.entity.Spartoi;
 import com.mythsofworlds.mythology.greek.entity.ThrownGrowthPotion;
+import com.mythsofworlds.mythology.greek.entity.ThrownLionbanePotion;
 import com.mythsofworlds.mythology.greek.item.HornOfThemiscyraItem;
 import com.mythsofworlds.mythology.greek.portal.BrazierBlock;
 import com.mythsofworlds.mythology.greek.portal.PoolPortal;
@@ -485,6 +486,24 @@ public class GreekTests {
         girl.discard();
         calf.discard();
         zombie.discard();
+        helper.succeed();
+    }
+
+    /** Five splash potions of lionbane leave the Nemean Lion standing, the sixth kills it; other creatures are unharmed. */
+    @GameTest(template = "empty")
+    public static void sixLionbanePotionsKillTheLion(GameTestHelper helper) {
+        NemeanLion lion = helper.spawn(GreekEntities.NEMEAN_LION.get(), new BlockPos(1, 2, 1));
+        Mob cow = helper.spawn(EntityType.COW, new BlockPos(2, 2, 2));
+        lion.setNoAi(true);
+        Vec3 at = Vec3.atCenterOf(helper.absolutePos(new BlockPos(1, 2, 1)));
+        for (int i = 0; i < ThrownLionbanePotion.BOTTLES_TO_KILL - 1; i++) {
+            helper.assertTrue(ThrownLionbanePotion.burst(helper.getLevel(), at, null, null) == 1, "the potion should reach the lion");
+        }
+        helper.assertTrue(lion.isAlive() && lion.getHealth() > 0, "five bottles should not be enough, health " + lion.getHealth());
+        helper.assertTrue(cow.getHealth() == cow.getMaxHealth(), "the cow should not be hurt");
+        ThrownLionbanePotion.burst(helper.getLevel(), at, null, null);
+        helper.assertTrue(lion.isDeadOrDying(), "the sixth bottle should kill the lion, health " + lion.getHealth());
+        cow.discard();
         helper.succeed();
     }
 

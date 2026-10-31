@@ -9,6 +9,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -26,13 +27,18 @@ public class GrowthPotionItem extends Item {
         level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.SPLASH_POTION_THROW, SoundSource.PLAYERS,
                 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
         if (!level.isClientSide) {
-            ThrownGrowthPotion potion = new ThrownGrowthPotion(level, player);
+            ThrowableItemProjectile potion = createProjectile(level, player);
             potion.setItem(stack);
             potion.shootFromRotation(player, player.getXRot(), player.getYRot(), -20.0F, 0.5F, 1.0F);
             level.addFreshEntity(potion);
         }
         stack.consume(1, player);
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
+    }
+
+    /** The thrown bottle; other splash potions of the myths override this. */
+    protected ThrowableItemProjectile createProjectile(Level level, Player player) {
+        return new ThrownGrowthPotion(level, player);
     }
 
     @Override

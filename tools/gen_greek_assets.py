@@ -961,6 +961,14 @@ def recipes():
                         {"item": "minecraft:golden_carrot"}, {"item": "minecraft:gunpowder"}],
         "result": {"id": f"{NS}:growth_potion", "count": 1},
     })
+    # Against the Nemean Lion: two bottles per craft, a ghast tear from the Nether in each (six bottles kill the lion).
+    write_json(data("recipe", "lionbane_potion.json"), {
+        "type": "minecraft:crafting_shaped", "category": "misc", "pattern": ["GTG", "BPB", " D "],
+        "key": {"G": {"item": "minecraft:gold_ingot"}, "T": {"item": "minecraft:ghast_tear"},
+                "B": {"item": "minecraft:glass_bottle"}, "P": {"item": "minecraft:blaze_powder"},
+                "D": {"item": "minecraft:gunpowder"}},
+        "result": {"id": f"{NS}:lionbane_potion", "count": 2},
+    })
     write_json(data("tags", "worldgen", "structure", "amazon_homes.json"),
                {"replace": False, "values": [f"{NS}:amazon_camp", f"{NS}:themiscyra"]})
     # The Codex of Myths, the one book of the mod (the old journals are no longer made).
@@ -997,7 +1005,7 @@ def add_tag(kind, name, values, namespace="minecraft"):
 ITEMS = ["promethean_torch", "ambrosia", "harpy_feather", "minotaur_horn", "hydra_scale", "cerberus_fang",
          "nemean_pelt", "cyclops_eye", "medusa_head", "nemean_claw", "nemean_claw_dagger", "harpe", "hydra_egg",
          "olives", "pomegranate", "wings_of_daedalus", "karkinos_claw", "girdle_of_hippolyta", "wedding_ring",
-         "necklace_of_harmonia", "horn_of_themiscyra", "growth_potion",
+         "necklace_of_harmonia", "horn_of_themiscyra", "growth_potion", "lionbane_potion",
          "greek_journal", "greek_journal_complete"]
 HANDHELD = {"promethean_torch", "nemean_claw_dagger", "harpe"}
 MOBS = ["satyr", "harpy", "spartoi", "shade", "pegasus", "golden_hind", "hydra_hatchling", "greek_merchant",
@@ -1125,6 +1133,11 @@ LANG = {
     "item.mythsofworlds.growth_potion.desc": ("Бросьте: малыши вокруг (и маленькие амазонки) сразу вырастают",
                                               "Throw it: the young around (little amazons too) grow up at once"),
     "entity.mythsofworlds.growth_potion": ("Зелье роста", "Potion of Growth"),
+    "item.mythsofworlds.lionbane_potion": ("Взрывное зелье львиной погибели", "Splash Potion of Lionbane"),
+    "item.mythsofworlds.lionbane_potion.desc": (
+        "Бросьте в Немейского льва: зелье прожигает золотую шкуру. Шести бутылок хватает, чтобы его убить",
+        "Throw it at the Nemean Lion: it burns through the golden hide. Six bottles are enough to kill it"),
+    "entity.mythsofworlds.lionbane_potion": ("Зелье львиной погибели", "Potion of Lionbane"),
     "item.mythsofworlds.horn_of_themiscyra.desc": ("ПКМ: амазонки вокруг возвращаются в свой лагерь",
                                                    "Right-click: the amazons around go back to their camp"),
     "item.mythsofworlds.horn_of_themiscyra.called": ("Горн трубит. Возвращаются домой: %s", "The horn sounds. Going home: %s"),

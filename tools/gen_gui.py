@@ -3,6 +3,8 @@ pixel is 2x2 texture pixels, so they stay sharp at the usual GUI scales).
 
 textures/gui/hud.png            frames of the bars and the hotbar, the level medallion and the world scroll (layout in HUD)
 textures/gui/inventory.png      the survival inventory, in vanilla's layout (INVENTORY_SLOTS)
+textures/gui/curios.png         the accessory panel of the Curios screen, in the layout of Curios' own inventory.png
+textures/gui/sprites/hud/recipe_button*.png  the recipe book button on the parchment
 Java: core/client/MythHud.java.
 """
 import math
@@ -226,6 +228,11 @@ def inventory():
     ax, ay = 136, 36
     d.polygon([(ax, ay - 2), (ax + 7, ay - 2), (ax + 7, ay - 6), (ax + 13, ay), (ax + 7, ay + 6), (ax + 7, ay + 2),
                (ax, ay + 2)], fill=(184, 140, 64), outline=(122, 86, 36))
+    # A gold-framed niche where the recipe book button sits (vanilla puts it at 104, 61, 20x18).
+    x, y = 102, 59
+    d.rounded_rectangle([x, y, x + 23, y + 21], radius=2, fill=(150, 128, 98), outline=(184, 140, 64))
+    d.line([(x + 1, y + 1), (x + 22, y + 1)], fill=(92, 70, 46))
+    d.line([(x + 1, y + 1), (x + 1, y + 20)], fill=(92, 70, 46))
     # A gold rule with a small Greek key between the backpack and the hotbar.
     d.line([(8, 139), (167, 139)], fill=(184, 140, 64))
     for x in range(14, 164, 18):
@@ -233,10 +240,84 @@ def inventory():
     img.save(os.path.join(ROOT, "inventory.png"))
 
 
+def parchment_box(img, box, seed, radius=4):
+    """A parchment panel in a gold band, the look of the inventory, filling {@code box} (x0, y0, x1, y1 inclusive)."""
+    d = ImageDraw.Draw(img)
+    x0, y0, x1, y1 = box
+    w, h = x1 - x0 + 1, y1 - y0 + 1
+    rng = random.Random(seed)
+    body = Image.new("RGBA", (w, h))
+    px = body.load()
+    for y in range(h):
+        base = lerp((236, 225, 198), (220, 204, 168), y / h)
+        for x in range(w):
+            n = rng.randint(-3, 3)
+            px[x, y] = (base[0] + n, base[1] + n, base[2] + n, 255)
+    mask = Image.new("L", (w, h), 0)
+    ImageDraw.Draw(mask).rounded_rectangle([0, 0, w - 1, h - 1], radius=radius, fill=255)
+    img.paste(body, (x0, y0), mask)
+    d.rounded_rectangle([x0, y0, x1, y1], radius=radius, outline=(54, 34, 20))
+    d.rounded_rectangle([x0 + 1, y0 + 1, x1 - 1, y1 - 1], radius=max(1, radius - 1), outline=(184, 140, 64))
+    d.line([(x0 + 3, y0 + 1), (x1 - 3, y0 + 1)], fill=(240, 206, 120))
+    d.line([(x0 + 1, y0 + 3), (x0 + 1, y1 - 3)], fill=(240, 206, 120))
+    d.line([(x0 + 3, y1 - 1), (x1 - 3, y1 - 1)], fill=(122, 86, 36))
+    d.line([(x1 - 1, y0 + 3), (x1 - 1, y1 - 3)], fill=(122, 86, 36))
+
+
+def sunk_slot(d, x, y):
+    """One 18x18 slot sunk into the parchment, its top left corner at (x, y)."""
+    d.rectangle([x, y, x + 17, y + 17], fill=(150, 128, 98))
+    d.line([(x, y), (x + 16, y)], fill=(92, 70, 46))
+    d.line([(x, y), (x, y + 16)], fill=(92, 70, 46))
+    d.line([(x + 1, y + 17), (x + 17, y + 17)], fill=(250, 240, 216))
+    d.line([(x + 17, y + 1), (x + 17, y + 17)], fill=(250, 240, 216))
+
+
+def curios():
+    """
+    The accessory panel of the Curios screen (the back slot and the rest), on parchment, in the layout of Curios'
+    textures/gui/curios/inventory.png, which CuriosScreen draws in pieces: the panel at 91..122 (top part from y 0,
+    the bottom 7 rows from y 159), the column of slots at 7, 7, the tab of the cosmetic slots at 32, 0 (28x24) and the
+    tint of a cosmetic slot at 32, 50 (18x18). Java: mixin/CuriosScreenMixin.java.
+    """
+    img = Image.new("RGBA", (256, 256), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    parchment_box(img, (91, 0, 122, 165), "curios-panel")
+    for row in range(8):
+        sunk_slot(d, 7, 7 + 18 * row)
+    parchment_box(img, (32, 0, 59, 23), "curios-tab", radius=3)
+    d.rectangle([32, 50, 49, 67], fill=(150, 90, 200, 70))
+    img.save(os.path.join(ROOT, "curios.png"))
+
+
+def recipe_button():
+    """The recipe book button on the parchment, 20x18 drawn at twice the scale: a green book in a gold frame."""
+    out = os.path.join(ROOT, "sprites", "hud")
+    os.makedirs(out, exist_ok=True)
+    for name, rim, fill in (("recipe_button", GOLD_DARK, (120, 90, 58)), ("recipe_button_highlighted", GOLD_LIGHT, (150, 116, 72))):
+        img = Image.new("RGBA", (20 * S, 18 * S), (0, 0, 0, 0))
+        d = ImageDraw.Draw(img)
+        w, h = img.size
+        d.rounded_rectangle([0, 0, w - 1, h - 1], radius=5, fill=fill, outline=(54, 34, 20), width=2)
+        d.rounded_rectangle([2, 2, w - 3, h - 3], radius=4, outline=rim, width=2)
+        # The book: a green cover, gold corners, pages showing at the right and a bookmark.
+        bx0, by0, bx1, by1 = 9, 7, 31, 29
+        d.polygon([(bx0 + 4, by0), (bx1, by0), (bx1 - 4, by1), (bx0, by1)], fill=(232, 222, 196), outline=(70, 50, 30))
+        d.polygon([(bx0 + 2, by0 + 1), (bx1 - 3, by0 + 1), (bx1 - 7, by1 - 2), (bx0 - 2, by1 - 2)],
+                  fill=(58, 150, 76), outline=(24, 70, 34))
+        d.line([(bx0 + 4, by0 + 4), (bx1 - 7, by0 + 4)], fill=(126, 210, 132), width=2)
+        d.line([(bx0 + 1, by1 - 6), (bx1 - 9, by1 - 6)], fill=(226, 179, 60), width=2)
+        d.line([(bx1 - 9, by0 + 1), (bx1 - 11, by1 - 2)], fill=(30, 90, 44), width=2)
+        d.line([(bx0 + 9, by1 - 2), (bx0 + 9, by1 + 2)], fill=(200, 40, 40), width=2)
+        img.save(os.path.join(out, name + ".png"))
+
+
 def main():
     os.makedirs(ROOT, exist_ok=True)
     hud()
     inventory()
+    curios()
+    recipe_button()
 
 
 if __name__ == "__main__":
