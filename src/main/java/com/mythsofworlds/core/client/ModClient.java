@@ -39,12 +39,11 @@ public final class ModClient {
     @EventBusSubscriber(modid = MythsOfWorlds.MODID, value = Dist.CLIENT)
     public static final class GameBus {
         private static boolean wasJumping;
-        private static boolean leapt;
 
         private GameBus() {
         }
 
-        /** The talaria of Hermes: press jump again in mid-air to leap once more. */
+        /** The talaria of Hermes: every fresh press of jump in mid-air leaps again, with no wait between leaps. */
         @SubscribeEvent
         public static void onClientTick(ClientTickEvent.Post event) {
             LocalPlayer player = Minecraft.getInstance().player;
@@ -52,10 +51,7 @@ public final class ModClient {
                 return;
             }
             boolean jumping = player.input != null && player.input.jumping;
-            if (player.onGround() || player.isInWater() || player.onClimbable()) {
-                leapt = false;
-            } else if (jumping && !wasJumping && !leapt && DoubleJumpPayload.canDoubleJump(player)) {
-                leapt = true;
+            if (jumping && !wasJumping && DoubleJumpPayload.canDoubleJump(player)) {
                 MobEffectInstance jump = player.getEffect(MobEffects.JUMP);
                 double power = 0.42 + (jump == null ? 0.0 : 0.1 * (jump.getAmplifier() + 1));
                 Vec3 motion = player.getDeltaMovement();

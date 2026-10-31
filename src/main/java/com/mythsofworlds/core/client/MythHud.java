@@ -10,7 +10,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.PauseScreen;
+import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -49,6 +51,15 @@ public final class MythHud {
     public static final ResourceLocation MYTH_FONT = MythsOfWorlds.id("myth");
     /** The survival inventory on parchment, in vanilla's layout (tools/gen_gui.py). */
     public static final ResourceLocation INVENTORY = MythsOfWorlds.id("textures/gui/inventory.png");
+    /** The accessory panel of the Curios screen on parchment, in the layout of Curios' own texture (tools/gen_gui.py). */
+    public static final ResourceLocation CURIOS_PANEL = MythsOfWorlds.id("textures/gui/curios.png");
+    private static final ResourceLocation VANILLA_INVENTORY = ResourceLocation.withDefaultNamespace(
+            "textures/gui/container/inventory.png");
+    private static final ResourceLocation VANILLA_CURIOS_PANEL = ResourceLocation.fromNamespaceAndPath("curios",
+            "textures/gui/curios/inventory.png");
+    /** The recipe book button on the parchment, in its gold niche. */
+    public static final WidgetSprites RECIPE_BUTTON = new WidgetSprites(MythsOfWorlds.id("hud/recipe_button"),
+            MythsOfWorlds.id("hud/recipe_button_highlighted"));
     private static final ResourceLocation TEXTURE = MythsOfWorlds.id("textures/gui/hud.png");
     private static final int TEX_W = 512;
     private static final int TEX_H = 128;
@@ -72,6 +83,22 @@ public final class MythHud {
 
     public static boolean enabled() {
         return ClientConfig.HUD_ENABLED.get();
+    }
+
+    /** The texture an inventory screen draws its background with: the parchment ones while the HUD is on. */
+    public static ResourceLocation background(ResourceLocation texture) {
+        if (!enabled()) {
+            return texture;
+        }
+        if (texture.equals(VANILLA_INVENTORY)) {
+            return INVENTORY;
+        }
+        return texture.equals(VANILLA_CURIOS_PANEL) ? CURIOS_PANEL : texture;
+    }
+
+    /** The sprites of the recipe book button in the inventory: the parchment ones while the HUD is on. */
+    public static WidgetSprites recipeButton(WidgetSprites sprites) {
+        return enabled() && sprites == RecipeBookComponent.RECIPE_BUTTON_SPRITES ? RECIPE_BUTTON : sprites;
     }
 
     @EventBusSubscriber(modid = MythsOfWorlds.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -165,27 +192,35 @@ public final class MythHud {
         graphics.pose().popPose();
     }
 
+    /** Inside a bar's frame (81 wide from x): the icon fills the first {@link #FILL_X} pixels, the fill the rest. */
+    private static final int FILL_X = 11;
+    private static final int FILL_W = 81 - FILL_X;
+
     /**
-     * One bar: the frame, the fill from {@code from} to {@code to} colours over {@code fraction} of the width, an
-     * optional thin second fill along the bottom (saturation) and the number.
+     * One bar: the frame, the icon inside its left end, the fill from {@code from} to {@code to} colours over
+     * {@code fraction} of the rest of the width, an optional thin second fill along the bottom (saturation) and the
+     * number.
      */
     private static void bar(GuiGraphics graphics, Font font, int x, int y, float fraction, int from, int to,
                             float extra, int extraColour, int iconU, String text, boolean flash) {
         sprite(graphics, x - 2, y - 2, 0, 0, 85, 13);
-        int fill = Math.round(81 * Mth.clamp(fraction, 0, 1));
+        int left = x + FILL_X;
+        int fill = Math.round(FILL_W * Mth.clamp(fraction, 0, 1));
         if (fill > 0) {
-            graphics.fillGradient(x, y, x + fill, y + 9, from, to);
-            graphics.fill(x, y, x + fill, y + 1, 0x40FFFFFF);
+            graphics.fillGradient(left, y, left + fill, y + 9, from, to);
+            graphics.fill(left, y, left + fill, y + 1, 0x40FFFFFF);
         }
         if (extra > 0) {
-            graphics.fill(x, y + 7, x + Math.round(81 * Mth.clamp(extra, 0, 1)), y + 9, extraColour);
+            graphics.fill(left, y + 7, left + Math.round(FILL_W * Mth.clamp(extra, 0, 1)), y + 9, extraColour);
         }
         if (flash) {
-            graphics.fill(x, y, x + 81, y + 9, 0x70FFFFFF);
+            graphics.fill(left, y, left + FILL_W, y + 9, 0x70FFFFFF);
         }
-        sprite(graphics, x - 6, y, iconU, 0, 9, 9);
+        // A thin gold divider between the icon and the fill keeps the icon inside the frame.
+        graphics.fill(left - 1, y, left, y + 9, 0xFF8A601E);
+        sprite(graphics, x + 1, y, iconU, 0, 9, 9);
         if (ClientConfig.SHOW_NUMBERS.get() && text != null) {
-            label(graphics, font, myth(text), x + 43, y + 1, 0xFFF6E7C1, 0.8F);
+            label(graphics, font, myth(text), left + FILL_W / 2, y + 1, 0xFFF6E7C1, 0.8F);
         }
     }
 
@@ -231,8 +266,9 @@ public final class MythHud {
             int y = h - 39;
             // A pale trail shows the health just lost.
             if (shownHealth > health) {
-                graphics.fill(leftX + Math.round(81 * health / max), y, leftX + Math.round(81 * Math.min(shownHealth, max) / max), y + 9,
-                        0xFFF0C8A0);
+                int left = leftX + FILL_X;
+                graphics.fill(left + Math.round(FILL_W * health / max), y, left + Math.round(FILL_W * Math.min(shownHealth, max) / max),
+                        y + 9, 0xFFF0C8A0);
             }
             float absorption = player.getAbsorptionAmount();
             String text = number(Mth.ceil(health)) + "/" + number(max) + (absorption > 0 ? " +" + Mth.ceil(absorption) : "");

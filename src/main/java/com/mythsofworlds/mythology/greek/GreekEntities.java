@@ -20,6 +20,7 @@ import com.mythsofworlds.mythology.greek.entity.Satyr;
 import com.mythsofworlds.mythology.greek.entity.Shade;
 import com.mythsofworlds.mythology.greek.entity.Spartoi;
 import com.mythsofworlds.mythology.greek.entity.ThrownGrowthPotion;
+import com.mythsofworlds.mythology.greek.entity.ThrownLionbanePotion;
 import java.util.List;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -111,6 +112,9 @@ public final class GreekEntities {
     // ---- Projectiles ----
     public static final DeferredHolder<EntityType<?>, EntityType<ThrownGrowthPotion>> GROWTH_POTION = register("growth_potion",
             EntityType.Builder.<ThrownGrowthPotion>of(ThrownGrowthPotion::new, MobCategory.MISC).sized(0.25F, 0.25F)
+                    .clientTrackingRange(4).updateInterval(10));
+    public static final DeferredHolder<EntityType<?>, EntityType<ThrownLionbanePotion>> LIONBANE_POTION = register("lionbane_potion",
+            EntityType.Builder.<ThrownLionbanePotion>of(ThrownLionbanePotion::new, MobCategory.MISC).sized(0.25F, 0.25F)
                     .clientTrackingRange(4).updateInterval(10));
 
     // ---- Spawn eggs (creative tab) ----

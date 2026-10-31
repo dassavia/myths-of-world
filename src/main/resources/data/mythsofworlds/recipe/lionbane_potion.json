@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "GTG",
+    "BPB",
+    " D "
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "T": {
+      "item": "minecraft:ghast_tear"
+    },
+    "B": {
+      "item": "minecraft:glass_bottle"
+    },
+    "P": {
+      "item": "minecraft:blaze_powder"
+    },
+    "D": {
+      "item": "minecraft:gunpowder"
+    }
+  },
+  "result": {
+    "id": "mythsofworlds:lionbane_potion",
+    "count": 2
+  }
+}

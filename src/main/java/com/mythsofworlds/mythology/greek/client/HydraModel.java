@@ -9,6 +9,7 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.TamableAnimal;
 
 /**
  * Squat reptile body with long swaying necks: five for the Hydra and its hatchlings, three for Zmey Gorynych.
@@ -21,6 +22,7 @@ public class HydraModel<T extends Entity> extends HierarchicalModel<T> {
     private final int count;
     private final ModelPart[] necks;
     private final ModelPart[] heads;
+    private final ModelPart body;
     private final ModelPart rightFront;
     private final ModelPart leftFront;
     private final ModelPart rightHind;
@@ -40,6 +42,7 @@ public class HydraModel<T extends Entity> extends HierarchicalModel<T> {
             necks[i] = root.getChild("neck" + i);
             heads[i] = necks[i].getChild("head");
         }
+        this.body = root.getChild("body");
         this.rightFront = root.getChild("right_front_leg");
         this.leftFront = root.getChild("left_front_leg");
         this.rightHind = root.getChild("right_hind_leg");
@@ -80,11 +83,18 @@ public class HydraModel<T extends Entity> extends HierarchicalModel<T> {
 
     @Override
     public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        root.getAllParts().forEach(ModelPart::resetPose);
+        boolean sitting = entity instanceof TamableAnimal pet && pet.isInSittingPose();
         for (int i = 0; i < count; i++) {
-            necks[i].zRot = (i - (count - 1) / 2.0F) * 0.28F + Mth.sin(ageInTicks * 0.08F + i * 1.3F) * 0.08F;
+            float sway = sitting ? 0.04F : 0.08F;
+            necks[i].zRot = (i - (count - 1) / 2.0F) * 0.28F + Mth.sin(ageInTicks * 0.08F + i * 1.3F) * sway;
             necks[i].xRot = -0.35F + Mth.cos(ageInTicks * 0.06F + i) * 0.1F;
             heads[i].yRot = netHeadYaw * Mth.DEG_TO_RAD * 0.6F - necks[i].zRot * 0.5F;
             heads[i].xRot = 0.35F + headPitch * Mth.DEG_TO_RAD * 0.5F;
+        }
+        if (sitting) {
+            sit(ageInTicks);
+            return;
         }
         float swing = Mth.cos(limbSwing * 0.6662F) * 1.2F * limbSwingAmount;
         rightFront.xRot = swing;
@@ -92,5 +102,34 @@ public class HydraModel<T extends Entity> extends HierarchicalModel<T> {
         leftFront.xRot = -swing;
         rightHind.xRot = -swing;
         tail.yRot = Mth.sin(ageInTicks * 0.08F) * 0.25F;
+    }
+
+    /**
+     * Sitting on command: the belly lies on the ground, the forelegs stretch out in front and the hind legs behind like
+     * a resting lizard, the tail curls along the ground and the necks stand up, swaying slowly.
+     */
+    private void sit(float ageInTicks) {
+        float drop = 5.0F;
+        body.y += drop;
+        tail.y += drop;
+        for (ModelPart neck : necks) {
+            neck.y += drop;
+        }
+        for (ModelPart leg : new ModelPart[]{rightFront, leftFront, rightHind, leftHind}) {
+            leg.y = 21.0F;
+        }
+        rightFront.xRot = -Mth.HALF_PI;
+        leftFront.xRot = -Mth.HALF_PI;
+        rightFront.yRot = 0.25F;
+        leftFront.yRot = -0.25F;
+        rightHind.xRot = Mth.HALF_PI;
+        leftHind.xRot = Mth.HALF_PI;
+        rightHind.yRot = -0.3F;
+        leftHind.yRot = 0.3F;
+        tail.xRot = -0.38F;
+        tail.yRot = 0.5F + Mth.sin(ageInTicks * 0.05F) * 0.08F;
+        for (ModelPart neck : necks) {
+            neck.xRot = -0.15F + (neck.xRot + 0.35F) * 0.5F;
+        }
     }
 }

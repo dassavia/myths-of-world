@@ -127,8 +127,8 @@ def greek():
          "-10%."),
         ("Прочность 363/528/495/429. Весь сет: сила, стрелы и снаряды не ранят.",
          "Durability 363/528/495/429. Whole set: Strength, arrows and projectiles cannot wound you."),
-        ("Таларии Гермеса: броня 3, прочность 390; скорость II, прыжок II, двойной прыжок, нет урона от падения.",
-         "Talaria of Hermes: armour 3, durability 390; Speed II, Jump Boost II, double jump, no fall damage."),
+        ("Таларии Гермеса: броня 3, прочность 390; скорость II, прыжок II, прыжки в воздухе без перезарядки, нет урона от падения.",
+         "Talaria of Hermes: armour 3, durability 390; Speed II, Jump Boost II, air jumps with no cooldown, no fall damage."),
         ("Нагрудник титана: броня 7, твёрдость 1.5, отбрасывание -20%, прочность 640, не горит; сила и стойкость.",
          "Titan's breastplate: armour 7, toughness 1.5, knockback -20%, durability 640, fireproof; Strength and "
          "Resistance."),
