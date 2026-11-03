@@ -10,6 +10,10 @@
     },
     {
       "type": "patchouli:text",
+      "text": "Meteoric iron: monster slaying 3% and evasion 2% a piece. Khopesh: monster slaying 10%. Nemes: divine ward 8%. Pectoral of Ra: reflection 10% and divine ward 5%."
+    },
+    {
+      "type": "patchouli:text",
       "text": "Dark iron: monster slaying 5% and divine ward 5% a piece. Heimdall's helmet 10%, Mjolnir and Surtr's sword 15%, the harpe 10% monster slaying.$(br)Nemean set: fury 5% a piece. Girdle of Hippolyta: fury 15% and lifesteal 5%."
     },
     {

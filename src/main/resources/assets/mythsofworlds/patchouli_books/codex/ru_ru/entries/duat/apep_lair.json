@@ -1,0 +1,13 @@
+{
+  "name": "Логово Апопа",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 25,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Остров чёрного камня в кольце лавы. На нём обломки золотой ладьи Ра, которую змей утащил на дно, и ещё горящий солнечный диск."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_apep_lair"
+}

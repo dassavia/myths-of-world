@@ -349,6 +349,27 @@ def _():
     return metal_block("dark_iron_block", 0x5A6070, 0x4FC8F0)
 
 
+# The Duat: meteoric iron in the stone, pyramid stone, hieroglyphs and the fronds of the date palm.
+@block("meteoric_iron_ore")
+def _():
+    return ore("meteoric_iron_ore", 0x6E6A66, 0x9AA8C0, clusters=4, stone_base=0x726C66)
+
+
+@block("meteoric_iron_block")
+def _():
+    return metal_block("meteoric_iron_block", 0x8E9AB0, 0xE2B33C)
+
+
+@block("date_palm_leaves")
+def _():
+    return leaves("date_palm", 0x5A8A2E, holes=0.2)
+
+
+@block("date_palm_leaves_ripe")
+def _():
+    return leaves("date_palm", 0x5A8A2E, fruit=0xB0602A, fruit_count=6, holes=0.2)
+
+
 # ---------------------------------------------------------------- wood and leaves
 
 @block("ironwood_log")

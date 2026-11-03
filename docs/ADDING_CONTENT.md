@@ -24,7 +24,8 @@ src/main/java/com/mythsofworlds/
 │   ├── client/                 модели и рендеры мобов (только клиент)
 │   └── item/                   голова Медузы, яйцо гидры
 ├── mythology/norse/NorseContent.java   всё скандинавское: блоки, предметы, измерение
-├── mythology/slavic|oceanic|egyptian|indian/   заготовки: только ключ измерения
+├── mythology/slavic/, mythology/egyptian/   Навь и Дуат: устроены как греческая и скандинавская
+├── mythology/oceanic|indian/   заготовки: только ключ измерения
 └── gametest/                   автотесты (./gradlew runGameTestServer) и WorldSmokeTest (./gradlew runSmokeTest)
 
 tools/gen_greek_assets.py       генератор греческих JSON, шаблонов структур (.nbt, сами постройки в tools/structures.py)
@@ -112,7 +113,7 @@ python3 tools/gen_greek_assets.py --textures  # плюс перерисоват�
 Скрипт берёт помощники из греческого, поэтому запускайте оба по порядку:
 
 ```bash
-python3 tools/gen_greek_assets.py && python3 tools/gen_norse_assets.py && python3 tools/gen_metals.py && python3 tools/gen_relics.py && python3 tools/gen_slavic_assets.py && python3 tools/gen_codex.py && python3 tools/gen_book.py && python3 tools/hd_textures.py && python3 tools/gen_art32_items.py && python3 tools/gen_art32_blocks.py && python3 tools/gen_gui.py && python3 tools/gen_3d_armour.py && python3 tools/gen_3d_gear.py   # --textures у первых, чтобы перерисовать PNG
+python3 tools/gen_greek_assets.py && python3 tools/gen_norse_assets.py && python3 tools/gen_metals.py && python3 tools/gen_relics.py && python3 tools/gen_slavic_assets.py && python3 tools/gen_egyptian_assets.py && python3 tools/gen_codex.py && python3 tools/gen_book.py && python3 tools/hd_textures.py && python3 tools/gen_art32_items.py && python3 tools/gen_art32_blocks.py && python3 tools/gen_gui.py && python3 tools/gen_3d_armour.py && python3 tools/gen_3d_gear.py   # --textures у первых, чтобы перерисовать PNG
 ```
 
 Навь (славянская мифология) — `tools/gen_slavic_assets.py`, постройки в `tools/structures_slavic.py`, текстуры в
@@ -164,12 +165,21 @@ python3 tools/gen_greek_assets.py && python3 tools/gen_norse_assets.py && python
    или свой файл через `own(...)` (свой .ogg положите в `assets/mythsofworlds/sounds/` или синтезируйте в `SYNTHS`).
 3. `python3 tools/gen_greek_sounds.py` (с `--ogg`, чтобы пересоздать файлы).
 
+### Египетские данные
+
+Дуат — `tools/gen_egyptian_assets.py` (биомы, структуры, лут, рецепты, модели, переводы), постройки в
+`tools/structures_egyptian.py`, текстуры в `tools/textures_egyptian.py`, реликвии в 32x32 в `tools/items_egyptian.py`,
+Книга мёртвых в `tools/journal_egyptian.py`. Портал Дуата — пирамида, которую строят руками: `egyptian/block/Pyramid.java`
+проверяет её форму (основание 5x5, ступень 3x3, золотой блок наверху, проход в основании) и строит такую же на другой
+стороне, `PyramidGateBlock` — врата тени в проходе, их открывает `AnkhItem`. Жрицы Исиды (`Priestess`) наследуют
+`Amazon`, как валькирии. Звуки Дуата (`EgyptianSounds`) описаны в той же таблице `SOUNDS` в `tools/gen_greek_sounds.py`.
+
 ## Как развить заготовку мифологии
 
-Например, египетскую: в `EgyptianContent` добавьте блок рамки, `MythPortalBlock` и зажигалку по образцу `NorseContent`
-(или портал своей формы, как священный водоём в `mythology/greek/portal` или Мировое древо в `mythology/slavic/block`),
-поставьте `true` у `EGYPTIAN` в `Mythology.java`, уберите `duat` из `STUB_DIMENSIONS` в `tools/gen_greek_assets.py` и
-напишите свой генератор по образцу `tools/gen_slavic_assets.py`.
+Например, индийскую: в `IndianContent` добавьте блок рамки, `MythPortalBlock` и зажигалку по образцу `NorseContent`
+(или портал своей формы, как священный водоём в `mythology/greek/portal`, Мировое древо в `mythology/slavic/block` или
+пирамида в `mythology/egyptian/block`), поставьте `true` у `INDIAN` в `Mythology.java`, уберите `svarga` из
+`STUB_DIMENSIONS` в `tools/gen_greek_assets.py` и напишите свой генератор по образцу `tools/gen_egyptian_assets.py`.
 
 ## Измерения: что можно менять без кода
 

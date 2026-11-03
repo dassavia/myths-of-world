@@ -14,7 +14,15 @@
     },
     {
       "type": "patchouli:text",
-      "text": "III. Dark iron (Jotunheim, needs a diamond or bulat pickaxe): sword 8.5, armour 20, toughness 3.5, durability 2400. Monster slaying and divine ward.$(br)The gifts of the bosses beat the metal of their world: kladenets 8.5, Surtr's sword 10.5, Mjolnir 12.5."
+      "text": "II. Meteoric iron (the Duat, ore deep below): sword 7.5, armour 20, toughness 2, durability 1650. Monster slaying and evasion. Its pickaxe mines dark iron."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "III. Dark iron (Jotunheim, needs a diamond or bulat pickaxe): sword 8.5, armour 20, toughness 3.5, durability 2400. Monster slaying and divine ward."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The gifts of the bosses beat the metal of their world: kladenets and khopesh 8.5, Surtr's sword 10.5, Mjolnir 12.5."
     }
   ]
 }

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "mythsofworlds:pyramid_stone"
+    },
+    {
+      "item": "mythsofworlds:pyramid_stone"
+    },
+    {
+      "item": "minecraft:ink_sac"
+    }
+  ],
+  "result": {
+    "id": "mythsofworlds:hieroglyph_stone",
+    "count": 2
+  }
+}

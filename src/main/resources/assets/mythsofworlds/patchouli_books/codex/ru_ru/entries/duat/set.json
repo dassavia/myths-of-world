@@ -1,0 +1,22 @@
+{
+  "name": "Сет",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 17,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:set",
+      "name": "Сет"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Красный бог пустыни и бурь, 500 здоровья, в храме в Долине царей. Песчаная буря ранит, ослепляет и отбрасывает; Сет переносится за спину врага и зовёт шакалов."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Сет вырвал око Гора, а Гор исцелил его и победил: без ока Гора Сет получает лишь четверть урона, а с ним буря не слепит. Роняет посох уас."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_set"
+}

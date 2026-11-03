@@ -1,0 +1,18 @@
+{
+  "name": "Мумия",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_creature",
+  "sortnum": 7,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:mummy",
+      "name": "Мумия"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Мертвец в жёлтых пеленах. Солнце ему не страшно, но смола в бинтах горит: огонь ранит мумию вдвое. Хватка вызывает голод и замедляет."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_mummy"
+}

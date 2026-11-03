@@ -60,6 +60,7 @@ public final class JoinTest {
         MetalSet ori = GreekContent.ORICHALCUM;
         MetalSet bulat = SlavicContent.BULAT;
         MetalSet dark = NorseContent.DARK_IRON;
+        MetalSet meteoric = com.mythsofworlds.mythology.egyptian.EgyptianContent.METEORIC_IRON;
         return List.of(
                 List.of(ori.helmet.get(), ori.chestplate.get(), ori.leggings.get(), ori.boots.get(), ori.sword.get()),
                 List.of(bulat.helmet.get(), bulat.chestplate.get(), bulat.leggings.get(), bulat.boots.get(), bulat.axe.get()),
@@ -70,7 +71,12 @@ public final class JoinTest {
                 List.of(GreekContent.NEMEAN_HELMET.get(), GreekContent.NEMEAN_CHESTPLATE.get(), bulat.leggings.get(),
                         SlavicContent.SKOROKHODY.get(), GreekContent.BIDENT_OF_HADES.get()),
                 List.of(SlavicContent.SHAPKA_NEVIDIMKA.get(), dark.chestplate.get(), dark.leggings.get(),
-                        GreekContent.NEMEAN_BOOTS.get(), SlavicContent.KLADENETS.get()));
+                        GreekContent.NEMEAN_BOOTS.get(), SlavicContent.KLADENETS.get()),
+                List.of(meteoric.helmet.get(), meteoric.chestplate.get(), meteoric.leggings.get(), meteoric.boots.get(),
+                        meteoric.sword.get()),
+                List.of(com.mythsofworlds.mythology.egyptian.EgyptianContent.NEMES.get(),
+                        com.mythsofworlds.mythology.egyptian.EgyptianContent.PECTORAL_OF_RA.get(), meteoric.leggings.get(),
+                        meteoric.boots.get(), com.mythsofworlds.mythology.egyptian.EgyptianContent.KHOPESH.get()));
     }
 
     private static void dress(ServerPlayer player, List<Item> suit) {

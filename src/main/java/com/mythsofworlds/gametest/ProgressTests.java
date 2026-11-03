@@ -69,6 +69,8 @@ public class ProgressTests {
         Set<String> none = Set.of();
         helper.assertTrue(Progress.has(player, none, Codex.chapter("hellas").requires()), "Hellas is open from the start");
         helper.assertTrue(!Progress.has(player, none, Codex.chapter("nav").requires()), "Nav waits for the Minotaur");
+        helper.assertTrue(!Progress.has(player, Set.of("kill.minotaur"), Codex.chapter("duat").requires()), "the Duat waits for the Hydra");
+        helper.assertTrue(Progress.has(player, Set.of("kill.hydra"), Codex.chapter("duat").requires()), "the Hydra opens the Duat");
         helper.assertTrue(!Progress.has(player, Set.of("kill.cerberus"), Codex.chapter("jotunheim").requires()),
                 "Jotunheim needs Zmey Gorynych too");
         helper.assertTrue(Progress.has(player, Set.of("kill.cerberus", "kill.zmey_gorynych"), Codex.chapter("jotunheim").requires()),
@@ -135,6 +137,7 @@ public class ProgressTests {
     public static void portalsNeedTrophies(GameTestHelper helper) {
         var recipes = helper.getLevel().getRecipeManager();
         assertNeeds(helper, recipes, "world_tree_acorn", List.of(GreekContent.MINOTAUR_HORN.get()));
+        assertNeeds(helper, recipes, "ankh", List.of(GreekContent.HYDRA_SCALE.get()));
         assertNeeds(helper, recipes, "rune_igniter", List.of(GreekContent.CERBERUS_FANG.get(), SlavicContent.ZMEY_SCALE.get()));
         helper.succeed();
     }
@@ -166,6 +169,13 @@ public class ProgressTests {
             helper.assertTrue(after.material.value().getDefense(ArmorItem.Type.CHESTPLATE)
                     >= before.material.value().getDefense(ArmorItem.Type.CHESTPLATE), after.name + " chestplate is weaker");
         }
+        // Meteoric iron stands beside bulat on the second step: stronger than orichalcum, weaker than dark iron.
+        MetalSet meteoric = com.mythsofworlds.mythology.egyptian.EgyptianContent.METEORIC_IRON;
+        helper.assertTrue(meteoric.tier.getUses() > GreekContent.ORICHALCUM.tier.getUses()
+                && meteoric.tier.getUses() < NorseContent.DARK_IRON.tier.getUses(), "meteoric iron is tier II");
+        helper.assertTrue(meteoric.material.value().toughness() > GreekContent.ORICHALCUM.material.value().toughness()
+                && meteoric.material.value().toughness() < NorseContent.DARK_IRON.material.value().toughness(),
+                "meteoric iron armour is tier II");
         helper.assertTrue(MythPowers.of(GreekContent.ORICHALCUM.chestplate.get()).get(MythAttributes.REFLECTION.value()) > 0,
                 "orichalcum armour reflects");
         helper.succeed();

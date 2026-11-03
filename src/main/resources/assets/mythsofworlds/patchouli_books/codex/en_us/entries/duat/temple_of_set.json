@@ -1,0 +1,13 @@
+{
+  "name": "Temple of Set",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 24,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Red walls under the night sky, columns with fires and a black altar with a flame. Here wait Set and his jackals."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_temple_of_set"
+}

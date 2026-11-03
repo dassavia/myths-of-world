@@ -1,6 +1,7 @@
 package com.mythsofworlds.mythology.relic;
 
 import com.mythsofworlds.MythsOfWorlds;
+import com.mythsofworlds.mythology.egyptian.EgyptianContent;
 import com.mythsofworlds.mythology.greek.GreekContent;
 import com.mythsofworlds.mythology.norse.NorseContent;
 import com.mythsofworlds.mythology.slavic.SlavicContent;
@@ -35,9 +36,10 @@ import net.neoforged.neoforge.registries.DeferredHolder;
  * <ul>
  *   <li>Reflection: that share of a melee blow you take strikes the attacker back (orichalcum, Titan's breastplate).</li>
  *   <li>Lifesteal: that share of the melee damage you deal heals you (bulat, kladenets, girdle of Hippolyta).</li>
- *   <li>Monster slaying: more damage to the creatures and gods of the myths (dark iron, Heimdall, Mjolnir, Surtr).</li>
+ *   <li>Monster slaying: more damage to the creatures and gods of the myths (dark iron, meteoric iron, Heimdall,
+ *       Mjolnir, Surtr, the khopesh).</li>
  *   <li>Divine ward: less damage from the creatures and gods of the myths (bulat, dark iron, cap of invisibility).</li>
- *   <li>Evasion: a chance that a blow or a shot misses altogether (talaria, seven-league boots, cap).</li>
+ *   <li>Evasion: a chance that a blow or a shot misses altogether (talaria, seven-league boots, cap, meteoric iron).</li>
  *   <li>Fury: more damage at half health or less (the Nemean set, the girdle).</li>
  * </ul>
  */
@@ -56,6 +58,8 @@ public final class MythPowers {
             Map<Item, List<Bonus>> map = new HashMap<>();
             metal(map, GreekContent.ORICHALCUM, new Bonus(MythAttributes.REFLECTION, 0.05));
             metal(map, SlavicContent.BULAT, new Bonus(MythAttributes.LIFESTEAL, 0.025), new Bonus(MythAttributes.DIVINE_WARD, 0.03));
+            metal(map, EgyptianContent.METEORIC_IRON, new Bonus(MythAttributes.MONSTER_SLAYING, 0.03),
+                    new Bonus(MythAttributes.EVASION, 0.02));
             metal(map, NorseContent.DARK_IRON, new Bonus(MythAttributes.MONSTER_SLAYING, 0.05),
                     new Bonus(MythAttributes.DIVINE_WARD, 0.05));
             for (Supplier<? extends Item> piece : List.of(GreekContent.NEMEAN_HELMET, GreekContent.NEMEAN_CHESTPLATE,
@@ -69,6 +73,10 @@ public final class MythPowers {
             put(map, SlavicContent.SKOROKHODY, new Bonus(MythAttributes.EVASION, 0.08));
             put(map, SlavicContent.SHAPKA_NEVIDIMKA, new Bonus(MythAttributes.EVASION, 0.05), new Bonus(MythAttributes.DIVINE_WARD, 0.08));
             put(map, SlavicContent.KLADENETS, new Bonus(MythAttributes.LIFESTEAL, 0.10));
+            put(map, EgyptianContent.KHOPESH, new Bonus(MythAttributes.MONSTER_SLAYING, 0.10));
+            put(map, EgyptianContent.NEMES, new Bonus(MythAttributes.DIVINE_WARD, 0.08));
+            put(map, EgyptianContent.PECTORAL_OF_RA, new Bonus(MythAttributes.REFLECTION, 0.10),
+                    new Bonus(MythAttributes.DIVINE_WARD, 0.05));
             put(map, NorseContent.MJOLNIR, new Bonus(MythAttributes.MONSTER_SLAYING, 0.15));
             put(map, NorseContent.SURTR_SWORD, new Bonus(MythAttributes.MONSTER_SLAYING, 0.15));
             put(map, GreekContent.HARPE, new Bonus(MythAttributes.MONSTER_SLAYING, 0.10));

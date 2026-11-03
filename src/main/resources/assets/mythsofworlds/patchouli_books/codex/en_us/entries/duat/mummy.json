@@ -1,0 +1,18 @@
+{
+  "name": "Mummy",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_creature",
+  "sortnum": 7,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:mummy",
+      "name": "Mummy"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "A dead man in yellowed wrappings. The sun does not harm it, but the resin in the bandages burns: fire wounds a mummy twice as much. Its grip brings hunger and slows."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_mummy"
+}

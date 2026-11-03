@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "minecraft:lapis_lazuli"
+    },
+    {
+      "item": "mythsofworlds:hydra_scale"
+    }
+  ],
+  "result": {
+    "id": "mythsofworlds:ankh",
+    "count": 1
+  }
+}

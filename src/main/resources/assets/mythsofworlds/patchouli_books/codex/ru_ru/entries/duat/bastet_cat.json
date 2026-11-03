@@ -1,0 +1,22 @@
+{
+  "name": "Кошка Бастет",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_creature",
+  "sortnum": 12,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:bastet_cat",
+      "name": "Кошка Бастет"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Чёрная храмовая кошка с золотыми глазами. Приручается сырой рыбой. Мумии и скарабеи её боятся, а ручная кошка рядом с хозяином дарит ему регенерацию."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Ра в облике великого кота убил змея Апопа. Ручные кошки Бастет бросаются на Апопа, и змей получает полный урон только от героя, рядом с которым кошка."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_bastet_cat"
+}

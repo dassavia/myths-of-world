@@ -1,0 +1,13 @@
+{
+  "name": "Tomb of the Pharaoh",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 22,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A mastaba with sloping walls in the Valley of the Kings. In the dark hall among the columns stands a sarcophagus of gold and lapis, guarded by mummies and ushabti."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_pharaoh_tomb"
+}

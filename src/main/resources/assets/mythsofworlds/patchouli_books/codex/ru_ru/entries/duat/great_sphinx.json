@@ -1,0 +1,13 @@
+{
+  "name": "Великий Сфинкс",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 23,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Огромный каменный лев с головой в полосатом немесе лежит в песках. Между его лапами - клад, у обелисков ждёт живой Сфинкс."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_great_sphinx"
+}

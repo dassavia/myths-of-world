@@ -1,0 +1,21 @@
+{
+  "name": "The Pyramid",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_intro",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The way to the Duat runs through a pyramid. Make pyramid stone: 8 sandstone around a gold ingot give 8 blocks."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Build a 5x5 base, a 3x3 step on it, and set a gold block on the top. In the middle of one side of the base leave a doorway: an empty block with air above it."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The ankh: two gold ingots, lapis and a scale of the Hydra. Touch the pyramid with the ankh and a gate of shadow opens in the doorway. Stand in it for 3 seconds. Come back the same way."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/duat"
+}

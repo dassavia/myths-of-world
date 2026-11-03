@@ -1,0 +1,13 @@
+{
+  "name": "Деревня на Ниле",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 19,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Дома из сырцового кирпича с плоскими крышами вдоль канала, поля пшеницы и тростника, пальмы и колодцы. Здесь живут торговцы и кошки Бастет."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_egyptian_village"
+}

@@ -2,7 +2,7 @@
   "name": "Svarga",
   "icon": "minecraft:recovery_compass",
   "category": "mythsofworlds:far_intro",
-  "sortnum": 2,
+  "sortnum": 1,
   "pages": [
     {
       "type": "patchouli:text",

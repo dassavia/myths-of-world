@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "MMM",
+    "M M",
+    "M M"
+  ],
+  "key": {
+    "M": {
+      "item": "mythsofworlds:meteoric_iron_ingot"
+    }
+  },
+  "result": {
+    "id": "mythsofworlds:meteoric_iron_leggings",
+    "count": 1
+  }
+}

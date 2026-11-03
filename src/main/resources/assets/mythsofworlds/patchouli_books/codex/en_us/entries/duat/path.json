@@ -1,0 +1,14 @@
+{
+  "name": "Path of the World",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat",
+  "priority": true,
+  "sortnum": -1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The steps of this world in order. Each one opens new pages.$(br)$(li)You passed through the gate of shadow into the Duat$(li)The Mummy of the Pharaoh is slain$(li)The Sphinx is slain$(li)Set is defeated$(li)Apep is slain: the barque of Ra sails again"
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/duat"
+}

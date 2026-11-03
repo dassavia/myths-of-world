@@ -1,0 +1,22 @@
+{
+  "name": "Cat of Bastet",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_creature",
+  "sortnum": 12,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:bastet_cat",
+      "name": "Cat of Bastet"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "A black temple cat with golden eyes. Tamed with raw fish. Mummies and scarabs fear it, and a tame cat near its master gives them Regeneration."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Ra in the shape of a great cat slew the serpent Apep. Tame cats of Bastet throw themselves on Apep, and the serpent takes full harm only from a hero with a cat at their side."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_bastet_cat"
+}

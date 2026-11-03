@@ -1,0 +1,22 @@
+{
+  "name": "Апоп",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 18,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:apep",
+      "name": "Апоп"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Змей хаоса, 600 здоровья, на острове в Огненном озере у обломков ладьи Ра. Укус ядовит, издали плюёт ядом, хвостом отбрасывает. Ниже половины здоровья зовёт скарабеев. Огонь ему не страшен."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Возьмите с собой ручную кошку Бастет: без неё Апоп получает лишь половину урона, с ней - в полтора раза больше, а укус кошки рвёт его вчетверо. Роняет пектораль Ра."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_apep"
+}

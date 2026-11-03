@@ -1,0 +1,153 @@
+{
+ "items": [
+  "pectoral_of_ra"
+ ],
+ "texture_height": 64,
+ "parts": [
+  {
+   "bone": "body",
+   "name": "collar",
+   "uv": [
+    0,
+    38
+   ],
+   "origin": [
+    -5,
+    -0.5,
+    -3
+   ],
+   "size": [
+    10,
+    2,
+    1
+   ],
+   "inflate": 0.1,
+   "pivot": [
+    0,
+    0,
+    0
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "bone": "body",
+   "name": "collar_inner",
+   "uv": [
+    22,
+    38
+   ],
+   "origin": [
+    -4,
+    1.5,
+    -3
+   ],
+   "size": [
+    8,
+    1,
+    1
+   ],
+   "inflate": 0.1,
+   "pivot": [
+    0,
+    0,
+    0
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "bone": "body",
+   "name": "sun_disc",
+   "uv": [
+    40,
+    32
+   ],
+   "origin": [
+    -1.5,
+    3,
+    -3.4
+   ],
+   "size": [
+    3,
+    3,
+    1
+   ],
+   "inflate": 0.0,
+   "pivot": [
+    0,
+    0,
+    0
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "bone": "right_arm",
+   "name": "right_shoulder",
+   "uv": [
+    0,
+    32
+   ],
+   "origin": [
+    -3.5,
+    -2.6,
+    -2.5
+   ],
+   "size": [
+    5,
+    1,
+    5
+   ],
+   "inflate": 0.1,
+   "pivot": [
+    0,
+    0,
+    0
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "bone": "left_arm",
+   "name": "left_shoulder",
+   "uv": [
+    20,
+    32
+   ],
+   "origin": [
+    -1.5,
+    -2.6,
+    -2.5
+   ],
+   "size": [
+    5,
+    1,
+    5
+   ],
+   "inflate": 0.1,
+   "pivot": [
+    0,
+    0,
+    0
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ]
+  }
+ ]
+}

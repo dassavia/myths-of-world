@@ -1,0 +1,17 @@
+{
+  "name": "Броня из небесного железа",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_intro",
+  "sortnum": 5,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Шлем: броня 3, прочность 363$(br)Нагрудник: броня 8, прочность 528$(br)Поножи: броня 6, прочность 495$(br)Сапоги: броня 3, прочность 429"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Весь комплект: броня 20, твёрдость 2 за вещь. Зачаровываемость 18."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/duat"
+}

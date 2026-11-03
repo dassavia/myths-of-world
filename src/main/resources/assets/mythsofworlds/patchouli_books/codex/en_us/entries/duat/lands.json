@@ -1,0 +1,17 @@
+{
+  "name": "The Lands of the Duat",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_intro",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "An everlasting night with stars hangs over the Duat. The sands with ruined columns, oases under date palms and the banks of the Celestial Nile with reeds and lotus."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The Fields of Aaru are the golden meadows of the blessed. Tombs stand among the red cliffs of the Valley of the Kings, and in the south burns the Lake of Fire, where the serpent Apep lies in wait."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/duat"
+}

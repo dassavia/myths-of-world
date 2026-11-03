@@ -1,0 +1,22 @@
+{
+  "name": "Apep",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 18,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:apep",
+      "name": "Apep"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The serpent of chaos, 600 health, on an island in the Lake of Fire by the wreck of the barque of Ra. Its bite is venom, it spits venom from afar and sweeps with its tail. Below half health it calls scarabs. Fire cannot hurt it."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Bring a tame cat of Bastet: without one Apep takes only half the harm, with one half as much again, and the cat's bite tears it four times as hard. Drops the pectoral of Ra."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_apep"
+}

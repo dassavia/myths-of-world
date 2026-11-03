@@ -1,0 +1,17 @@
+{
+  "name": "Земли Дуата",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_intro",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Над Дуатом вечная ночь и звёзды. Пески Дуата с руинами колонн, оазисы под финиковыми пальмами и берега Небесного Нила с тростником и лотосами."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Поля Иалу - золотые луга блаженных. В Долине царей среди красных скал стоят гробницы, а на юге горит Огненное озеро, где таится змей Апоп."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/duat"
+}

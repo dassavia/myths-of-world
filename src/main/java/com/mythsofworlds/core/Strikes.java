@@ -1,6 +1,7 @@
 package com.mythsofworlds.core;
 
 import com.mythsofworlds.MythsOfWorlds;
+import com.mythsofworlds.mythology.egyptian.EgyptianContent;
 import com.mythsofworlds.mythology.greek.GreekContent;
 import com.mythsofworlds.mythology.norse.NorseContent;
 import com.mythsofworlds.mythology.slavic.SlavicContent;
@@ -47,10 +48,12 @@ public final class Strikes {
             metal(map, GreekContent.ORICHALCUM, 0xF0A848);
             metal(map, SlavicContent.BULAT, 0x9ED8FF);
             metal(map, NorseContent.DARK_IRON, 0x8C6CE0);
+            metal(map, EgyptianContent.METEORIC_IRON, 0xB8C8E8);
             map.put(GreekContent.HARPE.get(), new Strike(Style.SLASH, 0xF4D878, null));
             map.put(GreekContent.NEMEAN_CLAW_DAGGER.get(), new Strike(Style.STAB, 0xE0B060, null));
             map.put(GreekContent.BIDENT_OF_HADES.get(), new Strike(Style.STAB, 0x6A2CB0, ParticleTypes.SOUL));
             map.put(SlavicContent.KLADENETS.get(), new Strike(Style.SLASH, 0xC4F4FF, ParticleTypes.END_ROD));
+            map.put(EgyptianContent.KHOPESH.get(), new Strike(Style.SLASH, 0xE8C060, ParticleTypes.SMOKE));
             map.put(NorseContent.MJOLNIR.get(), new Strike(Style.HEAVY, 0x8CD0FF, ParticleTypes.ELECTRIC_SPARK));
             map.put(NorseContent.SURTR_SWORD.get(), new Strike(Style.SLASH, 0xFF6A20, ParticleTypes.FLAME));
             strikes = map;

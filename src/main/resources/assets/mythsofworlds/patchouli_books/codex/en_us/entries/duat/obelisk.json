@@ -1,0 +1,13 @@
+{
+  "name": "Obelisk",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 21,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A needle of stone carved with hieroglyphs, with a golden tip. At its foot an offering table and the chest of the priests, where an eye of Horus may lie."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_obelisk"
+}

@@ -30,6 +30,9 @@ CHAPTERS = [
     ("nav", "slavic", "world_tree_acorn", ["kill.minotaur"], [
         ("enter.nav", "world_tree_acorn"), ("kill.solovei", "skorokhody"), ("kill.zmey_gorynych", "zmey_scale"),
         ("kill.koschei", "shapka_nevidimka")]),
+    ("duat", "egyptian", "ankh", ["kill.hydra"], [
+        ("enter.duat", "ankh"), ("kill.pharaoh_mummy", "khopesh"), ("kill.sphinx", "nemes"), ("kill.set", "was_sceptre"),
+        ("kill.apep", "pectoral_of_ra")]),
     ("jotunheim", "norse", "rune_igniter", ["kill.cerberus", "kill.zmey_gorynych"], [
         ("enter.jotunheim", "rune_igniter"), ("kill.draugr_chieftain", "barrow_crown"), ("kill.garm", "garm_fang"),
         ("kill.heimdall", "heimdall_eye"), ("kill.thrym", "mjolnir"), ("kill.fenrir", "fenrir_fang"),
@@ -41,6 +44,7 @@ CHAPTER_NAMES = {
     "path": ("Путь героя", "The Hero's Path"),
     "hellas": ("Эллада", "Hellas"),
     "nav": ("Навь", "Nav"),
+    "duat": ("Дуат", "Duat"),
     "jotunheim": ("Йотунхейм", "Jotunheim"),
     "far": ("Дальние миры", "The Far Worlds"),
 }
@@ -48,6 +52,7 @@ CHAPTER_NAMES = {
 MILESTONES = {
     "enter.hellas": ("Вы ступили в Элладу", "You set foot in Hellas"),
     "enter.nav": ("Вы спустились в Навь", "You went down into Nav"),
+    "enter.duat": ("Вы прошли сквозь врата тени в Дуат", "You passed through the gate of shadow into the Duat"),
     "enter.jotunheim": ("Вы прошли по Биврёсту в Йотунхейм", "You crossed Bifrost into Jotunheim"),
     "kill.nemean_lion": ("Немейский лев повержен", "The Nemean Lion is slain"),
     "kill.medusa": ("Медуза Горгона повержена", "Medusa is slain"),
@@ -59,6 +64,10 @@ MILESTONES = {
     "kill.solovei": ("Соловей-разбойник повержен", "Solovei the Robber is slain"),
     "kill.zmey_gorynych": ("Змей Горыныч повержен", "Zmey Gorynych is slain"),
     "kill.koschei": ("Кощей Бессмертный повержен", "Koschei the Deathless is slain"),
+    "kill.pharaoh_mummy": ("Мумия фараона повержена", "The Mummy of the Pharaoh is slain"),
+    "kill.sphinx": ("Сфинкс повержен", "The Sphinx is slain"),
+    "kill.set": ("Сет повержен", "Set is defeated"),
+    "kill.apep": ("Апоп повержен: ладья Ра снова плывёт", "Apep is slain: the barque of Ra sails again"),
     "kill.draugr_chieftain": ("Вождь драугров повержен", "The Draugr Chieftain is slain"),
     "kill.garm": ("Гарм повержен", "Garm is slain"),
     "kill.heimdall": ("Хеймдалль повержен", "Heimdall is defeated"),
@@ -104,6 +113,10 @@ PATH = [
          "вместе. Боссы: Соловей (300), Змей Горыныч (500), Кощей (550).",
          "II. Nav is opened by the Minotaur's horn: the acorn of the World Tree needs it. The two worlds can be "
          "travelled side by side. Bosses: Solovei (300), Zmey Gorynych (500), Koschei (550)."),
+        ("II. Дуат открывает чешуя Гидры: она нужна для анха, ключа пирамиды. Его можно проходить вместе с Навью. "
+         "Полубосс: мумия фараона (220). Боссы: Сфинкс (350), Сет (500), Апоп (600).",
+         "II. The Duat is opened by a scale of the Hydra: the ankh, key of the pyramid, needs it. It can be travelled "
+         "alongside Nav. Half-boss: the Mummy of the Pharaoh (220). Bosses: the Sphinx (350), Set (500), Apep (600)."),
         ("III. Йотунхейм самый суровый. Рунное огниво требует клык Цербера и чешую Змея Горыныча. Боссы: вождь "
          "драугров (350), Гарм (400), Хеймдалль (450), Трим (550), Фенрир (650), Сурт (800).",
          "III. Jotunheim is the harshest. The rune igniter needs a fang of Cerberus and a scale of Zmey Gorynych. "
@@ -121,12 +134,17 @@ PATH = [
          "божья защита. Кирка добывает тёмное железо.",
          "II. Bulat (Nav, ore deep below): sword 7.5, armour 20, toughness 2, durability 1700. Lifesteal and divine "
          "ward. Its pickaxe mines dark iron."),
+        ("II. Небесное железо (Дуат, руда в глубинах): меч 7.5, броня 20, твёрдость 2, прочность 1650. Гроза "
+         "чудовищ и уклонение. Кирка добывает тёмное железо.",
+         "II. Meteoric iron (the Duat, ore deep below): sword 7.5, armour 20, toughness 2, durability 1650. Monster "
+         "slaying and evasion. Its pickaxe mines dark iron."),
         ("III. Тёмное железо (Йотунхейм, нужна алмазная или булатная кирка): меч 8.5, броня 20, твёрдость 3.5, "
          "прочность 2400. Гроза чудовищ и божья защита.",
          "III. Dark iron (Jotunheim, needs a diamond or bulat pickaxe): sword 8.5, armour 20, toughness 3.5, "
          "durability 2400. Monster slaying and divine ward."),
-        ("Дары боссов сильнее металла своего мира: кладенец 8.5, меч Сурта 10.5, Мьёльнир 12.5.",
-         "The gifts of the bosses beat the metal of their world: kladenets 8.5, Surtr's sword 10.5, Mjolnir 12.5."),
+        ("Дары боссов сильнее металла своего мира: кладенец и хопеш 8.5, меч Сурта 10.5, Мьёльнир 12.5.",
+         "The gifts of the bosses beat the metal of their world: kladenets and khopesh 8.5, Surtr's sword 10.5, "
+         "Mjolnir 12.5."),
     ])),
     ("powers", "intro", None, *paginate(("Силы доспехов", "Powers of the Armour"), [
         ("У брони и оружия мифов есть силы, которых нет в обычной игре. Они видны в подсказке предмета и "
@@ -149,6 +167,10 @@ PATH = [
          "Orichalcum: reflection 5% a piece. Titan's breastplate: reflection 15%."),
         ("Булат: живая сила 2.5% и божья защита 3% за вещь. Кладенец: живая сила 10%.",
          "Bulat: lifesteal 2.5% and divine ward 3% a piece. Kladenets: lifesteal 10%."),
+        ("Небесное железо: гроза чудовищ 3% и уклонение 2% за вещь. Хопеш: гроза чудовищ 10%. Немес: божья защита "
+         "8%. Пектораль Ра: отражение 10% и божья защита 5%.",
+         "Meteoric iron: monster slaying 3% and evasion 2% a piece. Khopesh: monster slaying 10%. Nemes: divine ward "
+         "8%. Pectoral of Ra: reflection 10% and divine ward 5%."),
         ("Тёмное железо: гроза чудовищ 5% и божья защита 5% за вещь. Шлем Хеймдалля 10%, Мьёльнир и меч Сурта 15%, "
          "харпа 10% грозы чудовищ.",
          "Dark iron: monster slaying 5% and divine ward 5% a piece. Heimdall's helmet 10%, Mjolnir and Surtr's sword "
@@ -160,12 +182,12 @@ PATH = [
     ])),
     ("sets", "intro", None, *paginate(("Союз пантеонов", "Union of the Pantheons"), [
         ("Четыре вещи одного мира: Эллада - скорость и прыжок, Йотунхейм - сила и стойкость, Навь - ночное "
-         "зрение и подводное дыхание.",
+         "зрение и подводное дыхание, Дуат - огнестойкость и спешка.",
          "Four pieces of one world: Hellas - speed and jump boost, Jotunheim - strength and resistance, Nav - night "
-         "vision and water breathing."),
-        ("Вещи двух или трёх миров вместе: 2 дают спешку, 3 ещё огнестойкость, 4 ещё регенерацию, а две и две - "
+         "vision and water breathing, the Duat - fire resistance and haste."),
+        ("Вещи разных миров вместе: 2 дают спешку, 3 ещё огнестойкость, 4 ещё регенерацию, а две и две - "
          "стойкость.",
-         "Pieces of two or three worlds together: 2 give haste, 3 also fire resistance, 4 also regeneration, and two "
+         "Pieces of different worlds together: 2 give haste, 3 also fire resistance, 4 also regeneration, and two "
          "and two give resistance."),
         ("Весь Немейский сет: сила, и снаряды его не пробивают.",
          "The whole Nemean set: strength, and projectiles cannot pierce it."),
@@ -183,15 +205,13 @@ PATH = [
 ]
 
 FAR_INTRO = ("Дальние миры", "The Far Worlds",
-             "За краем известных мифов лежат ещё три мира. Их страницы пока пусты: скальды ещё не вернулись оттуда.",
-             "Beyond the known myths lie three more worlds. Their pages are still blank: the skalds have not yet "
+             "За краем известных мифов лежат ещё два мира. Их страницы пока пусты: скальды ещё не вернулись оттуда.",
+             "Beyond the known myths lie two more worlds. Their pages are still blank: the skalds have not yet "
              "come back from there.")
 
 FAR = [
     ("hawaiki", "intro", None, ["Гаваики", "Тёплое море и острова предков Полинезии. Путь туда ещё не найден."],
      ["Hawaiki", "A warm sea and the islands of the Polynesian ancestors. No way there has been found yet."]),
-    ("duat", "intro", None, ["Дуат", "Пустыня вечной ночи, где странствует ладья Ра. Путь туда ещё не найден."],
-     ["Duat", "A desert of everlasting night where the barque of Ra sails. No way there has been found yet."]),
     ("svarga", "intro", None, ["Сварга", "Джунгли вечного полдня, небо богов Индии. Путь туда ещё не найден."],
      ["Svarga", "A jungle of eternal noon, the heaven of the gods of India. No way there has been found yet."]),
 ]

@@ -1,4 +1,4 @@
-"""The item icons, drawn at 32x32 with the renderer of art32.py: the tools, armour and metals of the three
+"""The item icons, drawn at 32x32 with the renderer of art32.py: the tools, armour and metals of the four
 mythologies, the relics, trophies, foods, potions and books.
 
 Run after hd_textures.py (which still enlarges the textures that are not redrawn here, such as entities), and before
@@ -40,9 +40,15 @@ METALS = {
                   dark=mat(0x7D8A99)),
     "dark_iron": dict(blade=mat(0x66707F, spread=0.55), trim=mat(0x8C939F), grip=DARK_WOOD, gem=mat(0x4FC8F0),
                       dark=mat(0x464C59)),
+    # Meteoric iron of the Duat: grey with a cold blue sheen, set with gold and lapis.
+    "meteoric_iron": dict(blade=mat(0x8E9AB0, spread=0.5), trim=GOLD, grip=mat(0x2A4A8A, spread=0.4, glint=False),
+                          gem=mat(0x2A5AB0), dark=mat(0x5A6478)),
 }
+LAPIS = mat(0x2A5AB0, spread=0.4, glint=False)
+LINEN = mat(0xE8E0C8, spread=0.3, glint=False)
 # Bulat is patterned (Damascus watering), dark iron etched with runes.
-PATTERN = {"orichalcum": None, "bulat": grain((1, -1), period=2.6, amount=0.1, seed=3), "dark_iron": noise(0.06, 9)}
+PATTERN = {"orichalcum": None, "bulat": grain((1, -1), period=2.6, amount=0.1, seed=3), "dark_iron": noise(0.06, 9),
+           "meteoric_iron": noise(0.09, 17)}  # meteoric iron is speckled like the stone it fell from
 
 
 def handle(s, length, grip, width=2.2, start=0.0):
@@ -61,6 +67,10 @@ def sword(metal):
                bevel=1.2)
     elif metal == "dark_iron":  # a Norse sword: a short heavy guard
         s.poly(D.pts([(8.5, -4.6), (11, -4.6), (11, 4.6), (8.5, 4.6)]), m["trim"], bevel=1.4)
+    elif metal == "meteoric_iron":  # an Egyptian sword: a narrow gold guard with lapis bands on the grip
+        s.poly(D.pts([(8.5, -3.4), (10.6, -3.4), (10.6, 3.4), (8.5, 3.4)]), m["trim"], bevel=1.2)
+        for t in (3.5, 6.5):
+            s.stroke([D(t, -1.4), D(t, 1.4)], 0.9, GOLD, bevel=0.4, edge=False)
     else:  # a Greek xiphos: leaf blade and a crossbar with round ends
         s.poly(D.pts([(8.5, -4.2), (10.8, -4.2), (10.8, 4.2), (8.5, 4.2)]), m["trim"], bevel=1.2)
         for side in (-5, 5):
@@ -84,6 +94,8 @@ def axe(metal):
         head = [(23, 1), (29.5, 1), (31, 4), (31, 9.5), (28, 11), (23.5, 10.5), (21, 9), (24, 6), (23, 4)]
     elif metal == "bulat":  # a Slavic axe: a straight high edge
         head = [(22, 1), (29.5, 1), (32, 3), (32.5, 10), (29.5, 10.5), (26.5, 8), (24, 5), (22, 4)]
+    elif metal == "meteoric_iron":  # an Egyptian epsilon axe: a wide half-moon edge bound to the haft
+        head = [(21.5, 1), (30, 1), (33, 5), (33, 11), (30.5, 12), (27, 11), (24.5, 8), (21.5, 5)]
     else:  # a Greek axe: a crescent edge
         head = [(22, 1), (29.5, 1), (31.5, 4), (33, 9), (30.5, 11.5), (27.5, 9.5), (25, 6.5), (22, 4)]
     s.poly(D.pts(head), m["blade"], bevel=2.2, pattern=PATTERN[metal])
@@ -146,6 +158,13 @@ def helmet(metal):
         s.rect((5, 15, 27, 18), m["trim"], bevel=1.2)
         s.poly([(15, 18), (17, 18), (17, 24), (15, 24)], m["dark"], bevel=1)
         s.ellipse((14.5, 1, 17.5, 4), m["trim"])
+    elif metal == "meteoric_iron":  # the khepresh, the blue war crown of the pharaohs, studded with gold
+        s.poly([(6, 21), (5, 13), (7, 6), (11, 3), (16, 2), (21, 3), (25, 6), (27, 13), (26, 21)], LAPIS, bevel=3,
+               pattern=scales(3, 0.2))
+        s.poly([(5, 19), (27, 19), (28, 24), (24, 25), (16, 23), (8, 25), (4, 24)], b, bevel=1.6, pattern=PATTERN[metal])
+        s.rect((4.5, 18, 27.5, 20.5), m["trim"], bevel=1.2)
+        s.poly([(15, 8), (17, 8), (18, 12), (16, 14), (14, 12)], m["trim"], bevel=1)  # the uraeus on the brow
+        s.ellipse((15, 9, 17, 11), mat(0xC0402A))
     else:  # Norse: rounded cap, nose guard and spectacle guards
         s.poly([(5, 17), (5, 11), (8, 6), (13, 3.5), (19, 3.5), (24, 6), (27, 11), (27, 17)], b, bevel=3,
                pattern=PATTERN[metal])
@@ -169,6 +188,12 @@ def chestplate(metal):
         s.ellipse((14, 13, 18, 17), m["gem"])
         s.rect((7, 24, 25, 26.5), LEATHER, bevel=1)
         s.rect((15, 23.5, 17.5, 27), m["trim"], bevel=1)
+    elif metal == "meteoric_iron":  # a corslet of scales under a broad collar of gold and lapis
+        s.poly(body, m["blade"], bevel=2.4, pattern=combine(scales(2, 0.22), PATTERN[metal]))
+        s.poly([(5, 7), (10, 5), (16, 9), (22, 5), (27, 7), (25, 12), (16, 15), (7, 12)], m["trim"], bevel=1.6)
+        s.poly([(8, 8.5), (16, 12), (24, 8.5), (23.5, 10.5), (16, 13.5), (8.5, 10.5)], LAPIS, bevel=1)
+        s.rect((7, 23, 25, 25.5), m["trim"], bevel=1)
+        s.ellipse((14.5, 16, 17.5, 19), m["gem"])
     elif metal == "dark_iron":  # lamellar plates in rows
         s.poly(body, m["blade"], bevel=2.6, pattern=combine(bands("y", 4, 0.14), PATTERN[metal]))
         s.poly([(3, 7), (9, 4), (11, 9), (5, 12)], m["trim"], bevel=1.5)
@@ -200,6 +225,11 @@ def leggings(metal):
         s.poly(shape, m["blade"], bevel=2.6, pattern=combine(bands("y", 4, 0.12), PATTERN[metal]))
         s.rect((6.5, 4, 25.5, 7.5), m["trim"], bevel=1.2)
         s.ellipse((14.5, 4.2, 17.5, 7.2), m["gem"])
+    elif metal == "meteoric_iron":  # a pleated linen kilt (shendyt) over greaves of meteoric iron
+        s.poly(shape, m["blade"], bevel=2.4, pattern=PATTERN[metal])
+        s.poly([(6.5, 4), (25.5, 4), (26.5, 15), (5.5, 15)], LINEN, bevel=1.6, pattern=bands("x", 2, 0.12))
+        s.poly([(14, 6), (18, 6), (17.5, 15), (14.5, 15)], m["trim"], bevel=1)
+        s.rect((6.5, 4, 25.5, 6.5), m["trim"], bevel=1.2)
     else:
         s.poly(shape, CLOTH_RED, bevel=2, pattern=bands("x", 3, 0.1))
         s.rect((6.5, 4, 25.5, 7.5), m["trim"], bevel=1.2)
@@ -221,6 +251,11 @@ def boots(metal):
             s.poly(shin, m["blade"], bevel=2.4, pattern=combine(bands("y", 4, 0.12), PATTERN[metal]))
             s.rect((x0 + 0.5, 8, x0 + 9.5, 11), m["trim"], bevel=1)
             s.ellipse((x0 + 3.5, 14, x0 + 6.5, 17), m["gem"])
+        elif metal == "meteoric_iron":  # greaves of meteoric iron over gilded sandals
+            s.poly(shin, mat(0xC89A5A, spread=0.4, glint=False), bevel=2)
+            s.poly([(x0 + 1, 8), (x0 + 9, 8), (x0 + 9, 21), (x0 + 1, 21)], m["blade"], bevel=2.2, pattern=PATTERN[metal])
+            s.rect((x0 + 0.5, 8, x0 + 9.5, 10.5), m["trim"], bevel=1)
+            s.ellipse((x0 + 3.5, 13, x0 + 6.5, 16), m["gem"])
         else:  # greaves over sandals
             s.poly(shin, LEATHER, bevel=2)
             s.poly([(x0 + 1, 8), (x0 + 9, 8), (x0 + 9, 22), (x0 + 1, 22)], m["blade"], bevel=2.4)
@@ -259,6 +294,8 @@ for _metal in METALS:
 def main(names):
     from items_relics import register  # noqa: E402  the relics, trophies, foods and books
     register(ITEMS)
+    from items_egyptian import register as register_egyptian  # noqa: E402  the relics of the Duat
+    register_egyptian(ITEMS)
     for name in names or sorted(ITEMS):
         # Marked as full resolution, so that hd_textures.py leaves them alone.
         save_marked(ITEMS[name]().render(), os.path.join(ROOT, name + ".png"))

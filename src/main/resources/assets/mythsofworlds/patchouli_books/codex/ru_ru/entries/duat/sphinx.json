@@ -1,0 +1,22 @@
+{
+  "name": "Сфинкс",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 16,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:sphinx",
+      "name": "Сфинкс"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Каменный лев с головой царя, 350 здоровья, у Великого Сфинкса в песках. Не нападает первым. Рёв отбрасывает и замедляет, а ниже половины здоровья ослепляет песком."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Тело Сфинкса из камня: стрелы лишь царапают его, а кирка бьёт вдвое. Роняет немес и когти."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_sphinx"
+}

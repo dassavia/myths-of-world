@@ -2,6 +2,7 @@ package com.mythsofworlds.codex;
 
 import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.core.PlayerData;
+import com.mythsofworlds.mythology.egyptian.EgyptianContent;
 import com.mythsofworlds.mythology.greek.GreekContent;
 import com.mythsofworlds.mythology.norse.NorseContent;
 import com.mythsofworlds.mythology.slavic.SlavicContent;
@@ -32,7 +33,9 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
  * a boss ({@code kill.minotaur}); they open the chapters of the Codex (data/mythsofworlds/journal/codex.json).
  * <p>
  * The order of the worlds: Hellas is open from the start. The horn of the Minotaur goes into the acorn of the World
- * Tree, so Nav opens after the first boss of Hellas, and the two can be travelled side by side. The rune igniter of
+ * Tree, so Nav opens after the first boss of Hellas, and the two can be travelled side by side. The ankh that opens
+ * the pyramid to the Duat needs a scale of the Hydra, so the Duat opens after the second boss and is travelled
+ * alongside Nav. The rune igniter of
  * Bifrost needs a fang of Cerberus and a scale of Zmey Gorynych, so Jotunheim, the hardest world, opens once both
  * are slain. Surtr, the last boss of Jotunheim, ends the path and opens the chapter of the far worlds.
  * <p>
@@ -43,9 +46,10 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 public final class Progress {
     /** Bosses and half-bosses whose death is a milestone, by entity id path. */
     public static final Set<String> BOSSES = Set.of("cyclops", "medusa", "nemean_lion", "minotaur", "hydra", "cerberus",
-            "solovei", "zmey_gorynych", "koschei", "draugr_chieftain", "garm", "heimdall", "thrym", "fenrir", "surtr");
+            "solovei", "zmey_gorynych", "koschei", "pharaoh_mummy", "sphinx", "set", "apep", "draugr_chieftain", "garm", "heimdall", "thrym", "fenrir", "surtr");
     public static final Map<ResourceKey<Level>, String> WORLDS = Map.of(
-            GreekContent.HELLAS, "hellas", NorseContent.JOTUNHEIM, "jotunheim", SlavicContent.NAV, "nav");
+            GreekContent.HELLAS, "hellas", NorseContent.JOTUNHEIM, "jotunheim", SlavicContent.NAV, "nav",
+            EgyptianContent.DUAT, "duat");
     /** Players this close to a boss when it falls share the victory. */
     public static final double SHARE_RANGE = 64.0;
 

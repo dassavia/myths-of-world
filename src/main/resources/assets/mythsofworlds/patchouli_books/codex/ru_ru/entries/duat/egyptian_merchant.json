@@ -1,0 +1,18 @@
+{
+  "name": "Торговцы Дуата",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_creature",
+  "sortnum": 14,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:egyptian_merchant",
+      "name": "Торговцы Дуата"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "В деревнях на Ниле живут торговец рынка (скупает трофеи, продаёт финики и лазурит), жрец Анубиса (анх, око Гора, систр, зелья) и кузнец (небесное железо и оружие из трофеев)."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_egyptian_merchant"
+}

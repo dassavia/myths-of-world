@@ -6,11 +6,11 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "Four pieces of one world: Hellas - speed and jump boost, Jotunheim - strength and resistance, Nav - night vision and water breathing."
+      "text": "Four pieces of one world: Hellas - speed and jump boost, Jotunheim - strength and resistance, Nav - night vision and water breathing, the Duat - fire resistance and haste."
     },
     {
       "type": "patchouli:text",
-      "text": "Pieces of two or three worlds together: 2 give haste, 3 also fire resistance, 4 also regeneration, and two and two give resistance.$(br)The whole Nemean set: strength, and projectiles cannot pierce it."
+      "text": "Pieces of different worlds together: 2 give haste, 3 also fire resistance, 4 also regeneration, and two and two give resistance.$(br)The whole Nemean set: strength, and projectiles cannot pierce it."
     }
   ]
 }

@@ -1,0 +1,22 @@
+{
+  "name": "Мумия фараона",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 15,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:pharaoh_mummy",
+      "name": "Мумия фараона"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Полубосс, 220 здоровья, в гробнице Долины царей. Проклятие гробницы замедляет работу рук и мучает голодом всех рядом. Ниже половины здоровья поднимает мумий."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Огонь ранит его вдвое: берите горящие стрелы и заговор огня. Роняет хопеш, а в его сундуке всегда лежит око Гора."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_pharaoh_mummy"
+}

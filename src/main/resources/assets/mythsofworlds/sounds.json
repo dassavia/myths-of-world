@@ -363,6 +363,112 @@
       }
     ]
   },
+  "entity.mummy.ambient": {
+    "subtitle": "subtitles.mythsofworlds.entity.mummy.ambient",
+    "sounds": [
+      {
+        "name": "minecraft:entity.husk.ambient",
+        "type": "event",
+        "pitch": 0.75
+      },
+      {
+        "name": "minecraft:block.wool.break",
+        "type": "event",
+        "pitch": 0.6,
+        "volume": 0.6
+      }
+    ]
+  },
+  "entity.scarab.ambient": {
+    "subtitle": "subtitles.mythsofworlds.entity.scarab.ambient",
+    "sounds": [
+      {
+        "name": "minecraft:entity.silverfish.ambient",
+        "type": "event",
+        "pitch": 0.7
+      },
+      {
+        "name": "minecraft:block.sand.step",
+        "type": "event",
+        "pitch": 1.4,
+        "volume": 0.6
+      }
+    ]
+  },
+  "entity.pharaoh_mummy.curse": {
+    "subtitle": "subtitles.mythsofworlds.entity.pharaoh_mummy.curse",
+    "sounds": [
+      {
+        "name": "minecraft:entity.elder_guardian.curse",
+        "type": "event",
+        "pitch": 0.8
+      }
+    ]
+  },
+  "entity.sphinx.roar": {
+    "subtitle": "subtitles.mythsofworlds.entity.sphinx.roar",
+    "sounds": [
+      {
+        "name": "minecraft:entity.ravager.roar",
+        "type": "event",
+        "pitch": 0.6
+      },
+      {
+        "name": "minecraft:entity.polar_bear.warning",
+        "type": "event",
+        "pitch": 0.5
+      }
+    ]
+  },
+  "entity.set.sandstorm": {
+    "subtitle": "subtitles.mythsofworlds.entity.set.sandstorm",
+    "sounds": [
+      {
+        "name": "minecraft:weather.rain.above",
+        "type": "event",
+        "pitch": 0.6,
+        "volume": 2.0
+      },
+      {
+        "name": "minecraft:block.sand.break",
+        "type": "event",
+        "pitch": 0.5,
+        "volume": 2.0
+      }
+    ]
+  },
+  "entity.apep.hiss": {
+    "subtitle": "subtitles.mythsofworlds.entity.apep.hiss",
+    "sounds": [
+      {
+        "name": "minecraft:entity.cat.hiss",
+        "type": "event",
+        "pitch": 0.4,
+        "volume": 1.5
+      },
+      {
+        "name": "minecraft:entity.llama.spit",
+        "type": "event",
+        "pitch": 0.6
+      }
+    ]
+  },
+  "block.pyramid_gate.open": {
+    "subtitle": "subtitles.mythsofworlds.block.pyramid_gate.open",
+    "sounds": [
+      {
+        "name": "minecraft:block.beacon.activate",
+        "type": "event",
+        "pitch": 0.7
+      },
+      {
+        "name": "minecraft:block.end_portal.spawn",
+        "type": "event",
+        "pitch": 1.4,
+        "volume": 0.5
+      }
+    ]
+  },
   "music.hellas.elysium": {
     "sounds": [
       {

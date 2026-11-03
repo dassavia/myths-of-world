@@ -1,0 +1,22 @@
+{
+  "name": "Mummy of the Pharaoh",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 15,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:pharaoh_mummy",
+      "name": "Mummy of the Pharaoh"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "A half-boss, 220 health, in a tomb in the Valley of the Kings. The curse of the tomb slows the hands and starves everyone near. Below half health he raises mummies."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Fire wounds him twice: bring burning arrows and Fire Aspect. He drops the khopesh, and his chest always holds an eye of Horus."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_pharaoh_mummy"
+}

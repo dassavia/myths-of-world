@@ -1,0 +1,13 @@
+{
+  "name": "Обелиск",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 21,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Каменная игла в иероглифах с золотой вершиной. У подножия жертвенник и сундук жрецов: в нём бывает око Гора."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_obelisk"
+}

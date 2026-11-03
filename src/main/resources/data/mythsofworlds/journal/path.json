@@ -8,12 +8,12 @@
     {
       "id": "path.order",
       "category": "intro",
-      "pages": 4
+      "pages": 5
     },
     {
       "id": "path.tiers",
       "category": "intro",
-      "pages": 3
+      "pages": 5
     },
     {
       "id": "path.powers",
@@ -23,7 +23,7 @@
     {
       "id": "path.bearers",
       "category": "intro",
-      "pages": 3
+      "pages": 4
     },
     {
       "id": "path.sets",
