@@ -17,6 +17,8 @@ TIERS = {
                    "tough": 1.0, "kb": 0.0, "mines": ("железная", "an iron")},
     "bulat": {"uses": 1700, "speed": 8.0, "damage": 3.5, "ench": 16, "armour": (3, 8, 6, 3), "mult": 34,
               "tough": 2.0, "kb": 0.0, "mines": ("алмазная", "a diamond")},
+    "meteoric_iron": {"uses": 1650, "speed": 8.0, "damage": 3.5, "ench": 18, "armour": (3, 8, 6, 3), "mult": 33,
+                      "tough": 2.0, "kb": 0.0, "mines": ("алмазная", "a diamond")},
     "dark_iron": {"uses": 2400, "speed": 8.5, "damage": 4.5, "ench": 14, "armour": (3, 8, 6, 3), "mult": 40,
                   "tough": 3.5, "kb": 0.1, "mines": ("незеритовая", "a netherite")},
 }
@@ -53,7 +55,8 @@ def paginate(title, paragraphs):
 
 
 # Pickaxe each ore needs (gen_metals.py tags).
-NEEDS = {"orichalcum": ("железная", "an iron"), "bulat": ("железная", "an iron"), "dark_iron": ("алмазная", "a diamond")}
+NEEDS = {"orichalcum": ("железная", "an iron"), "bulat": ("железная", "an iron"), "meteoric_iron": ("железная", "an iron"),
+         "dark_iron": ("алмазная", "a diamond")}
 
 
 def ore_lines(metal, fuel, fuel_ru, fuel_en):
@@ -183,3 +186,25 @@ def slavic():
     ])
     return [("ores", "intro", None, *ores), ("bulat_tools", "intro", None, *tools),
             ("bulat_armour", "intro", None, *armour), ("gods_gear", "intro", None, *relics)]
+
+
+def egyptian():
+    ores = paginate(("Руды Дуата", "Ores of the Duat"), [ore_lines("meteoric_iron", "hephaestus_coal", "", "")[0]])
+    tools = paginate(("Оружие из небесного железа", "Meteoric Iron Tools"), tool_lines("meteoric_iron"))
+    armour = paginate(("Броня из небесного железа", "Meteoric Iron Armour"), armour_lines("meteoric_iron"))
+    relics = paginate(("Дары богов Египта", "Gifts of the Gods of Egypt"), [
+        ("Хопеш фараона: урон 8.5, скорость 1.6, прочность 1650, не горит. Каждый удар иссушает врага на 3 секунды.",
+         "Khopesh of the pharaoh: damage 8.5, attack speed 1.6, durability 1650, fireproof. Every blow withers the foe "
+         "for 3 seconds."),
+        ("Посох уас: прочность 250. ПКМ поднимает бурю: враги в 8 блоках отброшены, ослеплены и замедлены. Раз в 10 секунд.",
+         "Was-sceptre: durability 250. Right-click raises a storm: the foes within 8 blocks are thrown back, blinded "
+         "and slowed. Every 10 seconds."),
+        ("Немес Сфинкса: броня 3, твёрдость 2, прочность 330. Ночное зрение.",
+         "Nemes of the Sphinx: armour 3, toughness 2, durability 330. Night Vision."),
+        ("Пектораль Ра: броня 8, твёрдость 2.5, отбрасывание -5%, прочность 528, не горит. Огнестойкость и сила.",
+         "Pectoral of Ra: armour 8, toughness 2.5, knockback -5%, durability 528, fireproof. Fire Resistance and "
+         "Strength."),
+        BACK_SLOT,
+    ])
+    return [("ores", "intro", None, *ores), ("meteoric_iron_tools", "intro", None, *tools),
+            ("meteoric_iron_armour", "intro", None, *armour), ("gods_gear", "intro", None, *relics)]

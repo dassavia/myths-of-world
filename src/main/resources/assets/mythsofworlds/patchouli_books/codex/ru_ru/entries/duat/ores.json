@@ -1,0 +1,13 @@
+{
+  "name": "Руды Дуата",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_intro",
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Руда небесного железа: высота от -56 до 48, около 8 жил на чанк по 6 блоков, в камне и глубинном сланце. Нужна железная кирка, удача увеличивает добычу."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/duat"
+}

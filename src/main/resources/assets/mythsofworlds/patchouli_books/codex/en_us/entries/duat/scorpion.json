@@ -1,0 +1,18 @@
+{
+  "name": "Scorpion",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_creature",
+  "sortnum": 10,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:scorpion",
+      "name": "Scorpion"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "A giant scorpion of the goddess Serket, in a shell that turns light blows. Its sting carries a strong poison and weakness."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_scorpion"
+}

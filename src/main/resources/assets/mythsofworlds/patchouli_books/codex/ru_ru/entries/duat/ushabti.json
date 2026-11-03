@@ -1,0 +1,18 @@
+{
+  "name": "Ушебти",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_creature",
+  "sortnum": 11,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:ushabti",
+      "name": "Ушебти"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Фигурка слуги из голубого фаянса, что кладут в гробницы. В Дуате ушебти оживают и стерегут их. Стрелы лишь царапают глазурь, а кирка раскалывает глину вдвое."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_ushabti"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Set",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 17,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:set",
+      "name": "Set"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The red god of the desert and of storms, 500 health, in a temple in the Valley of the Kings. His sandstorm wounds, blinds and throws back; he steps behind his foe and calls jackals."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Set tore out the eye of Horus, and Horus healed it and beat him: without the eye Set takes only a quarter of the harm, and with it his storm cannot blind. Drops the was-sceptre."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_set"
+}

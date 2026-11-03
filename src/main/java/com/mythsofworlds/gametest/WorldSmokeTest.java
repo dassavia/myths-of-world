@@ -16,6 +16,14 @@ import com.mythsofworlds.mythology.norse.entity.NorseMerchant;
 import com.mythsofworlds.mythology.norse.entity.Surtr;
 import com.mythsofworlds.mythology.norse.entity.Thrym;
 import com.mythsofworlds.mythology.norse.entity.Valkyrie;
+import com.mythsofworlds.mythology.egyptian.EgyptianContent;
+import com.mythsofworlds.mythology.egyptian.block.Pyramid;
+import com.mythsofworlds.mythology.egyptian.entity.Apep;
+import com.mythsofworlds.mythology.egyptian.entity.EgyptianMerchant;
+import com.mythsofworlds.mythology.egyptian.entity.PharaohMummy;
+import com.mythsofworlds.mythology.egyptian.entity.Priestess;
+import com.mythsofworlds.mythology.egyptian.entity.SetGod;
+import com.mythsofworlds.mythology.egyptian.entity.Sphinx;
 import com.mythsofworlds.mythology.slavic.SlavicContent;
 import com.mythsofworlds.mythology.slavic.block.WorldTree;
 import com.mythsofworlds.mythology.slavic.entity.Koschei;
@@ -139,7 +147,13 @@ public final class WorldSmokeTest {
             Map.entry("baba_yaga_hut", SlavicMerchant.class),
             Map.entry("solovei_nest", Solovei.class),
             Map.entry("kalinov_bridge", ZmeyGorynych.class),
-            Map.entry("koschei_castle", Koschei.class));
+            Map.entry("koschei_castle", Koschei.class),
+            Map.entry("egyptian_village", EgyptianMerchant.class),
+            Map.entry("temple_of_isis", Priestess.class),
+            Map.entry("pharaoh_tomb", PharaohMummy.class),
+            Map.entry("great_sphinx", Sphinx.class),
+            Map.entry("temple_of_set", SetGod.class),
+            Map.entry("apep_lair", Apep.class));
 
     @SubscribeEvent
     public static void onServerStarted(ServerStartedEvent event) {
@@ -184,6 +198,16 @@ public final class WorldSmokeTest {
             checkWorld(server, failures, nav, SlavicContent.BIOMES, SlavicContent.STRUCTURES);
         } else {
             failures.add("Nav is not loaded");
+        }
+        ServerLevel duat = server.getLevel(EgyptianContent.DUAT);
+        if (duat != null) {
+            check(failures, "arrival pyramid", () -> {
+                var arrival = Pyramid.findOrBuild(duat, new BlockPos(0, 64, 0));
+                report("pyramid in the Duat at " + arrival.pos());
+            });
+            checkWorld(server, failures, duat, EgyptianContent.BIOMES, EgyptianContent.STRUCTURES);
+        } else {
+            failures.add("the Duat is not loaded");
         }
         report(failures.isEmpty() ? "OK" : "FAILED " + failures.size() + ": " + failures);
         Runtime.getRuntime().halt(failures.isEmpty() ? 0 : 1);

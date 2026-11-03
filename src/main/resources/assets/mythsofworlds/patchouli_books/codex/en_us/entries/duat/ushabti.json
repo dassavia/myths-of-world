@@ -1,0 +1,18 @@
+{
+  "name": "Ushabti",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_creature",
+  "sortnum": 11,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:ushabti",
+      "name": "Ushabti"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "A servant figure of blue faience put in the tombs. In the Duat the ushabti wake and guard them. Arrows only chip the glaze, while a pickaxe cracks the clay twice as hard."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_ushabti"
+}

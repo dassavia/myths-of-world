@@ -1,0 +1,25 @@
+{
+  "name": "Gifts of the Gods of Egypt",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_intro",
+  "sortnum": 6,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Khopesh of the pharaoh: damage 8.5, attack speed 1.6, durability 1650, fireproof. Every blow withers the foe for 3 seconds."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Was-sceptre: durability 250. Right-click raises a storm: the foes within 8 blocks are thrown back, blinded and slowed. Every 10 seconds.$(br)Nemes of the Sphinx: armour 3, toughness 2, durability 330. Night Vision."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Pectoral of Ra: armour 8, toughness 2.5, knockback -5%, durability 528, fireproof. Fire Resistance and Strength."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Elytra and the wings of Daedalus can go in the back slot (right of the player in the inventory) together with a chestplate: they fly and work just the same."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/duat"
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Скорпион",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_creature",
+  "sortnum": 10,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:scorpion",
+      "name": "Скорпион"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Огромный скорпион богини Серкет в панцире, который не берут слабые удары. Жало несёт сильный яд и слабость."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_scorpion"
+}

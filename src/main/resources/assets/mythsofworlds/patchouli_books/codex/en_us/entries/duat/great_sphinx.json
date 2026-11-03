@@ -1,0 +1,13 @@
+{
+  "name": "The Great Sphinx",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 23,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A huge lion of stone with a head in the striped nemes lies in the sands. Between its paws is a hoard, and by the obelisks waits the living Sphinx."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_great_sphinx"
+}

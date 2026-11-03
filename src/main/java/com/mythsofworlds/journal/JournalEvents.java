@@ -3,6 +3,7 @@ package com.mythsofworlds.journal;
 import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.codex.CodexBook;
 import com.mythsofworlds.core.PlayerData;
+import com.mythsofworlds.mythology.egyptian.EgyptianContent;
 import com.mythsofworlds.mythology.greek.GreekContent;
 import com.mythsofworlds.mythology.norse.NorseContent;
 import com.mythsofworlds.mythology.slavic.SlavicContent;
@@ -33,7 +34,8 @@ public final class JournalEvents {
     private static final Map<ResourceKey<Level>, Volume> VOLUMES = Map.of(
             GreekContent.HELLAS, new Volume("greek"),
             NorseContent.JOTUNHEIM, new Volume("norse"),
-            SlavicContent.NAV, new Volume("slavic"));
+            SlavicContent.NAV, new Volume("slavic"),
+            EgyptianContent.DUAT, new Volume("egyptian"));
     private static final double SIGHT_RANGE = 20.0;
 
     private record Volume(String id) {

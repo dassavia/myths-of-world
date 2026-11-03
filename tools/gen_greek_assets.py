@@ -165,7 +165,8 @@ def dimension(name, biome_source, settings="minecraft:overworld"):
     }
 
 
-# Stub worlds of the other mythologies: vanilla biomes only, no portal yet (Nav is written by gen_slavic_assets.py).
+# Stub worlds of the other mythologies: vanilla biomes only, no portal yet (Nav is written by gen_slavic_assets.py,
+# the Duat by gen_egyptian_assets.py).
 STUB_DIMENSIONS = {
     # Hawaiki: warm sea, beaches and jungle islands.
     "hawaiki": (None, multi_noise([
@@ -173,11 +174,6 @@ STUB_DIMENSIONS = {
         ("minecraft:beach", {"c": -0.15}),
         ("minecraft:jungle", {"c": 0.3, "h": 0.4}),
         ("minecraft:sparse_jungle", {"c": 0.3, "h": -0.2}),
-    ])),
-    # Duat: desert and badlands of the underworld.
-    "duat": (18000, multi_noise([
-        ("minecraft:desert", {"t": 0.5}),
-        ("minecraft:badlands", {"t": 0.5, "e": -0.5}),
     ])),
     # Svarga: jungles and bamboo under the eternal noon of Indra.
     "svarga": (6000, multi_noise([

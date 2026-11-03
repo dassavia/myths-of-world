@@ -74,6 +74,36 @@
       ]
     },
     {
+      "id": "duat",
+      "volume": "egyptian",
+      "icon": "mythsofworlds:ankh",
+      "requires": [
+        "kill.hydra"
+      ],
+      "steps": [
+        {
+          "milestone": "enter.duat",
+          "icon": "mythsofworlds:ankh"
+        },
+        {
+          "milestone": "kill.pharaoh_mummy",
+          "icon": "mythsofworlds:khopesh"
+        },
+        {
+          "milestone": "kill.sphinx",
+          "icon": "mythsofworlds:nemes"
+        },
+        {
+          "milestone": "kill.set",
+          "icon": "mythsofworlds:was_sceptre"
+        },
+        {
+          "milestone": "kill.apep",
+          "icon": "mythsofworlds:pectoral_of_ra"
+        }
+      ]
+    },
+    {
       "id": "jotunheim",
       "volume": "norse",
       "icon": "mythsofworlds:rune_igniter",

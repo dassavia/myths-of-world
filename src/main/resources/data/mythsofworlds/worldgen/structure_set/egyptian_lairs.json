@@ -1,0 +1,26 @@
+{
+  "structures": [
+    {
+      "structure": "mythsofworlds:pharaoh_tomb",
+      "weight": 3
+    },
+    {
+      "structure": "mythsofworlds:great_sphinx",
+      "weight": 3
+    },
+    {
+      "structure": "mythsofworlds:temple_of_set",
+      "weight": 3
+    },
+    {
+      "structure": "mythsofworlds:apep_lair",
+      "weight": 3
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 44,
+    "separation": 28,
+    "salt": 2570300
+  }
+}

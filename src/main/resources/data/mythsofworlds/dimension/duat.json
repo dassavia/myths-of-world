@@ -2,16 +2,16 @@
   "type": "mythsofworlds:duat",
   "generator": {
     "type": "minecraft:noise",
-    "settings": "minecraft:overworld",
+    "settings": "mythsofworlds:duat",
     "biome_source": {
       "type": "minecraft:multi_noise",
       "biomes": [
         {
-          "biome": "minecraft:desert",
+          "biome": "mythsofworlds:duat_sands",
           "parameters": {
-            "temperature": 0.5,
-            "humidity": 0.0,
-            "continentalness": 0.0,
+            "temperature": 0.6,
+            "humidity": -0.6,
+            "continentalness": 0.3,
             "erosion": 0.0,
             "weirdness": 0.0,
             "depth": 0.0,
@@ -19,12 +19,72 @@
           }
         },
         {
-          "biome": "minecraft:badlands",
+          "biome": "mythsofworlds:nile_banks",
+          "parameters": {
+            "temperature": 0.4,
+            "humidity": 0.5,
+            "continentalness": 0.1,
+            "erosion": 0.0,
+            "weirdness": 0.0,
+            "depth": 0.0,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "mythsofworlds:fields_of_aaru",
+          "parameters": {
+            "temperature": 0.2,
+            "humidity": 0.7,
+            "continentalness": 0.4,
+            "erosion": 0.0,
+            "weirdness": 0.3,
+            "depth": 0.0,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "mythsofworlds:valley_of_kings",
+          "parameters": {
+            "temperature": 0.7,
+            "humidity": -0.3,
+            "continentalness": 0.6,
+            "erosion": -0.5,
+            "weirdness": 0.0,
+            "depth": 0.0,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "mythsofworlds:lake_of_fire",
+          "parameters": {
+            "temperature": 0.9,
+            "humidity": -0.8,
+            "continentalness": 0.6,
+            "erosion": 0.0,
+            "weirdness": -0.6,
+            "depth": 0.0,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "mythsofworlds:oasis",
           "parameters": {
             "temperature": 0.5,
+            "humidity": 0.2,
+            "continentalness": 0.3,
+            "erosion": 0.0,
+            "weirdness": 0.6,
+            "depth": 0.0,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "mythsofworlds:celestial_nile",
+          "parameters": {
+            "temperature": 0.0,
             "humidity": 0.0,
-            "continentalness": 0.0,
-            "erosion": -0.5,
+            "continentalness": -0.6,
+            "erosion": 0.0,
             "weirdness": 0.0,
             "depth": 0.0,
             "offset": 0.0

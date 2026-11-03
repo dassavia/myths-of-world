@@ -1,0 +1,22 @@
+{
+  "name": "Priestess of Isis",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_creature",
+  "sortnum": 13,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:priestess",
+      "name": "Priestess of Isis"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The servants of Isis live in her temples on the Nile. Courted like the amazons: gifts and a ring. They love lotus and flowers, gold and lapis, honey and dates, and trophies of the Duat."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The knot of Isis wins her heart at once, the sistrum of Hathor calls strays home. Give your wife a honey cake and a daughter is born, a priestess too."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_priestess"
+}

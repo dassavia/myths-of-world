@@ -1,0 +1,13 @@
+{
+  "name": "Храм Сета",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 24,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Красные стены под ночным небом, колонны с огнями и чёрный алтарь с пламенем. Здесь Сет и его шакалы."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_temple_of_set"
+}

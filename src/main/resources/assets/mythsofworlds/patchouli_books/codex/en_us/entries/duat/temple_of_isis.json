@@ -1,0 +1,13 @@
+{
+  "name": "Temple of Isis",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 20,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Pylons at the gate, a court with a sacred pool and lotus, columns, and a sanctuary with the throne of the goddess. The priestesses of Isis and the temple cats live here."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_temple_of_isis"
+}

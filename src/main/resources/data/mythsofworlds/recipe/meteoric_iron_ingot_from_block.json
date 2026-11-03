@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "mythsofworlds:meteoric_iron_block"
+    }
+  ],
+  "result": {
+    "id": "mythsofworlds:meteoric_iron_ingot",
+    "count": 9
+  }
+}

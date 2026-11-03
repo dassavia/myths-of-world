@@ -133,6 +133,40 @@ SPECS = {
                       rotation=(0.3, -0.6, 0))),
         ],
     },
+    # The Duat: the blue war crown (khepresh) studded with gold, a broad collar on the shoulders, greaves.
+    "meteoric_iron": {
+        "items": ["meteoric_iron_helmet", "meteoric_iron_chestplate", "meteoric_iron_boots"],
+        "parts": [
+            box("head", "crown", (-4, -12, -3.5), (8, 3, 8), "lapis"),
+            box("head", "crown_top", (-3, -14, -2.5), (6, 2, 6), "lapis"),
+            box("head", "uraeus", (-0.5, -11, -5.4), (1, 3, 1), "gold"),
+            box("head", "band", (-5, -9, -5.2), (10, 1, 1), "gold"),
+            box("body", "collar_front", (-4.5, 0, -2.8), (9, 3, 1), "gold"),
+            box("body", "collar_back", (-4.5, 0, 1.8), (9, 3, 1), "lapis"),
+            *pauldron("gold", (6, 2, 6)),
+            *pair(box("right_leg", "right_greave", (-2.5, 6, -3.4), (5, 4, 1), "metal_light")),
+        ],
+    },
+    # The nemes: the lappets of the striped headcloth falling over the shoulders, the uraeus on the brow.
+    "nemes": {
+        "items": ["nemes"],
+        "parts": [
+            *pair(box("head", "right_lappet", (-5.4, -4, -3), (2, 8, 3), "gold", 0.1)),
+            box("head", "tail", (-2, -4, 4.4), (4, 6, 1), "lapis", 0.1),
+            box("head", "uraeus", (-0.5, -10, -5.6), (1, 3, 1), "gold"),
+            box("head", "cobra_head", (-1, -11, -6), (2, 1, 1), "lapis"),
+        ],
+    },
+    # The pectoral of Ra: a wide collar of gold and lapis and the sun disc on the breast.
+    "pectoral_of_ra": {
+        "items": ["pectoral_of_ra"],
+        "parts": [
+            box("body", "collar", (-5, -0.5, -3), (10, 2, 1), "gold", 0.1),
+            box("body", "collar_inner", (-4, 1.5, -3), (8, 1, 1), "lapis", 0.1),
+            box("body", "sun_disc", (-1.5, 3, -3.4), (3, 3, 1), "crest"),
+            *pair(box("right_arm", "right_shoulder", (-3.5, -2.6, -2.5), (5, 1, 5), "gold", 0.1)),
+        ],
+    },
     # Seven-league boots with turned-up toes.
     "skorokhody": {
         "items": ["skorokhody"],
@@ -201,6 +235,7 @@ def palette(img, scale):
         "fur": (176, 128, 64), "fur_dark": (110, 74, 36), "mane": (140, 92, 40),
         "feather": (242, 240, 232), "leather": (120, 72, 40), "leather_dark": (84, 48, 26),
         "cloth": (60, 40, 92), "cloth_dark": (40, 26, 64),
+        "lapis": (42, 90, 176), "turquoise": (58, 184, 168), "linen": (232, 224, 200),
     }
 
 

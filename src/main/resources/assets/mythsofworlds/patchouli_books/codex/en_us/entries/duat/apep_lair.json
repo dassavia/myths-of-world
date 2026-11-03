@@ -1,0 +1,13 @@
+{
+  "name": "Lair of Apep",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 25,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "An island of black rock in a ring of lava. On it lies the wreck of the golden barque of Ra that the serpent dragged down, its sun disc still glowing."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_apep_lair"
+}

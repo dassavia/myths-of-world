@@ -1,0 +1,13 @@
+{
+  "name": "Гробница фараона",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 22,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Мастаба с наклонными стенами в Долине царей. В тёмном зале среди колонн - саркофаг из золота и лазурита, его стерегут мумии и ушебти."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_pharaoh_tomb"
+}

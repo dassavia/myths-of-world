@@ -5,6 +5,8 @@ import com.mythsofworlds.core.ClientConfig;
 import com.mythsofworlds.core.PlayerData;
 import com.mythsofworlds.core.back.BackSlot;
 import com.mythsofworlds.mythology.egyptian.EgyptianContent;
+import com.mythsofworlds.mythology.egyptian.EgyptianEntities;
+import com.mythsofworlds.mythology.egyptian.EgyptianSounds;
 import com.mythsofworlds.mythology.greek.GreekContent;
 import com.mythsofworlds.mythology.greek.GreekEntities;
 import com.mythsofworlds.mythology.greek.GreekFeatures;
@@ -45,6 +47,8 @@ public final class MythsOfWorlds {
         SlavicEntities.init(modBus);
         OceanicContent.init();
         EgyptianContent.init();
+        EgyptianSounds.init();
+        EgyptianEntities.init(modBus);
         IndianContent.init();
 
         ModRegistries.register(modBus);

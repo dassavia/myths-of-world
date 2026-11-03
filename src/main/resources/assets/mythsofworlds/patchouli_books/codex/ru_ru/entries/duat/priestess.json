@@ -1,0 +1,22 @@
+{
+  "name": "Жрица Исиды",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_creature",
+  "sortnum": 13,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:priestess",
+      "name": "Жрица Исиды"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Служительницы Исиды живут в её храмах на Ниле. Ухаживание как за амазонками: подарки и кольцо. Любят лотосы и цветы, золото и лазурит, мёд и финики, трофеи Дуата."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Узел Исиды сразу её влюбляет, систр Хатхор зовёт разбредшихся домой. Подарите жене медовую лепёшку, и родится дочь-жрица."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_priestess"
+}

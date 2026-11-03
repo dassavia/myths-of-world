@@ -1,0 +1,153 @@
+{
+  "entries": [
+    {
+      "id": "egyptian.portal",
+      "category": "intro",
+      "pages": 3
+    },
+    {
+      "id": "egyptian.lands",
+      "category": "intro",
+      "pages": 2
+    },
+    {
+      "id": "egyptian.gifts",
+      "category": "intro",
+      "pages": 2
+    },
+    {
+      "id": "egyptian.ores",
+      "category": "intro",
+      "pages": 1
+    },
+    {
+      "id": "egyptian.meteoric_iron_tools",
+      "category": "intro",
+      "pages": 2
+    },
+    {
+      "id": "egyptian.meteoric_iron_armour",
+      "category": "intro",
+      "pages": 2
+    },
+    {
+      "id": "egyptian.gods_gear",
+      "category": "intro",
+      "pages": 4
+    },
+    {
+      "id": "egyptian.mummy",
+      "category": "creature",
+      "pages": 1,
+      "entity": "mythsofworlds:mummy"
+    },
+    {
+      "id": "egyptian.scarab",
+      "category": "creature",
+      "pages": 1,
+      "entity": "mythsofworlds:scarab"
+    },
+    {
+      "id": "egyptian.jackal",
+      "category": "creature",
+      "pages": 1,
+      "entity": "mythsofworlds:jackal"
+    },
+    {
+      "id": "egyptian.scorpion",
+      "category": "creature",
+      "pages": 1,
+      "entity": "mythsofworlds:scorpion"
+    },
+    {
+      "id": "egyptian.ushabti",
+      "category": "creature",
+      "pages": 1,
+      "entity": "mythsofworlds:ushabti"
+    },
+    {
+      "id": "egyptian.bastet_cat",
+      "category": "creature",
+      "pages": 2,
+      "entity": "mythsofworlds:bastet_cat"
+    },
+    {
+      "id": "egyptian.priestess",
+      "category": "creature",
+      "pages": 2,
+      "entity": "mythsofworlds:priestess"
+    },
+    {
+      "id": "egyptian.egyptian_merchant",
+      "category": "creature",
+      "pages": 1,
+      "entity": "mythsofworlds:egyptian_merchant"
+    },
+    {
+      "id": "egyptian.pharaoh_mummy",
+      "category": "boss",
+      "pages": 2,
+      "entity": "mythsofworlds:pharaoh_mummy"
+    },
+    {
+      "id": "egyptian.sphinx",
+      "category": "boss",
+      "pages": 2,
+      "entity": "mythsofworlds:sphinx"
+    },
+    {
+      "id": "egyptian.set",
+      "category": "boss",
+      "pages": 2,
+      "entity": "mythsofworlds:set"
+    },
+    {
+      "id": "egyptian.apep",
+      "category": "boss",
+      "pages": 2,
+      "entity": "mythsofworlds:apep"
+    },
+    {
+      "id": "egyptian.egyptian_village",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:egyptian_village"
+    },
+    {
+      "id": "egyptian.temple_of_isis",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:temple_of_isis"
+    },
+    {
+      "id": "egyptian.obelisk",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:obelisk"
+    },
+    {
+      "id": "egyptian.pharaoh_tomb",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:pharaoh_tomb"
+    },
+    {
+      "id": "egyptian.great_sphinx",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:great_sphinx"
+    },
+    {
+      "id": "egyptian.temple_of_set",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:temple_of_set"
+    },
+    {
+      "id": "egyptian.apep_lair",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:apep_lair"
+    }
+  ]
+}

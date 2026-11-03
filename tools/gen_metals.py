@@ -1,5 +1,5 @@
-"""Metals and fuels of the myths: orichalcum and Hephaestus coal in Hellas, bulat in Nav, dark iron and Muspel embers
-in Jotunheim.
+"""Metals and fuels of the myths: orichalcum and Hephaestus coal in Hellas, bulat in Nav, meteoric iron in the Duat,
+dark iron and Muspel embers in Jotunheim.
 
 Writes the ore features (the biomes list them in gen_greek_assets.py and gen_norse_assets.py), block states, models,
 loot, recipes, fuel values, tags and lang entries; with --textures also the block, item and armour textures.
@@ -25,6 +25,10 @@ METALS = {
     "bulat": {"ru": "Булат", "ru_gen": "булата", "en": "Bulat",
               "light": 0xD6E2EE, "mid": 0x8A9CB4, "dark": 0x3A4458, "count": 8, "size": 7, "y": (-56, 48),
               "style": "slavic"},
+    # The "iron of heaven" (bia-n-pet) of the Egyptians: grey meteoric iron with a pale blue sheen, deep in the Duat.
+    "meteoric_iron": {"ru": "Небесное железо", "ru_gen": "небесного железа", "en": "Meteoric Iron",
+                      "light": 0xC8D2E2, "mid": 0x7E8AA0, "dark": 0x343A4A, "count": 8, "size": 6, "y": (-56, 48),
+                      "style": "egyptian"},
 }
 # Fuels: the item, its ore, burn time in ticks (coal burns 1600), ore count, vein size, heights.
 FUELS = {
@@ -41,9 +45,12 @@ TOOL_RU = {"sword": ("Меч", "м"), "pickaxe": ("Кирка", "ж"), "axe": ("
            "leggings": ("Поножи", "мн"), "boots": ("Сапоги", "мн")}
 ADJ_RU = {"orichalcum": {"м": "Орихалковый", "ж": "Орихалковая", "мн": "Орихалковые"},
           "dark_iron": {"м": "Тёмножелезный", "ж": "Тёмножелезная", "мн": "Тёмножелезные"},
-          "bulat": {"м": "Булатный", "ж": "Булатная", "мн": "Булатные"}}
+          "bulat": {"м": "Булатный", "ж": "Булатная", "мн": "Булатные"},
+          "meteoric_iron": {"м": "Небесножелезный", "ж": "Небесножелезная", "мн": "Небесножелезные"}}
+# Metals whose gear is named "<tool> of <metal>" in Russian (a sword of meteoric iron), not with an adjective.
+OF_RU = {"meteoric_iron"}
 RAW_RU = {"orichalcum": "Необработанный орихалк", "dark_iron": "Необработанное тёмное железо",
-          "bulat": "Сырой булат"}
+          "bulat": "Сырой булат", "meteoric_iron": "Сырое небесное железо"}
 
 
 def items(metal):
@@ -179,7 +186,8 @@ def lang():
             noun, gender = TOOL_RU[piece]
             en = {"helmet": "Helmet", "chestplate": "Chestplate", "leggings": "Leggings", "boots": "Boots"}.get(
                 piece, piece.capitalize())
-            entries[f"item.{NS}.{metal}_{piece}"] = (f"{ADJ_RU[metal][gender]} {noun.lower()}", f"{spec['en']} {en}")
+            ru = (f"{noun} из {spec['ru_gen']}" if metal in OF_RU else f"{ADJ_RU[metal][gender]} {noun.lower()}")
+            entries[f"item.{NS}.{metal}_{piece}"] = (ru, f"{spec['en']} {en}")
     for index, code in ((0, "ru_ru"), (1, "en_us")):
         path = assets("lang", f"{code}.json")
         with open(path, encoding="utf-8") as f:

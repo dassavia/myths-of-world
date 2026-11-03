@@ -1,0 +1,17 @@
+{
+  "name": "Gifts of the Nile",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_intro",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Dates ripen among the palm fronds: right-click the ripe leaves. A honey cake is two wheat, honey and dates, and it heals. The sistrum of Hathor: gold, two nuggets and a stick."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The eye of Horus is needed against Set, the knot of Isis wins a priestess's heart. They are found in the chests of temples and tombs, and the priest of Anubis sells the eye."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/duat"
+}

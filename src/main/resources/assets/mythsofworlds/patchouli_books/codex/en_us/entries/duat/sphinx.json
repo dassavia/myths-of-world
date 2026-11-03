@@ -1,0 +1,22 @@
+{
+  "name": "Sphinx",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 16,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:sphinx",
+      "name": "Sphinx"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "A stone lion with a king's head, 350 health, by the Great Sphinx in the sands. It does not attack first. Its roar throws back and slows, and below half health blinds with sand."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Its body is stone: arrows only scratch it, while a pickaxe strikes twice as hard. Drops the nemes and its claws."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_sphinx"
+}

@@ -5,6 +5,8 @@
     "mythsofworlds:orichalcum_block",
     "mythsofworlds:dark_iron_block",
     "mythsofworlds:bulat_ore",
-    "mythsofworlds:bulat_block"
+    "mythsofworlds:bulat_block",
+    "mythsofworlds:meteoric_iron_ore",
+    "mythsofworlds:meteoric_iron_block"
   ]
 }

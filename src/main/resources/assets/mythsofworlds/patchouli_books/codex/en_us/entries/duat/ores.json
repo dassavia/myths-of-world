@@ -1,0 +1,13 @@
+{
+  "name": "Ores of the Duat",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_intro",
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Meteoric Iron ore: y -56 to 48, about 8 veins a chunk of up to 6 blocks, in stone and deepslate. Needs an iron pickaxe; Fortune gives more."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/duat"
+}

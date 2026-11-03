@@ -1,0 +1,18 @@
+{
+  "name": "Scarab",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_creature",
+  "sortnum": 8,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:scarab",
+      "name": "Scarab"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "A black beetle of the sands with a blue-green sheen, as big as a cat. They come in swarms: touch one and the rest come too. The bite is poisonous. Sometimes they drop a shell."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_scarab"
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Village on the Nile",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 19,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Houses of mud brick with flat roofs along a canal, fields of wheat and reeds, palms and wells. Traders and the cats of Bastet live here."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_egyptian_village"
+}

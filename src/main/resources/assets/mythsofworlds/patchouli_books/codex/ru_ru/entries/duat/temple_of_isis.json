@@ -1,0 +1,13 @@
+{
+  "name": "Храм Исиды",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 20,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Пилоны у ворот, двор со священным прудом и лотосами, колонны и святилище с троном богини. Здесь живут жрицы Исиды и храмовые кошки."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_temple_of_isis"
+}

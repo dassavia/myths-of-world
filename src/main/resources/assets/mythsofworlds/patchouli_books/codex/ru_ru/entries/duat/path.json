@@ -1,0 +1,14 @@
+{
+  "name": "Путь мира",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat",
+  "priority": true,
+  "sortnum": -1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Шаги этого мира по порядку. Каждый открывает новые страницы.$(br)$(li)Вы прошли сквозь врата тени в Дуат$(li)Мумия фараона повержена$(li)Сфинкс повержен$(li)Сет повержен$(li)Апоп повержен: ладья Ра снова плывёт"
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/duat"
+}
