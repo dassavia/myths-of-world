@@ -247,7 +247,7 @@ public class EgyptianTests {
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
         player.moveTo(helper.absoluteVec(new net.minecraft.world.phys.Vec3(3.5, 2.0, 3.5)));
         PharaohMummy pharaoh = helper.spawnWithNoFreeWill(EgyptianEntities.PHARAOH_MUMMY.get(), 1, 2, 1);
-        pharaoh.curse(helper.getLevel());
+        pharaoh.curse(player);
         helper.assertTrue(player.hasEffect(MobEffects.DIG_SLOWDOWN), "the curse slows the hero's work");
         Mummy mummy = helper.spawnWithNoFreeWill(EgyptianEntities.MUMMY.get(), 2, 2, 2);
         float before = mummy.getHealth();

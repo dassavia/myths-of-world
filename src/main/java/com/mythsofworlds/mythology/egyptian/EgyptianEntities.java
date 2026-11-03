@@ -136,5 +136,7 @@ public final class EgyptianEntities {
         event.register(JACKAL.get(), SpawnPlacementTypes.ON_GROUND, ground, Monster::checkAnyLightMonsterSpawnRules, replace);
         event.register(SCORPION.get(), SpawnPlacementTypes.ON_GROUND, ground, Monster::checkAnyLightMonsterSpawnRules, replace);
         event.register(BASTET_CAT.get(), SpawnPlacementTypes.ON_GROUND, ground, Mob::checkMobSpawnRules, replace);
+        // Camels roam the sands of the Duat; vanilla has no natural spawn rule for them, as they only come with villages.
+        event.register(EntityType.CAMEL, SpawnPlacementTypes.ON_GROUND, ground, Mob::checkMobSpawnRules, replace);
     }
 }

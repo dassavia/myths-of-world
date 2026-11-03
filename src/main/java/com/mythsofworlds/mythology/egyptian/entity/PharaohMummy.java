@@ -123,14 +123,19 @@ public class PharaohMummy extends GreekBoss {
         int cursed = 0;
         for (Player player : server.getEntitiesOfClass(Player.class, getBoundingBox().inflate(CURSE_RANGE),
                 p -> p.isAlive() && !p.isSpectator() && !p.isCreative())) {
-            player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 300, 1), this);
-            player.addEffect(new MobEffectInstance(MobEffects.HUNGER, 200, 1), this);
-            player.displayClientMessage(Component.translatable("entity.mythsofworlds.pharaoh_mummy.curse"), true);
+            curse(player);
             cursed++;
         }
         server.sendParticles(ParticleTypes.SCULK_SOUL, getX(), getY(1.0), getZ(), 20, 1.5, 0.8, 1.5, 0.02);
         playSound(EgyptianSounds.PHARAOH_CURSE.get(), 2.0F, 1.0F);
         return cursed;
+    }
+
+    /** The curse falls on one player. */
+    public void curse(Player player) {
+        player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 300, 1), this);
+        player.addEffect(new MobEffectInstance(MobEffects.HUNGER, 200, 1), this);
+        player.displayClientMessage(Component.translatable("entity.mythsofworlds.pharaoh_mummy.curse"), true);
     }
 
     /** Two mummies climb out of the sand around him. */
