@@ -1,0 +1,13 @@
+{
+  "name": "Святилище Сехмет",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 47,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Красные стены у Огненного озера, огонь и кости, колосс львицы с солнечным диском."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_shrine_of_sekhmet"
+}

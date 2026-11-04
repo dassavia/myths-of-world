@@ -1,0 +1,6 @@
+{
+  "parent": "mythsofworlds:item/bow_of_horus",
+  "textures": {
+    "layer0": "mythsofworlds:item/bow_of_horus_pulling_1"
+  }
+}

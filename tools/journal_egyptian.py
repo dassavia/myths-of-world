@@ -55,6 +55,27 @@ ENTRIES = [
       "and it heals. The sistrum of Hathor: gold, two nuggets and a stick.",
       "The eye of Horus is needed against Set, the knot of Isis wins a priestess's heart. They are found in the "
       "chests of temples and tombs, and the priest of Anubis sells the eye."]),
+    ("flood", "intro", None,
+     ["Разлив Нила",
+      "На низких берегах Нила и у воды оазисов лежит чёрный ил. Пока рядом есть вода, растения возле ила растут "
+      "быстрее: сажайте поля рядом с ним.",
+      "Ил можно копать лопатой или сделать из двух грязи и костной муки. Дар Хапи (ил, две костной муки и тростник) - "
+      "сильнейшее удобрение: трижды кормит все растения в квадрате 5x5."],
+     ["The Flood of the Nile",
+      "Black silt lies on the low banks of the Nile and by the water of the oases. While water is near, the plants "
+      "around the silt grow faster: sow your fields beside it.",
+      "Dig the silt with a shovel, or make it of two mud and bone meal. The gift of Hapi (silt, two bone meal and "
+      "sugar cane) is the strongest fertiliser: it feeds every plant in a 5x5 square three times."]),
+    ("gods", "intro", None,
+     ["Боги Египта",
+      "В Дуате живут боги. Почти все не нападают первыми, но примут вызов героя. Себек и Сехмет бросаются на чужаков.",
+      "Каждый бог роняет свою реликвию. Из неё куют оружие: посохи, скипетры, хопеш, лук, копьё, глефу, цеп, кинжал "
+      "и секиру. Рецепты есть в книге рецептов."],
+     ["The Gods of Egypt",
+      "The gods live in the Duat. Most of them never strike first, but they accept a hero's challenge. Sobek and "
+      "Sekhmet fall on strangers.",
+      "Each god drops a relic. Weapons are forged from it: staffs, sceptres, a khopesh, a bow, a spear, a glaive, a "
+      "flail, a dagger and an axe. The recipe book shows how."]),
 
     ("mummy", "creature", mob("mummy"),
      ["Мумия",
@@ -119,6 +140,17 @@ ENTRIES = [
       "In the villages on the Nile live a trader of the market (buys trophies, sells dates and lapis), a priest of "
       "Anubis (the ankh, the eye of Horus, the sistrum, potions) and a smith (meteoric iron and trophy weapons)."]),
 
+    ("crocodile", "creature", mob("crocodile"),
+     ["Крокодил",
+      "Священный зверь Себека таится на мелководье и берегах Нила. Плавает так же быстро, как ходит, и не тонет. "
+      "Укус замедляет, а в воде крокодил утаскивает жертву на дно.",
+      "Чешуя спины держит слабые удары. Роняет кожу (из одной выходит две обычных) и иногда зуб для хопеша Себека."],
+     ["Crocodile",
+      "The sacred beast of Sobek lurks in the shallows and on the banks of the Nile. It swims as fast as it walks and "
+      "never drowns. Its bite slows, and in the water it drags its prey down.",
+      "Its scaly back turns light blows. It drops its hide (one hide makes two leather) and sometimes a tooth for "
+      "the khopesh of Sobek."]),
+
     ("pharaoh_mummy", "boss", mob("pharaoh_mummy"),
      ["Мумия фараона",
       "Полубосс, 220 здоровья, в гробнице Долины царей. Проклятие гробницы замедляет работу рук и мучает голодом "
@@ -163,6 +195,112 @@ ENTRIES = [
       "Fire cannot hurt it.",
       "Bring a tame cat of Bastet: without one Apep takes only half the harm, with one half as much again, and the "
       "cat's bite tears it four times as hard. Drops the pectoral of Ra."]),
+    ("ra", "boss", mob("ra"),
+     ["Ра",
+      "Царь богов с головой сокола, 550 здоровья, на солнечной ладье на Небесном Ниле. Мечет огненные шары, ниже "
+      "половины здоровья око Ра поджигает и слепит всех вокруг.",
+      "Огонь ему не страшен. Роняет солнечный диск: из него, золотого блока и палки - посох Ра."],
+     ["Ra",
+      "The falcon-headed king of the gods, 550 health, on the solar barque on the Celestial Nile. He hurls "
+      "fireballs; below half health the eye of Ra burns and blinds everyone around.",
+      "Fire cannot harm him. Drops the sun disc: with a gold block and a stick it makes the staff of Ra."]),
+    ("osiris", "boss", mob("osiris"),
+     ["Осирис",
+      "Зеленокожий царь мёртвых, 400 здоровья, на троне в Зале суда. Поднимает мумий и замедляет врага.",
+      "Как Исида оживила его, он один раз встаёт после смертельного удара с половиной здоровья. Роняет джед: с "
+      "цепями и палками - цеп Осириса."],
+     ["Osiris",
+      "The green-skinned king of the dead, 400 health, on his throne in the Hall of Judgment. He raises mummies "
+      "and slows his foe.",
+      "As Isis brought him back to life, he rises once from a death blow with half his health. Drops the djed: "
+      "with chains and sticks it makes the flail of Osiris."]),
+    ("isis", "boss", mob("isis"),
+     ["Исида",
+      "Великая волшебница, 360 здоровья, у трона в своём храме. Взмахом крыльев отбрасывает и замедляет врагов и "
+      "лечит себя.",
+      "Роняет крыло Исиды: с блоком лазурита и золотым слитком - скипетр Исиды, который лечит вас и друзей."],
+     ["Isis",
+      "The great of magic, 360 health, by the throne in her temple. The wind of her wings throws back and slows "
+      "her foes, and she heals herself.",
+      "Drops a wing of Isis: with a lapis block and a gold ingot it makes the sceptre of Isis, which heals you "
+      "and your friends."]),
+    ("horus", "boss", mob("horus"),
+     ["Гор",
+      "Мститель с головой сокола, 420 здоровья, в храме с гранитными соколами. Пикирует на врага, его око "
+      "заставляет светиться и слабеть.",
+      "Падения ему не страшны. Роняет соколиное перо: с золотом и нитями - лук Гора."],
+     ["Horus",
+      "The falcon-headed avenger, 420 health, in the temple with the granite falcons. He dives on his foe, and "
+      "his eye makes them glow and grow weak.",
+      "Falls cannot harm him. Drops a falcon feather: with gold and string it makes the bow of Horus."]),
+    ("anubis", "boss", mob("anubis"),
+     ["Анубис",
+      "Страж мёртвых с головой шакала, 400 здоровья, у весов в Зале суда. Взвешивание сердца иссушает и замедляет "
+      "врага, а его лечит.",
+      "Ниже половины здоровья зовёт шакалов. Роняет перо Маат: с небесным железом и палками - глефа Анубиса."],
+     ["Anubis",
+      "The jackal-headed guardian of the dead, 400 health, by the scales in the Hall of Judgment. The weighing of "
+      "the heart withers and slows his foe and heals him.",
+      "Below half health he calls his jackals. Drops the feather of Ma'at: with meteoric iron and sticks it makes "
+      "the glaive of Anubis."]),
+    ("thoth", "boss", mob("thoth"),
+     ["Тот",
+      "Писец богов с головой ибиса, 340 здоровья, в Зале суда. Слово силы поднимает врага в воздух и ранит "
+      "магией.",
+      "Ниже половины здоровья отступает лунным светом. Роняет скрижаль: с аметистом и палкой - посох Тота."],
+     ["Thoth",
+      "The ibis-headed scribe of the gods, 340 health, in the Hall of Judgment. A word of power lifts his foe "
+      "into the air and wounds with magic.",
+      "Below half health he steps away through the moonlight. Drops the tablet: with amethyst and a stick it "
+      "makes the staff of Thoth."]),
+    ("bastet", "boss", mob("bastet"),
+     ["Бастет",
+      "Богиня-кошка, 340 здоровья, в храме среди своих кошек. Быстра, прыгает на врага, когти ранят ядом.",
+      "Всегда падает на лапы. Роняет коготь: с небесным железом и палкой - кинжал Бастет."],
+     ["Bastet",
+      "The cat goddess, 340 health, in her temple among her cats. She is quick, pounces on her foe, and her claws "
+      "poison.",
+      "She always lands on her feet. Drops a claw: with meteoric iron and a stick it makes the dagger of Bastet."]),
+    ("sobek", "boss", mob("sobek"),
+     ["Себек",
+      "Владыка Нила с головой крокодила, 450 здоровья, в святилище на берегу. Нападает первым, утаскивает врага "
+      "на дно и зовёт крокодилов.",
+      "В воде лечится: выманите его на сушу. Роняет клык: с зубом крокодила и небесным железом - хопеш Себека."],
+     ["Sobek",
+      "The crocodile-headed lord of the Nile, 450 health, in his shrine on the bank. He attacks on sight, drags "
+      "his foe down in the death roll and calls crocodiles.",
+      "In the water he heals: lure him onto dry land. Drops a fang: with a crocodile tooth and meteoric iron it "
+      "makes the khopesh of Sobek."]),
+    ("hathor", "boss", mob("hathor"),
+     ["Хатхор",
+      "Богиня радости с рогами коровы, 360 здоровья, в святилище на Полях Иалу. Песня систра кружит голову и "
+      "замедляет.",
+      "Ниже половины здоровья в ней просыпается ярость Сехмет. Роняет рог: с золотом и палкой - скипетр Хатхор."],
+     ["Hathor",
+      "The goddess of joy with the cow horns, 360 health, in her shrine in the Fields of Aaru. The song of her "
+      "sistrum makes heads spin and slows.",
+      "Below half health the rage of Sekhmet wakes in her. Drops a horn: with gold and a stick it makes the "
+      "sceptre of Hathor."]),
+    ("ptah", "boss", mob("ptah"),
+     ["Птах",
+      "Мастер, создавший мир, 420 здоровья, в храме-кузнице. Тяжёл и в броне. Его слово оживляет ушебти, удар "
+      "сковывает руки.",
+      "Роняет резец: с небесным железом и палками - секира Птаха, которая в руке даёт спешку."],
+     ["Ptah",
+      "The craftsman who made the world, 420 health, in his forge-temple. Heavy and armoured, his word wakes "
+      "ushabti and his blow numbs the hands.",
+      "Drops the chisel: with meteoric iron and sticks it makes the axe of Ptah, which gives Haste in hand."]),
+    ("sekhmet", "boss", mob("sekhmet"),
+     ["Сехмет",
+      "Львица-истребительница, 480 здоровья, у Огненного озера. Нападает первой, дышит огнём и насылает голод и "
+      "яд.",
+      "Огонь ей не страшен, ниже половины здоровья она сильнее. Роняет уголь: с небесным железом и палкой - копьё "
+      "Сехмет."],
+     ["Sekhmet",
+      "The lioness of slaughter, 480 health, by the Lake of Fire. She attacks on sight, breathes fire and sends "
+      "hunger and poison.",
+      "Fire cannot harm her, and below half health she grows stronger. Drops an ember: with meteoric iron and a "
+      "stick it makes the spear of Sekhmet."]),
 
     ("egyptian_village", "place", place("egyptian_village"),
      ["Деревня на Ниле",
@@ -211,6 +349,60 @@ ENTRIES = [
      ["Lair of Apep",
       "An island of black rock in a ring of lava. On it lies the wreck of the golden barque of Ra that the serpent "
       "dragged down, its sun disc still glowing."]),
+    ("hall_of_judgment", "place", place("hall_of_judgment"),
+     ["Зал суда",
+      "Зал двух истин, где взвешивают сердца мёртвых: колонны под звёздами, золотые весы, Анубис и Тот у весов, "
+      "Осирис на троне."],
+     ["Hall of Judgment",
+      "The Hall of the Two Truths, where the hearts of the dead are weighed: columns under the stars, golden "
+      "scales, Anubis and Thoth by them, Osiris on his throne."]),
+    ("solar_barque", "place", place("solar_barque"),
+     ["Солнечная ладья",
+      "Золотая ладья миллионов лет плывёт по Небесному Нилу. На мачте горит солнечный диск, на палубе стоит сам "
+      "Ра."],
+     ["Solar Barque",
+      "The golden barque of millions of years sails the Celestial Nile. The sun disc blazes on its mast, and Ra "
+      "himself stands on the deck."]),
+    ("temple_of_horus", "place", place("temple_of_horus"),
+     ["Храм Гора",
+      "Храм из светлого камня с гранитными соколами у ворот и колоссом сокола в двойной короне."],
+     ["Temple of Horus",
+      "A temple of pale stone with granite falcons at the gate and the falcon colossus in the double crown."]),
+    ("temple_of_bastet", "place", place("temple_of_bastet"),
+     ["Храм Бастет",
+      "Храм Бубастиса с колоссом чёрной кошки. Во дворе гуляют священные кошки богини."],
+     ["Temple of Bastet",
+      "The temple of Bubastis with the colossus of a black cat. The sacred cats of the goddess roam the court."]),
+    ("shrine_of_sobek", "place", place("shrine_of_sobek"),
+     ["Святилище Себека",
+      "Святилище из сырцового кирпича на берегу Нила, двор со священным прудом, где греются крокодилы."],
+     ["Shrine of Sobek",
+      "A shrine of mud brick on the bank of the Nile, with a sacred pool in the court where crocodiles bask."]),
+    ("shrine_of_hathor", "place", place("shrine_of_hathor"),
+     ["Святилище Хатхор",
+      "Розовый камень на Полях Иалу, колосс с рогами и солнечным диском, вокруг пасутся коровы."],
+     ["Shrine of Hathor",
+      "Rose stone in the Fields of Aaru, the colossus with horns and the sun disc, cows grazing around."]),
+    ("forge_of_ptah", "place", place("forge_of_ptah"),
+     ["Кузница Птаха",
+      "Храм-кузница из тёмного камня: наковальни, горн и бассейн расплавленного металла, ушебти за работой."],
+     ["Forge of Ptah",
+      "A forge-temple of dark stone: anvils, a furnace and a basin of molten metal, with ushabti at work."]),
+    ("shrine_of_sekhmet", "place", place("shrine_of_sekhmet"),
+     ["Святилище Сехмет",
+      "Красные стены у Огненного озера, огонь и кости, колосс львицы с солнечным диском."],
+     ["Shrine of Sekhmet",
+      "Red walls by the Lake of Fire, fire and bones, the lioness colossus with the sun disc."]),
+    ("nile_boat", "place", place("nile_boat"),
+     ["Ладья Нила",
+      "Торговая ладья из связок папируса с льняным парусом. На ней плывёт торговец рынка."],
+     ["Nile Boat",
+      "A trading boat of papyrus bundles with a linen sail. A trader of the market sails on it."]),
+    ("papyrus_skiff", "place", place("papyrus_skiff"),
+     ["Папирусная лодка",
+      "Маленькая лодка рыбака среди тростника, с сетью и утренним уловом."],
+     ["Papyrus Skiff",
+      "A fisherman's little boat among the reeds, with a net and the morning's catch."]),
 ]
 
 

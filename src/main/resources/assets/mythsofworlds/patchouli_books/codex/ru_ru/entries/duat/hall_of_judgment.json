@@ -1,0 +1,13 @@
+{
+  "name": "Зал суда",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 40,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Зал двух истин, где взвешивают сердца мёртвых: колонны под звёздами, золотые весы, Анубис и Тот у весов, Осирис на троне."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_hall_of_judgment"
+}

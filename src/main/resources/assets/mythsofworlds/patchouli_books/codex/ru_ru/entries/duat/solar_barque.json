@@ -1,0 +1,13 @@
+{
+  "name": "Солнечная ладья",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 41,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Золотая ладья миллионов лет плывёт по Небесному Нилу. На мачте горит солнечный диск, на палубе стоит сам Ра."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_solar_barque"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Anubis",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 26,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:anubis",
+      "name": "Anubis"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The jackal-headed guardian of the dead, 400 health, by the scales in the Hall of Judgment. The weighing of the heart withers and slows his foe and heals him."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Below half health he calls his jackals. Drops the feather of Ma'at: with meteoric iron and sticks it makes the glaive of Anubis."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_anubis"
+}

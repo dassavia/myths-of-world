@@ -1,0 +1,22 @@
+{
+  "name": "Себек",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 29,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:sobek",
+      "name": "Себек"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Владыка Нила с головой крокодила, 450 здоровья, в святилище на берегу. Нападает первым, утаскивает врага на дно и зовёт крокодилов."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "В воде лечится: выманите его на сушу. Роняет клык: с зубом крокодила и небесным железом - хопеш Себека."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_sobek"
+}

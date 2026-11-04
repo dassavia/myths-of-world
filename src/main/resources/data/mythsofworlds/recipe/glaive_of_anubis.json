@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "MF",
+    "MS",
+    " S"
+  ],
+  "key": {
+    "M": {
+      "item": "mythsofworlds:meteoric_iron_ingot"
+    },
+    "F": {
+      "item": "mythsofworlds:feather_of_maat"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "id": "mythsofworlds:glaive_of_anubis",
+    "count": 1
+  }
+}

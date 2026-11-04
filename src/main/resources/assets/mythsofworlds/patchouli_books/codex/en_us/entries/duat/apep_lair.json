@@ -2,7 +2,7 @@
   "name": "Lair of Apep",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_place",
-  "sortnum": 25,
+  "sortnum": 39,
   "pages": [
     {
       "type": "patchouli:text",

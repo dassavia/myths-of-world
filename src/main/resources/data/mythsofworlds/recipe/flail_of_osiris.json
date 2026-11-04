@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "CDC",
+    " S ",
+    " S "
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:chain"
+    },
+    "D": {
+      "item": "mythsofworlds:djed_of_osiris"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "id": "mythsofworlds:flail_of_osiris",
+    "count": 1
+  }
+}

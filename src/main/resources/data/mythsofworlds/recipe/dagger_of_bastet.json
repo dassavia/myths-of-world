@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "C",
+    "M",
+    "S"
+  ],
+  "key": {
+    "C": {
+      "item": "mythsofworlds:claw_of_bastet"
+    },
+    "M": {
+      "item": "mythsofworlds:meteoric_iron_ingot"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "id": "mythsofworlds:dagger_of_bastet",
+    "count": 1
+  }
+}

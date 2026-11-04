@@ -1,0 +1,22 @@
+{
+  "name": "Bastet",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 28,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:bastet",
+      "name": "Bastet"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The cat goddess, 340 health, in her temple among her cats. She is quick, pounces on her foe, and her claws poison."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "She always lands on her feet. Drops a claw: with meteoric iron and a stick it makes the dagger of Bastet."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_bastet"
+}

@@ -101,7 +101,7 @@ def egyptian_village():
     # A canal from the Nile runs across the village, with fields of papyrus and wheat along it.
     for x in range(sx):
         for z in range(17, 21):
-            t.set(x, 0, z, "minecraft:water" if z in (18, 19) else "minecraft:mud")
+            t.set(x, 0, z, "minecraft:water" if z in (18, 19) else f"{NS}:nile_silt")
         if x % 3 == 0:
             t.set(x, 1, 17, "minecraft:sugar_cane[age=0]")
             t.set(x, 2, 17, "minecraft:sugar_cane[age=0]")
@@ -117,10 +117,11 @@ def egyptian_village():
     house(t, 33, 4, rng, chest="egyptian_house", merchant=2, length=7, width=6)
     house(t, 4, 25, rng, chest="egyptian_house")
     house(t, 26, 24, rng, chest="egyptian_house", length=8, width=7)
-    # Fields of wheat between the houses and the canal.
+    # Fields of wheat between the houses and the canal, edged with the black silt of the Nile that makes them grow.
     for x in range(14, 24):
         for z in range(22, 30):
             if x in (14, 23) or z in (22, 29):
+                t.set(x, 0, z, f"{NS}:nile_silt")
                 continue
             t.set(x, 0, z, "minecraft:farmland[moisture=7]")
             t.set(x, 1, z, f"minecraft:wheat[age={rng.choice([5, 6, 7])}]")
@@ -217,6 +218,7 @@ def temple_of_isis():
     # The priestesses of Isis and the temple cats.
     for x, z in ((c - 4.5, 16.5), (c + 5.5, 18.5), (c + 0.5, 5.5)):
         t.entity(x, 1.0, z, f"{NS}:priestess")
+    t.entity(c - 1.5, 1.0, 6.5, f"{NS}:isis")                  # the goddess herself before her throne
     t.entity(c - 6.5, 1.0, 21.5, f"{NS}:bastet_cat")
     t.entity(c + 6.5, 1.0, 11.5, f"{NS}:bastet_cat")
     for x, z in ((1, 3), (sx - 2, 3), (1, 20), (sx - 2, 20)):
@@ -452,6 +454,401 @@ def apep_lair():
     return t
 
 
+# ---------------------------------------------------------------- the shrines of the gods
+
+def sanctuary_shrine(seed, palette, god, chest, ground_palette=SAND, sx=23, sz=29):
+    """A shrine of one god: a pylon gate in the south, a court with columns and fire bowls where the god waits, and a
+    roofed sanctuary in the north with the god's colossal statue behind an offering table and two chests.
+
+    palette: wall (weighted list), floor (two blocks in a chequer), column shaft and capital, accent (bands of colour
+    on the pylons), fire (the bowls). Returns the template and the centre column, so that each god can add its own
+    statue and details."""
+    sy = 16
+    t = Template(sx, sy, sz)
+    rng = random.Random(seed)
+    ground(t, rng, ground_palette)
+    c = sx // 2
+    wall = palette["wall"]
+    for x in range(2, sx - 2):
+        for z in range(2, sz - 2):
+            t.set(x, 0, z, palette["floor"][(x + z) % 2])
+    # The pylon gate.
+    for x0, x1 in ((2, c - 2), (c + 2, sx - 3)):
+        for y in range(1, 10):
+            inset = y // 4
+            for x in range(x0 + inset, x1 - inset + 1):
+                for z in range(sz - 6, sz - 2):
+                    t.set(x, y, z, pick(rng, wall))
+        for y in range(3, 9):
+            t.set((x0 + x1) // 2, y, sz - 2, palette["accent"][y % 2])
+    for x in range(c - 1, c + 2):
+        t.set(x, 7, sz - 4, "minecraft:chiseled_sandstone")
+        for z in range(sz - 6, sz - 2):
+            t.set(x, 8, z, pick(rng, wall))
+    # The court with its columns and fire bowls.
+    for z in range(10, sz - 7, 3):
+        for x in (4, sx - 5):
+            column(t, x, z, 0, 7, shaft=palette["shaft"], capital=palette["capital"])
+    for x, z in ((c - 4, 12), (c + 4, 12), (c - 4, sz - 9), (c + 4, sz - 9)):
+        t.set(x, 1, z, palette["fire"])
+    # The sanctuary.
+    for x in range(2, sx - 2):
+        for z in range(2, 10):
+            edge = x in (2, sx - 3) or z == 2
+            for y in range(1, 10):
+                t.set(x, y, z, pick(rng, wall) if edge else AIR)
+            t.set(x, 10, z, pick(rng, wall))
+    for x in range(3, sx - 3):
+        if abs(x - c) > 1:
+            for y in range(1, 10):
+                t.set(x, y, 9, pick(rng, wall))
+    for x in range(c - 1, c + 2):
+        t.set(x, 6, 9, palette["capital"])
+        for y in range(7, 10):
+            t.set(x, y, 9, pick(rng, wall))
+    t.fill(c - 2, 1, 6, c + 2, 1, 6, "minecraft:smooth_sandstone_slab[type=bottom,waterlogged=false]")
+    t.chest(c - 3, 1, 6, chest, facing="south")
+    t.chest(c + 3, 1, 6, chest, facing="south")
+    for x in (4, sx - 5):
+        t.set(x, 8, 5, LANTERN)
+    t.entity(c + 0.5, 1.0, 13.5, f"{NS}:{god}")
+    return t, c, rng
+
+
+def colossus(t, c, z, body, head_fn, top=8):
+    """A seated colossus of the god against the back wall: a throne block, legs, body and the head drawn by head_fn."""
+    t.fill(c - 1, 1, z, c + 1, 2, z, body)
+    t.fill(c - 1, 1, z + 1, c + 1, top - 3, z + 1, body)
+    t.set(c, top - 3, z + 1, "minecraft:gold_block")
+    head_fn(t, c, top - 2, z + 1)
+
+
+def temple_of_horus():
+    """The temple of Horus at Edfu: golden-white stone, two falcons of granite before the gate, the falcon colossus
+    with the double crown in the sanctuary."""
+    palette = {"wall": [(PYRAMID, 60), ("minecraft:smooth_sandstone", 25), (GLYPHS, 15)],
+               "floor": ("minecraft:smooth_sandstone", "minecraft:cut_sandstone"),
+               "shaft": "minecraft:cut_sandstone", "capital": "minecraft:chiseled_sandstone",
+               "accent": ("minecraft:blue_wool", "minecraft:yellow_wool"), "fire": FIRE_BOWL}
+    t, c, rng = sanctuary_shrine(208, palette, "horus", "temple_of_horus")
+    sz = t.size[2]
+
+    def falcon_head(t, x, y, z):
+        t.fill(x - 1, y, z, x + 1, y + 1, z, "minecraft:brown_terracotta")
+        t.set(x, y, z - 1, "minecraft:yellow_terracotta")              # the hooked beak
+        t.set(x, y + 2, z, "minecraft:white_terracotta")              # the white crown of the south
+        t.set(x, y + 2, z + 1, "minecraft:red_terracotta")            # the red crown of the north behind it
+    colossus(t, c, 3, "minecraft:polished_blackstone", falcon_head)
+    for x in (c - 4, c + 4):                                          # the falcons of granite at the gate
+        t.set(x, 1, sz - 7, "minecraft:polished_blackstone")
+        t.set(x, 2, sz - 7, "minecraft:polished_blackstone")
+        t.set(x, 3, sz - 7, "minecraft:brown_terracotta")
+        t.set(x, 4, sz - 7, "minecraft:red_terracotta")
+    return t
+
+
+def temple_of_bastet():
+    """The temple of Bastet at Bubastis: pale stone with black and turquoise, the black cat colossus with a golden
+    earring, and the sacred cats of the goddess in the court."""
+    palette = {"wall": [("minecraft:smooth_sandstone", 60), (PYRAMID, 30), (GLYPHS, 10)],
+               "floor": ("minecraft:polished_blackstone", "minecraft:smooth_sandstone"),
+               "shaft": "minecraft:cut_sandstone", "capital": "minecraft:chiseled_sandstone",
+               "accent": ("minecraft:cyan_wool", "minecraft:black_wool"), "fire": FIRE_BOWL}
+    t, c, rng = sanctuary_shrine(209, palette, "bastet", "temple_of_bastet")
+
+    def cat_head(t, x, y, z):
+        t.fill(x - 1, y, z, x + 1, y + 1, z, "minecraft:black_concrete")
+        t.set(x - 1, y + 2, z, "minecraft:black_concrete")              # the pointed ears
+        t.set(x + 1, y + 2, z, "minecraft:black_concrete")
+        t.set(x - 1, y + 1, z - 1, "minecraft:yellow_stained_glass")    # the golden eyes
+        t.set(x + 1, y + 1, z - 1, "minecraft:yellow_stained_glass")
+        t.set(x + 2, y + 1, z, "minecraft:gold_block")                   # the earring
+    colossus(t, c, 3, "minecraft:black_concrete", cat_head)
+    for x, z in ((c - 3, 16), (c + 3, 18), (c - 2, 21), (c + 2, 12)):
+        t.entity(x + 0.5, 1.0, z + 0.5, f"{NS}:bastet_cat")
+    for x, z in ((6, 15), (t.size[0] - 7, 20)):
+        t.set(x, 1, z, "minecraft:decorated_pot[facing=south,cracked=false,waterlogged=false]")
+    return t
+
+
+def shrine_of_sobek():
+    """The shrine of Sobek on the bank of the Nile, as at Kom Ombo: mud brick and green stone, a sacred pool in the
+    court where his crocodiles bask, the crocodile colossus in the sanctuary."""
+    palette = {"wall": [("minecraft:mud_bricks", 55), ("minecraft:packed_mud", 20), ("minecraft:mossy_stone_bricks", 25)],
+               "floor": ("minecraft:mud_bricks", "minecraft:smooth_sandstone"),
+               "shaft": "minecraft:mossy_stone_bricks", "capital": "minecraft:chiseled_stone_bricks",
+               "accent": ("minecraft:green_wool", "minecraft:lime_wool"), "fire": FIRE_BOWL}
+    t, c, rng = sanctuary_shrine(210, palette, "sobek", "shrine_of_sobek",
+                                 ground_palette=[(f"{NS}:nile_silt", 50), ("minecraft:mud", 30), ("minecraft:grass_block[snowy=false]", 20)])
+    # The sacred pool in the middle of the court, with silt and papyrus around it.
+    for x in range(c - 3, c + 4):
+        for z in range(15, 21):
+            edge = x in (c - 3, c + 3) or z in (15, 20)
+            t.set(x, 0, z, f"{NS}:nile_silt" if edge else "minecraft:water")
+            if edge and (x + z) % 3 == 0:
+                t.set(x, 1, z, "minecraft:sugar_cane[age=0]")
+                t.set(x, 2, z, "minecraft:sugar_cane[age=0]")
+    t.set(c, 1, 17, "minecraft:lily_pad")
+
+    def crocodile_head(t, x, y, z):
+        t.fill(x - 1, y, z, x + 1, y, z, "minecraft:green_terracotta")
+        t.fill(x - 1, y, z - 1, x + 1, y, z - 1, "minecraft:green_terracotta")   # the long snout
+        t.set(x, y, z - 2, "minecraft:green_terracotta")
+        t.set(x - 1, y + 1, z, "minecraft:yellow_terracotta")                      # the eyes on top
+        t.set(x + 1, y + 1, z, "minecraft:yellow_terracotta")
+        t.set(x, y + 1, z + 1, "minecraft:gold_block")                             # the plumes and sun disc
+    colossus(t, c, 3, "minecraft:green_terracotta", crocodile_head)
+    t.entity(c - 1.5, 1.0, 17.5, f"{NS}:crocodile")
+    t.entity(c + 2.5, 1.0, 18.5, f"{NS}:crocodile")
+    return t
+
+
+def shrine_of_hathor():
+    """The shrine of Hathor in the Fields of Aaru: rose and white stone, Hathor-headed capitals, the colossus with the
+    cow horns and the sun disc between them, and her cows grazing around."""
+    palette = {"wall": [("minecraft:smooth_quartz", 40), ("minecraft:pink_terracotta", 35), (GLYPHS, 25)],
+               "floor": ("minecraft:smooth_quartz", "minecraft:pink_terracotta"),
+               "shaft": "minecraft:quartz_pillar[axis=y]", "capital": "minecraft:chiseled_quartz_block",
+               "accent": ("minecraft:red_wool", "minecraft:yellow_wool"), "fire": FIRE_BOWL}
+    t, c, rng = sanctuary_shrine(211, palette, "hathor", "shrine_of_hathor",
+                                 ground_palette=[("minecraft:grass_block[snowy=false]", 80), ("minecraft:moss_block", 20)])
+
+    def cow_head(t, x, y, z):
+        t.fill(x - 1, y, z, x + 1, y + 1, z, "minecraft:white_terracotta")
+        t.set(x - 2, y + 2, z, "minecraft:gold_block")                     # the horns curving up
+        t.set(x + 2, y + 2, z, "minecraft:gold_block")
+        t.set(x - 2, y + 1, z, "minecraft:gold_block")
+        t.set(x + 2, y + 1, z, "minecraft:gold_block")
+        t.set(x, y + 2, z, "minecraft:shroomlight")                         # the sun disc between them
+    colossus(t, c, 3, "minecraft:pink_terracotta", cow_head)
+    for x, z in ((1, 15), (t.size[0] - 2, 19)):
+        t.entity(x + 0.5, 1.0, z + 0.5, "minecraft:cow")
+    for x in range(5, t.size[0] - 5, 2):
+        t.set(x, 1, t.size[2] - 1, "minecraft:poppy")
+    return t
+
+
+def forge_of_ptah():
+    """The forge-temple of Ptah at Memphis, lord of craftsmen: dark stone and lapis, anvils, a blast furnace and a
+    basin of molten metal in the court, the mummiform colossus with the blue cap, and ushabti at work."""
+    palette = {"wall": [("minecraft:polished_blackstone_bricks", 50), ("minecraft:blackstone", 25), ("minecraft:lapis_block", 5),
+                        (PYRAMID, 20)],
+               "floor": ("minecraft:polished_blackstone", "minecraft:polished_basalt[axis=y]"),
+               "shaft": "minecraft:polished_basalt[axis=y]", "capital": "minecraft:chiseled_polished_blackstone",
+               "accent": ("minecraft:blue_wool", "minecraft:light_blue_wool"), "fire": FIRE_BOWL}
+    t, c, rng = sanctuary_shrine(212, palette, "ptah", "forge_of_ptah", ground_palette=RED_SAND)
+    for x in range(c - 1, c + 2):                                      # the basin of molten metal
+        for z in range(17, 20):
+            t.set(x, 0, z, "minecraft:lava[level=0]")
+    for x, z in ((c - 2, 16), (c + 2, 16), (c - 2, 20), (c + 2, 20)):
+        t.set(x, 1, z, "minecraft:polished_blackstone_wall")
+    t.set(c - 4, 1, 17, "minecraft:anvil[facing=east]")
+    t.set(c + 4, 1, 19, "minecraft:anvil[facing=west]")
+    t.set(c - 4, 1, 20, "minecraft:blast_furnace[facing=east,lit=true]")
+    t.set(c + 4, 1, 16, "minecraft:smithing_table")
+
+    def ptah_head(t, x, y, z):
+        t.fill(x - 1, y, z, x + 1, y + 1, z, "minecraft:white_terracotta")
+        t.fill(x - 1, y + 2, z, x + 1, y + 2, z, "minecraft:lapis_block")   # the close blue cap
+        t.set(x, y, z - 1, "minecraft:gold_block")                          # the straight beard
+    colossus(t, c, 3, "minecraft:green_terracotta", ptah_head)
+    t.entity(c - 3.5, 1.0, 14.5, f"{NS}:ushabti")
+    t.entity(c + 4.5, 1.0, 14.5, f"{NS}:ushabti")
+    return t
+
+
+def shrine_of_sekhmet():
+    """The shrine of Sekhmet by the Lake of Fire: red stone, fire everywhere, the lioness colossus with the sun disc
+    and the cobra, and the bones of those she punished."""
+    palette = {"wall": [("minecraft:red_sandstone", 45), ("minecraft:cut_red_sandstone", 25), ("minecraft:red_nether_bricks", 30)],
+               "floor": ("minecraft:red_nether_bricks", "minecraft:smooth_red_sandstone"),
+               "shaft": "minecraft:cut_red_sandstone", "capital": "minecraft:chiseled_red_sandstone",
+               "accent": ("minecraft:red_wool", "minecraft:orange_wool"), "fire": FIRE_BOWL}
+    t, c, rng = sanctuary_shrine(213, palette, "sekhmet", "shrine_of_sekhmet",
+                                 ground_palette=[("minecraft:blackstone", 50), ("minecraft:magma_block", 20), ("minecraft:red_sand", 30)])
+
+    def lioness_head(t, x, y, z):
+        t.fill(x - 1, y, z, x + 1, y + 1, z, "minecraft:orange_terracotta")
+        t.set(x, y, z - 1, "minecraft:yellow_terracotta")                   # the muzzle
+        t.set(x, y + 2, z, "minecraft:shroomlight")                         # the sun disc
+        t.set(x, y + 2, z - 1, "minecraft:gold_block")                      # the cobra on the brow
+    colossus(t, c, 3, "minecraft:red_terracotta", lioness_head)
+    for x, z in ((c - 3, 14), (c + 3, 20), (c - 2, 22)):
+        t.set(x, 1, z, "minecraft:bone_block[axis=y]")
+    for x in (c - 1, c + 1):
+        t.set(x, 0, 17, "minecraft:netherrack")
+        t.set(x, 1, 17, "minecraft:fire[age=0,east=false,north=false,south=false,up=false,west=false]")
+    return t
+
+
+# ---------------------------------------------------------------- the Hall of Judgment
+
+def hall_of_judgment():
+    """The Hall of the Two Truths, where the hearts of the dead are weighed: a long hall of columns open to the stars,
+    the great scales in the middle with Anubis beside them and Thoth with his tablet, and Osiris enthroned at the
+    north end under a canopy, with the devourer Ammit's jaws carved at the foot of the scales."""
+    sx, sy, sz = 27, 15, 35
+    t = Template(sx, sy, sz)
+    rng = random.Random(214)
+    ground(t, rng, SAND)
+    c = sx // 2
+    wall = [(PYRAMID, 50), (GLYPHS, 30), ("minecraft:smooth_sandstone", 20)]
+    for x in range(1, sx - 1):
+        for z in range(1, sz - 1):
+            edge = x in (1, sx - 2) or z in (1, sz - 2)
+            t.set(x, 0, z, "minecraft:lapis_block" if abs(x - c) <= 1 else
+                  ("minecraft:polished_blackstone" if (x + z) % 2 else "minecraft:smooth_quartz"))
+            if edge:
+                for y in range(1, 8):
+                    t.set(x, y, z, pick(rng, wall))
+                if (x + z) % 2 == 0:
+                    t.set(x, 8, z, "minecraft:sandstone_wall")
+    for x in range(c - 1, c + 2):                                   # the doorway in the south
+        for y in range(1, 5):
+            t.set(x, y, sz - 2, AIR)
+    for z in range(5, sz - 4, 4):                                   # two rows of papyrus columns
+        for x in (5, sx - 6):
+            column(t, x, z, 0, 9, shaft="minecraft:quartz_pillar[axis=y]", capital="minecraft:chiseled_sandstone")
+            t.set(x, 9, z, "minecraft:gold_block")
+    # The scales: a pillar with a beam, chains and two golden pans.
+    zs = 17
+    t.fill(c, 1, zs, c, 5, zs, "minecraft:gold_block")
+    t.fill(c - 3, 6, zs, c + 3, 6, zs, "minecraft:gold_block")
+    for x in (c - 3, c + 3):
+        t.set(x, 5, zs, "minecraft:chain[axis=y,waterlogged=false]")
+        t.set(x, 4, zs, "minecraft:chain[axis=y,waterlogged=false]")
+        t.set(x, 3, zs, "minecraft:light_weighted_pressure_plate[power=0]")
+        t.set(x, 2, zs, "minecraft:gold_block")
+    t.set(c - 3, 1, zs, "minecraft:smooth_sandstone")
+    t.set(c + 3, 1, zs, "minecraft:smooth_sandstone")
+    t.set(c, 1, zs + 1, "minecraft:green_terracotta")              # Ammit, waiting at the foot of the scales
+    t.set(c, 1, zs + 2, "minecraft:orange_terracotta")
+    # The throne of Osiris on a dais under a canopy.
+    t.fill(c - 3, 1, 3, c + 3, 1, 7, "minecraft:smooth_sandstone")
+    t.fill(c - 1, 2, 3, c + 1, 2, 4, "minecraft:green_terracotta")
+    t.fill(c - 1, 3, 3, c + 1, 4, 3, "minecraft:green_terracotta")
+    for x in (c - 3, c + 3):
+        for z in (3, 7):
+            t.fill(x, 2, z, x, 7, z, "minecraft:quartz_pillar[axis=y]")
+    t.fill(c - 3, 8, 3, c + 3, 8, 7, "minecraft:gold_block")
+    t.chest(c - 2, 2, 5, "hall_of_judgment", facing="south")
+    t.chest(c + 2, 2, 5, "hall_of_judgment", facing="south")
+    for x, z in ((c - 4, 12), (c + 4, 12), (c - 4, 24), (c + 4, 24)):
+        t.set(x, 1, z, SOUL_FIRE)
+    t.entity(c + 0.5, 2.0, 5.5, f"{NS}:osiris")
+    t.entity(c - 4.5, 1.0, zs + 0.5, f"{NS}:anubis")
+    t.entity(c + 5.5, 1.0, zs + 0.5, f"{NS}:thoth")
+    return t
+
+
+# ---------------------------------------------------------------- boats on the Nile
+
+def hull(t, x0, x1, cz, half_width, deck_y, planks, trim, bow_rise=2):
+    """A boat of the Nile seen from above: a long hull, widest in the middle and narrowing to a bow and a stern that
+    curve up. The keel sits in the water (y = 0, the water surface), the deck is at deck_y. Water is left where the hull
+    is not, as the template keeps the blocks it does not set."""
+    length = x1 - x0
+    for x in range(x0, x1 + 1):
+        f = (x - x0) / length
+        width = max(0, round(half_width * math.sin(math.pi * f) ** 0.6))
+        end = min(x - x0, x1 - x)
+        for z in range(cz - width, cz + width + 1):
+            side = abs(z - cz) == width
+            t.set(x, 0, z, planks)
+            for y in range(1, deck_y):
+                t.set(x, y, z, planks)
+            if side:
+                t.set(x, deck_y, z, trim)
+        if end < bow_rise:                                         # the bow and the stern curve up like a papyrus umbel
+            for y in range(deck_y, deck_y + bow_rise - end + 1):
+                t.set(x, y, cz, trim)
+
+
+def solar_barque():
+    """The barque of millions of years, in which Ra sails the sky by day and the Duat by night: a long golden hull on
+    the Celestial Nile, a shrine with a golden roof amidships, the sun disc blazing on its mast, steering oars at the
+    stern. Ra stands on the deck."""
+    sx, sy, sz = 31, 14, 11
+    t = Template(sx, sy, sz)
+    rng = random.Random(215)
+    cz = sz // 2
+    hull(t, 1, sx - 2, cz, 4, 2, "minecraft:stripped_jungle_log[axis=x]", "minecraft:gold_block", bow_rise=4)
+    for x in range(sx):                                                # the deck of cedar
+        for z in range(sz):
+            if t.get(x, 2, z) in (None, AIR) and t.get(x, 1, z) not in (None, AIR):
+                t.set(x, 2, z, "minecraft:jungle_planks")
+    c = sx // 2
+    for x in range(c - 3, c + 2):                                      # the shrine of the god amidships
+        for z in range(cz - 2, cz + 3):
+            edge = x in (c - 3, c + 1) or abs(z - cz) == 2
+            for y in range(3, 6):
+                t.set(x, y, z, (GLYPHS if y == 4 else PYRAMID) if edge else AIR)
+            t.set(x, 6, z, "minecraft:gold_block")
+    for y in range(3, 5):
+        t.set(c + 1, y, cz, AIR)
+    t.chest(c - 2, 3, cz, "solar_barque", facing="east")
+    for y in range(3, 10):                                             # the mast with the sun disc
+        t.set(c + 5, y, cz, "minecraft:stripped_jungle_log[axis=y]")
+    for dy in range(-1, 2):
+        for dz in range(-1, 2):
+            t.set(c + 5, 10 + dy, cz + dz, "minecraft:shroomlight" if (dy, dz) != (0, 0) else "minecraft:gold_block")
+    t.set(c + 5, 12, cz, "minecraft:end_rod[facing=up]")
+    for z in (cz - 4, cz + 4):                                         # the steering oars at the stern
+        t.set(4, 3, z, "minecraft:jungle_fence")
+        t.set(4, 2, z, "minecraft:jungle_fence")
+        t.set(4, 1, z, "minecraft:jungle_fence")
+    for x in (6, sx - 7):
+        t.set(x, 3, cz, STANDING_LANTERN)
+    t.entity(c + 3.5, 3.0, cz + 0.5, f"{NS}:ra")
+    return t
+
+
+def nile_boat():
+    """A trading boat of the Nile: a hull of papyrus bundles tied with rope, a deck of planks, a tall mast with a wide
+    square sail of linen, jars and a chest of goods. A trader of the market sails on it."""
+    sx, sy, sz = 17, 12, 7
+    t = Template(sx, sy, sz)
+    rng = random.Random(216)
+    cz = sz // 2
+    hull(t, 0, sx - 1, cz, 3, 2, "minecraft:hay_block[axis=x]", "minecraft:stripped_bamboo_block[axis=x]", bow_rise=3)
+    for x in range(sx):
+        for z in range(sz):
+            if t.get(x, 2, z) in (None, AIR) and t.get(x, 1, z) not in (None, AIR):
+                t.set(x, 2, z, "minecraft:bamboo_mosaic")
+    m = sx // 2
+    for y in range(3, 11):
+        t.set(m, y, cz, "minecraft:stripped_jungle_log[axis=y]")
+    for z in range(cz - 3, cz + 4):                                    # the yard and the square sail
+        t.set(m, 10, z, "minecraft:stripped_jungle_log[axis=z]")
+        for y in range(5, 10):
+            if abs(z - cz) <= 3 and z != cz:
+                t.set(m + 1, y, z, "minecraft:white_wool")
+        t.set(m + 1, 5, cz, "minecraft:white_wool")
+        t.set(m + 1, 9, cz, "minecraft:white_wool")
+    t.set(m - 3, 3, cz - 1, "minecraft:decorated_pot[facing=south,cracked=false,waterlogged=false]")
+    t.set(m - 3, 3, cz + 1, "minecraft:barrel[facing=up,open=false]")
+    t.chest(m - 2, 3, cz, "nile_boat", facing="east")
+    t.set(m + 3, 3, cz, STANDING_LANTERN)
+    t.entity(m + 2.5, 3.0, cz + 1.5, f"{NS}:egyptian_merchant", {"Kind": 0})
+    return t
+
+
+def papyrus_skiff():
+    """A small skiff of papyrus bundles for fishing among the reeds, with a pole, a net and the morning's catch."""
+    sx, sy, sz = 11, 6, 5
+    t = Template(sx, sy, sz)
+    rng = random.Random(217)
+    cz = sz // 2
+    hull(t, 0, sx - 1, cz, 2, 1, "minecraft:hay_block[axis=x]", "minecraft:hay_block[axis=x]", bow_rise=2)
+    for x in range(3, sx - 3):
+        t.set(x, 1, cz, "minecraft:bamboo_mosaic_slab[type=bottom,waterlogged=false]")
+    t.chest(4, 1, cz, "papyrus_skiff", facing="east")
+    t.set(6, 2, cz, "minecraft:cobweb")                                # the fishing net hung to dry
+    t.set(sx // 2 + 2, 2, cz, "minecraft:bamboo_fence")
+    t.set(sx // 2 + 2, 3, cz, "minecraft:bamboo_fence")
+    return t
+
+
 STRUCTURES = {
     "egyptian_village": egyptian_village,
     "temple_of_isis": temple_of_isis,
@@ -460,4 +857,14 @@ STRUCTURES = {
     "great_sphinx": great_sphinx,
     "temple_of_set": temple_of_set,
     "apep_lair": apep_lair,
+    "hall_of_judgment": hall_of_judgment,
+    "solar_barque": solar_barque,
+    "temple_of_horus": temple_of_horus,
+    "temple_of_bastet": temple_of_bastet,
+    "shrine_of_sobek": shrine_of_sobek,
+    "shrine_of_hathor": shrine_of_hathor,
+    "forge_of_ptah": forge_of_ptah,
+    "shrine_of_sekhmet": shrine_of_sekhmet,
+    "nile_boat": nile_boat,
+    "papyrus_skiff": papyrus_skiff,
 }

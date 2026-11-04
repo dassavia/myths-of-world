@@ -1,0 +1,13 @@
+{
+  "name": "Храм Гора",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 42,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Храм из светлого камня с гранитными соколами у ворот и колоссом сокола в двойной короне."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_temple_of_horus"
+}

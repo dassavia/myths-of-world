@@ -2,7 +2,7 @@
   "name": "Храм Сета",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_place",
-  "sortnum": 24,
+  "sortnum": 38,
   "pages": [
     {
       "type": "patchouli:text",

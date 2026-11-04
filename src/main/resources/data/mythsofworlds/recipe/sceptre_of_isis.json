@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    " W ",
+    " L ",
+    " G "
+  ],
+  "key": {
+    "W": {
+      "item": "mythsofworlds:wing_of_isis"
+    },
+    "L": {
+      "item": "minecraft:lapis_block"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "result": {
+    "id": "mythsofworlds:sceptre_of_isis",
+    "count": 1
+  }
+}

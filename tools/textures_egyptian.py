@@ -3,8 +3,8 @@ import math
 
 from PIL import Image
 
-from textures import (amazon, band, beast, box_faces, crayfish, face, fill_rect, humanoid, hydra, item, jitter, mix, rgb,
-                      save, scale, shade_parts, side_faces, speckle)
+from textures import (amazon, band, beast, box_faces, crayfish, face, fill_rect, humanoid, hydra, item, jitter, mix,
+                      paint_box, rgb, save, scale, shade_parts, side_faces, speckle)
 from textures_norse import giant, norse_merchant
 
 __all__ = ["BLOCKS", "ITEMS", "ENTITIES", "LAYERS", "item", "save"]
@@ -100,7 +100,29 @@ def date_palm_leaves(rng, ripe=False):
     return img
 
 
+def nile_silt(rng):
+    """The black silt of the Nile: dark wet earth, almost black, with streaks of grey clay, glints of water and tiny
+    roots, the soil that gave Egypt its name of Kemet, the black land."""
+    img = Image.new("RGBA", (16, 16))
+    fill_rect(img, 0, 0, 16, 16, rgb(0x2A2420), rng, 6)
+    for _ in range(3):                                          # streaks of grey clay laid down by the flood
+        y = rng.randrange(16)
+        for x in range(16):
+            if rng.random() < 0.7:
+                img.putpixel((x, (y + x // 6) % 16), jitter(rgb(0x4A4440), rng, 5))
+    for _ in range(18):
+        img.putpixel((rng.randrange(16), rng.randrange(16)), jitter(rgb(0x1A1614), rng, 4))
+    for _ in range(6):                                          # glints of water on the wet surface
+        img.putpixel((rng.randrange(16), rng.randrange(16)), jitter(rgb(0x5A6A78), rng, 6))
+    for _ in range(3):                                          # fine roots of papyrus
+        x, y = rng.randrange(16), rng.randrange(16)
+        for i in range(3):
+            img.putpixel(((x + i) % 16, (y + (i % 2)) % 16), jitter(rgb(0x6A5A3A), rng, 6))
+    return img
+
+
 BLOCKS = {
+    "nile_silt": nile_silt,
     "pyramid_stone": pyramid_stone,
     "hieroglyph_stone": hieroglyph_stone,
     "pyramid_gate": pyramid_gate,
@@ -423,7 +445,456 @@ PRIESTESSES = [
          crown=0xE2B33C, belt=0xC0402A),
 ]
 
+# ---------------------------------------------------------------- the crocodile
+
+def crocodile(rng):
+    """Layout of client/CrocodileModel (64x64): an olive-green crocodile, dark and knobbly on the back with rows of
+    raised scutes, banded with black on the tail, the flanks paler and the belly of smooth cream scales in square
+    rows; yellow eyes with a slit pupil on raised sockets, a long snout with the teeth showing along the jaw line."""
+    img = Image.new("RGBA", (64, 64), (0, 0, 0, 0))
+    back, flank, belly = rgb(0x4A5A2A), rgb(0x6A7A3A), rgb(0xD8CC98)
+    dark, scute = rgb(0x2A321A), rgb(0x3A4420)
+    parts = {}
+
+    def scales_on(rect, base, cell=2, shade=0.82):
+        """Square scales: every cell gets a darker rim on its lower and right side."""
+        x, y, w, h = rect
+        for j in range(h):
+            for i in range(w):
+                c = img.getpixel((x + i, y + j))
+                if i % cell == cell - 1 or j % cell == cell - 1:
+                    img.putpixel((x + i, y + j), scale(c, shade))
+
+    def flanks(rects, rows_belly):
+        for name in ("right", "left", "front", "back"):
+            x, y, w, h = rects[name]
+            for j in range(h):
+                t = j / max(1, h - 1)
+                for i in range(w):
+                    c = mix(back, flank, min(1.0, t * 1.6))
+                    if j >= h - rows_belly:
+                        c = belly
+                    img.putpixel((x + i, y + j), jitter(c, rng, 8))
+            scales_on((x, y, w, h), None, cell=2)
+            for _ in range(w * h // 10):                         # dark mottling
+                img.putpixel((x + rng.randrange(w), y + rng.randrange(max(1, h - rows_belly))), jitter(dark, rng, 6))
+
+    def top_scutes(rect, rows=2):
+        """Rows of raised bony scutes along the back: light tips with dark gaps between them."""
+        x, y, w, h = rect
+        fill_rect(img, x, y, w, h, back, rng, 8)
+        for j in range(h):
+            for i in range(w):
+                if j % 2 == 0 and (i % 3) != 1:
+                    img.putpixel((x + i, y + j), jitter(scale(scute, 1.25), rng, 6))
+                elif j % 2 == 1:
+                    img.putpixel((x + i, y + j), jitter(dark, rng, 5))
+
+    # The body and the ridge of scutes on the back.
+    parts["body"] = paint_box(img, 0, 0, 8, 4, 16, back, rng, 8, faces={"bottom": belly}, shaded=False)
+    top_scutes(parts["body"]["top"])
+    flanks(parts["body"], 1)
+    fill_rect(img, *parts["body"]["bottom"], belly, rng, 6)
+    scales_on(parts["body"]["bottom"], None, cell=2, shade=0.9)
+    parts["ridge"] = paint_box(img, 0, 20, 4, 1, 14, scute, rng, 6, shaded=False)
+    x, y, w, h = parts["ridge"]["top"]
+    for j in range(h):
+        for i in range(w):
+            img.putpixel((x + i, y + j), jitter(scale(scute, 1.35) if (j % 2 == 0 and i in (0, w - 1)) else dark, rng, 6))
+    # The tail: three segments, banded black, the crest of paired scutes on top.
+    for name, d in (("tail", (36, 20, 6, 4, 8)), ("tail2", (42, 45, 4, 3, 7)), ("tail3", (0, 55, 2, 2, 7))):
+        parts[name] = paint_box(img, *d, back, rng, 8, faces={"bottom": belly}, shaded=False)
+        top_scutes(parts[name]["top"])
+        flanks(parts[name], 1 if d[3] > 2 else 0)
+        for side in ("top", "right", "left"):
+            rx, ry, rw, rh = parts[name][side]
+            for k in range(2, (rh if side == "top" else rw), 3):
+                if side == "top":
+                    fill_rect(img, rx, ry + k, rw, 1, dark, rng, 4)
+                else:
+                    fill_rect(img, rx + k, ry, 1, rh, dark, rng, 4)
+    # The head: a flat skull with the eye sockets, a long snout, the lower jaw with its pale throat.
+    parts["skull"] = paint_box(img, 0, 35, 6, 4, 5, back, rng, 8, faces={"bottom": belly}, shaded=False)
+    top_scutes(parts["skull"]["top"])
+    flanks(parts["skull"], 1)
+    parts["snout"] = paint_box(img, 22, 35, 4, 2, 8, back, rng, 8, faces={"bottom": belly}, shaded=False)
+    sx_, sy_, sw, sh = parts["snout"]["top"]
+    for _ in range(14):                                          # the bumpy hide of the snout
+        img.putpixel((sx_ + rng.randrange(sw), sy_ + rng.randrange(sh)), jitter(scale(back, 1.2), rng, 8))
+    img.putpixel((sx_ + 1, sy_), rgb(0x141410))                  # the nostrils at the tip
+    img.putpixel((sx_ + 2, sy_), rgb(0x141410))
+    for side in ("right", "left"):                               # the teeth along the jaw line
+        rx, ry, rw, rh = parts["snout"][side]
+        fill_rect(img, rx, ry, rw, rh - 1, flank, rng, 8)
+        for i in range(rw):
+            img.putpixel((rx + i, ry + rh - 1), rgb(0xF2ECD8) if i % 2 == 0 else rgb(0x2A1A14))
+    fx, fy, fw, fh = parts["snout"]["front"]
+    fill_rect(img, fx, fy, fw, fh, flank, rng, 6)
+    img.putpixel((fx, fy + fh - 1), rgb(0xF2ECD8))
+    img.putpixel((fx + fw - 1, fy + fh - 1), rgb(0xF2ECD8))
+    parts["jaw"] = paint_box(img, 0, 45, 5, 1, 9, flank, rng, 8, faces={"bottom": belly, "top": rgb(0xB85A5A)}, shaded=False)
+    jx, jy, jw, jh = parts["jaw"]["top"]                         # the pink mouth inside, lined with teeth
+    for j in range(jh):
+        img.putpixel((jx, jy + j), rgb(0xF2ECD8) if j % 2 else rgb(0xB85A5A))
+        img.putpixel((jx + jw - 1, jy + j), rgb(0xF2ECD8) if j % 2 else rgb(0xB85A5A))
+    scales_on(parts["jaw"]["bottom"], None, cell=2, shade=0.9)
+    parts["eye"] = paint_box(img, 48, 8, 1, 1, 2, back, rng, 6, shaded=False)
+    for name in ("front", "right", "left", "top"):
+        ex, ey, ew, eh = parts["eye"][name]
+        img.putpixel((ex, ey), rgb(0xE8C83A))                    # the yellow eye
+    ex, ey, ew, eh = parts["eye"]["right"]
+    img.putpixel((ex + ew - 1, ey), rgb(0x141410))              # the slit pupil
+    ex, ey, ew, eh = parts["eye"]["left"]
+    img.putpixel((ex, ey), rgb(0x141410))
+    # The legs: scaly, with dark claws on the webbed feet.
+    parts["leg"] = paint_box(img, 48, 0, 3, 4, 3, flank, rng, 8, faces={"bottom": dark}, shaded=False)
+    for rect in side_faces(parts["leg"]):
+        scales_on(rect, None, cell=2)
+        rx, ry, rw, rh = rect
+        fill_rect(img, rx, ry + rh - 1, rw, 1, dark, rng, 4)
+        img.putpixel((rx, ry + rh - 1), rgb(0xD8D0B8))
+        img.putpixel((rx + rw - 1, ry + rh - 1), rgb(0xD8D0B8))
+    shade_parts(img, parts)
+    return img
+
+
+# ---------------------------------------------------------------- the gods of Egypt
+
+def god_body(rng, skin, kilt=0xF4F0E4, collar=(GOLD, LAPIS, TURQUOISE), dress=None, arms=None, sandals=0xC8A060):
+    """The body of a god as the temple walls show it: bare chest with a broad collar of gold and stone, a pleated
+    white kilt with a golden belt, armbands and bracelets of gold, sandals. With dress, a long sheath dress from the
+    chest to the ankles instead of the kilt. Returns (img, parts); the head is painted by the god's own function."""
+    img, parts = humanoid(rng, skin, skin, skin, arms=arms, sleeves=0, sandals=sandals)
+    body, leg = parts["body"], parts["leg"]
+    if dress is not None:
+        for x, y, w, h in side_faces(body):
+            fill_rect(img, x, y + 3, w, h - 3, rgb(dress), rng, 6)
+        for x, y, w, h in side_faces(leg):
+            fill_rect(img, x, y, w, h - 2, rgb(dress), rng, 6)
+            for i in range(0, w, 2):
+                img.putpixel((x + i, y + h - 3), scale(rgb(dress), 0.75))
+        fill_rect(img, *leg["top"], rgb(dress), rng, 6)
+    else:
+        for x, y, w, h in side_faces(body):
+            fill_rect(img, x, y + 8, w, h - 8, rgb(kilt), rng, 4)
+        for x, y, w, h in side_faces(leg):
+            fill_rect(img, x, y, w, 5, rgb(kilt), rng, 4)
+            for i in range(0, w, 2):                             # the pleats
+                for j in range(5):
+                    img.putpixel((x + i, y + j), scale(rgb(kilt), 0.86))
+        band(img, body, 8, 1, GOLD, rng)                         # the golden belt
+        x, y, w, h = body["front"]
+        fill_rect(img, x + 3, y + 9, 2, 3, GOLD, rng, 6)         # the apron of the kilt
+    for row, colour in enumerate(collar):                        # the broad collar
+        band(img, body, row, 1, colour, rng)
+    x, y, w, h = body["front"]
+    for i in range(1, w - 1):
+        img.putpixel((x + i, y + len(collar)), GOLD if i % 2 else CARNELIAN)
+    fill_rect(img, *body["top"], collar[0], rng, 6)
+    band(img, parts["arm"], 3, 1, GOLD, rng)                     # armbands and bracelets
+    band(img, parts["arm"], 10, 1, GOLD, rng)
+    return img, parts
+
+
+def head_fill(img, colour, rng, noise=8, faces=("front", "right", "left", "back", "top", "bottom")):
+    head = box_faces(0, 0, 8, 8, 8)
+    for name in faces:
+        fill_rect(img, *head[name], rgb(colour) if isinstance(colour, int) else colour, rng, noise)
+    return head
+
+
+def hat_px(img, face_name, pixels, colour):
+    """Pixels on one face of the overlay that floats around the head (crowns, ears, horns)."""
+    x, y, w, h = box_faces(32, 0, 8, 8, 8)[face_name]
+    c = rgb(colour) if isinstance(colour, int) else colour
+    for i, j in pixels:
+        img.putpixel((x + i, y + j), c)
+
+
+def wig(img, rng, colour=0x14100E, band_colour=None):
+    """The heavy black wig of the gods and goddesses, falling behind the ears to the shoulders."""
+    head = box_faces(0, 0, 8, 8, 8)
+    for name in ("top", "back"):
+        fill_rect(img, *head[name], rgb(colour), rng, 8)
+    for name in ("right", "left"):
+        x, y, w, h = head[name]
+        fill_rect(img, x, y, w, h, rgb(colour), rng, 8)
+        ear = (x + w - 3, y + 3) if name == "right" else (x + 1, y + 3)
+        fill_rect(img, ear[0], ear[1], 2, 2, img.getpixel((8 + 3, 8 + 5)), rng, 0)
+    x, y, w, h = head["front"]
+    fill_rect(img, x, y, w, 2, rgb(colour), rng, 8)
+    for j in range(2, h):
+        img.putpixel((x, y + j), rgb(colour))
+        img.putpixel((x + w - 1, y + j), rgb(colour))
+    if band_colour:
+        for name in ("front", "right", "left", "back"):
+            bx, by, bw, bh = head[name]
+            fill_rect(img, bx, by + 1, bw, 1, rgb(band_colour), rng, 4)
+    return head
+
+
+def bird_head(img, rng, feathers, cheek, beak, eye=0x141414, ring=0xE2B33C, curved=False):
+    """The head of a falcon or an ibis: feathers all over, a pale cheek, a dark stripe under the eye, the beak in the
+    middle of the face, hooked down for the falcon, long and curved down to the chest for the ibis."""
+    head = head_fill(img, feathers, rng, 10)
+    for name in ("front", "right", "left", "back", "top"):
+        x, y, w, h = head[name]
+        for j in range(0, h, 2):
+            for i in range((j // 2) % 2, w, 2):
+                img.putpixel((x + i, y + j), scale(img.getpixel((x + i, y + j)), 0.85))
+    x, y, w, h = head["front"]
+    fill_rect(img, x + 1, y + 4, 2, 3, rgb(cheek), rng, 4)
+    fill_rect(img, x + 5, y + 4, 2, 3, rgb(cheek), rng, 4)
+    for ex in (1, 5):
+        img.putpixel((x + ex, y + 3), rgb(ring))
+        img.putpixel((x + ex + 1, y + 3), rgb(eye))
+        img.putpixel((x + ex + (1 if ex == 1 else 0), y + 4), scale(rgb(feathers), 0.5))   # the malar stripe
+        img.putpixel((x + ex + (1 if ex == 1 else 0), y + 5), scale(rgb(feathers), 0.5))
+    if curved:
+        fill_rect(img, x + 3, y + 3, 2, 5, rgb(beak), rng, 4)
+        bx, by, bw, bh = head["bottom"]
+        fill_rect(img, bx + 3, by + 3, 2, 5, rgb(beak), rng, 4)
+    else:
+        fill_rect(img, x + 3, y + 3, 2, 3, rgb(beak), rng, 4)
+        img.putpixel((x + 3, y + 6), scale(rgb(beak), 0.4))
+        img.putpixel((x + 4, y + 6), scale(rgb(beak), 0.4))
+    for name in ("right", "left"):                               # the eye seen from the side
+        sx_, sy_, sw, sh = head[name]
+        ex = sx_ + (sw - 3 if name == "right" else 2)
+        img.putpixel((ex, sy_ + 3), rgb(ring))
+        img.putpixel((ex + (1 if name == "right" else -1), sy_ + 3), rgb(eye))
+    return head
+
+
+def beast_head(img, rng, fur, muzzle, eyes, nose=0x1A1414, teeth=False, scales_=False):
+    """The head of a jackal, a cat, a lioness or a crocodile: fur (or scales) all over, a muzzle of another colour
+    in the lower middle of the face, the eyes above it, the nose at the bottom."""
+    head = head_fill(img, fur, rng, 10)
+    if scales_:
+        for name in ("front", "right", "left", "back", "top"):
+            x, y, w, h = head[name]
+            for j in range(h):
+                for i in range(w):
+                    if i % 2 == 1 or j % 2 == 1:
+                        img.putpixel((x + i, y + j), scale(img.getpixel((x + i, y + j)), 0.84))
+    x, y, w, h = head["front"]
+    fill_rect(img, x + 2, y + 4, 4, 4, rgb(muzzle), rng, 6)
+    for ex in (1, 5):
+        img.putpixel((x + ex, y + 3), rgb(eyes))
+        img.putpixel((x + ex + 1, y + 3), rgb(0x0A0A0A) if not scales_ else rgb(eyes))
+        img.putpixel((x + ex, y + 2), scale(rgb(fur), 0.6))
+        img.putpixel((x + ex + 1, y + 2), scale(rgb(fur), 0.6))
+    fill_rect(img, x + 3, y + 5, 2, 1, rgb(nose), rng, 0)
+    if teeth:
+        for i in range(2, 6):
+            img.putpixel((x + i, y + 7), rgb(0xF2ECD8) if i % 2 == 0 else rgb(0x2A1A14))
+        for name in ("right", "left"):
+            sx_, sy_, sw, sh = head[name]
+            for i in range(sw):
+                img.putpixel((sx_ + i, sy_ + 6), rgb(0xF2ECD8) if i % 2 == 0 else rgb(0x2A1A14))
+    else:
+        fill_rect(img, x + 2, y + 7, 4, 1, scale(rgb(muzzle), 0.6), rng, 0)
+    return head
+
+
+def sun_disc(img, colour=0xE0402A, cobra=GOLD):
+    """The red sun disc above the head, with the cobra (uraeus) rearing on the brow."""
+    hat_px(img, "front", [(i, j) for j in range(0, 3) for i in range(2, 6)], colour)
+    hat_px(img, "back", [(i, j) for j in range(0, 3) for i in range(2, 6)], colour)
+    hat_px(img, "front", [(3, 3), (4, 3), (3, 4)], cobra)
+    hat_px(img, "top", [(i, j) for j in range(3, 5) for i in range(2, 6)], colour)
+
+
+def ra(rng):
+    """Ra, king of the gods: the head of a falcon in gold-brown feathers under the red sun disc and the cobra, ruddy
+    skin, a white kilt and a collar of gold, lapis and carnelian."""
+    img, parts = god_body(rng, 0xB8643A, collar=(GOLD, LAPIS, CARNELIAN))
+    bird_head(img, rng, 0x9A6A2A, 0xF0E0B0, 0xE2B33C)
+    sun_disc(img)
+    shade_parts(img, parts)
+    return img
+
+
+def horus(rng):
+    """Horus the avenger: a falcon in brown and white feathers, the double crown of Egypt, white for the south and red
+    for the north, his kilt banded with blue."""
+    img, parts = god_body(rng, 0xA86A3A, collar=(GOLD, LAPIS, GOLD))
+    bird_head(img, rng, 0x6A4A2A, 0xF4F0E4, 0xE8C060, ring=0x3A8AE0)
+    for name in ("front", "back", "right", "left"):               # the white crown in the red crown
+        hat_px(img, name, [(i, j) for j in range(0, 3) for i in range(2, 6)], 0xF4F0E4)
+        hat_px(img, name, [(i, 3) for i in range(0, 8)], 0xC0262E)
+    hat_px(img, "front", [(0, j) for j in range(0, 3)], 0xC0262E)    # the curl of the red crown
+    band(img, parts["leg"], 3, 1, LAPIS, rng)
+    shade_parts(img, parts)
+    return img
+
+
+def thoth(rng):
+    """Thoth the scribe: the white head of an ibis with a black neck and a long curved black beak, the crescent and
+    the full moon above, a kilt of white linen and a collar of turquoise."""
+    img, parts = god_body(rng, 0xB07A52, collar=(TURQUOISE, GOLD, TURQUOISE))
+    bird_head(img, rng, 0xF0ECE4, 0xF0ECE4, 0x1A1A1A, ring=0x1A1A1A, curved=True)
+    head = box_faces(0, 0, 8, 8, 8)
+    for name in ("back",):
+        fill_rect(img, *head[name], rgb(0x1A1A1A), rng, 6)
+    hat_px(img, "front", [(i, j) for j in range(0, 3) for i in range(2, 6)], 0xE8ECF4)   # the moon disc
+    hat_px(img, "front", [(1, 2), (6, 2), (1, 3), (6, 3), (2, 3), (5, 3)], 0xC8CCD8)    # the crescent under it
+    hat_px(img, "back", [(i, j) for j in range(0, 3) for i in range(2, 6)], 0xE8ECF4)
+    shade_parts(img, parts)
+    return img
+
+
+def anubis(rng):
+    """Anubis, guardian of the dead: the black head of a jackal with a long muzzle, eyes ringed with gold and tall
+    pointed ears, dark skin, a kilt striped with gold and a collar of gold."""
+    img, parts = god_body(rng, 0x5A3A2A, kilt=0xE8D8A0, collar=(GOLD, rgb(0x1A1A1A), GOLD))
+    beast_head(img, rng, 0x161414, 0x1E1C1C, 0xE2B33C, nose=0x0A0A0A)
+    for name in ("front", "back"):                                    # the tall ears
+        hat_px(img, name, [(0, 0), (1, 0), (0, 1), (1, 1), (6, 0), (7, 0), (6, 1), (7, 1)], 0x161414)
+    hat_px(img, "front", [(1, 1), (6, 1)], GOLD)
+    for x, y, w, h in side_faces(parts["leg"]):
+        for i in range(w):
+            img.putpixel((x + i, y + 1), GOLD)
+            img.putpixel((x + i, y + 3), GOLD)
+    shade_parts(img, parts)
+    return img
+
+
+def bastet(rng):
+    """Bastet, lady of the home: the black head of a cat with golden-green eyes and pointed ears, a gold ring in one
+    ear, a dress of turquoise linen with a golden collar."""
+    img, parts = god_body(rng, 0xB07A52, dress=0x2AA898, collar=(GOLD, LAPIS, GOLD))
+    beast_head(img, rng, 0x1A1A20, 0x22222A, 0xB8E04A, nose=0xC87A8A)
+    for name in ("front", "back"):
+        hat_px(img, name, [(0, 0), (1, 1), (0, 1), (7, 0), (6, 1), (7, 1)], 0x1A1A20)
+    hat_px(img, "front", [(7, 2)], GOLD)                               # the earring
+    shade_parts(img, parts)
+    return img
+
+
+def sekhmet(rng):
+    """Sekhmet, the lioness of slaughter: a tawny lioness head with amber eyes and a dark muzzle, the red sun disc and
+    the cobra above, a red dress and a collar of gold and carnelian."""
+    img, parts = god_body(rng, 0xB07A52, dress=0xA8202A, collar=(GOLD, CARNELIAN, GOLD))
+    beast_head(img, rng, 0xC8903A, 0xE0B870, 0xF0A020, nose=0x5A2A1A, teeth=True)
+    head = box_faces(0, 0, 8, 8, 8)
+    for name in ("right", "left", "back"):                             # the ruff of fur round the face
+        x, y, w, h = head[name]
+        for j in range(h):
+            for i in range(w):
+                if (i + j) % 3 == 0:
+                    img.putpixel((x + i, y + j), rgb(0xA8702A))
+    for name in ("front", "back"):
+        hat_px(img, name, [(0, 3), (1, 3), (6, 3), (7, 3)], 0xC8903A)  # the round ears
+    sun_disc(img)
+    shade_parts(img, parts)
+    return img
+
+
+def sobek(rng):
+    """Sobek, lord of the Nile: the green scaly head of a crocodile with yellow eyes and the teeth showing, the sun
+    disc with two tall plumes above, olive skin, a kilt striped with green and gold."""
+    img, parts = god_body(rng, 0x8A6A3A, kilt=0xF4F0E4, collar=(GOLD, rgb(0x3A8A4A), GOLD))
+    beast_head(img, rng, 0x4A6A2A, 0x5A7A3A, 0xE8C83A, nose=0x1A2A10, teeth=True, scales_=True)
+    sun_disc(img)
+    for name in ("front", "back"):                                    # the plumes
+        hat_px(img, name, [(1, 0), (1, 1), (1, 2), (6, 0), (6, 1), (6, 2)], 0x3AA0D0)
+    band(img, parts["leg"], 2, 1, rgb(0x3A8A4A), rng)
+    shade_parts(img, parts)
+    return img
+
+
+def isis(rng):
+    """Isis, great of magic: a woman with a black wig and a golden band, the throne sign on her head, a white sheath
+    dress, and the feathered wings of the goddess drawn down her arms in red, blue and green."""
+    img, parts = god_body(rng, 0xC8956B, dress=0xF4F0E4, collar=(GOLD, LAPIS, TURQUOISE))
+    head = wig(img, rng, band_colour=0xE2B33C)
+    face(img, head, iris=0x2A1E14, eye_row=4, brow=0x14100E)
+    x, y, w, h = head["front"]
+    for ex in (1, 6):
+        img.putpixel((x + ex, y + 4), rgb(0x14100E))                    # the kohl lines
+    for name in ("front", "back", "right", "left"):                   # the throne sign
+        hat_px(img, name, [(2, 0), (2, 1), (2, 2), (3, 2), (4, 2), (5, 2), (5, 1)], 0x2A5AB0)
+    for x, y, w, h in side_faces(parts["arm"]):                       # the wings of the goddess on her arms
+        for j in range(2, h - 1):
+            colour = (CARNELIAN, LAPIS, TURQUOISE, GOLD)[(j // 2) % 4]
+            for i in range(w):
+                if (i + j) % 4 != 0:
+                    img.putpixel((x + i, y + j), jitter(colour, rng, 6))
+    shade_parts(img, parts)
+    return img
+
+
+def hathor(rng):
+    """Hathor, lady of joy: a woman with a black wig, the cow horns and the red sun disc between them, a red sheath
+    dress and the menat necklace of the goddess."""
+    img, parts = god_body(rng, 0xC8956B, dress=0xC0302A, collar=(GOLD, TURQUOISE, GOLD))
+    head = wig(img, rng, band_colour=0x3AB8A8)
+    face(img, head, iris=0x2A1E14, eye_row=4, brow=0x14100E)
+    for name in ("front", "back"):
+        hat_px(img, name, [(0, 0), (0, 1), (0, 2), (1, 3), (7, 0), (7, 1), (7, 2), (6, 3)], 0xF0E4C0)   # the horns
+        hat_px(img, name, [(i, j) for j in range(0, 3) for i in range(2, 6)], 0xE0402A)                  # the disc
+    hat_px(img, "front", [(3, 3), (4, 3)], GOLD)
+    shade_parts(img, parts)
+    return img
+
+
+def osiris(rng):
+    """Osiris, king of the dead: green skin, the colour of new life, the tall white atef crown with two plumes, the
+    plaited beard of the gods, and the white wrappings of a mummy from the chest down."""
+    img, parts = god_body(rng, 0x3A8A4A, dress=0xF4F0E4, collar=(GOLD, LAPIS, GOLD))
+    for x, y, w, h in side_faces(parts["body"]) + side_faces(parts["leg"]):     # the fine linen wound round and round
+        for j in range(h):
+            for i in range(w):
+                c = img.getpixel((x + i, y + j))
+                if (j + i // 3) % 3 == 0 and c[0] > 200:
+                    img.putpixel((x + i, y + j), scale(c, 0.86))
+    head = head_fill(img, 0x3A8A4A, rng, 6)
+    face(img, head, iris=0x14100E, eye_row=4, brow=0x14100E)
+    x, y, w, h = head["front"]
+    fill_rect(img, x + 3, y + 6, 2, 2, rgb(0x2A1A10), rng, 0)          # the plaited beard
+    for name in ("front", "back", "right", "left", "top"):            # the white atef crown
+        hx, hy, hw, hh = box_faces(32, 0, 8, 8, 8)[name]
+        fill_rect(img, hx + 2, hy, hw - 4, hh // 2 if name != "top" else hh, rgb(0xF4F0E4), rng, 4)
+    hat_px(img, "front", [(1, 0), (1, 1), (1, 2), (6, 0), (6, 1), (6, 2)], 0xE8D8A0)   # the plumes
+    hat_px(img, "front", [(3, 3), (4, 3)], GOLD)
+    shade_parts(img, parts)
+    return img
+
+
+def ptah(rng):
+    """Ptah the craftsman: green skin, a close blue skullcap, a straight beard, the tight feathered robe wrapping him
+    like a mummy, and the collar with the menat of gold."""
+    img, parts = god_body(rng, 0x4A9A6A, kilt=0xE8E0C8, collar=(GOLD, LAPIS, GOLD), dress=0x6A8AB8)
+    for x, y, w, h in side_faces(parts["body"]) + side_faces(parts["leg"]):
+        for j in range(0, h, 2):                                     # the feathered pattern of the robe
+            for i in range((j // 2) % 2, w, 2):
+                img.putpixel((x + i, y + j), scale(img.getpixel((x + i, y + j)), 0.82))
+    head = head_fill(img, 0x4A9A6A, rng, 6)
+    for name in ("top", "back", "right", "left"):                    # the skullcap
+        hx, hy, hw, hh = head[name]
+        fill_rect(img, hx, hy, hw, hh if name == "top" else 3, LAPIS, rng, 6)
+    x, y, w, h = head["front"]
+    fill_rect(img, x, y, w, 2, LAPIS, rng, 6)
+    face(img, head, iris=0x14100E, eye_row=3, brow=0x14100E)
+    fill_rect(img, x + 3, y + 6, 2, 2, rgb(0x2A2A3A), rng, 0)          # the straight beard
+    shade_parts(img, parts)
+    return img
+
+
 ENTITIES = {
+    "crocodile": crocodile,
+    "ra": ra,
+    "osiris": osiris,
+    "isis": isis,
+    "horus": horus,
+    "anubis": anubis,
+    "thoth": thoth,
+    "bastet": bastet,
+    "sobek": sobek,
+    "hathor": hathor,
+    "ptah": ptah,
+    "sekhmet": sekhmet,
     **{f"priestess_{i}": priestess(spec) for i, spec in enumerate(PRIESTESSES)},
     "mummy": mummy,
     "pharaoh_mummy": pharaoh_mummy,

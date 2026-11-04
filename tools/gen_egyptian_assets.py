@@ -26,8 +26,9 @@ from gen_greek_assets import (NS, SAPLING_OK, _above, _biome, _block, _if, _nois
 
 def duat_surface():
     """Surface rules of the Duat, tried before the vanilla ones: sand over sandstone in the deserts, red sand and
-    terracotta in the Valley of the Kings, black stone and magma around the lake of fire, mud and grass on the banks
-    of the Nile, grass among the sand of the oases, sand under the river."""
+    terracotta in the Valley of the Kings, black stone and magma around the lake of fire, the black silt of the flood
+    on the low banks of the Nile and by the water of the oases with mud and grass higher up, grass among the sand of
+    the oases, sand under the river."""
     not_above = lambda y: {"type": "minecraft:not", "invert": _above(y)}  # noqa: E731
     return _if({"type": "minecraft:above_preliminary_surface"}, _seq(
         _if(_biome("duat_sands"), _seq(
@@ -43,10 +44,12 @@ def duat_surface():
                             _if(_noise(-4.0, -0.25), _block("minecraft:basalt")), _block("minecraft:blackstone"))),
             _if(UNDER_FLOOR, _block("minecraft:blackstone")))),
         _if(_biome("oasis"), _seq(
-            _if(FLOOR, _seq(_if(_noise(-0.15, 4.0), _block("minecraft:grass_block")), _block("minecraft:sand"))),
+            _if(FLOOR, _seq(_if(not_above(64), _block(f"{NS}:nile_silt")),
+                            _if(_noise(-0.15, 4.0), _block("minecraft:grass_block")), _block("minecraft:sand"))),
             _if(UNDER_FLOOR, _block("minecraft:sand")))),
+        # The black silt the flood leaves on the low banks of the Nile and on its bed, mud a little higher up.
         _if(_biome("nile_banks"), _seq(
-            _if(FLOOR, _seq(_if(not_above(64), _block("minecraft:mud")), _if(_noise(0.45, 4.0), _block("minecraft:mud")))))),
+            _if(FLOOR, _seq(_if(not_above(66), _block(f"{NS}:nile_silt")), _if(_noise(0.45, 4.0), _block("minecraft:mud")))))),
         _if(_biome("celestial_nile"), _if(UNDER_FLOOR, _seq(_if(_noise(0.3, 4.0), _block("minecraft:clay")),
                                                             _block("minecraft:sand"))))))
 
@@ -77,7 +80,7 @@ FEATURE_ORDER = [
     ["minecraft:monster_room", "minecraft:monster_room_deep", "minecraft:fossil_upper", "minecraft:fossil_lower"],
     ["minecraft:desert_well", f"{NS}:basalt_spire", f"{NS}:nav_bone_pile", f"{NS}:duat_ruin_column"],
     [],
-    g.COMMON_ORES + [f"{NS}:muspel_magma"] + g.DISKS + [f"{NS}:ore_meteoric_iron"],
+    g.COMMON_ORES + [f"{NS}:muspel_magma"] + g.DISKS + [f"{NS}:disk_nile_silt", f"{NS}:ore_meteoric_iron"],
     [],
     ["minecraft:spring_water", "minecraft:spring_lava"],
     ["minecraft:glow_lichen", f"{NS}:date_palm", f"{NS}:date_palm_grove", "minecraft:trees_savanna",
@@ -117,12 +120,13 @@ BIOMES = {
         "temperature": 1.4, "downfall": 0.6,
         "sky": 0x22285A, "fog": 0x3A4A6A, "water": 0x2E7AA8, "water_fog": 0x0A2A3A, "grass": 0x7AB84A, "foliage": 0x5EA83A,
         "music": music("overworld.jungle"),
-        "features": COMMON + g.DISKS + [f"{NS}:date_palm_grove", "minecraft:patch_tall_grass", "minecraft:flower_default",
+        "features": COMMON + g.DISKS + [f"{NS}:disk_nile_silt", f"{NS}:date_palm_grove", "minecraft:patch_tall_grass",
+                                        "minecraft:flower_default",
                                         "minecraft:patch_melon", "minecraft:patch_sugar_cane", "minecraft:patch_waterlily",
                                         "minecraft:seagrass_river"],
         "spawners": {
-            "monster": [spawn(f"{NS}:scarab", 20, 2, 3), spawn(f"{NS}:mummy", 20, 1, 2), spawn(f"{NS}:jackal", 10, 2, 3),
-                        spawn("minecraft:zombie", 10, 1, 2)],
+            "monster": [spawn(f"{NS}:scarab", 20, 2, 3), spawn(f"{NS}:mummy", 20, 1, 2), spawn(f"{NS}:crocodile", 25, 1, 2),
+                        spawn(f"{NS}:jackal", 10, 2, 3), spawn("minecraft:zombie", 10, 1, 2)],
             "creature": [spawn(f"{NS}:bastet_cat", 4, 1, 1), spawn("minecraft:cow", 6, 2, 4), spawn("minecraft:sheep", 6, 2, 4),
                          spawn("minecraft:frog", 4, 2, 4)],
             "water_ambient": [spawn("minecraft:cod", 10, 3, 6), spawn("minecraft:salmon", 10, 1, 5)],
@@ -134,7 +138,7 @@ BIOMES = {
         "temperature": 1.0, "downfall": 0.5,
         "sky": 0x3A3A7A, "fog": 0x8A80B0, "water": 0x4A8AE8, "water_fog": 0x0A2A4A, "grass": 0xC8C850, "foliage": 0x9AB83A,
         "particle": ("minecraft:end_rod", 0.0006), "music": music("overworld.meadow"),  # the souls of the blessed
-        "features": COMMON + ["minecraft:trees_savanna", f"{NS}:date_palm", "minecraft:flower_plains",
+        "features": COMMON + [f"{NS}:disk_nile_silt", "minecraft:trees_savanna", f"{NS}:date_palm", "minecraft:flower_plains",
                               "minecraft:patch_sunflower", "minecraft:patch_grass_savanna", "minecraft:patch_pumpkin",
                               "minecraft:patch_sugar_cane", "minecraft:patch_waterlily"],
         "spawners": {
@@ -176,10 +180,12 @@ BIOMES = {
         "temperature": 1.6, "downfall": 0.4,
         "sky": 0x22285A, "fog": 0x3A4A6A, "water": 0x3ABAC8, "water_fog": 0x0A3A4A, "grass": 0x8AC04A, "foliage": 0x6AB03A,
         "particle": ("minecraft:spore_blossom_air", 0.002), "music": music("overworld.desert"),
-        "features": COMMON + [f"{NS}:date_palm_grove", "minecraft:patch_grass_savanna", "minecraft:flower_default",
-                              "minecraft:patch_melon", "minecraft:patch_sugar_cane_desert", "minecraft:patch_waterlily"],
+        "features": COMMON + [f"{NS}:disk_nile_silt", f"{NS}:date_palm_grove", "minecraft:patch_grass_savanna",
+                              "minecraft:flower_default", "minecraft:patch_melon", "minecraft:patch_sugar_cane_desert",
+                              "minecraft:patch_waterlily"],
         "spawners": {
-            "monster": [spawn(f"{NS}:scarab", 15, 1, 3), spawn(f"{NS}:jackal", 15, 2, 3), spawn(f"{NS}:mummy", 10, 1, 2)],
+            "monster": [spawn(f"{NS}:scarab", 15, 1, 3), spawn(f"{NS}:jackal", 15, 2, 3), spawn(f"{NS}:mummy", 10, 1, 2),
+                        spawn(f"{NS}:crocodile", 10, 1, 1)],
             "creature": [spawn(f"{NS}:bastet_cat", 4, 1, 1), spawn("minecraft:camel", 4, 1, 2), spawn("minecraft:rabbit", 4, 2, 3)],
         },
     },
@@ -188,9 +194,9 @@ BIOMES = {
         "point": {"c": -0.6},
         "temperature": 1.2, "downfall": 0.5,
         "sky": 0x22285A, "fog": 0x4A5A8A, "water": 0x2A5AB0, "water_fog": 0x051E3E, "grass": 0x7AB84A, "foliage": 0x5EA83A,
-        "features": COMMON + g.DISKS + ["minecraft:seagrass_warm", "minecraft:warm_ocean_vegetation"],
+        "features": COMMON + g.DISKS + [f"{NS}:disk_nile_silt", "minecraft:seagrass_warm", "minecraft:warm_ocean_vegetation"],
         "spawners": {
-            "monster": [spawn("minecraft:drowned", 30, 1, 2)],
+            "monster": [spawn("minecraft:drowned", 30, 1, 2), spawn(f"{NS}:crocodile", 20, 1, 3)],
             "water_creature": [spawn("minecraft:squid", 4, 1, 3)],
             "water_ambient": [spawn("minecraft:cod", 15, 3, 6), spawn("minecraft:tropical_fish", 15, 3, 6)],
         },
@@ -215,6 +221,21 @@ def features():
     write_json(data("worldgen", "placed_feature", "duat_ruin_column.json"),
                {"feature": f"{NS}:duat_ruin_column", "placement": surface_placement(rarity=10)})
 
+    # Patches of the black silt of the Nile on the river bed and the shores, like the clay of the Overworld.
+    write_json(data("worldgen", "configured_feature", "disk_nile_silt.json"), {"type": "minecraft:disk", "config": {
+        "state_provider": {"fallback": simple(f"{NS}:nile_silt"), "rules": []},
+        "target": {"type": "minecraft:matching_blocks",
+                   "blocks": ["minecraft:dirt", "minecraft:sand", "minecraft:clay", "minecraft:mud", "minecraft:gravel",
+                              "minecraft:grass_block"]},
+        "radius": {"type": "minecraft:uniform", "min_inclusive": 2, "max_inclusive": 5},
+        "half_height": 2}})
+    write_json(data("worldgen", "placed_feature", "disk_nile_silt.json"), {"feature": f"{NS}:disk_nile_silt", "placement": [
+        {"type": "minecraft:count", "count": 2},
+        {"type": "minecraft:in_square"},
+        {"type": "minecraft:heightmap", "heightmap": "OCEAN_FLOOR_WG"},
+        {"type": "minecraft:block_predicate_filter", "predicate": {"type": "minecraft:matching_fluids", "fluids": "minecraft:water"}},
+        {"type": "minecraft:biome"}]})
+
 
 # ====================================================================== structures
 
@@ -228,9 +249,25 @@ STRUCTURES = {
     "egyptian_village": (["nile_banks", "oasis", "fields_of_aaru"], 30, 12, 2570201, "WORLD_SURFACE_WG", 0, "beard_thin"),
     "temple_of_isis": (["nile_banks", "fields_of_aaru", "oasis"], 28, 10, 2570202, "WORLD_SURFACE_WG", 0, "beard_thin"),
     "obelisk": (["duat_sands", "valley_of_kings", "nile_banks", "oasis"], 24, 8, 2570203, "WORLD_SURFACE_WG", 0, "beard_thin"),
+    # The shrines of the gods: one set, so that two gods never stand side by side.
+    "hall_of_judgment": (["fields_of_aaru", "duat_sands"], 0, 0, 0, "WORLD_SURFACE_WG", 0, "beard_thin"),
+    "temple_of_horus": (["duat_sands", "nile_banks", "oasis"], 0, 0, 0, "WORLD_SURFACE_WG", 0, "beard_thin"),
+    "temple_of_bastet": (["nile_banks", "oasis", "fields_of_aaru"], 0, 0, 0, "WORLD_SURFACE_WG", 0, "beard_thin"),
+    "shrine_of_sobek": (["nile_banks", "oasis"], 0, 0, 0, "WORLD_SURFACE_WG", 0, "beard_thin"),
+    "shrine_of_hathor": (["fields_of_aaru", "oasis"], 0, 0, 0, "WORLD_SURFACE_WG", 0, "beard_thin"),
+    "forge_of_ptah": (["valley_of_kings", "duat_sands"], 0, 0, 0, "WORLD_SURFACE_WG", 0, "beard_thin"),
+    "shrine_of_sekhmet": (["lake_of_fire", "valley_of_kings"], 0, 0, 0, "WORLD_SURFACE_WG", 0, "beard_thin"),
+    # Boats on the Celestial Nile. The water surface is one block under the first free block: the hull sits in the
+    # water, which stays wherever the template sets nothing.
+    "solar_barque": (["celestial_nile"], 48, 20, 2570204, "WORLD_SURFACE_WG", -1, "none"),
+    "nile_boat": (["celestial_nile"], 20, 8, 2570205, "WORLD_SURFACE_WG", -1, "none"),
+    "papyrus_skiff": (["celestial_nile"], 12, 5, 2570206, "WORLD_SURFACE_WG", -1, "none"),
 }
 LAIRS = {"structures": {"pharaoh_tomb": 3, "great_sphinx": 3, "temple_of_set": 3, "apep_lair": 3},
          "spacing": 44, "separation": 28, "salt": 2570300}
+SHRINES = {"structures": {"hall_of_judgment": 3, "temple_of_horus": 2, "temple_of_bastet": 2, "shrine_of_sobek": 2,
+                          "shrine_of_hathor": 2, "forge_of_ptah": 2, "shrine_of_sekhmet": 2},
+           "spacing": 34, "separation": 16, "salt": 2570400}
 
 
 def worldgen_structures():
@@ -261,23 +298,39 @@ def worldgen_structures():
             "max_distance_from_center": 80,
             "use_expansion_hack": False,
         })
-        if name in LAIRS["structures"]:
+        if name in LAIRS["structures"] or name in SHRINES["structures"]:
             continue
         write_json(data("worldgen", "structure_set", f"{name}.json"), {
             "structures": [{"structure": f"{NS}:{name}", "weight": 1}],
             "placement": {"type": "minecraft:random_spread", "spacing": spacing, "separation": separation, "salt": salt},
         })
-    write_json(data("worldgen", "structure_set", "egyptian_lairs.json"), {
-        "structures": [{"structure": f"{NS}:{name}", "weight": w} for name, w in LAIRS["structures"].items()],
-        "placement": {"type": "minecraft:random_spread", "spacing": LAIRS["spacing"], "separation": LAIRS["separation"],
-                      "salt": LAIRS["salt"]},
-    })
+    for set_name, group in (("egyptian_lairs", LAIRS), ("egyptian_shrines", SHRINES)):
+        write_json(data("worldgen", "structure_set", f"{set_name}.json"), {
+            "structures": [{"structure": f"{NS}:{name}", "weight": w} for name, w in group["structures"].items()],
+            "placement": {"type": "minecraft:random_spread", "spacing": group["spacing"], "separation": group["separation"],
+                          "salt": group["salt"]},
+        })
     # The temples of Isis are the homes the sistrum of Hathor calls the priestesses back to.
     write_json(data("tags", "worldgen", "structure", "priestess_homes.json"),
                {"replace": False, "values": [f"{NS}:temple_of_isis"]})
 
 
 # ====================================================================== loot
+
+# god: (its relic, other drops of its myth)
+GOD_RELICS = {
+    "ra": ("sun_disc", [("minecraft:glowstone_dust", 4, 10, None)]),
+    "osiris": ("djed_of_osiris", [("minecraft:wheat_seeds", 4, 10, None), (f"{NS}:mummy_wrappings", 2, 5, None)]),
+    "isis": ("wing_of_isis", [(f"{NS}:knot_of_isis", 1, 1, 0.5)]),
+    "horus": ("falcon_feather", [(f"{NS}:eye_of_horus", 1, 1, 0.5), ("minecraft:feather", 2, 6, None)]),
+    "anubis": ("feather_of_maat", [(f"{NS}:jackal_pelt", 2, 4, None)]),
+    "thoth": ("tablet_of_thoth", [("minecraft:book", 2, 4, None), ("minecraft:experience_bottle", 4, 8, None)]),
+    "bastet": ("claw_of_bastet", [("minecraft:string", 2, 6, None)]),
+    "sobek": ("fang_of_sobek", [(f"{NS}:crocodile_hide", 2, 4, None), (f"{NS}:crocodile_tooth", 1, 3, None)]),
+    "hathor": ("horn_of_hathor", [(f"{NS}:sistrum", 1, 1, 0.5), ("minecraft:leather", 2, 5, None)]),
+    "ptah": ("chisel_of_ptah", [(f"{NS}:meteoric_iron_ingot", 1, 3, None)]),
+    "sekhmet": ("ember_of_sekhmet", [("minecraft:blaze_rod", 2, 4, None)]),
+}
 
 def loot():
     gold = [entry("minecraft:gold_ingot", 8, 1, 4), entry("minecraft:gold_nugget", 10, 3, 9), entry("minecraft:emerald", 6, 1, 4),
@@ -320,6 +373,54 @@ def loot():
         entry("minecraft:golden_apple", 3), entry(f"{NS}:apep_scale", 4, 1, 2), entry("minecraft:enchanted_golden_apple", 1),
     ])
 
+    # The shrines of the gods: offerings of gold and lapis, and things of each god's myth.
+    chest("hall_of_judgment", (4, 7), gold + [
+        entry("minecraft:diamond", 4, 1, 3), entry("minecraft:golden_apple", 3), entry(f"{NS}:mummy_wrappings", 6, 2, 6),
+        entry(f"{NS}:ankh", 2), entry(f"{NS}:eye_of_horus", 2), entry("minecraft:book", 4, enchant=True),
+        entry("minecraft:feather", 4, 1, 3), entry("minecraft:totem_of_undying", 1),
+    ])
+    chest("temple_of_horus", (3, 6), gold + [
+        entry(f"{NS}:eye_of_horus", 4), entry("minecraft:arrow", 8, 8, 24), entry("minecraft:spectral_arrow", 5, 4, 12),
+        entry("minecraft:bow", 4, enchant=True), entry("minecraft:diamond", 3, 1, 2), entry("minecraft:feather", 6, 2, 6),
+    ])
+    chest("temple_of_bastet", (3, 6), gold + [
+        entry("minecraft:cod", 8, 2, 6), entry("minecraft:salmon", 6, 1, 4), entry(f"{NS}:honey_cake", 6, 1, 3),
+        entry("minecraft:string", 6, 2, 6), entry(f"{NS}:sistrum", 3), entry(f"{NS}:knot_of_isis", 2),
+        entry("minecraft:diamond", 3, 1, 2),
+    ])
+    chest("shrine_of_sobek", (3, 6), gold + [
+        entry(f"{NS}:crocodile_hide", 8, 1, 4), entry(f"{NS}:crocodile_tooth", 6, 1, 3), entry(f"{NS}:gift_of_hapi", 6, 2, 6),
+        entry(f"{NS}:nile_silt", 6, 4, 12), entry("minecraft:cod", 6, 2, 6), entry("minecraft:diamond", 3, 1, 2),
+    ])
+    chest("shrine_of_hathor", (3, 6), gold + [
+        entry(f"{NS}:honey_cake", 8, 1, 4), entry("minecraft:milk_bucket", 4), entry(f"{NS}:sistrum", 4),
+        entry("minecraft:music_disc_cat", 1), entry("minecraft:cake", 3), entry(f"{NS}:gift_of_hapi", 4, 1, 4),
+        entry("minecraft:diamond", 3, 1, 2), entry(f"{NS}:wedding_ring", 1),
+    ])
+    chest("forge_of_ptah", (3, 6), gold + [
+        entry(f"{NS}:meteoric_iron_ingot", 6, 1, 3), entry(f"{NS}:raw_meteoric_iron", 6, 1, 4), entry("minecraft:iron_ingot", 8, 2, 6),
+        entry("minecraft:diamond", 4, 1, 3), entry("minecraft:netherite_scrap", 2), entry("minecraft:clay_ball", 6, 2, 8),
+        entry("minecraft:smithing_table", 2),
+    ])
+    chest("shrine_of_sekhmet", (4, 7), gold + [
+        entry("minecraft:diamond", 4, 1, 3), entry("minecraft:fire_charge", 6, 2, 6), entry("minecraft:blaze_powder", 6, 2, 6),
+        entry("minecraft:netherite_scrap", 2), entry("minecraft:golden_apple", 3), entry("minecraft:bone", 6, 2, 6),
+    ])
+    # The boats of the Nile.
+    chest("solar_barque", (4, 8), gold + [
+        entry("minecraft:gold_block", 3), entry("minecraft:diamond", 4, 1, 3), entry("minecraft:golden_apple", 4),
+        entry("minecraft:enchanted_golden_apple", 1), entry("minecraft:glowstone_dust", 6, 4, 12), entry(f"{NS}:ankh", 2),
+    ])
+    chest("nile_boat", (3, 6), gold + [
+        entry(f"{NS}:dates", 8, 2, 6), entry("minecraft:wheat", 8, 2, 8), entry("minecraft:paper", 6, 2, 6),
+        entry("minecraft:white_wool", 4, 1, 4), entry(f"{NS}:gift_of_hapi", 4, 1, 3), entry(f"{NS}:honey_cake", 4, 1, 2),
+    ])
+    chest("papyrus_skiff", (2, 4), [
+        entry("minecraft:cod", 10, 2, 6), entry("minecraft:salmon", 8, 1, 4), entry("minecraft:tropical_fish", 4, 1, 2),
+        entry("minecraft:fishing_rod", 4), entry("minecraft:string", 6, 1, 4), entry("minecraft:sugar_cane", 8, 2, 6),
+        entry(f"{NS}:crocodile_tooth", 2),
+    ])
+
     mob("mummy", [(f"{NS}:mummy_wrappings", 0, 2, None), ("minecraft:rotten_flesh", 0, 2, None), ("minecraft:bone", 0, 1, None)])
     mob("scarab", [(f"{NS}:scarab_shell", 1, 1, 0.35), ("minecraft:string", 0, 1, None)])
     mob("jackal", [(f"{NS}:jackal_pelt", 1, 1, 0.5), ("minecraft:bone", 0, 2, None)])
@@ -336,6 +437,10 @@ def loot():
                 (f"{NS}:jackal_pelt", 2, 4, None)])
     mob("apep", [(f"{NS}:pectoral_of_ra", 1, 1, None), (f"{NS}:apep_scale", 3, 6, None), ("minecraft:diamond", 2, 4, None),
                  ("minecraft:gold_block", 1, 3, None)])
+    mob("crocodile", [(f"{NS}:crocodile_hide", 1, 2, None), (f"{NS}:crocodile_tooth", 1, 1, 0.35)])
+    # Each god drops the relic of its myth, from which its weapon is forged, and gold.
+    for god, (relic, extra) in GOD_RELICS.items():
+        mob(god, [(f"{NS}:{relic}", 1, 2, None), ("minecraft:gold_ingot", 3, 8, None), ("minecraft:diamond", 1, 3, None)] + extra)
 
     shears_or_silk = {"condition": "minecraft:any_of", "terms": [
         {"condition": "minecraft:match_tool", "predicate": {"items": "minecraft:shears"}},
@@ -352,7 +457,7 @@ def loot():
                  "conditions": [{"condition": "minecraft:random_chance", "chance": 0.04}]}]}]}],
         "random_sequence": f"{NS}:blocks/date_palm_leaves",
     })
-    for block in ("pyramid_stone", "hieroglyph_stone"):
+    for block in ("pyramid_stone", "hieroglyph_stone", "nile_silt"):
         write_json(data("loot_table", "blocks", f"{block}.json"), {
             "type": "minecraft:block",
             "pools": [{"rolls": 1, "bonus_rolls": 0, "entries": [{"type": "minecraft:item", "name": f"{NS}:{block}"}],
@@ -362,6 +467,23 @@ def loot():
 
 
 # ====================================================================== recipes and tags
+
+M = f"{NS}:meteoric_iron_ingot"
+# The weapons of the gods: the god's relic, meteoric iron or gold, and a staff or a string.
+WEAPON_RECIPES = [
+    ("staff_of_ra", [" D ", " G ", " S "], {"D": f"{NS}:sun_disc", "G": "minecraft:gold_block", "S": "minecraft:stick"}),
+    ("flail_of_osiris", ["CDC", " S ", " S "], {"C": "minecraft:chain", "D": f"{NS}:djed_of_osiris", "S": "minecraft:stick"}),
+    ("sceptre_of_isis", [" W ", " L ", " G "], {"W": f"{NS}:wing_of_isis", "L": "minecraft:lapis_block", "G": "minecraft:gold_ingot"}),
+    ("bow_of_horus", [" GS", "F S", " GS"], {"G": "minecraft:gold_ingot", "F": f"{NS}:falcon_feather", "S": "minecraft:string"}),
+    ("glaive_of_anubis", ["MF", "MS", " S"], {"M": M, "F": f"{NS}:feather_of_maat", "S": "minecraft:stick"}),
+    ("staff_of_thoth", [" T ", " A ", " S "], {"T": f"{NS}:tablet_of_thoth", "A": "minecraft:amethyst_shard", "S": "minecraft:stick"}),
+    ("dagger_of_bastet", ["C", "M", "S"], {"C": f"{NS}:claw_of_bastet", "M": M, "S": "minecraft:stick"}),
+    ("khopesh_of_sobek", ["FM", "TM", "S "], {"F": f"{NS}:fang_of_sobek", "T": f"{NS}:crocodile_tooth", "M": M,
+                                             "S": "minecraft:stick"}),
+    ("sceptre_of_hathor", [" H ", " G ", " S "], {"H": f"{NS}:horn_of_hathor", "G": "minecraft:gold_ingot", "S": "minecraft:stick"}),
+    ("axe_of_ptah", ["MC", "MS", " S"], {"M": M, "C": f"{NS}:chisel_of_ptah", "S": "minecraft:stick"}),
+    ("spear_of_sekhmet", ["  E", " M ", "S  "], {"E": f"{NS}:ember_of_sekhmet", "M": M, "S": "minecraft:stick"}),
+]
 
 def recipes():
     def shapeless(name, ingredients, result, count=1, category="misc"):
@@ -384,6 +506,24 @@ def recipes():
               f"{NS}:honey_cake", 2)
     shapeless("sistrum", ["minecraft:gold_ingot", "minecraft:gold_nugget", "minecraft:gold_nugget", "minecraft:stick"],
               f"{NS}:sistrum", 1, "equipment")
+    shapeless("nile_silt", ["minecraft:mud", "minecraft:mud", "minecraft:bone_meal"], f"{NS}:nile_silt", 2, "building")
+    # The gift of Hapi: silt of the flood, bone meal and papyrus, the strongest fertiliser.
+    shapeless("gift_of_hapi", [f"{NS}:nile_silt", "minecraft:bone_meal", "minecraft:bone_meal", "minecraft:sugar_cane"],
+              f"{NS}:gift_of_hapi", 2)
+    shapeless("leather_from_crocodile_hide", [f"{NS}:crocodile_hide"], "minecraft:leather", 2)
+    for name, pattern, key in WEAPON_RECIPES:
+        write_json(data("recipe", f"{name}.json"), {
+            "type": "minecraft:crafting_shaped", "category": "equipment", "pattern": pattern,
+            "key": {k: {"item": v} for k, v in key.items()}, "result": {"id": f"{NS}:{name}", "count": 1}})
+    g.add_tag("item", "swords", ["flail_of_osiris", "glaive_of_anubis", "dagger_of_bastet", "khopesh_of_sobek", "spear_of_sekhmet"])
+    g.add_tag("item", "axes", ["axe_of_ptah"])
+    g.add_tag("item", "enchantable/bow", ["bow_of_horus"])
+    g.add_tag("item", "enchantable/durability", ["bow_of_horus", "staff_of_ra", "staff_of_thoth", "sceptre_of_isis",
+                                                 "sceptre_of_hathor"])
+    g.add_tag("block", "mineable/shovel", ["nile_silt"])
+    g.add_tag("block", "dirt", ["nile_silt"])
+    g.add_tag("item", "dirt", ["nile_silt"])
+    g.add_tag("entity_type", "can_breathe_under_water", ["crocodile", "sobek"])
     g.add_tag("item", "head_armor", ["nemes"])
     g.add_tag("item", "chest_armor", ["pectoral_of_ra"])
     g.add_tag("item", "swords", ["khopesh"])
@@ -396,12 +536,16 @@ def recipes():
 
 # ====================================================================== models
 
+GODS = ["ra", "osiris", "isis", "horus", "anubis", "thoth", "bastet", "sobek", "hathor", "ptah", "sekhmet"]
+WEAPONS = ["staff_of_ra", "flail_of_osiris", "sceptre_of_isis", "glaive_of_anubis", "staff_of_thoth", "dagger_of_bastet",
+           "khopesh_of_sobek", "sceptre_of_hathor", "axe_of_ptah", "spear_of_sekhmet"]
 ITEMS = ["ankh", "dates", "honey_cake", "mummy_wrappings", "scarab_shell", "scorpion_stinger", "jackal_pelt", "sphinx_claw",
-         "apep_scale", "eye_of_horus", "knot_of_isis", "sistrum", "khopesh", "was_sceptre", "nemes", "pectoral_of_ra"]
-HANDHELD = {"khopesh", "was_sceptre"}
-BLOCKS = ["pyramid_stone", "hieroglyph_stone"]
+         "apep_scale", "eye_of_horus", "knot_of_isis", "sistrum", "khopesh", "was_sceptre", "nemes", "pectoral_of_ra",
+         "gift_of_hapi", "crocodile_hide", "crocodile_tooth"] + [relic for relic, _ in GOD_RELICS.values()] + WEAPONS
+HANDHELD = {"khopesh", "was_sceptre"} | set(WEAPONS)
+BLOCKS = ["pyramid_stone", "hieroglyph_stone", "nile_silt"]
 MOBS = ["mummy", "scarab", "jackal", "scorpion", "ushabti", "bastet_cat", "priestess", "egyptian_merchant", "pharaoh_mummy",
-        "sphinx", "set", "apep"]
+        "sphinx", "set", "apep", "crocodile"] + GODS
 
 
 def models():
@@ -429,6 +573,15 @@ def models():
         write_json(assets("models", "item", f"{item}.json"), {"parent": parent, "textures": {"layer0": f"{NS}:item/{item}"}})
     for name in MOBS:
         write_json(assets("models", "item", f"{name}_spawn_egg.json"), {"parent": "minecraft:item/template_spawn_egg"})
+    # The bow of Horus draws like the vanilla bow: three pulling stages picked by the "pull" property.
+    write_json(assets("models", "item", "bow_of_horus.json"), {
+        "parent": "minecraft:item/bow", "textures": {"layer0": f"{NS}:item/bow_of_horus"},
+        "overrides": [{"predicate": {"pulling": 1}, "model": f"{NS}:item/bow_of_horus_pulling_0"},
+                      {"predicate": {"pulling": 1, "pull": 0.65}, "model": f"{NS}:item/bow_of_horus_pulling_1"},
+                      {"predicate": {"pulling": 1, "pull": 0.9}, "model": f"{NS}:item/bow_of_horus_pulling_2"}]})
+    for stage in range(3):
+        write_json(assets("models", "item", f"bow_of_horus_pulling_{stage}.json"), {
+            "parent": f"{NS}:item/bow_of_horus", "textures": {"layer0": f"{NS}:item/bow_of_horus_pulling_{stage}"}})
 
 
 # ====================================================================== translations
@@ -485,6 +638,71 @@ LANG = {
     "entity.mythsofworlds.sphinx": ("Сфинкс", "Sphinx"),
     "entity.mythsofworlds.set": ("Сет", "Set"),
     "entity.mythsofworlds.apep": ("Апоп", "Apep"),
+    "block.mythsofworlds.nile_silt": ("Ил Нила", "Nile Silt"),
+    "item.mythsofworlds.gift_of_hapi": ("Дар Хапи", "Gift of Hapi"),
+    "item.mythsofworlds.gift_of_hapi.desc": (
+        "Сильнейшее удобрение: ПКМ по растению трижды подкармливает все растения в квадрате 5x5",
+        "The strongest fertiliser: right-click a plant to feed every plant in a 5x5 square three times"),
+    "item.mythsofworlds.crocodile_hide": ("Крокодилова кожа", "Crocodile Hide"),
+    "item.mythsofworlds.crocodile_tooth": ("Зуб крокодила", "Crocodile Tooth"),
+    "item.mythsofworlds.sun_disc": ("Солнечный диск Ра", "Sun Disc of Ra"),
+    "item.mythsofworlds.djed_of_osiris": ("Джед Осириса", "Djed of Osiris"),
+    "item.mythsofworlds.wing_of_isis": ("Крыло Исиды", "Wing of Isis"),
+    "item.mythsofworlds.falcon_feather": ("Соколиное перо Гора", "Falcon Feather of Horus"),
+    "item.mythsofworlds.feather_of_maat": ("Перо Маат", "Feather of Ma'at"),
+    "item.mythsofworlds.tablet_of_thoth": ("Скрижаль Тота", "Tablet of Thoth"),
+    "item.mythsofworlds.claw_of_bastet": ("Коготь Бастет", "Claw of Bastet"),
+    "item.mythsofworlds.fang_of_sobek": ("Клык Себека", "Fang of Sobek"),
+    "item.mythsofworlds.horn_of_hathor": ("Рог Хатхор", "Horn of Hathor"),
+    "item.mythsofworlds.chisel_of_ptah": ("Резец Птаха", "Chisel of Ptah"),
+    "item.mythsofworlds.ember_of_sekhmet": ("Уголь Сехмет", "Ember of Sekhmet"),
+    "item.mythsofworlds.staff_of_ra": ("Посох Ра", "Staff of Ra"),
+    "item.mythsofworlds.staff_of_ra.desc": ("ПКМ: три огненных шара солнца (раз в 2 секунды)",
+                                            "Right-click: three fireballs of the sun (every 2 seconds)"),
+    "item.mythsofworlds.flail_of_osiris": ("Цеп Осириса", "Flail of Osiris"),
+    "item.mythsofworlds.flail_of_osiris.desc": ("Удары лечат вас; нежить слабеет и замедляется",
+                                                "Your blows heal you; the undead grow weak and slow"),
+    "item.mythsofworlds.sceptre_of_isis": ("Скипетр Исиды", "Sceptre of Isis"),
+    "item.mythsofworlds.sceptre_of_isis.desc": (
+        "ПКМ: лечит вас, игроков, питомцев и семью в 8 блоках и даёт регенерацию (раз в 20 секунд)",
+        "Right-click: heals you, the players, pets and family within 8 blocks and gives Regeneration (every 20 seconds)"),
+    "item.mythsofworlds.bow_of_horus": ("Лук Гора", "Bow of Horus"),
+    "item.mythsofworlds.bow_of_horus.desc": ("Стрелы бьют сильнее, а раненый светится 10 секунд",
+                                             "Arrows strike harder, and whoever they hit glows for 10 seconds"),
+    "item.mythsofworlds.glaive_of_anubis": ("Глефа Анубиса", "Glaive of Anubis"),
+    "item.mythsofworlds.glaive_of_anubis.desc": ("Гроза чудовищ и богов; удар замедляет",
+                                                 "The bane of monsters and gods; its blow slows"),
+    "item.mythsofworlds.staff_of_thoth": ("Посох Тота", "Staff of Thoth"),
+    "item.mythsofworlds.staff_of_thoth.desc": (
+        "ПКМ: слово силы бьёт существо, на которое вы смотрите (до 24 блоков), магией и поднимает в воздух",
+        "Right-click: a word of power strikes the creature you look at (up to 24 blocks) with magic and lifts it up"),
+    "item.mythsofworlds.dagger_of_bastet": ("Кинжал Бастет", "Dagger of Bastet"),
+    "item.mythsofworlds.dagger_of_bastet.desc": ("Быстрый, как кошка: каждый удар даёт вам скорость",
+                                                 "Quick as a cat: every blow makes you swift"),
+    "item.mythsofworlds.khopesh_of_sobek": ("Хопеш Себека", "Khopesh of Sobek"),
+    "item.mythsofworlds.khopesh_of_sobek.desc": ("Удар замедляет, а врага в воде ещё и лишает сил",
+                                                 "Its blow slows, and saps the strength of a foe in the water"),
+    "item.mythsofworlds.sceptre_of_hathor": ("Скипетр Хатхор", "Sceptre of Hathor"),
+    "item.mythsofworlds.sceptre_of_hathor.desc": (
+        "ПКМ: песня усмиряет чудовищ в 10 блоках, они забывают о вас (раз в 15 секунд)",
+        "Right-click: the song calms the monsters within 10 blocks and they forget you (every 15 seconds)"),
+    "item.mythsofworlds.axe_of_ptah": ("Секира Птаха", "Axe of Ptah"),
+    "item.mythsofworlds.axe_of_ptah.desc": ("В руке: спешка II", "In hand: Haste II"),
+    "item.mythsofworlds.spear_of_sekhmet": ("Копьё Сехмет", "Spear of Sekhmet"),
+    "item.mythsofworlds.spear_of_sekhmet.desc": ("Каждый удар поджигает врага на 5 секунд",
+                                                 "Every blow sets the foe on fire for 5 seconds"),
+    "entity.mythsofworlds.crocodile": ("Крокодил", "Crocodile"),
+    "entity.mythsofworlds.ra": ("Ра", "Ra"),
+    "entity.mythsofworlds.osiris": ("Осирис", "Osiris"),
+    "entity.mythsofworlds.isis": ("Исида", "Isis"),
+    "entity.mythsofworlds.horus": ("Гор", "Horus"),
+    "entity.mythsofworlds.anubis": ("Анубис", "Anubis"),
+    "entity.mythsofworlds.thoth": ("Тот", "Thoth"),
+    "entity.mythsofworlds.bastet": ("Бастет", "Bastet"),
+    "entity.mythsofworlds.sobek": ("Себек", "Sobek"),
+    "entity.mythsofworlds.hathor": ("Хатхор", "Hathor"),
+    "entity.mythsofworlds.ptah": ("Птах", "Ptah"),
+    "entity.mythsofworlds.sekhmet": ("Сехмет", "Sekhmet"),
     "entity.mythsofworlds.pharaoh_mummy.curse": ("Проклятие гробницы: руки слабеют, мучает голод",
                                                  "The curse of the tomb: your hands grow weak, hunger gnaws"),
     "entity.mythsofworlds.set.eye_guards": ("Око Гора защищает ваши глаза от бури Сета",
@@ -517,7 +735,9 @@ PRIESTESS_TEXT = dict(g.AMAZON_TEXT, **{
 MOB_NAMES_RU = {
     "mummy": "мумии", "scarab": "скарабея", "jackal": "шакала Анубиса", "scorpion": "скорпиона", "ushabti": "ушебти",
     "bastet_cat": "кошки Бастет", "priestess": "жрицы Исиды", "egyptian_merchant": "торговца Дуата",
-    "pharaoh_mummy": "мумии фараона", "sphinx": "Сфинкса", "set": "Сета", "apep": "Апопа",
+    "pharaoh_mummy": "мумии фараона", "sphinx": "Сфинкса", "set": "Сета", "apep": "Апопа", "crocodile": "крокодила",
+    "ra": "Ра", "osiris": "Осириса", "isis": "Исиды", "horus": "Гора", "anubis": "Анубиса", "thoth": "Тота",
+    "bastet": "Бастет", "sobek": "Себека", "hathor": "Хатхор", "ptah": "Птаха", "sekhmet": "Сехмет",
 }
 
 

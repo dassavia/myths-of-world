@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    " GS",
+    "F S",
+    " GS"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "F": {
+      "item": "mythsofworlds:falcon_feather"
+    },
+    "S": {
+      "item": "minecraft:string"
+    }
+  },
+  "result": {
+    "id": "mythsofworlds:bow_of_horus",
+    "count": 1
+  }
+}

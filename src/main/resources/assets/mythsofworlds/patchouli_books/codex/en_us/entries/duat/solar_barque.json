@@ -1,0 +1,13 @@
+{
+  "name": "Solar Barque",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 41,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The golden barque of millions of years sails the Celestial Nile. The sun disc blazes on its mast, and Ra himself stands on the deck."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_solar_barque"
+}

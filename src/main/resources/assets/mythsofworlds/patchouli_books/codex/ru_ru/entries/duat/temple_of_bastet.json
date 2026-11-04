@@ -1,0 +1,13 @@
+{
+  "name": "Храм Бастет",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 43,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Храм Бубастиса с колоссом чёрной кошки. Во дворе гуляют священные кошки богини."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_temple_of_bastet"
+}

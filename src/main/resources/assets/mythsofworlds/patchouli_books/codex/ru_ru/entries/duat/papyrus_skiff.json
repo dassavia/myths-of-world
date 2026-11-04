@@ -1,0 +1,13 @@
+{
+  "name": "Папирусная лодка",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 49,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Маленькая лодка рыбака среди тростника, с сетью и утренним уловом."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_papyrus_skiff"
+}

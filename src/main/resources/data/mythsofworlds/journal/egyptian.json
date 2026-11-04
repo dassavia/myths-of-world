@@ -16,6 +16,16 @@
       "pages": 2
     },
     {
+      "id": "egyptian.flood",
+      "category": "intro",
+      "pages": 2
+    },
+    {
+      "id": "egyptian.gods",
+      "category": "intro",
+      "pages": 2
+    },
+    {
       "id": "egyptian.ores",
       "category": "intro",
       "pages": 1
@@ -33,7 +43,7 @@
     {
       "id": "egyptian.gods_gear",
       "category": "intro",
-      "pages": 4
+      "pages": 10
     },
     {
       "id": "egyptian.mummy",
@@ -84,6 +94,12 @@
       "entity": "mythsofworlds:egyptian_merchant"
     },
     {
+      "id": "egyptian.crocodile",
+      "category": "creature",
+      "pages": 2,
+      "entity": "mythsofworlds:crocodile"
+    },
+    {
       "id": "egyptian.pharaoh_mummy",
       "category": "boss",
       "pages": 2,
@@ -106,6 +122,72 @@
       "category": "boss",
       "pages": 2,
       "entity": "mythsofworlds:apep"
+    },
+    {
+      "id": "egyptian.ra",
+      "category": "boss",
+      "pages": 2,
+      "entity": "mythsofworlds:ra"
+    },
+    {
+      "id": "egyptian.osiris",
+      "category": "boss",
+      "pages": 2,
+      "entity": "mythsofworlds:osiris"
+    },
+    {
+      "id": "egyptian.isis",
+      "category": "boss",
+      "pages": 2,
+      "entity": "mythsofworlds:isis"
+    },
+    {
+      "id": "egyptian.horus",
+      "category": "boss",
+      "pages": 2,
+      "entity": "mythsofworlds:horus"
+    },
+    {
+      "id": "egyptian.anubis",
+      "category": "boss",
+      "pages": 2,
+      "entity": "mythsofworlds:anubis"
+    },
+    {
+      "id": "egyptian.thoth",
+      "category": "boss",
+      "pages": 2,
+      "entity": "mythsofworlds:thoth"
+    },
+    {
+      "id": "egyptian.bastet",
+      "category": "boss",
+      "pages": 2,
+      "entity": "mythsofworlds:bastet"
+    },
+    {
+      "id": "egyptian.sobek",
+      "category": "boss",
+      "pages": 2,
+      "entity": "mythsofworlds:sobek"
+    },
+    {
+      "id": "egyptian.hathor",
+      "category": "boss",
+      "pages": 2,
+      "entity": "mythsofworlds:hathor"
+    },
+    {
+      "id": "egyptian.ptah",
+      "category": "boss",
+      "pages": 2,
+      "entity": "mythsofworlds:ptah"
+    },
+    {
+      "id": "egyptian.sekhmet",
+      "category": "boss",
+      "pages": 2,
+      "entity": "mythsofworlds:sekhmet"
     },
     {
       "id": "egyptian.egyptian_village",
@@ -148,6 +230,66 @@
       "category": "place",
       "pages": 1,
       "structure": "mythsofworlds:apep_lair"
+    },
+    {
+      "id": "egyptian.hall_of_judgment",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:hall_of_judgment"
+    },
+    {
+      "id": "egyptian.solar_barque",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:solar_barque"
+    },
+    {
+      "id": "egyptian.temple_of_horus",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:temple_of_horus"
+    },
+    {
+      "id": "egyptian.temple_of_bastet",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:temple_of_bastet"
+    },
+    {
+      "id": "egyptian.shrine_of_sobek",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:shrine_of_sobek"
+    },
+    {
+      "id": "egyptian.shrine_of_hathor",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:shrine_of_hathor"
+    },
+    {
+      "id": "egyptian.forge_of_ptah",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:forge_of_ptah"
+    },
+    {
+      "id": "egyptian.shrine_of_sekhmet",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:shrine_of_sekhmet"
+    },
+    {
+      "id": "egyptian.nile_boat",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:nile_boat"
+    },
+    {
+      "id": "egyptian.papyrus_skiff",
+      "category": "place",
+      "pages": 1,
+      "structure": "mythsofworlds:papyrus_skiff"
     }
   ]
 }

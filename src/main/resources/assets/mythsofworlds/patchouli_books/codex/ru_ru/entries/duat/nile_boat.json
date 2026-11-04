@@ -1,0 +1,13 @@
+{
+  "name": "Ладья Нила",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 48,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Торговая ладья из связок папируса с льняным парусом. На ней плывёт торговец рынка."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_nile_boat"
+}

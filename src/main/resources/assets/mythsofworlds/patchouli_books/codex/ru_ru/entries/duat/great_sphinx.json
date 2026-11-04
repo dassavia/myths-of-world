@@ -2,7 +2,7 @@
   "name": "Великий Сфинкс",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_place",
-  "sortnum": 23,
+  "sortnum": 37,
   "pages": [
     {
       "type": "patchouli:text",

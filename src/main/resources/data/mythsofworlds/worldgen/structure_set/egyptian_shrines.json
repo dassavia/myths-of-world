@@ -1,0 +1,38 @@
+{
+  "structures": [
+    {
+      "structure": "mythsofworlds:hall_of_judgment",
+      "weight": 3
+    },
+    {
+      "structure": "mythsofworlds:temple_of_horus",
+      "weight": 2
+    },
+    {
+      "structure": "mythsofworlds:temple_of_bastet",
+      "weight": 2
+    },
+    {
+      "structure": "mythsofworlds:shrine_of_sobek",
+      "weight": 2
+    },
+    {
+      "structure": "mythsofworlds:shrine_of_hathor",
+      "weight": 2
+    },
+    {
+      "structure": "mythsofworlds:forge_of_ptah",
+      "weight": 2
+    },
+    {
+      "structure": "mythsofworlds:shrine_of_sekhmet",
+      "weight": 2
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 34,
+    "separation": 16,
+    "salt": 2570400
+  }
+}

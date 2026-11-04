@@ -1,0 +1,22 @@
+{
+  "name": "Ра",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 22,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:ra",
+      "name": "Ра"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Царь богов с головой сокола, 550 здоровья, на солнечной ладье на Небесном Ниле. Мечет огненные шары, ниже половины здоровья око Ра поджигает и слепит всех вокруг."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Огонь ему не страшен. Роняет солнечный диск: из него, золотого блока и палки - посох Ра."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_ra"
+}

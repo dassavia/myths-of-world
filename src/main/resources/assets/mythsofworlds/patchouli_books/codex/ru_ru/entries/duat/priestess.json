@@ -2,7 +2,7 @@
   "name": "Жрица Исиды",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_creature",
-  "sortnum": 13,
+  "sortnum": 15,
   "pages": [
     {
       "type": "patchouli:entity",

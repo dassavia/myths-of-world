@@ -693,6 +693,26 @@
                         {
                           "type": "minecraft:condition",
                           "if_true": {
+                            "type": "minecraft:not",
+                            "invert": {
+                              "type": "minecraft:y_above",
+                              "anchor": {
+                                "absolute": 64
+                              },
+                              "surface_depth_multiplier": 0,
+                              "add_stone_depth": false
+                            }
+                          },
+                          "then_run": {
+                            "type": "minecraft:block",
+                            "result_state": {
+                              "Name": "mythsofworlds:nile_silt"
+                            }
+                          }
+                        },
+                        {
+                          "type": "minecraft:condition",
+                          "if_true": {
                             "type": "minecraft:noise_threshold",
                             "noise": "minecraft:surface",
                             "min_threshold": -0.15,
@@ -763,7 +783,7 @@
                             "invert": {
                               "type": "minecraft:y_above",
                               "anchor": {
-                                "absolute": 64
+                                "absolute": 66
                               },
                               "surface_depth_multiplier": 0,
                               "add_stone_depth": false
@@ -772,7 +792,7 @@
                           "then_run": {
                             "type": "minecraft:block",
                             "result_state": {
-                              "Name": "minecraft:mud"
+                              "Name": "mythsofworlds:nile_silt"
                             }
                           }
                         },

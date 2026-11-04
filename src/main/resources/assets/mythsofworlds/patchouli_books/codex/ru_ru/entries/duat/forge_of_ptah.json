@@ -1,0 +1,13 @@
+{
+  "name": "Кузница Птаха",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 46,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Храм-кузница из тёмного камня: наковальни, горн и бассейн расплавленного металла, ушебти за работой."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_forge_of_ptah"
+}

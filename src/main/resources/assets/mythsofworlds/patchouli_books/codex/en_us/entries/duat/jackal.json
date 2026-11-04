@@ -2,7 +2,7 @@
   "name": "Jackal of Anubis",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_creature",
-  "sortnum": 9,
+  "sortnum": 11,
   "pages": [
     {
       "type": "patchouli:entity",

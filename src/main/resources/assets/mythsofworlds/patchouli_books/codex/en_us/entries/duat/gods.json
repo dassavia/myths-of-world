@@ -1,0 +1,17 @@
+{
+  "name": "The Gods of Egypt",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_intro",
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The gods live in the Duat. Most of them never strike first, but they accept a hero's challenge. Sobek and Sekhmet fall on strangers."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Each god drops a relic. Weapons are forged from it: staffs, sceptres, a khopesh, a bow, a spear, a glaive, a flail, a dagger and an axe. The recipe book shows how."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/duat"
+}

@@ -2,7 +2,7 @@
   "name": "Мумия фараона",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_boss",
-  "sortnum": 15,
+  "sortnum": 18,
   "pages": [
     {
       "type": "patchouli:entity",

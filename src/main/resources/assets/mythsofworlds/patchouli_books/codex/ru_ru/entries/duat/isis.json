@@ -1,0 +1,22 @@
+{
+  "name": "Исида",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 24,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:isis",
+      "name": "Исида"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Великая волшебница, 360 здоровья, у трона в своём храме. Взмахом крыльев отбрасывает и замедляет врагов и лечит себя."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Роняет крыло Исиды: с блоком лазурита и золотым слитком - скипетр Исиды, который лечит вас и друзей."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_isis"
+}

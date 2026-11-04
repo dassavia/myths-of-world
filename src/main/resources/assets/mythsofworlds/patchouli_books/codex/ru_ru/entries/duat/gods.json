@@ -1,0 +1,17 @@
+{
+  "name": "Боги Египта",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_intro",
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "В Дуате живут боги. Почти все не нападают первыми, но примут вызов героя. Себек и Сехмет бросаются на чужаков."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Каждый бог роняет свою реликвию. Из неё куют оружие: посохи, скипетры, хопеш, лук, копьё, глефу, цеп, кинжал и секиру. Рецепты есть в книге рецептов."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/duat"
+}

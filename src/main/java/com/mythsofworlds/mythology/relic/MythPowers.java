@@ -35,12 +35,14 @@ import net.neoforged.neoforge.registries.DeferredHolder;
  * Which piece of gear gives which power of {@link MythAttributes}, and what the powers do in a fight:
  * <ul>
  *   <li>Reflection: that share of a melee blow you take strikes the attacker back (orichalcum, Titan's breastplate).</li>
- *   <li>Lifesteal: that share of the melee damage you deal heals you (bulat, kladenets, girdle of Hippolyta).</li>
+ *   <li>Lifesteal: that share of the melee damage you deal heals you (bulat, kladenets, girdle of Hippolyta, flail of
+ *       Osiris).</li>
  *   <li>Monster slaying: more damage to the creatures and gods of the myths (dark iron, meteoric iron, Heimdall,
- *       Mjolnir, Surtr, the khopesh).</li>
+ *       Mjolnir, Surtr, the khopeshes, the glaive of Anubis).</li>
  *   <li>Divine ward: less damage from the creatures and gods of the myths (bulat, dark iron, cap of invisibility).</li>
- *   <li>Evasion: a chance that a blow or a shot misses altogether (talaria, seven-league boots, cap, meteoric iron).</li>
- *   <li>Fury: more damage at half health or less (the Nemean set, the girdle).</li>
+ *   <li>Evasion: a chance that a blow or a shot misses altogether (talaria, seven-league boots, cap, meteoric iron, the
+ *       dagger of Bastet).</li>
+ *   <li>Fury: more damage at half health or less (the Nemean set, the girdle, the spear of Sekhmet).</li>
  * </ul>
  */
 @EventBusSubscriber(modid = MythsOfWorlds.MODID)
@@ -74,6 +76,11 @@ public final class MythPowers {
             put(map, SlavicContent.SHAPKA_NEVIDIMKA, new Bonus(MythAttributes.EVASION, 0.05), new Bonus(MythAttributes.DIVINE_WARD, 0.08));
             put(map, SlavicContent.KLADENETS, new Bonus(MythAttributes.LIFESTEAL, 0.10));
             put(map, EgyptianContent.KHOPESH, new Bonus(MythAttributes.MONSTER_SLAYING, 0.10));
+            put(map, EgyptianContent.FLAIL_OF_OSIRIS, new Bonus(MythAttributes.LIFESTEAL, 0.12));
+            put(map, EgyptianContent.GLAIVE_OF_ANUBIS, new Bonus(MythAttributes.MONSTER_SLAYING, 0.15));
+            put(map, EgyptianContent.DAGGER_OF_BASTET, new Bonus(MythAttributes.EVASION, 0.05));
+            put(map, EgyptianContent.KHOPESH_OF_SOBEK, new Bonus(MythAttributes.MONSTER_SLAYING, 0.08));
+            put(map, EgyptianContent.SPEAR_OF_SEKHMET, new Bonus(MythAttributes.FURY, 0.12));
             put(map, EgyptianContent.NEMES, new Bonus(MythAttributes.DIVINE_WARD, 0.08));
             put(map, EgyptianContent.PECTORAL_OF_RA, new Bonus(MythAttributes.REFLECTION, 0.10),
                     new Bonus(MythAttributes.DIVINE_WARD, 0.05));

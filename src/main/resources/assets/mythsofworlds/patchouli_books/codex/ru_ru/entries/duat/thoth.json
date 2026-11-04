@@ -1,0 +1,22 @@
+{
+  "name": "Тот",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 27,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:thoth",
+      "name": "Тот"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Писец богов с головой ибиса, 340 здоровья, в Зале суда. Слово силы поднимает врага в воздух и ранит магией."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Ниже половины здоровья отступает лунным светом. Роняет скрижаль: с аметистом и палкой - посох Тота."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_thoth"
+}

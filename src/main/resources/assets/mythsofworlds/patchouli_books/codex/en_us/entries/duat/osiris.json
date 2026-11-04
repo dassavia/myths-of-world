@@ -1,0 +1,22 @@
+{
+  "name": "Osiris",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 23,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:osiris",
+      "name": "Osiris"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The green-skinned king of the dead, 400 health, on his throne in the Hall of Judgment. He raises mummies and slows his foe."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "As Isis brought him back to life, he rises once from a death blow with half his health. Drops the djed: with chains and sticks it makes the flail of Osiris."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_osiris"
+}

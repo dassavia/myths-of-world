@@ -1,0 +1,13 @@
+{
+  "name": "Святилище Хатхор",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 45,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Розовый камень на Полях Иалу, колосс с рогами и солнечным диском, вокруг пасутся коровы."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_shrine_of_hathor"
+}

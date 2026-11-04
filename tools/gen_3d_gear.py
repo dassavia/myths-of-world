@@ -18,7 +18,8 @@ ROOT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources",
 METALS = ["orichalcum", "bulat", "dark_iron", "meteoric_iron"]
 TOOLS = ["sword", "axe", "pickaxe", "shovel", "hoe"]
 RELICS = ["harpe", "kladenets", "mjolnir", "surtr_sword", "bident_of_hades", "nemean_claw_dagger", "khopesh",
-          "was_sceptre"]
+          "was_sceptre", "staff_of_ra", "flail_of_osiris", "sceptre_of_isis", "glaive_of_anubis", "staff_of_thoth",
+          "dagger_of_bastet", "khopesh_of_sobek", "sceptre_of_hathor", "axe_of_ptah", "spear_of_sekhmet"]
 GEAR = [f"{metal}_{tool}" for metal in METALS for tool in TOOLS] + RELICS
 
 # Half the thickness, in model units (16 per item), of each layer: the silhouette, then the pixels at least

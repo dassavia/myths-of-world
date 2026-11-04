@@ -1,0 +1,13 @@
+{
+  "name": "Shrine of Sekhmet",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 47,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Red walls by the Lake of Fire, fire and bones, the lioness colossus with the sun disc."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_shrine_of_sekhmet"
+}

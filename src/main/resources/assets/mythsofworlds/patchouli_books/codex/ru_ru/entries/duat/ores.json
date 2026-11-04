@@ -2,7 +2,7 @@
   "name": "Руды Дуата",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_intro",
-  "sortnum": 3,
+  "sortnum": 5,
   "pages": [
     {
       "type": "patchouli:text",

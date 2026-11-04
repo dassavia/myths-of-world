@@ -1,0 +1,13 @@
+{
+  "name": "Temple of Horus",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 42,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A temple of pale stone with granite falcons at the gate and the falcon colossus in the double crown."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_temple_of_horus"
+}

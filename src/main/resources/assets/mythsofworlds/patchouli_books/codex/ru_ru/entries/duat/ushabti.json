@@ -2,7 +2,7 @@
   "name": "Ушебти",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_creature",
-  "sortnum": 11,
+  "sortnum": 13,
   "pages": [
     {
       "type": "patchouli:entity",

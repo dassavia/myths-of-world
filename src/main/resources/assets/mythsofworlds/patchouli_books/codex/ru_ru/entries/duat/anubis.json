@@ -1,0 +1,22 @@
+{
+  "name": "Анубис",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 26,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:anubis",
+      "name": "Анубис"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Страж мёртвых с головой шакала, 400 здоровья, у весов в Зале суда. Взвешивание сердца иссушает и замедляет врага, а его лечит."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Ниже половины здоровья зовёт шакалов. Роняет перо Маат: с небесным железом и палками - глефа Анубиса."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_anubis"
+}

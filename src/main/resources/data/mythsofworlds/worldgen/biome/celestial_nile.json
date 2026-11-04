@@ -23,6 +23,12 @@
         "weight": 30,
         "minCount": 1,
         "maxCount": 2
+      },
+      {
+        "type": "mythsofworlds:crocodile",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 3
       }
     ],
     "water_creature": [
@@ -95,6 +101,7 @@
       "minecraft:disk_sand",
       "minecraft:disk_clay",
       "minecraft:disk_gravel",
+      "mythsofworlds:disk_nile_silt",
       "mythsofworlds:ore_meteoric_iron"
     ],
     [],

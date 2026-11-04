@@ -1,0 +1,22 @@
+{
+  "name": "Хатхор",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 30,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:hathor",
+      "name": "Хатхор"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Богиня радости с рогами коровы, 360 здоровья, в святилище на Полях Иалу. Песня систра кружит голову и замедляет."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Ниже половины здоровья в ней просыпается ярость Сехмет. Роняет рог: с золотом и палкой - скипетр Хатхор."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_hathor"
+}

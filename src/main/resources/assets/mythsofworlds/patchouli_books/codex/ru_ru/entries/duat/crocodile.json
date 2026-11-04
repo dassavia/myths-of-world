@@ -1,0 +1,22 @@
+{
+  "name": "Крокодил",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_creature",
+  "sortnum": 17,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:crocodile",
+      "name": "Крокодил"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Священный зверь Себека таится на мелководье и берегах Нила. Плавает так же быстро, как ходит, и не тонет. Укус замедляет, а в воде крокодил утаскивает жертву на дно."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Чешуя спины держит слабые удары. Роняет кожу (из одной выходит две обычных) и иногда зуб для хопеша Себека."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_crocodile"
+}
