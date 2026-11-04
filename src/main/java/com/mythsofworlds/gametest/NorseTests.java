@@ -469,6 +469,7 @@ public class NorseTests {
         player.setItemSlot(EquipmentSlot.HEAD, new ItemStack(NorseContent.HEIMDALL_HELMET.get()));
         Mob mob = helper.spawn(EntityType.ZOMBIE, new BlockPos(2, 2, 2));
         mob.setNoAi(true);
+        player.moveTo(helper.absoluteVec(new net.minecraft.world.phys.Vec3(1.5, 2.0, 1.5)));
         helper.assertTrue(HeimdallVision.on(player), "the vision should be on by default");
         player.tickCount = 0;
         Relics.heimdall(player);
