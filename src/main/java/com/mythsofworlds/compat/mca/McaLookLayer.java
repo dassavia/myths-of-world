@@ -1,9 +1,9 @@
 package com.mythsofworlds.compat.mca;
 
-import Function;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mythsofworlds.mythology.greek.entity.Amazon;
 import com.mythsofworlds.mythology.norse.entity.Valkyrie;
+import java.util.function.Function;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
