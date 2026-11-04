@@ -177,7 +177,7 @@ python3 tools/gen_greek_assets.py && python3 tools/gen_norse_assets.py && python
 секунд); их святилища — `sanctuary_shrine()` в `tools/structures_egyptian.py`, реликвии и рецепты оружия — таблицы
 `GOD_RELICS` и `WEAPON_RECIPES` в `tools/gen_egyptian_assets.py`. Лодки стоят на воде: у них `start_height` -1 и
 `terrain_adaptation` none, а клетки шаблона, которые не заданы, остаются водой. Модель крокодила —
-`egyptian/client/CrocodileModel`, его развёртка повторена в `crocodile()` из `tools/textures_egyptian.py`.
+`egyptian/client/CrocodileModel`, его развёртка повторена в `crocodile()` из `tools/textures_egyptian.py`; модель скорпиона — `egyptian/client/ScorpionModel` и `scorpion()` там же.
 
 ## Как развить заготовку мифологии
 
