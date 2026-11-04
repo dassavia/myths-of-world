@@ -2,7 +2,7 @@
   "name": "Осирис",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_boss",
-  "sortnum": 23,
+  "sortnum": 24,
   "pages": [
     {
       "type": "patchouli:entity",

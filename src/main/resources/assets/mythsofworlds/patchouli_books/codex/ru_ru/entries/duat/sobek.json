@@ -2,7 +2,7 @@
   "name": "Себек",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_boss",
-  "sortnum": 29,
+  "sortnum": 30,
   "pages": [
     {
       "type": "patchouli:entity",

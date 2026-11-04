@@ -24,6 +24,7 @@ import com.mythsofworlds.mythology.egyptian.entity.SetGod;
 import com.mythsofworlds.mythology.egyptian.entity.SobekGod;
 import com.mythsofworlds.mythology.egyptian.entity.Sphinx;
 import com.mythsofworlds.mythology.egyptian.entity.ThothGod;
+import com.mythsofworlds.mythology.egyptian.entity.TravelersBoat;
 import com.mythsofworlds.mythology.egyptian.entity.Ushabti;
 import java.util.List;
 import net.minecraft.world.entity.Entity;
@@ -75,6 +76,11 @@ public final class EgyptianEntities {
     /** Trader of the villages on the Nile: a trader of the market, a priest of Anubis or a smith. */
     public static final DeferredHolder<EntityType<?>, EntityType<EgyptianMerchant>> EGYPTIAN_MERCHANT = register("egyptian_merchant",
             EntityType.Builder.of(EgyptianMerchant::new, MobCategory.CREATURE).sized(0.6F, 1.95F).eyeHeight(1.62F)
+                    .clientTrackingRange(10));
+
+    /** The traveller's boat (EgyptianContent.TRAVELERS_BOAT): a vanilla boat with its own look. */
+    public static final DeferredHolder<EntityType<?>, EntityType<TravelersBoat>> TRAVELERS_BOAT = register("travelers_boat",
+            EntityType.Builder.<TravelersBoat>of(TravelersBoat::new, MobCategory.MISC).sized(1.375F, 0.5625F).eyeHeight(0.5625F)
                     .clientTrackingRange(10));
 
     // ---- Half-boss and bosses ----

@@ -2,7 +2,7 @@
   "name": "Храм Бастет",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_place",
-  "sortnum": 43,
+  "sortnum": 44,
   "pages": [
     {
       "type": "patchouli:text",

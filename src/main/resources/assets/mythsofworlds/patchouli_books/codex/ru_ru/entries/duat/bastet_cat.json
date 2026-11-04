@@ -2,7 +2,7 @@
   "name": "Кошка Бастет",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_creature",
-  "sortnum": 14,
+  "sortnum": 15,
   "pages": [
     {
       "type": "patchouli:entity",

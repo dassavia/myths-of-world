@@ -2,7 +2,7 @@
   "name": "Village on the Nile",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_place",
-  "sortnum": 33,
+  "sortnum": 34,
   "pages": [
     {
       "type": "patchouli:text",

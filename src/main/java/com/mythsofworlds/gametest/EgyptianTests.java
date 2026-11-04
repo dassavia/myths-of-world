@@ -19,6 +19,7 @@ import com.mythsofworlds.mythology.egyptian.entity.Priestess;
 import com.mythsofworlds.mythology.egyptian.entity.Scorpion;
 import com.mythsofworlds.mythology.egyptian.entity.SetGod;
 import com.mythsofworlds.mythology.egyptian.entity.Sphinx;
+import com.mythsofworlds.mythology.egyptian.entity.TravelersBoat;
 import com.mythsofworlds.mythology.egyptian.item.HapiGiftItem;
 import com.mythsofworlds.mythology.greek.GreekContent;
 import com.mythsofworlds.mythology.greek.entity.Amazon;
@@ -489,6 +490,25 @@ public class EgyptianTests {
         }
         helper.assertFalse(Scorpion.canSpawnAt(biomes.getHolderOrThrow(ResourceKey.create(Registries.BIOME, MythsOfWorlds.id("nile_banks"))),
                 Blocks.SAND.defaultBlockState()), "a scorpion on the green banks of the Nile");
+        helper.succeed();
+    }
+
+    /** The traveler's boat is crafted from papyrus, linen and crocodile hide, carries two and breaks into itself. */
+    @GameTest(template = "empty")
+    public static void travelersBoatCraftsAndSeatsTwo(GameTestHelper helper) {
+        var recipe = helper.getLevel().getRecipeManager().byKey(MythsOfWorlds.id("travelers_boat"));
+        helper.assertTrue(recipe.isPresent() && recipe.get().value().getResultItem(helper.getLevel().registryAccess())
+                .is(EgyptianContent.TRAVELERS_BOAT.get()), "no recipe for the traveler's boat");
+        TravelersBoat boat = helper.spawn(EgyptianEntities.TRAVELERS_BOAT.get(), new BlockPos(1, 2, 1));
+        helper.assertTrue(boat.getDropItem() == EgyptianContent.TRAVELERS_BOAT.get(), "the boat does not break into itself");
+        Player first = helper.makeMockPlayer(GameType.SURVIVAL);
+        Player second = helper.makeMockPlayer(GameType.SURVIVAL);
+        Player third = helper.makeMockPlayer(GameType.SURVIVAL);
+        helper.assertTrue(first.startRiding(boat) && second.startRiding(boat), "two cannot ride the boat");
+        helper.assertFalse(third.startRiding(boat), "a third rides the boat");
+        helper.assertTrue(boat.getControllingPassenger() == first, "the first aboard does not steer");
+        boat.ejectPassengers();
+        boat.discard();
         helper.succeed();
     }
 }

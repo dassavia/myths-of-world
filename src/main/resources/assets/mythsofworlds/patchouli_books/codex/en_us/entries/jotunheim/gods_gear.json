@@ -14,7 +14,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Helmet of Heimdall: armour 4, toughness 2.5, knockback -10%, durability 418. Night vision, every creature within 100 blocks glows through walls."
+      "text": "Helmet of Heimdall: armour 4, toughness 2.5, knockback -10%, durability 418. Night vision, every creature within 100 blocks glows through walls. The N key turns this vision off and on again."
     },
     {
       "type": "patchouli:text",

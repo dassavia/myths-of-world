@@ -32,6 +32,10 @@ public final class PlayerData {
     public static final Supplier<AttachmentType<String>> SPOUSE = ATTACHMENT_TYPES.register("spouse",
             () -> AttachmentType.builder(() -> "").serialize(Codec.STRING).copyOnDeath().build());
 
+    /** Whether the vision of the helmet of Heimdall is on for this player (see mythology/relic/HeimdallVision); on by default. */
+    public static final Supplier<AttachmentType<Boolean>> HEIMDALL_VISION = ATTACHMENT_TYPES.register("heimdall_vision",
+            () -> AttachmentType.builder(() -> true).serialize(Codec.BOOL).copyOnDeath().build());
+
     private PlayerData() {
     }
 

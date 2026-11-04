@@ -2,7 +2,7 @@
   "name": "Ладья Нила",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_place",
-  "sortnum": 48,
+  "sortnum": 49,
   "pages": [
     {
       "type": "patchouli:text",

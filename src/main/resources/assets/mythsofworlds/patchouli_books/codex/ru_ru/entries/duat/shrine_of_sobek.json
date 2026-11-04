@@ -2,7 +2,7 @@
   "name": "Святилище Себека",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_place",
-  "sortnum": 44,
+  "sortnum": 45,
   "pages": [
     {
       "type": "patchouli:text",

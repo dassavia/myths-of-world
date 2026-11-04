@@ -2,7 +2,7 @@
   "name": "Сфинкс",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_boss",
-  "sortnum": 19,
+  "sortnum": 20,
   "pages": [
     {
       "type": "patchouli:entity",

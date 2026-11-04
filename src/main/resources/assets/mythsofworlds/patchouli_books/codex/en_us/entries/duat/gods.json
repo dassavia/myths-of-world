@@ -2,7 +2,7 @@
   "name": "The Gods of Egypt",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_intro",
-  "sortnum": 4,
+  "sortnum": 5,
   "pages": [
     {
       "type": "patchouli:text",

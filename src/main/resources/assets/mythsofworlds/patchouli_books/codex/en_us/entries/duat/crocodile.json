@@ -2,7 +2,7 @@
   "name": "Crocodile",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_creature",
-  "sortnum": 17,
+  "sortnum": 18,
   "pages": [
     {
       "type": "patchouli:entity",

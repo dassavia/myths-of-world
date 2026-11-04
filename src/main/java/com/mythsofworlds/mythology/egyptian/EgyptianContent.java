@@ -5,6 +5,7 @@ import com.mythsofworlds.mythology.Mythology;
 import com.mythsofworlds.mythology.egyptian.block.NileSiltBlock;
 import com.mythsofworlds.mythology.egyptian.block.PyramidGateBlock;
 import com.mythsofworlds.mythology.egyptian.item.AnkhItem;
+import com.mythsofworlds.mythology.egyptian.item.TravelersBoatItem;
 import com.mythsofworlds.mythology.egyptian.item.DivineWeaponItem;
 import com.mythsofworlds.mythology.egyptian.item.HapiGiftItem;
 import com.mythsofworlds.mythology.egyptian.item.HathorSceptreItem;
@@ -173,6 +174,9 @@ public final class EgyptianContent {
     public static final DeferredItem<HapiGiftItem> GIFT_OF_HAPI = ITEMS.register("gift_of_hapi",
             () -> new HapiGiftItem(new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final DeferredItem<Item> CROCODILE_HIDE = ITEMS.registerSimpleItem("crocodile_hide", new Item.Properties());
+    /** The traveller's boat: papyrus bundles, a linen sail and a lining of crocodile hide; a vanilla boat for two. */
+    public static final DeferredItem<TravelersBoatItem> TRAVELERS_BOAT = ITEMS.register("travelers_boat",
+            () -> new TravelersBoatItem(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<Item> CROCODILE_TOOTH = ITEMS.registerSimpleItem("crocodile_tooth",
             new Item.Properties().rarity(Rarity.UNCOMMON));
 

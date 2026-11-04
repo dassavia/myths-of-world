@@ -2,7 +2,7 @@
   "name": "Обелиск",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_place",
-  "sortnum": 35,
+  "sortnum": 36,
   "pages": [
     {
       "type": "patchouli:text",

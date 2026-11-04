@@ -2,7 +2,7 @@
   "name": "Солнечная ладья",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_place",
-  "sortnum": 41,
+  "sortnum": 42,
   "pages": [
     {
       "type": "patchouli:text",

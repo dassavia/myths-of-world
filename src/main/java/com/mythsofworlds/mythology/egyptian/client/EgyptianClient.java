@@ -118,6 +118,7 @@ public final class EgyptianClient {
                 ctx -> new GreekMobRenderer<Crocodile, CrocodileModel<Crocodile>>(ctx, new CrocodileModel<>(ctx.bakeLayer(CROCODILE)),
                         "crocodile", 1.0F));
         event.<Cat>registerEntityRenderer(EgyptianEntities.BASTET_CAT.get(), BastetCatRenderer::new);
+        event.registerEntityRenderer(EgyptianEntities.TRAVELERS_BOAT.get(), TravelersBoatRenderer::new);
         event.registerEntityRenderer(EgyptianEntities.PRIESTESS.get(), AmazonRenderer::new);
         event.<NorseMerchant>registerEntityRenderer(EgyptianEntities.EGYPTIAN_MERCHANT.get(),
                 ctx -> new NorseMerchantRenderer(ctx, "egyptian_merchant"));
