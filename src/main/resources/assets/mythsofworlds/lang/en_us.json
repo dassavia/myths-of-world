@@ -1,5 +1,4 @@
 {
-  "itemGroup.mythsofworlds": "Myths of Worlds",
   "block.mythsofworlds.runestone": "Runestone",
   "block.mythsofworlds.bifrost_portal": "Bifrost Portal",
   "item.mythsofworlds.rune_igniter": "Rune Igniter",
@@ -764,6 +763,8 @@
   "mythsofworlds.configuration.showWorldName.tooltip": "Show the name of the world of the myths at the top of the screen",
   "mythsofworlds.configuration.showNumbers": "Numbers on the bars",
   "mythsofworlds.configuration.showNumbers.tooltip": "Write health, hunger and armour as numbers",
+  "mythsofworlds.configuration.codexFont": "Clean font in the Codex",
+  "mythsofworlds.configuration.codexFont.tooltip": "Write the Codex of Myths in the mod's clear font with full Cyrillic instead of Patchouli's",
   "journal.mythsofworlds.path.title": "Codex of Myths",
   "journal.mythsofworlds.path.intro": "One book for every world. Chapters open as you walk the hero's path, and entries write themselves when you meet creatures and find places. In creative mode everything is open.",
   "journal.mythsofworlds.path.welcome.title": "How to Read the Codex",
@@ -1161,5 +1162,6 @@
   "journal.mythsofworlds.egyptian.nile_boat.title": "Nile Boat",
   "journal.mythsofworlds.egyptian.nile_boat.page1": "A trading boat of papyrus bundles with a linen sail. A trader of the market sails on it.",
   "journal.mythsofworlds.egyptian.papyrus_skiff.title": "Papyrus Skiff",
-  "journal.mythsofworlds.egyptian.papyrus_skiff.page1": "A fisherman's little boat among the reeds, with a net and the morning's catch."
+  "journal.mythsofworlds.egyptian.papyrus_skiff.page1": "A fisherman's little boat among the reeds, with a net and the morning's catch.",
+  "itemGroup.mythsofworlds": "Myths of Worlds"
 }

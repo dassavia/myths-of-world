@@ -11,6 +11,7 @@ public final class ClientConfig {
     public static final ModConfigSpec.BooleanValue HUD_ENABLED;
     public static final ModConfigSpec.BooleanValue SHOW_WORLD_NAME;
     public static final ModConfigSpec.BooleanValue SHOW_NUMBERS;
+    public static final ModConfigSpec.BooleanValue CODEX_FONT;
 
     static {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
@@ -20,6 +21,8 @@ public final class ClientConfig {
                 .translation("mythsofworlds.configuration.showWorldName").define("showWorldName", true);
         SHOW_NUMBERS = builder.comment("Write health, armour, hunger and air as numbers on the bars")
                 .translation("mythsofworlds.configuration.showNumbers").define("showNumbers", true);
+        CODEX_FONT = builder.comment("Write the Codex of Myths in the clean font of the mod (full Cyrillic) instead of Patchouli's Unifont")
+                .translation("mythsofworlds.configuration.codexFont").define("codexFont", true);
         SPEC = builder.build();
     }
 

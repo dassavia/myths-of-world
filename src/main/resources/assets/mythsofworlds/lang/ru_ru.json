@@ -1,5 +1,4 @@
 {
-  "itemGroup.mythsofworlds": "Myths of Worlds",
   "block.mythsofworlds.runestone": "Рунный камень",
   "block.mythsofworlds.bifrost_portal": "Портал Бифрёст",
   "item.mythsofworlds.rune_igniter": "Рунное огниво",
@@ -764,6 +763,8 @@
   "mythsofworlds.configuration.showWorldName.tooltip": "Показывать вверху экрана название мира мифов",
   "mythsofworlds.configuration.showNumbers": "Цифры на полосах",
   "mythsofworlds.configuration.showNumbers.tooltip": "Писать здоровье, сытость и броню числами",
+  "mythsofworlds.configuration.codexFont": "Чистый шрифт Кодекса",
+  "mythsofworlds.configuration.codexFont.tooltip": "Писать Кодекс мифов чётким шрифтом мода с полной кириллицей вместо шрифта Patchouli",
   "journal.mythsofworlds.path.title": "Кодекс мифов",
   "journal.mythsofworlds.path.intro": "Одна книга на все миры. Главы открываются по мере того, как вы проходите путь героя, а записи пишутся сами, когда вы встречаете существ и находите места. В творческом режиме открыто всё.",
   "journal.mythsofworlds.path.welcome.title": "Как читать Кодекс",
@@ -1161,5 +1162,6 @@
   "journal.mythsofworlds.egyptian.nile_boat.title": "Ладья Нила",
   "journal.mythsofworlds.egyptian.nile_boat.page1": "Торговая ладья из связок папируса с льняным парусом. На ней плывёт торговец рынка.",
   "journal.mythsofworlds.egyptian.papyrus_skiff.title": "Папирусная лодка",
-  "journal.mythsofworlds.egyptian.papyrus_skiff.page1": "Маленькая лодка рыбака среди тростника, с сетью и утренним уловом."
+  "journal.mythsofworlds.egyptian.papyrus_skiff.page1": "Маленькая лодка рыбака среди тростника, с сетью и утренним уловом.",
+  "itemGroup.mythsofworlds": "Мифы миров"
 }

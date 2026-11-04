@@ -10,7 +10,8 @@
   "client": [
     "CuriosScreenMixin",
     "InventoryScreenMixin",
-    "LocalPlayerMixin"
+    "LocalPlayerMixin",
+    "PatchouliBookMixin"
   ],
   "injectors": {
     "defaultRequire": 1
