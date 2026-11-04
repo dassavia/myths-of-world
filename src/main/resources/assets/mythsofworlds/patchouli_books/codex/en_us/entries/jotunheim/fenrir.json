@@ -7,7 +7,8 @@
     {
       "type": "patchouli:entity",
       "entity": "mythsofworlds:fenrir",
-      "name": "Fenrir"
+      "name": "Fenrir",
+      "scale": 0.58
     },
     {
       "type": "patchouli:text",

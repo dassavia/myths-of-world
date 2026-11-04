@@ -7,7 +7,8 @@
     {
       "type": "patchouli:entity",
       "entity": "mythsofworlds:zmey_gorynych",
-      "name": "Змей Горыныч"
+      "name": "Змей Горыныч",
+      "scale": 0.7
     },
     {
       "type": "patchouli:text",

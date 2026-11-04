@@ -37,9 +37,11 @@ public final class JoinTestClient {
     /** Ticks after the suits when the Codex sweep starts, and how long each of its screenshots takes. */
     private static final int CODEX_SWEEP = 104;
     private static final int SHOT_TICKS = 14;
-    /** Pages of the Codex the sweep opens: the path, a large and a small creature of each world, a place, a god. */
+    /** Pages of the Codex the sweep opens: the paths, small and the largest creatures (whose pictures must stay in their frame), a place, a god. */
     private static final List<String> CODEX_PAGES = List.of("hellas/path", "hellas/hydra", "hellas/satyr", "hellas/agora",
-            "duat/apep", "duat/scorpion", "duat/isis", "jotunheim/path", "nav/path");
+            "duat/apep", "duat/scorpion", "duat/isis", "jotunheim/path", "nav/path", "duat/sphinx", "hellas/cyclops",
+            "hellas/cerberus", "jotunheim/thrym", "jotunheim/surtr", "jotunheim/fenrir", "jotunheim/frost_giant",
+            "nav/zmey_gorynych");
 
     private static int ticks;
     /** Client ticks since the milestone arrived, or -1 before. */

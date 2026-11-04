@@ -7,7 +7,8 @@
     {
       "type": "patchouli:entity",
       "entity": "mythsofworlds:cerberus",
-      "name": "Cerberus"
+      "name": "Cerberus",
+      "scale": 0.78
     },
     {
       "type": "patchouli:text",

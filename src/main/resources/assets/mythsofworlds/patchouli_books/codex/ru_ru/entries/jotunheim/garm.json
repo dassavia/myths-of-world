@@ -7,7 +7,8 @@
     {
       "type": "patchouli:entity",
       "entity": "mythsofworlds:garm",
-      "name": "Гарм"
+      "name": "Гарм",
+      "scale": 0.87
     },
     {
       "type": "patchouli:text",

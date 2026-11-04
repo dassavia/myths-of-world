@@ -7,7 +7,8 @@
     {
       "type": "patchouli:entity",
       "entity": "mythsofworlds:minotaur",
-      "name": "Minotaur"
+      "name": "Minotaur",
+      "scale": 0.93
     },
     {
       "type": "patchouli:text",

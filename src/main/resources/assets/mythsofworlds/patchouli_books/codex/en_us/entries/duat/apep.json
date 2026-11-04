@@ -7,7 +7,8 @@
     {
       "type": "patchouli:entity",
       "entity": "mythsofworlds:apep",
-      "name": "Apep"
+      "name": "Apep",
+      "scale": 0.45
     },
     {
       "type": "patchouli:text",

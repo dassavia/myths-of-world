@@ -7,7 +7,8 @@
     {
       "type": "patchouli:entity",
       "entity": "mythsofworlds:hydra",
-      "name": "Лернейская гидра"
+      "name": "Лернейская гидра",
+      "scale": 0.78
     },
     {
       "type": "patchouli:text",

@@ -7,7 +7,8 @@
     {
       "type": "patchouli:entity",
       "entity": "mythsofworlds:frost_giant",
-      "name": "Frost Giant"
+      "name": "Frost Giant",
+      "scale": 0.7
     },
     {
       "type": "patchouli:text",
