@@ -13,7 +13,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        mca: [none, '7.7.32']
+        include:
+          - mca: none
+            neo: ''
+          # MCA 7.7.32 registers its event subscribers the way newer NeoForge 21.1 builds expect (it is built
+          # against 21.1.234), so this run plays on that NeoForge; the released jar is the one built above.
+          - mca: '7.7.32'
+            neo: '-Pneo_version=21.1.234'
     name: build (MCA ${{ matrix.mca }})
     env:
       MYTHS_EXPECT_MCA: ${{ matrix.mca != 'none' }}
@@ -25,7 +31,7 @@ jobs:
           java-version: 21
       - uses: gradle/actions/setup-gradle@v4
       - name: Build
-        run: ./gradlew build --stacktrace
+        run: ./gradlew build ${{ matrix.neo }} --stacktrace
       - name: Install MCA Reborn ${{ matrix.mca }} (NeoForge, 1.21.1) into every run
         if: matrix.mca != 'none'
         run: |
@@ -41,22 +47,30 @@ jobs:
           for dir in run run/smoke run/client-smoke run/join-server run/join-client; do
             mkdir -p "$dir/mods" && cp mca.jar "$dir/mods/"
           done
+      # Each run must print its own success line: a server or client that never starts would otherwise pass.
       - name: Game tests (portals, data, structures, mobs)
-        run: ./gradlew runGameTestServer --stacktrace
+        run: |
+          set -o pipefail
+          ./gradlew runGameTestServer ${{ matrix.neo }} --stacktrace | tee gametests.log
+          grep -q 'required tests passed' gametests.log
       - name: World smoke test (generate every dimension, biome and structure)
         timeout-minutes: 20
         run: |
           mkdir -p run/smoke
           echo "eula=true" > run/smoke/eula.txt
           echo "max-tick-time=-1" > run/smoke/server.properties
-          ./gradlew runSmokeTest --stacktrace
+          set -o pipefail
+          ./gradlew runSmokeTest ${{ matrix.neo }} --stacktrace | tee smoke.log
+          grep -q '\[smoke\] OK' smoke.log
       - name: Client smoke test (start the game up to the title screen)
         timeout-minutes: 15
         run: |
           mkdir -p run/client-smoke
           echo "onboardAccessibility:false" > run/client-smoke/options.txt
           sudo apt-get update -q && sudo apt-get install -y -q xvfb
-          xvfb-run -a -s "-screen 0 1280x720x24" ./gradlew runClientSmokeTest --stacktrace
+          set -o pipefail
+          xvfb-run -a -s "-screen 0 1280x720x24" ./gradlew runClientSmokeTest ${{ matrix.neo }} --stacktrace | tee client-smoke.log
+          grep -q '\[client-smoke\] OK' client-smoke.log
       - name: Join test (a client joins a dedicated server, syncs, draws the gear and takes screenshots)
         timeout-minutes: 20
         run: |
@@ -64,7 +78,7 @@ jobs:
           echo "eula=true" > run/join-server/eula.txt
           printf "online-mode=false\nenforce-secure-profile=false\nlevel-type=minecraft\\:flat\nspawn-protection=0\nview-distance=4\nsimulation-distance=4\nmax-tick-time=-1\n" > run/join-server/server.properties
           printf "onboardAccessibility:false\nskipMultiplayerWarning:true\njoinedFirstServer:true\ntutorialStep:none\nrenderDistance:4\nguiScale:2\n" > run/join-client/options.txt
-          ./gradlew runJoinServer --stacktrace > run/join-server.log 2>&1 &
+          ./gradlew runJoinServer ${{ matrix.neo }} --stacktrace > run/join-server.log 2>&1 &
           SERVER=$!
           for i in $(seq 1 120); do
             if grep -q 'Done (' run/join-server.log; then break; fi
@@ -73,11 +87,11 @@ jobs:
           done
           grep -q 'Done (' run/join-server.log || { tail -n 200 run/join-server.log; exit 1; }
           CLIENT=0
-          xvfb-run -a -s "-screen 0 1280x720x24" ./gradlew runJoinClient --stacktrace > run/join-client.log 2>&1 || CLIENT=$?
+          xvfb-run -a -s "-screen 0 1280x720x24" ./gradlew runJoinClient ${{ matrix.neo }} --stacktrace > run/join-client.log 2>&1 || CLIENT=$?
           SERVER_EXIT=0
           wait $SERVER || SERVER_EXIT=$?
           grep -h '\[join-test' run/join-server.log run/join-client.log || true
-          if [ $CLIENT -ne 0 ] || [ $SERVER_EXIT -ne 0 ]; then
+          if [ $CLIENT -ne 0 ] || [ $SERVER_EXIT -ne 0 ] || ! grep -q '\[join-test-client\] OK' run/join-client.log; then
             tail -n 150 run/join-client.log
             tail -n 80 run/join-server.log
             exit 1
