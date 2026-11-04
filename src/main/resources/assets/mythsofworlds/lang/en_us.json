@@ -763,6 +763,8 @@
   "mythsofworlds.configuration.showWorldName.tooltip": "Show the name of a world of the myths for two seconds at the top of the screen when you enter it",
   "mythsofworlds.configuration.worldBannerScale": "Size of the world's name banner",
   "mythsofworlds.configuration.worldBannerScale.tooltip": "From a quarter to the full scroll; the name stays readable at every GUI scale",
+  "mythsofworlds.configuration.mcaSkins": "MCA looks for priestesses, amazons and valkyries",
+  "mythsofworlds.configuration.mcaSkins.tooltip": "With MCA Reborn installed they wear its women's looks, each her own; Isis stays herself. Without MCA the mod's own textures are used",
   "mythsofworlds.configuration.mca": "MCA Reborn",
   "mythsofworlds.configuration.mca.tooltip": "Working together with Minecraft Comes Alive Reborn (when installed)",
   "mythsofworlds.configuration.mcaCompat": "MCA Reborn compatibility",

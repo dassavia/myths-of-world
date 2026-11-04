@@ -24,7 +24,25 @@ public final class ClientSmokeTest {
     public static void onScreenOpening(ScreenEvent.Opening event) {
         if (Boolean.getBoolean(PROPERTY) && (event.getNewScreen() instanceof TitleScreen
                 || event.getNewScreen() instanceof AccessibilityOnboardingScreen)) {
-            System.out.println("[client-smoke] OK: title screen reached, all renderers and models loaded");
+            var resources = net.minecraft.client.Minecraft.getInstance().getResourceManager();
+            java.util.List<String> textures = new java.util.ArrayList<>(java.util.List.of("hippolyta", "isis"));
+            for (int i = 0; i < com.mythsofworlds.mythology.greek.entity.Amazon.VARIANTS; i++) {
+                textures.add("amazon_" + i);
+            }
+            for (int i = 0; i < 8; i++) {
+                textures.add("valkyrie_" + i);
+                textures.add("priestess_" + i);
+            }
+            for (String name : textures) {
+                if (resources.getResource(MythsOfWorlds.id("textures/entity/" + name + ".png")).isEmpty()) {
+                    System.out.println("[client-smoke] FAIL: missing texture textures/entity/" + name + ".png");
+                    System.out.flush();
+                    Runtime.getRuntime().halt(1);
+                }
+            }
+            System.out.println("[client-smoke] OK: title screen reached, all renderers, models and the women's textures loaded"
+                    + (net.neoforged.fml.ModList.get().isLoaded("mca") ? ", MCA looks " + (com.mythsofworlds.compat.mca.McaSkins.INSTANCE.active()
+                    ? "found" : "MISSING") : ""));
             System.out.flush();
             Runtime.getRuntime().halt(0);
         }

@@ -13,6 +13,7 @@ public final class ClientConfig {
     public static final ModConfigSpec.BooleanValue SHOW_NUMBERS;
     public static final ModConfigSpec.BooleanValue CODEX_FONT;
     public static final ModConfigSpec.DoubleValue WORLD_BANNER_SCALE;
+    public static final ModConfigSpec.BooleanValue MCA_SKINS;
 
     static {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
@@ -26,6 +27,9 @@ public final class ClientConfig {
                 .translation("mythsofworlds.configuration.showNumbers").define("showNumbers", true);
         CODEX_FONT = builder.comment("Write the Codex of Myths in the clean font of the mod (full Cyrillic) instead of Patchouli's Unifont")
                 .translation("mythsofworlds.configuration.codexFont").define("codexFont", true);
+        MCA_SKINS = builder.comment("With MCA Reborn installed, priestesses, amazons and valkyries wear MCA's women's looks (each her own); "
+                        + "Isis keeps hers. Without MCA the mod's own textures are always used")
+                .translation("mythsofworlds.configuration.mcaSkins").define("mcaSkins", true);
         SPEC = builder.build();
     }
 

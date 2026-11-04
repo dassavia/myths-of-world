@@ -5,6 +5,7 @@ from PIL import Image
 
 from textures import (amazon, band, beast, box_faces, crayfish, face, fill_rect, humanoid, hydra, item, jitter, mix,
                       paint_box, rgb, save, scale, shade_parts, side_faces, speckle)
+from heroines import isis as heroine_isis
 from textures_norse import giant, norse_merchant
 
 __all__ = ["BLOCKS", "ITEMS", "ENTITIES", "LAYERS", "item", "save"]
@@ -423,7 +424,7 @@ def bastet_cat(rng):
 
 
 def priestess(spec):
-    return lambda rng: amazon(rng, **spec)
+    return lambda rng: amazon(rng, culture="egypt", **spec)
 
 
 PRIESTESSES = [
@@ -902,27 +903,6 @@ def sobek(rng):
     return img
 
 
-def isis(rng):
-    """Isis, great of magic: a woman with a black wig and a golden band, the throne sign on her head, a white sheath
-    dress, and the feathered wings of the goddess drawn down her arms in red, blue and green."""
-    img, parts = god_body(rng, 0xC8956B, dress=0xF4F0E4, collar=(GOLD, LAPIS, TURQUOISE))
-    head = wig(img, rng, band_colour=0xE2B33C)
-    face(img, head, iris=0x2A1E14, eye_row=4, brow=0x14100E)
-    x, y, w, h = head["front"]
-    for ex in (1, 6):
-        img.putpixel((x + ex, y + 4), rgb(0x14100E))                    # the kohl lines
-    for name in ("front", "back", "right", "left"):                   # the throne sign
-        hat_px(img, name, [(2, 0), (2, 1), (2, 2), (3, 2), (4, 2), (5, 2), (5, 1)], 0x2A5AB0)
-    for x, y, w, h in side_faces(parts["arm"]):                       # the wings of the goddess on her arms
-        for j in range(2, h - 1):
-            colour = (CARNELIAN, LAPIS, TURQUOISE, GOLD)[(j // 2) % 4]
-            for i in range(w):
-                if (i + j) % 4 != 0:
-                    img.putpixel((x + i, y + j), jitter(colour, rng, 6))
-    shade_parts(img, parts)
-    return img
-
-
 def hathor(rng):
     """Hathor, lady of joy: a woman with a black wig, the cow horns and the red sun disc between them, a red sheath
     dress and the menat necklace of the goddess."""
@@ -984,7 +964,7 @@ ENTITIES = {
     "crocodile": crocodile,
     "ra": ra,
     "osiris": osiris,
-    "isis": isis,
+    "isis": heroine_isis,
     "horus": horus,
     "anubis": anubis,
     "thoth": thoth,

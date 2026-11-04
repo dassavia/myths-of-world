@@ -763,6 +763,8 @@
   "mythsofworlds.configuration.showWorldName.tooltip": "На две секунды показывать вверху экрана название мира мифов при входе в него",
   "mythsofworlds.configuration.worldBannerScale": "Размер свитка с названием мира",
   "mythsofworlds.configuration.worldBannerScale.tooltip": "От четверти до полного свитка; надпись остаётся читаемой при любом масштабе интерфейса",
+  "mythsofworlds.configuration.mcaSkins": "Облики MCA для жриц, амазонок и валькирий",
+  "mythsofworlds.configuration.mcaSkins.tooltip": "Если установлен MCA Reborn, они надевают его женские облики, у каждой свой; Исида остаётся собой. Без MCA всегда свои текстуры",
   "mythsofworlds.configuration.mca": "MCA Reborn",
   "mythsofworlds.configuration.mca.tooltip": "Совместная работа с Minecraft Comes Alive Reborn (если установлен)",
   "mythsofworlds.configuration.mcaCompat": "Совместимость с MCA Reborn",

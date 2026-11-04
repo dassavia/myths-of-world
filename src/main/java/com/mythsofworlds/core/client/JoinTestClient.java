@@ -4,8 +4,8 @@ import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.codex.CodexBook;
 import com.mythsofworlds.gametest.JoinTest;
 import com.mythsofworlds.mythology.relic.MythAttributes;
-import net.minecraft.client.CameraType;
 import java.util.List;
+import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Screenshot;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
@@ -15,6 +15,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -34,7 +35,7 @@ public final class JoinTestClient {
     public static final String PROPERTY = "mythsofworlds.joinTestClient";
     private static final int GIVE_UP = 20 * 60 * 5;
     /** Ticks after the suits when the Codex sweep starts, and how long each of its screenshots takes. */
-    private static final int CODEX_SWEEP = 100;
+    private static final int CODEX_SWEEP = 104;
     private static final int SHOT_TICKS = 14;
     /** Pages of the Codex the sweep opens: the path, a large and a small creature of each world, a place, a god. */
     private static final List<String> CODEX_PAGES = List.of("hellas/path", "hellas/hydra", "hellas/satyr", "hellas/agora",
@@ -135,6 +136,14 @@ public final class JoinTestClient {
                 if (mc.player != null) {
                     mc.player.closeContainer();
                 }
+            }
+            case 88 -> mc.options.setCameraType(CameraType.FIRST_PERSON);
+            case 96 -> {
+                if (ModList.get().isLoaded("mca") && !com.mythsofworlds.compat.mca.McaSkins.INSTANCE.active()) {
+                    fail("MCA Reborn is installed but its women's looks were not found");
+                }
+                report(ModList.get().isLoaded("mca") ? "heroines drawn with MCA's looks" : "heroines drawn with the mod's own textures");
+                screenshot(mc, "heroines" + (ModList.get().isLoaded("mca") ? "_mca" : ""));
             }
             default -> {
                 if (after >= CODEX_SWEEP) {
