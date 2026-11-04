@@ -40,7 +40,6 @@ import net.minecraft.nbt.NbtIo;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -466,7 +465,7 @@ public class NorseTests {
     /** Heimdall's vision can be switched off (no night vision, nothing glows) and on again, and starts on. */
     @GameTest(template = "empty")
     public static void heimdallVisionSwitchesOffAndOn(GameTestHelper helper) {
-        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
         player.setItemSlot(EquipmentSlot.HEAD, new ItemStack(NorseContent.HEIMDALL_HELMET.get()));
         Mob mob = helper.spawn(EntityType.ZOMBIE, new BlockPos(2, 2, 2));
         mob.setNoAi(true);

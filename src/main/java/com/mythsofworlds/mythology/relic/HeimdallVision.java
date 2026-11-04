@@ -8,7 +8,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Mob;
@@ -32,7 +31,7 @@ public final class HeimdallVision {
     }
 
     /** Switches the player's vision; when it goes off, its night vision and the glow it gave go at once. */
-    public static void set(ServerPlayer player, boolean enabled, boolean tell) {
+    public static void set(Player player, boolean enabled, boolean tell) {
         boolean was = on(player);
         player.setData(PlayerData.HEIMDALL_VISION, enabled);
         if (was && !on(player)) {
@@ -74,9 +73,7 @@ public final class HeimdallVision {
 
         public static void handle(Payload payload, IPayloadContext context) {
             context.enqueueWork(() -> {
-                if (context.player() instanceof ServerPlayer player) {
-                    set(player, payload.enabled(), payload.tell());
-                }
+                set(context.player(), payload.enabled(), payload.tell());
             });
         }
     }
