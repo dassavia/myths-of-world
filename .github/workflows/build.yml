@@ -45,7 +45,9 @@ jobs:
           echo "MCA jar: $URL"
           curl -sfL "$URL" -o mca.jar
           for dir in run run/smoke run/client-smoke run/join-server run/join-client; do
-            mkdir -p "$dir/mods" && cp mca.jar "$dir/mods/"
+            mkdir -p "$dir/mods" "$dir/config" && cp mca.jar "$dir/mods/"
+            # MCA's own config (config/mca.json): no Destiny screen on first join, it would cover the test's screenshots.
+            echo '{"version": 2, "launchIntoDestiny": false}' > "$dir/config/mca.json"
           done
       # Each run must print its own success line: a server or client that never starts would otherwise pass.
       - name: Game tests (portals, data, structures, mobs)
