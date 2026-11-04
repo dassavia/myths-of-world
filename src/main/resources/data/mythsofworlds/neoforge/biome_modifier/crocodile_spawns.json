@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#mythsofworlds:spawns/crocodile",
+  "spawners": {
+    "type": "mythsofworlds:crocodile",
+    "weight": 10,
+    "minCount": 1,
+    "maxCount": 2
+  }
+}
