@@ -1169,5 +1169,11 @@
   "journal.mythsofworlds.egyptian.nile_boat.page1": "A trading boat of papyrus bundles with a linen sail. A trader of the market sails on it.",
   "journal.mythsofworlds.egyptian.papyrus_skiff.title": "Papyrus Skiff",
   "journal.mythsofworlds.egyptian.papyrus_skiff.page1": "A fisherman's little boat among the reeds, with a net and the morning's catch.",
-  "itemGroup.mythsofworlds": "Myths of Worlds"
+  "itemGroup.mythsofworlds": "Myths of Worlds",
+  "subtitles.mythsofworlds.entity.isis.ambient": "Isis hums",
+  "subtitles.mythsofworlds.entity.isis.idle": "Isis's sistrum jingles",
+  "subtitles.mythsofworlds.entity.isis.hurt": "Isis hurts",
+  "subtitles.mythsofworlds.entity.isis.death": "Isis falls silent",
+  "subtitles.mythsofworlds.entity.isis.yes": "Isis agrees",
+  "subtitles.mythsofworlds.entity.isis.no": "Isis refuses"
 }

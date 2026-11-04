@@ -1169,5 +1169,11 @@
   "journal.mythsofworlds.egyptian.nile_boat.page1": "Торговая ладья из связок папируса с льняным парусом. На ней плывёт торговец рынка.",
   "journal.mythsofworlds.egyptian.papyrus_skiff.title": "Папирусная лодка",
   "journal.mythsofworlds.egyptian.papyrus_skiff.page1": "Маленькая лодка рыбака среди тростника, с сетью и утренним уловом.",
-  "itemGroup.mythsofworlds": "Мифы миров"
+  "itemGroup.mythsofworlds": "Мифы миров",
+  "subtitles.mythsofworlds.entity.isis.ambient": "Исида напевает",
+  "subtitles.mythsofworlds.entity.isis.idle": "Систр Исиды звенит",
+  "subtitles.mythsofworlds.entity.isis.hurt": "Исида ранена",
+  "subtitles.mythsofworlds.entity.isis.death": "Исида умолкает",
+  "subtitles.mythsofworlds.entity.isis.yes": "Исида соглашается",
+  "subtitles.mythsofworlds.entity.isis.no": "Исида отказывает"
 }

@@ -10,13 +10,14 @@ import com.mythsofworlds.mythology.egyptian.block.PyramidGateBlock;
 import com.mythsofworlds.mythology.egyptian.entity.Apep;
 import com.mythsofworlds.mythology.egyptian.entity.BastetCat;
 import com.mythsofworlds.mythology.egyptian.entity.EgyptianMerchant;
+import com.mythsofworlds.mythology.egyptian.entity.IsisGod;
 import com.mythsofworlds.mythology.egyptian.entity.Mummy;
 import com.mythsofworlds.mythology.egyptian.entity.OsirisGod;
-import com.mythsofworlds.mythology.egyptian.item.HapiGiftItem;
 import com.mythsofworlds.mythology.egyptian.entity.PharaohMummy;
 import com.mythsofworlds.mythology.egyptian.entity.Priestess;
 import com.mythsofworlds.mythology.egyptian.entity.SetGod;
 import com.mythsofworlds.mythology.egyptian.entity.Sphinx;
+import com.mythsofworlds.mythology.egyptian.item.HapiGiftItem;
 import com.mythsofworlds.mythology.greek.GreekContent;
 import com.mythsofworlds.mythology.greek.entity.Amazon;
 import com.mythsofworlds.mythology.relic.ArmourSets;
@@ -38,6 +39,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.packs.resources.Resource;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
@@ -399,6 +402,38 @@ public class EgyptianTests {
             helper.assertTrue(!god.getMainHandItem().isEmpty(), type.getId() + " has nothing in hand");
             god.discard();
         }
+        helper.succeed();
+    }
+
+    /** Isis speaks with her own voice: every sound she makes is one of ours, none a villager's or an illager's. */
+    @GameTest(template = "empty")
+    public static void isisHasHerOwnVoice(GameTestHelper helper) {
+        IsisGod isis = helper.spawn(EgyptianEntities.ISIS.get(), new BlockPos(1, 2, 1));
+        Player foe = helper.makeMockPlayer(GameType.SURVIVAL);
+        List<SoundEvent> voice = new ArrayList<>(List.of(isis.getAmbientSound(), isis.getHurtSound(helper.getLevel().damageSources().generic()),
+                isis.getDeathSound(), isis.answer()));
+        isis.setTarget(foe);
+        voice.add(isis.getAmbientSound());
+        voice.add(isis.answer());
+        List<SoundEvent> vanilla = List.of(SoundEvents.VILLAGER_AMBIENT, SoundEvents.VILLAGER_HURT, SoundEvents.VILLAGER_DEATH,
+                SoundEvents.VILLAGER_YES, SoundEvents.VILLAGER_NO, SoundEvents.VILLAGER_TRADE, SoundEvents.VILLAGER_CELEBRATE,
+                SoundEvents.EVOKER_AMBIENT, SoundEvents.EVOKER_HURT, SoundEvents.EVOKER_DEATH);
+        for (SoundEvent sound : voice) {
+            helper.assertTrue(sound != null && sound.getLocation().getNamespace().equals(MythsOfWorlds.MODID)
+                    && sound.getLocation().getPath().startsWith("entity.isis."), "Isis plays " + (sound == null ? null : sound.getLocation()));
+            helper.assertFalse(vanilla.contains(sound), "Isis plays a vanilla sound: " + sound.getLocation());
+        }
+        helper.assertTrue(voice.stream().map(SoundEvent::getLocation).distinct().count() == 6,
+                "Isis should have six sounds of her own (idle, ambient, hurt, death, yes, no): " + voice);
+        float low = Float.MAX_VALUE;
+        float high = -Float.MAX_VALUE;
+        for (int i = 0; i < 40; i++) {
+            float pitch = isis.getVoicePitch();
+            low = Math.min(low, pitch);
+            high = Math.max(high, pitch);
+        }
+        helper.assertTrue(low < high && low > 0.9F && high < 1.1F, "her pitch should vary a little: " + low + ".." + high);
+        isis.discard();
         helper.succeed();
     }
 }

@@ -2,7 +2,7 @@
 
 Most creatures are voiced by vanilla sounds re-pitched through "event" references; the sounds no vanilla
 sound fits (pan flute, lyre, Medusa's hiss, the brazier flaring up...) are synthesized here with numpy and
-encoded with ffmpeg. Run from the repository root: python3 tools/gen_greek_sounds.py [--ogg]
+encoded with ffmpeg. Run from the repository root: python3 tools/gen_greek_sounds.py [--ogg | --ogg=<folder>/]
 """
 import json
 import os
@@ -93,6 +93,13 @@ SOUNDS = {
                          "Апоп шипит", "Apep hisses"),
     "block.pyramid_gate.open": ([event("minecraft:block.beacon.activate", 0.7), event("minecraft:block.end_portal.spawn", 1.4, 0.5)],
                                 "Врата тени открываются", "Gate of shadow opens"),
+    # Isis has a voice of her own, soft and mystic: a choir, chimes and the sistrum (synthesized below, see CREDITS.md).
+    "entity.isis.ambient": (own("isis/ambient", 3, 0.55), "Исида напевает", "Isis hums"),
+    "entity.isis.idle": (own("isis/idle", 2, 0.5), "Систр Исиды звенит", "Isis's sistrum jingles"),
+    "entity.isis.hurt": (own("isis/hurt", 2, 0.6), "Исида ранена", "Isis hurts"),
+    "entity.isis.death": (own("isis/death", 1, 0.75), "Исида умолкает", "Isis falls silent"),
+    "entity.isis.yes": (own("isis/yes", 1, 0.5), "Исида соглашается", "Isis agrees"),
+    "entity.isis.no": (own("isis/no", 1, 0.5), "Исида отказывает", "Isis refuses"),
     "music.hellas.elysium": ([{"name": f"{NS}:music/elysium", "stream": True}], None, None),
     "music.hellas.underworld": ([{"name": f"{NS}:music/underworld", "stream": True}], None, None),
 }
@@ -269,6 +276,105 @@ def underworld(rng, seed):
     return out * envelope(len(out), 4.0, 6.0)
 
 
+# ---- Isis: a soft, feminine, mystic voice of her own (EgyptianSounds.ISIS_*), all synthesized here
+# Formants of a sung "a" and "u" (soprano): frequency, bandwidth, gain.
+VOWEL_A = ((800, 90, 1.0), (1150, 110, 0.5), (2900, 160, 0.25), (3900, 200, 0.12))
+VOWEL_U = ((350, 60, 1.0), (600, 80, 0.35), (2700, 160, 0.06))
+
+
+def sung(f0_from, f0_to, seconds, rng, vowel=VOWEL_A, voices=3, breath=0.06, glide=0.35):
+    """A small choir singing one vowel, gliding from f0_from to f0_to: harmonics of the pitch weighted by the vowel's
+    formants, a gentle vibrato that grows in, each voice a little detuned, and some breath."""
+    x = t(seconds)
+    k = np.clip(x / max(1e-3, seconds * glide), 0.0, 1.0)
+    f0 = f0_from * (f0_to / f0_from) ** (0.5 - 0.5 * np.cos(np.pi * k))
+    out = np.zeros(len(x))
+    for v in range(voices):
+        detune = 1.0 + (v - (voices - 1) / 2) * 0.004
+        vibrato = 1.0 + 0.006 * np.clip(x / 0.4, 0, 1) * np.sin(2 * np.pi * (5.2 + 0.3 * v) * x + rng.uniform(0, 6.28))
+        phase = 2 * np.pi * np.cumsum(f0 * detune * vibrato) / RATE
+        for h in range(1, 24):
+            freq = f0_from * h
+            gain = sum(g * np.exp(-((freq - fc) / bw) ** 2 / 2) for fc, bw, g in vowel) + 0.02 / h
+            out += np.sin(h * phase) * gain / h ** 0.3
+    out += lowpass(rng.normal(0, 1, len(x)), 0.25) * breath
+    return out * envelope(len(x), 0.12, min(0.5, seconds * 0.4))
+
+
+def pad(freqs, seconds, rng):
+    """A low choir pad on "u" under her voice."""
+    return sum(sung(f, f, seconds, rng, VOWEL_U, voices=2, breath=0.02) for f in freqs) / len(freqs)
+
+
+def tinkle(freq, seconds, decay=6.0):
+    """A small golden chime: inharmonic partials that ring out."""
+    x = t(seconds)
+    return sum(np.sin(2 * np.pi * freq * r * x) * a for r, a in ((1, 1.0), (2.76, 0.5), (5.4, 0.25), (8.93, 0.12))) * np.exp(-x * decay)
+
+
+def sistrum(rng, seconds, shakes=3):
+    """The sistrum of Isis: a few shakes, each a quick rattle of the metal discs on their rods."""
+    out = np.zeros(int(RATE * seconds))
+    for k in range(shakes):
+        start = int(RATE * (0.08 + k * rng.uniform(0.16, 0.24)))
+        for j in range(rng.integers(5, 9)):
+            at = start + int(RATE * j * rng.uniform(0.012, 0.022))
+            note = tinkle(rng.uniform(2800, 5200), 0.25, 28.0) * rng.uniform(0.3, 0.7)
+            note = note[:max(0, len(out) - at)]
+            out[at:at + len(note)] += note
+    return out
+
+
+def mix_into(base, sound, at=0.0, gain=1.0):
+    start = int(RATE * at)
+    sound = sound[:max(0, len(base) - start)]
+    base[start:start + len(sound)] += sound * gain
+    return base
+
+
+def isis_ambient(rng, seed):
+    """Her calm humming in combat: a glide over a low pad and one chime."""
+    f_from, f_to = ((440.0, 523.3), (329.6, 440.0), (392.0, 329.6))[seed]
+    out = sung(f_from, f_to, 2.0, rng) * 0.8
+    out = mix_into(out, pad((f_to / 2, f_to * 0.75), 2.0, rng), 0.0, 0.5)
+    return mix_into(out, tinkle(f_to * 4, 1.2), 1.1, 0.25)
+
+
+def isis_idle(rng, seed):
+    """At rest on her throne: the sistrum shaken softly over the choir pad."""
+    root = (220.0, 196.0)[seed]
+    out = pad((root, root * 1.5, root * 2), 2.4, rng) * 0.7
+    return mix_into(out, sistrum(rng, 2.4, 3 + seed), 0.2, 0.6)
+
+
+def isis_hurt(rng, seed):
+    """A short breathy cry that falls, with a rattle of the sistrum."""
+    f = (587.3, 523.3)[seed]
+    out = sung(f, f * 0.8, 0.5, rng, voices=2, breath=0.12, glide=0.8)
+    return mix_into(out, sistrum(rng, 0.5, 1), 0.0, 0.35)
+
+
+def isis_death(rng, seed):
+    """A long falling chant, the chimes scattering as the pad fades."""
+    out = sung(440.0, 220.0, 3.0, rng, glide=0.9) * 0.8
+    out = mix_into(out, pad((110.0, 164.8), 3.0, rng), 0.0, 0.6)
+    for k, f in enumerate((1760.0, 1318.5, 1174.7, 880.0)):
+        out = mix_into(out, tinkle(f, 1.6, 3.5), 0.3 + 0.45 * k, 0.25)
+    return out
+
+
+def isis_yes(rng, seed):
+    """A warm rising "mm-hm" and a bright chime: she agrees."""
+    out = sung(329.6, 440.0, 0.9, rng, VOWEL_U, voices=2, glide=0.5)
+    return mix_into(out, tinkle(1760.0, 0.8), 0.45, 0.35)
+
+
+def isis_no(rng, seed):
+    """A soft falling hum, a minor step down: she refuses."""
+    out = sung(440.0, 349.2, 0.9, rng, VOWEL_U, voices=2, glide=0.5)
+    return mix_into(out, tinkle(698.5, 0.6, 9.0), 0.5, 0.2)
+
+
 SYNTHS = {
     "ambient/chimes": chimes,
     "music/elysium": elysium,
@@ -282,6 +388,12 @@ SYNTHS = {
     "cyclops/stomp": stomp,
     "shade/blink": blink,
     "block/brazier_ignite": brazier_ignite,
+    "isis/ambient": isis_ambient,
+    "isis/idle": isis_idle,
+    "isis/hurt": isis_hurt,
+    "isis/death": isis_death,
+    "isis/yes": isis_yes,
+    "isis/no": isis_no,
 }
 
 
@@ -318,13 +430,16 @@ def main():
         with open(path, "w", encoding="utf-8") as f:
             json.dump(lang, f, indent=2, ensure_ascii=False)
             f.write("\n")
-    if "--ogg" in sys.argv:
+    only = next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--ogg=")), None)
+    if "--ogg" in sys.argv or only:
         for key, (entries, _, _) in SOUNDS.items():
             for entry in entries:
                 name = entry if isinstance(entry, str) else entry["name"]
                 if isinstance(entry, dict) and entry.get("type") == "event":
                     continue
                 file = name.split(":", 1)[1]
+                if only and not file.startswith(only):
+                    continue
                 base = file.rstrip("0123456789")
                 seed = int(file[len(base):] or 1) - 1
                 rng = np.random.default_rng(seed * 7919 + len(file))

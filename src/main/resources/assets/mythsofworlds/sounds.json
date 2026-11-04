@@ -469,6 +469,76 @@
       }
     ]
   },
+  "entity.isis.ambient": {
+    "subtitle": "subtitles.mythsofworlds.entity.isis.ambient",
+    "sounds": [
+      {
+        "name": "mythsofworlds:isis/ambient1",
+        "volume": 0.55
+      },
+      {
+        "name": "mythsofworlds:isis/ambient2",
+        "volume": 0.55
+      },
+      {
+        "name": "mythsofworlds:isis/ambient3",
+        "volume": 0.55
+      }
+    ]
+  },
+  "entity.isis.idle": {
+    "subtitle": "subtitles.mythsofworlds.entity.isis.idle",
+    "sounds": [
+      {
+        "name": "mythsofworlds:isis/idle1",
+        "volume": 0.5
+      },
+      {
+        "name": "mythsofworlds:isis/idle2",
+        "volume": 0.5
+      }
+    ]
+  },
+  "entity.isis.hurt": {
+    "subtitle": "subtitles.mythsofworlds.entity.isis.hurt",
+    "sounds": [
+      {
+        "name": "mythsofworlds:isis/hurt1",
+        "volume": 0.6
+      },
+      {
+        "name": "mythsofworlds:isis/hurt2",
+        "volume": 0.6
+      }
+    ]
+  },
+  "entity.isis.death": {
+    "subtitle": "subtitles.mythsofworlds.entity.isis.death",
+    "sounds": [
+      {
+        "name": "mythsofworlds:isis/death",
+        "volume": 0.75
+      }
+    ]
+  },
+  "entity.isis.yes": {
+    "subtitle": "subtitles.mythsofworlds.entity.isis.yes",
+    "sounds": [
+      {
+        "name": "mythsofworlds:isis/yes",
+        "volume": 0.5
+      }
+    ]
+  },
+  "entity.isis.no": {
+    "subtitle": "subtitles.mythsofworlds.entity.isis.no",
+    "sounds": [
+      {
+        "name": "mythsofworlds:isis/no",
+        "volume": 0.5
+      }
+    ]
+  },
   "music.hellas.elysium": {
     "sounds": [
       {
