@@ -81,7 +81,7 @@ public abstract class EgyptianGod extends GreekBoss {
     @Override
     public void tick() {
         super.tick();
-        if (!level().isClientSide && tickCount == 1 && getMainHandItem().isEmpty()) {
+        if (!level().isClientSide && tickCount < 40 && getMainHandItem().isEmpty()) {
             arm();
         }
     }
