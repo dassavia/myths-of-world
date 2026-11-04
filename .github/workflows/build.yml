@@ -98,16 +98,6 @@ jobs:
             tail -n 80 run/join-server.log
             exit 1
           fi
-      # TEMPORARY (removed before merge): the artifact store cannot be read from the dev sandbox, so print the
-      # Codex screenshots into the log.
-      - name: DEBUG print codex screenshots
-        if: always() && github.ref != 'refs/heads/main'
-        run: |
-          cd run/join-client/screenshots || exit 0
-          for f in codex_*_gui2.png codex_*_gui4.png codex_hellas_path_gui1.png codex_hellas_path_gui3.png heroines*.png; do
-            [ -f "$f" ] || continue
-            echo "BEGIN-SHOT $f"; base64 -w0 "$f"; echo; echo "END-SHOT $f"
-          done
       - uses: actions/upload-artifact@v4
         if: always()
         with:
