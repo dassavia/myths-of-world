@@ -1,6 +1,7 @@
 package com.mythsofworlds.gametest;
 
 import com.mythsofworlds.MythsOfWorlds;
+import com.mythsofworlds.codex.CodexBook;
 import com.mythsofworlds.codex.CodexContent;
 import com.mythsofworlds.codex.Progress;
 import com.mythsofworlds.mythology.greek.GreekContent;
@@ -121,6 +122,8 @@ public final class JoinTest {
         }
         if (t == FIRST_STAGE) {
             Progress.award(player, "kill.minotaur");
+            // Every page of the Codex open, so the client can draw any of them.
+            CodexBook.sync(player, true);
         }
         List<List<Item>> stages = stages();
         int stage = (t - FIRST_STAGE) / STAGE_TICKS;
