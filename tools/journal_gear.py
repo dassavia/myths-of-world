@@ -204,6 +204,34 @@ def egyptian():
         ("Пектораль Ра: броня 8, твёрдость 2.5, отбрасывание -5%, прочность 528, не горит. Огнестойкость и сила.",
          "Pectoral of Ra: armour 8, toughness 2.5, knockback -5%, durability 528, fireproof. Fire Resistance and "
          "Strength."),
+        ("Посох Ра: прочность 400, не горит. ПКМ мечет три огненных шара. Раз в 2 секунды.",
+         "Staff of Ra: durability 400, fireproof. Right-click hurls three fireballs. Every 2 seconds."),
+        ("Цеп Осириса: урон 8.5, скорость 1.2, прочность 1650. Вампиризм 12%; нежить слабеет и замедляется.",
+         "Flail of Osiris: damage 8.5, attack speed 1.2, durability 1650. Lifesteal 12%; the undead grow weak and slow."),
+        ("Скипетр Исиды: прочность 250. ПКМ лечит на 6 и даёт регенерацию II вам, игрокам, питомцам и семье в 8 "
+         "блоках. Раз в 20 секунд.",
+         "Sceptre of Isis: durability 250. Right-click heals 6 and gives Regeneration II to you, the players, pets "
+         "and family within 8 blocks. Every 20 seconds."),
+        ("Лук Гора: прочность 640. Стрелы бьют на 2.5 сильнее, раненый светится 10 секунд.",
+         "Bow of Horus: durability 640. Arrows strike 2.5 harder, and whoever they hit glows for 10 seconds."),
+        ("Глефа Анубиса: урон 9.5, скорость 1.0, прочность 1650. Гроза чудовищ 15%, удар замедляет.",
+         "Glaive of Anubis: damage 9.5, attack speed 1.0, durability 1650. Monster slaying 15%, its blow slows."),
+        ("Посох Тота: прочность 400. ПКМ: слово силы до 24 блоков, 7 урона магией и левитация. Раз в 1.5 секунды.",
+         "Staff of Thoth: durability 400. Right-click: a word of power up to 24 blocks, 7 magic damage and "
+         "Levitation. Every 1.5 seconds."),
+        ("Кинжал Бастет: урон 6.5, скорость 2.6, прочность 1650. Уклонение 5%, удар даёт вам скорость.",
+         "Dagger of Bastet: damage 6.5, attack speed 2.6, durability 1650. Evasion 5%, each blow makes you swift."),
+        ("Хопеш Себека: урон 8.5, скорость 1.6, прочность 1650. Гроза чудовищ 8%, удар замедляет, врага в воде "
+         "лишает сил.",
+         "Khopesh of Sobek: damage 8.5, attack speed 1.6, durability 1650. Monster slaying 8%, its blow slows and "
+         "weakens a foe in the water."),
+        ("Скипетр Хатхор: прочность 250. ПКМ усмиряет чудовищ в 10 блоках. Раз в 15 секунд.",
+         "Sceptre of Hathor: durability 250. Right-click calms the monsters within 10 blocks. Every 15 seconds."),
+        ("Секира Птаха: урон 10.5, скорость 1.0, прочность 1650. В руке: спешка II.",
+         "Axe of Ptah: damage 10.5, attack speed 1.0, durability 1650. In hand: Haste II."),
+        ("Копьё Сехмет: урон 9.5, скорость 1.1, прочность 1650, не горит. Ярость 12%, удар поджигает на 5 секунд.",
+         "Spear of Sekhmet: damage 9.5, attack speed 1.1, durability 1650, fireproof. Fury 12%, each blow sets the "
+         "foe on fire for 5 seconds."),
         BACK_SLOT,
     ])
     return [("ores", "intro", None, *ores), ("meteoric_iron_tools", "intro", None, *tools),

@@ -2,7 +2,7 @@
   "name": "Set",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_boss",
-  "sortnum": 17,
+  "sortnum": 20,
   "pages": [
     {
       "type": "patchouli:entity",

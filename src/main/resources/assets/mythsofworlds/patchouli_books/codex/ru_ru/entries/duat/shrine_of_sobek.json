@@ -1,0 +1,13 @@
+{
+  "name": "Святилище Себека",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 44,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Святилище из сырцового кирпича на берегу Нила, двор со священным прудом, где греются крокодилы."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_shrine_of_sobek"
+}

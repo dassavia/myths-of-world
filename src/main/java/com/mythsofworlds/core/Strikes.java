@@ -54,6 +54,12 @@ public final class Strikes {
             map.put(GreekContent.BIDENT_OF_HADES.get(), new Strike(Style.STAB, 0x6A2CB0, ParticleTypes.SOUL));
             map.put(SlavicContent.KLADENETS.get(), new Strike(Style.SLASH, 0xC4F4FF, ParticleTypes.END_ROD));
             map.put(EgyptianContent.KHOPESH.get(), new Strike(Style.SLASH, 0xE8C060, ParticleTypes.SMOKE));
+            map.put(EgyptianContent.FLAIL_OF_OSIRIS.get(), new Strike(Style.HEAVY, 0x5AC07A, ParticleTypes.SCULK_SOUL));
+            map.put(EgyptianContent.GLAIVE_OF_ANUBIS.get(), new Strike(Style.STAB, 0x8A6AE0, ParticleTypes.SOUL));
+            map.put(EgyptianContent.DAGGER_OF_BASTET.get(), new Strike(Style.STAB, 0x5AD8C8, null));
+            map.put(EgyptianContent.KHOPESH_OF_SOBEK.get(), new Strike(Style.SLASH, 0x8AB85A, ParticleTypes.SPLASH));
+            map.put(EgyptianContent.AXE_OF_PTAH.get(), new Strike(Style.CHOP, 0x5A8AE0, null));
+            map.put(EgyptianContent.SPEAR_OF_SEKHMET.get(), new Strike(Style.STAB, 0xFF5A2A, ParticleTypes.FLAME));
             map.put(NorseContent.MJOLNIR.get(), new Strike(Style.HEAVY, 0x8CD0FF, ParticleTypes.ELECTRIC_SPARK));
             map.put(NorseContent.SURTR_SWORD.get(), new Strike(Style.SLASH, 0xFF6A20, ParticleTypes.FLAME));
             strikes = map;

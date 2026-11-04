@@ -153,7 +153,16 @@ public final class WorldSmokeTest {
             Map.entry("pharaoh_tomb", PharaohMummy.class),
             Map.entry("great_sphinx", Sphinx.class),
             Map.entry("temple_of_set", SetGod.class),
-            Map.entry("apep_lair", Apep.class));
+            Map.entry("apep_lair", Apep.class),
+            Map.entry("hall_of_judgment", com.mythsofworlds.mythology.egyptian.entity.OsirisGod.class),
+            Map.entry("solar_barque", com.mythsofworlds.mythology.egyptian.entity.RaGod.class),
+            Map.entry("temple_of_horus", com.mythsofworlds.mythology.egyptian.entity.HorusGod.class),
+            Map.entry("temple_of_bastet", com.mythsofworlds.mythology.egyptian.entity.BastetGod.class),
+            Map.entry("shrine_of_sobek", com.mythsofworlds.mythology.egyptian.entity.SobekGod.class),
+            Map.entry("shrine_of_hathor", com.mythsofworlds.mythology.egyptian.entity.HathorGod.class),
+            Map.entry("forge_of_ptah", com.mythsofworlds.mythology.egyptian.entity.PtahGod.class),
+            Map.entry("shrine_of_sekhmet", com.mythsofworlds.mythology.egyptian.entity.SekhmetGod.class),
+            Map.entry("nile_boat", EgyptianMerchant.class));
 
     @SubscribeEvent
     public static void onServerStarted(ServerStartedEvent event) {

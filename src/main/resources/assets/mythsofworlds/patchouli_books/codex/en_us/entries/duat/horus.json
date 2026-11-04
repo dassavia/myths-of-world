@@ -1,0 +1,22 @@
+{
+  "name": "Horus",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 25,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:horus",
+      "name": "Horus"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The falcon-headed avenger, 420 health, in the temple with the granite falcons. He dives on his foe, and his eye makes them glow and grow weak."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Falls cannot harm him. Drops a falcon feather: with gold and string it makes the bow of Horus."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_horus"
+}

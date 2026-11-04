@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "  E",
+    " M ",
+    "S  "
+  ],
+  "key": {
+    "E": {
+      "item": "mythsofworlds:ember_of_sekhmet"
+    },
+    "M": {
+      "item": "mythsofworlds:meteoric_iron_ingot"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "id": "mythsofworlds:spear_of_sekhmet",
+    "count": 1
+  }
+}

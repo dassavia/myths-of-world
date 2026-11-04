@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "FM",
+    "TM",
+    "S "
+  ],
+  "key": {
+    "F": {
+      "item": "mythsofworlds:fang_of_sobek"
+    },
+    "T": {
+      "item": "mythsofworlds:crocodile_tooth"
+    },
+    "M": {
+      "item": "mythsofworlds:meteoric_iron_ingot"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "id": "mythsofworlds:khopesh_of_sobek",
+    "count": 1
+  }
+}

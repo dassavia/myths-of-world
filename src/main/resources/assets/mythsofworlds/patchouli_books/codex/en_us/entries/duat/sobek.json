@@ -1,0 +1,22 @@
+{
+  "name": "Sobek",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 29,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:sobek",
+      "name": "Sobek"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The crocodile-headed lord of the Nile, 450 health, in his shrine on the bank. He attacks on sight, drags his foe down in the death roll and calls crocodiles."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "In the water he heals: lure him onto dry land. Drops a fang: with a crocodile tooth and meteoric iron it makes the khopesh of Sobek."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_sobek"
+}

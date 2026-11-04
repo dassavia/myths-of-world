@@ -1,0 +1,13 @@
+{
+  "name": "Nile Boat",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 48,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A trading boat of papyrus bundles with a linen sail. A trader of the market sails on it."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_nile_boat"
+}

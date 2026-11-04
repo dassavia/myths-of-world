@@ -41,7 +41,10 @@ public final class EgyptianTrades {
             sell(EgyptianContent.SCORPION_STINGER.get(), 2, 3),
             sell(EgyptianContent.JACKAL_PELT.get(), 2, 2),
             sell(EgyptianContent.MUMMY_WRAPPINGS.get(), 8, 1),
+            sell(EgyptianContent.CROCODILE_HIDE.get(), 3, 2),
             buy(1, () -> new ItemStack(EgyptianContent.DATES.get(), 6), 16),
+            buy(2, () -> new ItemStack(EgyptianContent.NILE_SILT_ITEM.get(), 8), 12),
+            buy(4, () -> new ItemStack(EgyptianContent.GIFT_OF_HAPI.get(), 4), 8),
             buy(3, () -> new ItemStack(EgyptianContent.HONEY_CAKE.get(), 2), 12),
             buy(2, () -> new ItemStack(Items.WHITE_WOOL, 6), 12),
             buy(4, () -> new ItemStack(Items.LAPIS_LAZULI, 8), 8));

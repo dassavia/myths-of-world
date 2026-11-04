@@ -1,0 +1,22 @@
+{
+  "name": "Гор",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 25,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:horus",
+      "name": "Гор"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Мститель с головой сокола, 420 здоровья, в храме с гранитными соколами. Пикирует на врага, его око заставляет светиться и слабеть."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Падения ему не страшны. Роняет соколиное перо: с золотом и нитями - лук Гора."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_horus"
+}

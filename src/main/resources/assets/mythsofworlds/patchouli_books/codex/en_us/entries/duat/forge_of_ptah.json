@@ -1,0 +1,13 @@
+{
+  "name": "Forge of Ptah",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 46,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A forge-temple of dark stone: anvils, a furnace and a basin of molten metal, with ushabti at work."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_forge_of_ptah"
+}

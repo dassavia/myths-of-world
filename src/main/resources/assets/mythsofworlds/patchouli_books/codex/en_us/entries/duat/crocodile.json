@@ -1,0 +1,22 @@
+{
+  "name": "Crocodile",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_creature",
+  "sortnum": 17,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:crocodile",
+      "name": "Crocodile"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The sacred beast of Sobek lurks in the shallows and on the banks of the Nile. It swims as fast as it walks and never drowns. Its bite slows, and in the water it drags its prey down."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Its scaly back turns light blows. It drops its hide (one hide makes two leather) and sometimes a tooth for the khopesh of Sobek."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_crocodile"
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Shrine of Sobek",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 44,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A shrine of mud brick on the bank of the Nile, with a sacred pool in the court where crocodiles bask."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_shrine_of_sobek"
+}

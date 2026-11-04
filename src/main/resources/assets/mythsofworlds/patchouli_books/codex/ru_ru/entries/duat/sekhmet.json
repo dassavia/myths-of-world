@@ -1,0 +1,22 @@
+{
+  "name": "Сехмет",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 32,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:sekhmet",
+      "name": "Сехмет"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Львица-истребительница, 480 здоровья, у Огненного озера. Нападает первой, дышит огнём и насылает голод и яд."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Огонь ей не страшен, ниже половины здоровья она сильнее. Роняет уголь: с небесным железом и палкой - копьё Сехмет."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_sekhmet"
+}

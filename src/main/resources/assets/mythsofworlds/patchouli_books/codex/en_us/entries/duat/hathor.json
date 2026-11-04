@@ -1,0 +1,22 @@
+{
+  "name": "Hathor",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 30,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:hathor",
+      "name": "Hathor"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The goddess of joy with the cow horns, 360 health, in her shrine in the Fields of Aaru. The song of her sistrum makes heads spin and slows."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Below half health the rage of Sekhmet wakes in her. Drops a horn: with gold and a stick it makes the sceptre of Hathor."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_hathor"
+}

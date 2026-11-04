@@ -2,7 +2,7 @@
   "name": "Mummy of the Pharaoh",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_boss",
-  "sortnum": 15,
+  "sortnum": 18,
   "pages": [
     {
       "type": "patchouli:entity",

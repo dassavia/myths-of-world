@@ -1,0 +1,22 @@
+{
+  "name": "Ra",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 22,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:ra",
+      "name": "Ra"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The falcon-headed king of the gods, 550 health, on the solar barque on the Celestial Nile. He hurls fireballs; below half health the eye of Ra burns and blinds everyone around."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Fire cannot harm him. Drops the sun disc: with a gold block and a stick it makes the staff of Ra."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_ra"
+}

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    " D ",
+    " G ",
+    " S "
+  ],
+  "key": {
+    "D": {
+      "item": "mythsofworlds:sun_disc"
+    },
+    "G": {
+      "item": "minecraft:gold_block"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "id": "mythsofworlds:staff_of_ra",
+    "count": 1
+  }
+}

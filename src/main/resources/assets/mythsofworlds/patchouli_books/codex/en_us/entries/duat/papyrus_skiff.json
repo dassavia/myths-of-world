@@ -1,0 +1,13 @@
+{
+  "name": "Papyrus Skiff",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 49,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A fisherman's little boat among the reeds, with a net and the morning's catch."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_papyrus_skiff"
+}

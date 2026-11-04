@@ -1,0 +1,13 @@
+{
+  "name": "Shrine of Hathor",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 45,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Rose stone in the Fields of Aaru, the colossus with horns and the sun disc, cows grazing around."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_shrine_of_hathor"
+}

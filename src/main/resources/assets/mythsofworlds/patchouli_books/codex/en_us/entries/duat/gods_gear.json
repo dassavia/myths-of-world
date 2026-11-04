@@ -2,7 +2,7 @@
   "name": "Gifts of the Gods of Egypt",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_intro",
-  "sortnum": 6,
+  "sortnum": 8,
   "pages": [
     {
       "type": "patchouli:text",
@@ -14,7 +14,31 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Pectoral of Ra: armour 8, toughness 2.5, knockback -5%, durability 528, fireproof. Fire Resistance and Strength."
+      "text": "Pectoral of Ra: armour 8, toughness 2.5, knockback -5%, durability 528, fireproof. Fire Resistance and Strength.$(br)Staff of Ra: durability 400, fireproof. Right-click hurls three fireballs. Every 2 seconds."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Flail of Osiris: damage 8.5, attack speed 1.2, durability 1650. Lifesteal 12%; the undead grow weak and slow."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Sceptre of Isis: durability 250. Right-click heals 6 and gives Regeneration II to you, the players, pets and family within 8 blocks. Every 20 seconds.$(br)Bow of Horus: durability 640. Arrows strike 2.5 harder, and whoever they hit glows for 10 seconds."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Glaive of Anubis: damage 9.5, attack speed 1.0, durability 1650. Monster slaying 15%, its blow slows.$(br)Staff of Thoth: durability 400. Right-click: a word of power up to 24 blocks, 7 magic damage and Levitation. Every 1.5 seconds."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Dagger of Bastet: damage 6.5, attack speed 2.6, durability 1650. Evasion 5%, each blow makes you swift.$(br)Khopesh of Sobek: damage 8.5, attack speed 1.6, durability 1650. Monster slaying 8%, its blow slows and weakens a foe in the water."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Sceptre of Hathor: durability 250. Right-click calms the monsters within 10 blocks. Every 15 seconds.$(br)Axe of Ptah: damage 10.5, attack speed 1.0, durability 1650. In hand: Haste II."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Spear of Sekhmet: damage 9.5, attack speed 1.1, durability 1650, fireproof. Fury 12%, each blow sets the foe on fire for 5 seconds."
     },
     {
       "type": "patchouli:text",

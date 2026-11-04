@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "mythsofworlds:bow_of_horus",
+    "mythsofworlds:staff_of_ra",
+    "mythsofworlds:staff_of_thoth",
+    "mythsofworlds:sceptre_of_isis",
+    "mythsofworlds:sceptre_of_hathor"
+  ]
+}

@@ -173,6 +173,11 @@ python3 tools/gen_greek_assets.py && python3 tools/gen_norse_assets.py && python
 проверяет её форму (основание 5x5, ступень 3x3, золотой блок наверху, проход в основании) и строит такую же на другой
 стороне, `PyramidGateBlock` — врата тени в проходе, их открывает `AnkhItem`. Жрицы Исиды (`Priestess`) наследуют
 `Amazon`, как валькирии. Звуки Дуата (`EgyptianSounds`) описаны в той же таблице `SOUNDS` в `tools/gen_greek_sounds.py`.
+Боги Египта наследуют `egyptian/entity/EgyptianGod` (босс с оружием мифа в руке и силой `power()` раз в несколько
+секунд); их святилища — `sanctuary_shrine()` в `tools/structures_egyptian.py`, реликвии и рецепты оружия — таблицы
+`GOD_RELICS` и `WEAPON_RECIPES` в `tools/gen_egyptian_assets.py`. Лодки стоят на воде: у них `start_height` -1 и
+`terrain_adaptation` none, а клетки шаблона, которые не заданы, остаются водой. Модель крокодила —
+`egyptian/client/CrocodileModel`, его развёртка повторена в `crocodile()` из `tools/textures_egyptian.py`.
 
 ## Как развить заготовку мифологии
 

@@ -2,7 +2,7 @@
   "name": "Sphinx",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_boss",
-  "sortnum": 16,
+  "sortnum": 19,
   "pages": [
     {
       "type": "patchouli:entity",

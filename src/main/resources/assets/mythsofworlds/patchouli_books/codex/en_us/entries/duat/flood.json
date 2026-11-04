@@ -1,0 +1,17 @@
+{
+  "name": "The Flood of the Nile",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_intro",
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Black silt lies on the low banks of the Nile and by the water of the oases. While water is near, the plants around the silt grow faster: sow your fields beside it."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Dig the silt with a shovel, or make it of two mud and bone meal. The gift of Hapi (silt, two bone meal and sugar cane) is the strongest fertiliser: it feeds every plant in a 5x5 square three times."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/duat"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Бастет",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 28,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:bastet",
+      "name": "Бастет"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Богиня-кошка, 340 здоровья, в храме среди своих кошек. Быстра, прыгает на врага, когти ранят ядом."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Всегда падает на лапы. Роняет коготь: с небесным железом и палкой - кинжал Бастет."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_bastet"
+}

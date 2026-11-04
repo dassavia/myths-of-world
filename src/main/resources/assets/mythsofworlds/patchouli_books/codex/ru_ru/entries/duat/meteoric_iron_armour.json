@@ -2,7 +2,7 @@
   "name": "Броня из небесного железа",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_intro",
-  "sortnum": 5,
+  "sortnum": 7,
   "pages": [
     {
       "type": "patchouli:text",

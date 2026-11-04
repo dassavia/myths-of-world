@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "MC",
+    "MS",
+    " S"
+  ],
+  "key": {
+    "M": {
+      "item": "mythsofworlds:meteoric_iron_ingot"
+    },
+    "C": {
+      "item": "mythsofworlds:chisel_of_ptah"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "id": "mythsofworlds:axe_of_ptah",
+    "count": 1
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Isis",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 24,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:isis",
+      "name": "Isis"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The great of magic, 360 health, by the throne in her temple. The wind of her wings throws back and slows her foes, and she heals herself."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Drops a wing of Isis: with a lapis block and a gold ingot it makes the sceptre of Isis, which heals you and your friends."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_isis"
+}

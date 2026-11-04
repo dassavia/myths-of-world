@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "mythsofworlds:papyrus_skiff",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 12,
+    "separation": 5,
+    "salt": 2570206
+  }
+}

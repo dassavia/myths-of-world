@@ -1,0 +1,22 @@
+{
+  "name": "Осирис",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 23,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:osiris",
+      "name": "Осирис"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Зеленокожий царь мёртвых, 400 здоровья, на троне в Зале суда. Поднимает мумий и замедляет врага."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Как Исида оживила его, он один раз встаёт после смертельного удара с половиной здоровья. Роняет джед: с цепями и палками - цеп Осириса."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_osiris"
+}

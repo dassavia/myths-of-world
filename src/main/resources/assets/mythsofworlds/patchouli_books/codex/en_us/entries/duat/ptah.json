@@ -1,0 +1,22 @@
+{
+  "name": "Ptah",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 31,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:ptah",
+      "name": "Ptah"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The craftsman who made the world, 420 health, in his forge-temple. Heavy and armoured, his word wakes ushabti and his blow numbs the hands."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Drops the chisel: with meteoric iron and sticks it makes the axe of Ptah, which gives Haste in hand."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_ptah"
+}

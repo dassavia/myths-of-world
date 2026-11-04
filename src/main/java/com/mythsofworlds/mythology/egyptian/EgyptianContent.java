@@ -2,9 +2,18 @@ package com.mythsofworlds.mythology.egyptian;
 
 import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.mythology.Mythology;
+import com.mythsofworlds.mythology.egyptian.block.NileSiltBlock;
 import com.mythsofworlds.mythology.egyptian.block.PyramidGateBlock;
 import com.mythsofworlds.mythology.egyptian.item.AnkhItem;
+import com.mythsofworlds.mythology.egyptian.item.DivineWeaponItem;
+import com.mythsofworlds.mythology.egyptian.item.HapiGiftItem;
+import com.mythsofworlds.mythology.egyptian.item.HathorSceptreItem;
+import com.mythsofworlds.mythology.egyptian.item.HorusBowItem;
+import com.mythsofworlds.mythology.egyptian.item.IsisSceptreItem;
 import com.mythsofworlds.mythology.egyptian.item.KhopeshItem;
+import com.mythsofworlds.mythology.egyptian.item.PtahAxeItem;
+import com.mythsofworlds.mythology.egyptian.item.SunStaffItem;
+import com.mythsofworlds.mythology.egyptian.item.ThothStaffItem;
 import com.mythsofworlds.mythology.egyptian.item.WasSceptreItem;
 import com.mythsofworlds.mythology.greek.block.FruitLeavesBlock;
 import com.mythsofworlds.mythology.greek.item.HornOfThemiscyraItem;
@@ -15,6 +24,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -22,6 +32,7 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
@@ -57,7 +68,9 @@ public final class EgyptianContent {
             "lake_of_fire", "oasis", "celestial_nile");
     /** Structures of the Duat (data/mythsofworlds/worldgen/structure, templates in data/mythsofworlds/structure/egyptian). */
     public static final List<String> STRUCTURES = List.of("egyptian_village", "temple_of_isis", "obelisk", "pharaoh_tomb",
-            "great_sphinx", "temple_of_set", "apep_lair");
+            "great_sphinx", "temple_of_set", "apep_lair", "hall_of_judgment", "solar_barque", "temple_of_horus",
+            "temple_of_bastet", "shrine_of_sobek", "shrine_of_hathor", "forge_of_ptah", "shrine_of_sekhmet", "nile_boat",
+            "papyrus_skiff");
     /** The temples of Isis, where the priestesses live; the sistrum of Hathor calls them back there. */
     public static final TagKey<Structure> PRIESTESS_HOMES = TagKey.create(Registries.STRUCTURE, MythsOfWorlds.id("priestess_homes"));
 
@@ -98,9 +111,18 @@ public final class EgyptianContent {
                     .ignitedByLava()
                     .pushReaction(PushReaction.DESTROY)));
 
+    /** The black silt of the Nile on its banks: watered, it makes the plants around it grow faster. */
+    public static final DeferredBlock<NileSiltBlock> NILE_SILT = BLOCKS.register("nile_silt",
+            () -> new NileSiltBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BLACK)
+                    .strength(0.6F)
+                    .randomTicks()
+                    .sound(SoundType.MUD)));
+
     public static final DeferredItem<BlockItem> PYRAMID_STONE_ITEM = ITEMS.registerSimpleBlockItem(PYRAMID_STONE);
     public static final DeferredItem<BlockItem> HIEROGLYPH_STONE_ITEM = ITEMS.registerSimpleBlockItem(HIEROGLYPH_STONE);
     public static final DeferredItem<BlockItem> DATE_PALM_LEAVES_ITEM = ITEMS.registerSimpleBlockItem(DATE_PALM_LEAVES);
+    public static final DeferredItem<BlockItem> NILE_SILT_ITEM = ITEMS.registerSimpleBlockItem(NILE_SILT);
 
     // ---- Items ----
 
@@ -146,6 +168,98 @@ public final class EgyptianContent {
     /** The was-sceptre of Set, lord of storms: raise it and a sandstorm throws back the foes around. */
     public static final DeferredItem<WasSceptreItem> WAS_SCEPTRE = ITEMS.register("was_sceptre",
             () -> new WasSceptreItem(new Item.Properties().durability(250).rarity(Rarity.EPIC).fireResistant()));
+
+    /** The gift of Hapi, god of the flood: the strongest fertiliser, it feeds every plant in a 5x5 area three times. */
+    public static final DeferredItem<HapiGiftItem> GIFT_OF_HAPI = ITEMS.register("gift_of_hapi",
+            () -> new HapiGiftItem(new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final DeferredItem<Item> CROCODILE_HIDE = ITEMS.registerSimpleItem("crocodile_hide", new Item.Properties());
+    public static final DeferredItem<Item> CROCODILE_TOOTH = ITEMS.registerSimpleItem("crocodile_tooth",
+            new Item.Properties().rarity(Rarity.UNCOMMON));
+
+    // ---- Relics of the gods (each god drops its own; the weapons below are forged from them) ----
+
+    /** The sun disc from the head of Ra. */
+    public static final DeferredItem<Item> SUN_DISC = relic("sun_disc", true);
+    /** The djed, the pillar of the backbone of Osiris, the sign of his rising. */
+    public static final DeferredItem<Item> DJED_OF_OSIRIS = relic("djed_of_osiris", false);
+    /** A feather from the wings with which Isis fanned breath back into Osiris. */
+    public static final DeferredItem<Item> WING_OF_ISIS = relic("wing_of_isis", false);
+    /** A feather of the falcon Horus, whose eyes are the sun and the moon. */
+    public static final DeferredItem<Item> FALCON_FEATHER = relic("falcon_feather", false);
+    /** The feather of Ma'at, against which Anubis weighs the hearts of the dead. */
+    public static final DeferredItem<Item> FEATHER_OF_MAAT = relic("feather_of_maat", false);
+    /** A tablet of the words of power, from the books of Thoth. */
+    public static final DeferredItem<Item> TABLET_OF_THOTH = relic("tablet_of_thoth", false);
+    /** A claw of the cat goddess Bastet. */
+    public static final DeferredItem<Item> CLAW_OF_BASTET = relic("claw_of_bastet", false);
+    /** A fang of Sobek, lord of the crocodiles. */
+    public static final DeferredItem<Item> FANG_OF_SOBEK = relic("fang_of_sobek", false);
+    /** A horn of Hathor, the cow of heaven, with a glint of the sun disc between them. */
+    public static final DeferredItem<Item> HORN_OF_HATHOR = relic("horn_of_hathor", false);
+    /** The chisel with which Ptah shaped the world. */
+    public static final DeferredItem<Item> CHISEL_OF_PTAH = relic("chisel_of_ptah", false);
+    /** An ember of the hot breath of Sekhmet, the desert wind. */
+    public static final DeferredItem<Item> EMBER_OF_SEKHMET = relic("ember_of_sekhmet", true);
+
+    private static DeferredItem<Item> relic(String name, boolean fireproof) {
+        Item.Properties properties = new Item.Properties().rarity(Rarity.RARE);
+        return ITEMS.registerSimpleItem(name, fireproof ? properties.fireResistant() : properties);
+    }
+
+    // ---- Weapons of the gods ----
+
+    /** The staff of Ra: right-click hurls three fireballs of the sun. */
+    public static final DeferredItem<SunStaffItem> STAFF_OF_RA = ITEMS.register("staff_of_ra",
+            () -> new SunStaffItem(new Item.Properties().durability(400).rarity(Rarity.EPIC).fireResistant()));
+    /** The flail of Osiris, king of the dead: every blow heals its bearer (lifesteal) and the undead it strikes fail. */
+    public static final DeferredItem<DivineWeaponItem> FLAIL_OF_OSIRIS = ITEMS.register("flail_of_osiris",
+            () -> new DivineWeaponItem(METEORIC_IRON.tier, new Item.Properties().rarity(Rarity.EPIC)
+                    .attributes(SwordItem.createAttributes(METEORIC_IRON.tier, 4, -2.8F)), (target, attacker) -> {
+                        if (target.getType().is(EntityTypeTags.UNDEAD)) {
+                            target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 100, 1), attacker);
+                            target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 1), attacker);
+                        }
+                    }));
+    /** The sceptre of Isis: right-click heals you, your friends, pets and family around. */
+    public static final DeferredItem<IsisSceptreItem> SCEPTRE_OF_ISIS = ITEMS.register("sceptre_of_isis",
+            () -> new IsisSceptreItem(new Item.Properties().durability(250).rarity(Rarity.EPIC)));
+    /** The bow of Horus: arrows strike harder and make their mark glow. */
+    public static final DeferredItem<HorusBowItem> BOW_OF_HORUS = ITEMS.register("bow_of_horus",
+            () -> new HorusBowItem(new Item.Properties().durability(640).rarity(Rarity.EPIC)));
+    /** The glaive of Anubis, a long blade on a staff: the bane of the creatures of the myths; its foe is slowed. */
+    public static final DeferredItem<DivineWeaponItem> GLAIVE_OF_ANUBIS = ITEMS.register("glaive_of_anubis",
+            () -> new DivineWeaponItem(METEORIC_IRON.tier, new Item.Properties().rarity(Rarity.EPIC)
+                    .attributes(SwordItem.createAttributes(METEORIC_IRON.tier, 5, -3.0F)),
+                    (target, attacker) -> target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 0), attacker)));
+    /** The staff of Thoth: right-click strikes the creature you look at with a word of power. */
+    public static final DeferredItem<ThothStaffItem> STAFF_OF_THOTH = ITEMS.register("staff_of_thoth",
+            () -> new ThothStaffItem(new Item.Properties().durability(400).rarity(Rarity.EPIC)));
+    /** The dagger of Bastet, quick as a cat: every blow makes its bearer swift. */
+    public static final DeferredItem<DivineWeaponItem> DAGGER_OF_BASTET = ITEMS.register("dagger_of_bastet",
+            () -> new DivineWeaponItem(METEORIC_IRON.tier, new Item.Properties().rarity(Rarity.EPIC)
+                    .attributes(SwordItem.createAttributes(METEORIC_IRON.tier, 2, -1.4F)),
+                    (target, attacker) -> attacker.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 60, 0), attacker)));
+    /** The khopesh of Sobek with crocodile teeth on its edge: its blow drags the foe down in the death roll. */
+    public static final DeferredItem<DivineWeaponItem> KHOPESH_OF_SOBEK = ITEMS.register("khopesh_of_sobek",
+            () -> new DivineWeaponItem(METEORIC_IRON.tier, new Item.Properties().rarity(Rarity.EPIC)
+                    .attributes(SwordItem.createAttributes(METEORIC_IRON.tier, 4, -2.4F)), (target, attacker) -> {
+                        target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1), attacker);
+                        if (target.isInWater()) {
+                            target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 100, 1), attacker);
+                        }
+                    }));
+    /** The sceptre of Hathor: right-click, and its song calms the monsters around. */
+    public static final DeferredItem<HathorSceptreItem> SCEPTRE_OF_HATHOR = ITEMS.register("sceptre_of_hathor",
+            () -> new HathorSceptreItem(new Item.Properties().durability(250).rarity(Rarity.EPIC)));
+    /** The battle-axe of Ptah: Haste II while it is in hand. */
+    public static final DeferredItem<PtahAxeItem> AXE_OF_PTAH = ITEMS.register("axe_of_ptah",
+            () -> new PtahAxeItem(METEORIC_IRON.tier, new Item.Properties().rarity(Rarity.EPIC)
+                    .attributes(DiggerItem.createAttributes(METEORIC_IRON.tier, 6.0F, -3.0F))));
+    /** The spear of Sekhmet: every blow sets the foe on fire. */
+    public static final DeferredItem<DivineWeaponItem> SPEAR_OF_SEKHMET = ITEMS.register("spear_of_sekhmet",
+            () -> new DivineWeaponItem(METEORIC_IRON.tier, new Item.Properties().rarity(Rarity.EPIC).fireResistant()
+                    .attributes(SwordItem.createAttributes(METEORIC_IRON.tier, 5, -2.9F)),
+                    (target, attacker) -> target.setRemainingFireTicks(100)));
 
     /** The striped nemes of the Sphinx: the eyes of the guardian of the desert see through the night. */
     public static final DeferredHolder<ArmorMaterial, ArmorMaterial> NEMES_MATERIAL = RelicArmorItem.material("nemes",

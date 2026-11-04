@@ -1,0 +1,13 @@
+{
+  "name": "Hall of Judgment",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_place",
+  "sortnum": 40,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The Hall of the Two Truths, where the hearts of the dead are weighed: columns under the stars, golden scales, Anubis and Thoth by them, Osiris on his throne."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_hall_of_judgment"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Птах",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 31,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:ptah",
+      "name": "Птах"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Мастер, создавший мир, 420 здоровья, в храме-кузнице. Тяжёл и в броне. Его слово оживляет ушебти, удар сковывает руки."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Роняет резец: с небесным железом и палками - секира Птаха, которая в руке даёт спешку."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_ptah"
+}

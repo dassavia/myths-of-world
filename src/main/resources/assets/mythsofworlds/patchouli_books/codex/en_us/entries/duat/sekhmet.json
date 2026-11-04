@@ -1,0 +1,22 @@
+{
+  "name": "Sekhmet",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 32,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:sekhmet",
+      "name": "Sekhmet"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The lioness of slaughter, 480 health, by the Lake of Fire. She attacks on sight, breathes fire and sends hunger and poison."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Fire cannot harm her, and below half health she grows stronger. Drops an ember: with meteoric iron and a stick it makes the spear of Sekhmet."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_sekhmet"
+}

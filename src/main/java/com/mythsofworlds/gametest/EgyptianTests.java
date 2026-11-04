@@ -11,6 +11,8 @@ import com.mythsofworlds.mythology.egyptian.entity.Apep;
 import com.mythsofworlds.mythology.egyptian.entity.BastetCat;
 import com.mythsofworlds.mythology.egyptian.entity.EgyptianMerchant;
 import com.mythsofworlds.mythology.egyptian.entity.Mummy;
+import com.mythsofworlds.mythology.egyptian.entity.OsirisGod;
+import com.mythsofworlds.mythology.egyptian.item.HapiGiftItem;
 import com.mythsofworlds.mythology.egyptian.entity.PharaohMummy;
 import com.mythsofworlds.mythology.egyptian.entity.Priestess;
 import com.mythsofworlds.mythology.egyptian.entity.SetGod;
@@ -49,6 +51,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.FeatureSorter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CropBlock;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
@@ -353,6 +356,48 @@ public class EgyptianTests {
                 helper.assertTrue(helper.getLevel().registryAccess().registryOrThrow(Registries.STRUCTURE).containsKey(entry.structure().get()),
                         "unknown structure " + entry.structure().get());
             }
+        }
+        helper.succeed();
+    }
+
+    /** Osiris rises once from a death blow with half his health; the second death blow is the last. */
+    @GameTest(template = "empty")
+    public static void osirisRisesOnce(GameTestHelper helper) {
+        OsirisGod osiris = helper.spawn(EgyptianEntities.OSIRIS.get(), new BlockPos(1, 2, 1));
+        osiris.hurt(helper.getLevel().damageSources().generic(), 10000.0F);
+        helper.assertTrue(osiris.isAlive() && osiris.reborn(), "Osiris should rise from the first death blow");
+        helper.assertTrue(Math.abs(osiris.getHealth() - osiris.getMaxHealth() / 2.0F) < 0.01F, "he rises with half his health");
+        osiris.invulnerableTime = 0;
+        osiris.hurt(helper.getLevel().damageSources().generic(), 10000.0F);
+        helper.assertTrue(!osiris.isAlive() || osiris.getHealth() <= 0.0F, "the second death blow is the last");
+        osiris.discard();
+        helper.succeed();
+    }
+
+    /** The gift of Hapi feeds the wheat around it three times over, nearly or fully ripening a fresh field. */
+    @GameTest(template = "empty")
+    public static void giftOfHapiRipensTheField(GameTestHelper helper) {
+        for (int x = 0; x < 3; x++) {
+            helper.setBlock(new BlockPos(x, 1, 1), Blocks.FARMLAND);
+            helper.setBlock(new BlockPos(x, 2, 1), Blocks.WHEAT);
+        }
+        int fed = HapiGiftItem.flood(helper.getLevel(), helper.absolutePos(new BlockPos(1, 2, 1)));
+        helper.assertTrue(fed == 3, "three wheat plants should be fed, fed " + fed);
+        for (int x = 0; x < 3; x++) {
+            int age = helper.getBlockState(new BlockPos(x, 2, 1)).getValue(CropBlock.AGE);
+            helper.assertTrue(age >= 6, "wheat at " + x + " only reached age " + age);
+        }
+        helper.succeed();
+    }
+
+    /** Every god of Egypt spawns with the weapon of its myth in hand and does not drop it. */
+    @GameTest(template = "empty")
+    public static void godsHoldTheirWeapons(GameTestHelper helper) {
+        for (var type : EgyptianEntities.gods()) {
+            Mob god = helper.spawn(type.get(), new BlockPos(1, 2, 1));
+            god.tick();
+            helper.assertTrue(!god.getMainHandItem().isEmpty(), type.getId() + " has nothing in hand");
+            god.discard();
         }
         helper.succeed();
     }

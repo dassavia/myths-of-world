@@ -1,0 +1,22 @@
+{
+  "name": "Thoth",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_boss",
+  "sortnum": 27,
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "mythsofworlds:thoth",
+      "name": "Thoth"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The ibis-headed scribe of the gods, 340 health, in the Hall of Judgment. A word of power lifts his foe into the air and wounds with magic."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Below half health he steps away through the moonlight. Drops the tablet: with amethyst and a stick it makes the staff of Thoth."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/entry/egyptian_thoth"
+}
