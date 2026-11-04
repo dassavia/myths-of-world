@@ -1,15 +1,21 @@
 package com.mythsofworlds.mythology.egyptian.entity;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
@@ -21,6 +27,8 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.PathType;
 
 /**
@@ -111,5 +119,51 @@ public class Crocodile extends Monster {
     @Override
     public float getVoicePitch() {
         return super.getVoicePitch() * 0.5F;
+    }
+
+    /** How far from water a crocodile may come ashore to spawn, in blocks. */
+    public static final int WATER_RANGE = 4;
+    /** The deepest water a crocodile spawns in: it lives in the shallows, not the open water. */
+    public static final int MAX_DEPTH = 2;
+
+    /**
+     * Natural spawning: never in peaceful, and only on the shore or in the shallows, on ground within
+     * {@value #WATER_RANGE} blocks of water or in water at most {@value #MAX_DEPTH} blocks deep. Spawners, eggs and
+     * commands are not limited.
+     */
+    public static boolean checkCrocodileSpawnRules(EntityType<Crocodile> type, ServerLevelAccessor level, MobSpawnType spawnType,
+                                                   BlockPos pos, RandomSource random) {
+        if (level.getDifficulty() == Difficulty.PEACEFUL) {
+            return false;
+        }
+        return !(spawnType == MobSpawnType.NATURAL || spawnType == MobSpawnType.CHUNK_GENERATION) || onShore(level, pos);
+    }
+
+    /** True for a spot in shallow water, or on firm ground with water within {@value #WATER_RANGE} blocks. */
+    public static boolean onShore(LevelReader level, BlockPos pos) {
+        if (level.getFluidState(pos).is(FluidTags.WATER)) {
+            BlockPos.MutableBlockPos cursor = pos.mutable();
+            while (level.getFluidState(cursor.above()).is(FluidTags.WATER)) {
+                cursor.move(0, 1, 0);
+            }
+            int depth = 0;
+            while (level.getFluidState(cursor).is(FluidTags.WATER)) {
+                if (++depth > MAX_DEPTH) {
+                    return false;
+                }
+                cursor.move(0, -1, 0);
+            }
+            return level.getBlockState(cursor).isFaceSturdy(level, cursor, Direction.UP);
+        }
+        BlockPos ground = pos.below();
+        if (!level.getBlockState(ground).isFaceSturdy(level, ground, Direction.UP) || !level.getFluidState(pos).isEmpty()) {
+            return false;
+        }
+        for (BlockPos near : BlockPos.betweenClosed(pos.offset(-WATER_RANGE, -2, -WATER_RANGE), pos.offset(WATER_RANGE, 1, WATER_RANGE))) {
+            if (level.getFluidState(near).is(FluidTags.WATER)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

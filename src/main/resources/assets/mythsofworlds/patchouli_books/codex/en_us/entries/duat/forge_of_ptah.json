@@ -2,7 +2,7 @@
   "name": "Forge of Ptah",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_place",
-  "sortnum": 46,
+  "sortnum": 47,
   "pages": [
     {
       "type": "patchouli:text",

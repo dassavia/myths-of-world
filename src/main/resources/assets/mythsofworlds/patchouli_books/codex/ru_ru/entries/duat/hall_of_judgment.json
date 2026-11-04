@@ -2,7 +2,7 @@
   "name": "Зал суда",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_place",
-  "sortnum": 40,
+  "sortnum": 41,
   "pages": [
     {
       "type": "patchouli:text",

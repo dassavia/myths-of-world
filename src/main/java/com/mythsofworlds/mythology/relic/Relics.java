@@ -29,16 +29,19 @@ public final class Relics {
 
     /** How far the helmet of Heimdall sees, in blocks. */
     public static final double HEIMDALL_RANGE = 100.0;
+    /** How long the glow of a creature lasts once the helmet stops seeing it, in ticks. */
+    public static final int HEIMDALL_GLOW_TICKS = 40;
 
     /** Helmet set with the eye of Heimdall, who sees a hundred leagues by night and day: night vision, and every
-     *  creature within {@value #HEIMDALL_RANGE} blocks glows through the walls. */
+     *  creature within {@value #HEIMDALL_RANGE} blocks glows through the walls. Does nothing while the player (or the
+     *  server) has switched the vision off ({@link HeimdallVision}). */
 
     public static void heimdall(Player player) {
-        if (player.tickCount % 20 == 0) {
+        if (player.tickCount % 20 == 0 && HeimdallVision.on(player)) {
             RelicArmorItem.keep(player, MobEffects.NIGHT_VISION, 0);
             for (Mob mob : player.level().getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(HEIMDALL_RANGE),
                     mob -> mob.isAlive() && mob.distanceToSqr(player) < HEIMDALL_RANGE * HEIMDALL_RANGE)) {
-                mob.addEffect(new MobEffectInstance(MobEffects.GLOWING, 40, 0, true, false));
+                mob.addEffect(new MobEffectInstance(MobEffects.GLOWING, HEIMDALL_GLOW_TICKS, 0, true, false));
             }
         }
     }

@@ -2,7 +2,7 @@
   "name": "Бастет",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_boss",
-  "sortnum": 28,
+  "sortnum": 29,
   "pages": [
     {
       "type": "patchouli:entity",

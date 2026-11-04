@@ -24,6 +24,7 @@ import com.mythsofworlds.mythology.egyptian.entity.SetGod;
 import com.mythsofworlds.mythology.egyptian.entity.SobekGod;
 import com.mythsofworlds.mythology.egyptian.entity.Sphinx;
 import com.mythsofworlds.mythology.egyptian.entity.ThothGod;
+import com.mythsofworlds.mythology.egyptian.entity.TravelersBoat;
 import com.mythsofworlds.mythology.egyptian.entity.Ushabti;
 import java.util.List;
 import net.minecraft.world.entity.Entity;
@@ -46,7 +47,8 @@ import static com.mythsofworlds.registry.ModRegistries.ENTITY_TYPES;
 import static com.mythsofworlds.registry.ModRegistries.ITEMS;
 
 /**
- * Creatures of the Duat. Which biomes they spawn in is set in data/mythsofworlds/worldgen/biome/*.json ("spawners");
+ * Creatures of the Duat. Which biomes they spawn in is set in data/mythsofworlds/worldgen/biome/*.json ("spawners"),
+ * for crocodiles and scorpions by biome modifiers (data/mythsofworlds/neoforge/biome_modifier);
  * bosses wait in their structures (data/mythsofworlds/structure/egyptian). Renderers are in the client package.
  */
 public final class EgyptianEntities {
@@ -74,6 +76,11 @@ public final class EgyptianEntities {
     /** Trader of the villages on the Nile: a trader of the market, a priest of Anubis or a smith. */
     public static final DeferredHolder<EntityType<?>, EntityType<EgyptianMerchant>> EGYPTIAN_MERCHANT = register("egyptian_merchant",
             EntityType.Builder.of(EgyptianMerchant::new, MobCategory.CREATURE).sized(0.6F, 1.95F).eyeHeight(1.62F)
+                    .clientTrackingRange(10));
+
+    /** The traveller's boat (EgyptianContent.TRAVELERS_BOAT): a vanilla boat with its own look. */
+    public static final DeferredHolder<EntityType<?>, EntityType<TravelersBoat>> TRAVELERS_BOAT = register("travelers_boat",
+            EntityType.Builder.<TravelersBoat>of(TravelersBoat::new, MobCategory.MISC).sized(1.375F, 0.5625F).eyeHeight(0.5625F)
                     .clientTrackingRange(10));
 
     // ---- Half-boss and bosses ----
@@ -202,8 +209,10 @@ public final class EgyptianEntities {
         event.register(SCARAB.get(), SpawnPlacementTypes.ON_GROUND, ground, Monster::checkMonsterSpawnRules, replace);
         event.register(USHABTI.get(), SpawnPlacementTypes.ON_GROUND, ground, Monster::checkMonsterSpawnRules, replace);
         event.register(JACKAL.get(), SpawnPlacementTypes.ON_GROUND, ground, Monster::checkAnyLightMonsterSpawnRules, replace);
-        event.register(SCORPION.get(), SpawnPlacementTypes.ON_GROUND, ground, Monster::checkAnyLightMonsterSpawnRules, replace);
-        event.register(CROCODILE.get(), SpawnPlacementTypes.ON_GROUND, ground, Monster::checkAnyLightMonsterSpawnRules, replace);
+        // Scorpions only in deserts on sand or terracotta, mostly in the dark; crocodiles only on the shore or in the
+        // shallows. Where they may spawn at all is set by the biome modifiers in data/mythsofworlds/neoforge/biome_modifier.
+        event.register(SCORPION.get(), SpawnPlacementTypes.ON_GROUND, ground, Scorpion::checkScorpionSpawnRules, replace);
+        event.register(CROCODILE.get(), SpawnPlacementTypes.NO_RESTRICTIONS, ground, Crocodile::checkCrocodileSpawnRules, replace);
         event.register(BASTET_CAT.get(), SpawnPlacementTypes.ON_GROUND, ground, Mob::checkMobSpawnRules, replace);
         // Camels roam the sands of the Duat; vanilla has no natural spawn rule for them, as they only come with villages.
         event.register(EntityType.CAMEL, SpawnPlacementTypes.ON_GROUND, ground, Mob::checkMobSpawnRules, replace);

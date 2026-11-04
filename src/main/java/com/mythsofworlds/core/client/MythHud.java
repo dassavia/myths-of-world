@@ -1,9 +1,12 @@
 package com.mythsofworlds.core.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.core.ClientConfig;
+import com.mythsofworlds.core.WorldBanner;
 import java.util.Set;
+import net.minecraft.Util;
 import net.minecraft.client.AttackIndicatorStatus;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -16,6 +19,7 @@ import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffects;
@@ -24,12 +28,15 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.food.FoodData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.client.event.CustomizeGuiOverlayEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
@@ -42,7 +49,7 @@ import org.lwjgl.glfw.GLFW;
 /**
  * The HUD of the myths: health, armour, hunger, air and experience as carved bars in gold frames, the numbers in the
  * old-style typeface of the myths, a lacquered hotbar in a gold rim, the survival inventory on parchment, and in the
- * worlds of the myths a scroll with the world's name. It replaces the vanilla hearts, armour, food, air, experience,
+ * worlds of the myths a short banner with the world's name on entering them. It replaces the vanilla hearts, armour, food, air, experience,
  * hotbar and inventory background while it is on (the spectator's hotbar stays vanilla); the H key or the button in the pause menu
  * switches it at any time ({@link ClientConfig}).
  */
@@ -77,6 +84,11 @@ public final class MythHud {
     private static float shownHealth = -1;
     private static float lastHealth = -1;
     private static int hurtFlash;
+    /** The world the banner was last shown for (null before joining), and when it started, or -1 when not showing. */
+    private static ResourceKey<Level> bannerWorld;
+    private static long bannerStart = -1;
+    /** How far down the boss bars reached in the last frame, so the banner can sit below them. */
+    private static int bossBottom;
 
     private MythHud() {
     }
@@ -139,6 +151,29 @@ public final class MythHud {
                     && Minecraft.getInstance().player != null && Minecraft.getInstance().player.isSpectator())) {
                 event.setCanceled(true);
             }
+        }
+
+        /** Once per entry into a world of the myths (joining, a portal, respawning in another world), the banner starts. */
+        @SubscribeEvent
+        public static void watchWorld(ClientTickEvent.Post event) {
+            Minecraft minecraft = Minecraft.getInstance();
+            ResourceKey<Level> world = minecraft.level == null ? null : minecraft.level.dimension();
+            if (world != null && !world.equals(bannerWorld)) {
+                bannerWorld = world;
+                bannerStart = world.location().getNamespace().equals(MythsOfWorlds.MODID) ? Util.getMillis() : -1;
+            }
+        }
+
+        @SubscribeEvent
+        public static void loggedOut(ClientPlayerNetworkEvent.LoggingOut event) {
+            bannerWorld = null;
+            bannerStart = -1;
+        }
+
+        /** Remembers where the boss bars (ours and other mods') end. */
+        @SubscribeEvent
+        public static void bossBar(CustomizeGuiOverlayEvent.BossEventProgress event) {
+            bossBottom = Math.max(bossBottom, event.getY() + event.getIncrement());
         }
 
         @SubscribeEvent
@@ -380,20 +415,40 @@ public final class MythHud {
         }
     }
 
+    /**
+     * The banner with the world's name ({@link WorldBanner}): once each time the player enters a world of the myths,
+     * small and see-through at the top centre, below any boss bars, for about two seconds.
+     */
     static void renderWorldScroll(GuiGraphics graphics) {
+        int bosses = bossBottom;
+        bossBottom = 0;
         Minecraft minecraft = Minecraft.getInstance();
-        if (!enabled() || !ClientConfig.SHOW_WORLD_NAME.get() || minecraft.level == null || minecraft.options.hideGui
+        if (bannerStart < 0 || !ClientConfig.SHOW_WORLD_NAME.get() || minecraft.level == null || minecraft.options.hideGui
                 || minecraft.getDebugOverlay().showDebugScreen()) {
             return;
         }
-        ResourceLocation dimension = minecraft.level.dimension().location();
-        if (!dimension.getNamespace().equals(MythsOfWorlds.MODID)) {
+        long age = Util.getMillis() - bannerStart;
+        float alpha = WorldBanner.alpha(age);
+        if (age >= WorldBanner.TOTAL_MS) {
+            bannerStart = -1;
+        }
+        if (alpha <= 0.02F) {
             return;
         }
-        sprite(graphics, 4, 4, 24, 22, 104, 18);
-        Component name = Component.translatable("hud.mythsofworlds.world." + dimension.getPath())
+        float scale = WorldBanner.scale(ClientConfig.WORLD_BANNER_SCALE.get(), minecraft.getWindow().getGuiScale());
+        Component name = Component.translatable("hud.mythsofworlds.world." + bannerWorld.location().getPath())
                 .withStyle(Style.EMPTY.withFont(MYTH_FONT));
-        int x = 4 + 52 - minecraft.font.width(name) / 2;
-        graphics.drawString(minecraft.font, name, x, 9, 0xFF4A2410, false);
+        var pose = graphics.pose();
+        pose.pushPose();
+        pose.translate(WorldBanner.left(graphics.guiWidth(), scale), WorldBanner.top(bosses), 0.0F);
+        pose.scale(scale, scale, 1.0F);
+        RenderSystem.enableBlend();
+        graphics.setColor(1.0F, 1.0F, 1.0F, alpha);
+        sprite(graphics, 0, 0, 24, 22, WorldBanner.WIDTH, WorldBanner.HEIGHT);
+        graphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+        int colour = (Math.max(4, (int) (alpha * 255.0F)) << 24) | 0x4A2410;
+        graphics.drawString(minecraft.font, name, WorldBanner.WIDTH / 2 - minecraft.font.width(name) / 2, 5, colour, false);
+        RenderSystem.disableBlend();
+        pose.popPose();
     }
 }

@@ -2,7 +2,7 @@
   "name": "Святилище Сехмет",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_place",
-  "sortnum": 47,
+  "sortnum": 48,
   "pages": [
     {
       "type": "patchouli:text",

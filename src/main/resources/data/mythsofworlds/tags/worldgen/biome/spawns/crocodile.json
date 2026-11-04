@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "mythsofworlds:nile_banks",
+    "mythsofworlds:celestial_nile",
+    "mythsofworlds:oasis",
+    "minecraft:river",
+    "minecraft:swamp",
+    "minecraft:mangrove_swamp"
+  ]
+}

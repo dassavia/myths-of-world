@@ -2,7 +2,7 @@
   "name": "Nile Boat",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_place",
-  "sortnum": 48,
+  "sortnum": 49,
   "pages": [
     {
       "type": "patchouli:text",

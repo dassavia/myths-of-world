@@ -7,7 +7,8 @@
     {
       "type": "patchouli:entity",
       "entity": "mythsofworlds:hydra",
-      "name": "Lernaean Hydra"
+      "name": "Lernaean Hydra",
+      "scale": 0.78
     },
     {
       "type": "patchouli:text",

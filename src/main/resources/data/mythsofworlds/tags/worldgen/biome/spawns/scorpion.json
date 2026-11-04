@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "mythsofworlds:duat_sands",
+    "mythsofworlds:valley_of_kings",
+    "minecraft:desert",
+    "#minecraft:is_badlands"
+  ]
+}

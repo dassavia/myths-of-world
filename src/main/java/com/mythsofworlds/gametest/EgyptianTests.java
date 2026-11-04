@@ -9,14 +9,18 @@ import com.mythsofworlds.mythology.egyptian.block.Pyramid;
 import com.mythsofworlds.mythology.egyptian.block.PyramidGateBlock;
 import com.mythsofworlds.mythology.egyptian.entity.Apep;
 import com.mythsofworlds.mythology.egyptian.entity.BastetCat;
+import com.mythsofworlds.mythology.egyptian.entity.Crocodile;
 import com.mythsofworlds.mythology.egyptian.entity.EgyptianMerchant;
+import com.mythsofworlds.mythology.egyptian.entity.IsisGod;
 import com.mythsofworlds.mythology.egyptian.entity.Mummy;
 import com.mythsofworlds.mythology.egyptian.entity.OsirisGod;
-import com.mythsofworlds.mythology.egyptian.item.HapiGiftItem;
 import com.mythsofworlds.mythology.egyptian.entity.PharaohMummy;
 import com.mythsofworlds.mythology.egyptian.entity.Priestess;
+import com.mythsofworlds.mythology.egyptian.entity.Scorpion;
 import com.mythsofworlds.mythology.egyptian.entity.SetGod;
 import com.mythsofworlds.mythology.egyptian.entity.Sphinx;
+import com.mythsofworlds.mythology.egyptian.entity.TravelersBoat;
+import com.mythsofworlds.mythology.egyptian.item.HapiGiftItem;
 import com.mythsofworlds.mythology.greek.GreekContent;
 import com.mythsofworlds.mythology.greek.entity.Amazon;
 import com.mythsofworlds.mythology.relic.ArmourSets;
@@ -38,6 +42,9 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.packs.resources.Resource;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
@@ -48,6 +55,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.biome.FeatureSorter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -399,6 +407,108 @@ public class EgyptianTests {
             helper.assertTrue(!god.getMainHandItem().isEmpty(), type.getId() + " has nothing in hand");
             god.discard();
         }
+        helper.succeed();
+    }
+
+    /** Isis speaks with her own voice: every sound she makes is one of ours, none a villager's or an illager's. */
+    @GameTest(template = "empty")
+    public static void isisHasHerOwnVoice(GameTestHelper helper) {
+        IsisGod isis = helper.spawn(EgyptianEntities.ISIS.get(), new BlockPos(1, 2, 1));
+        Player foe = helper.makeMockPlayer(GameType.SURVIVAL);
+        List<SoundEvent> voice = new ArrayList<>(List.of(isis.getAmbientSound(), isis.getHurtSound(helper.getLevel().damageSources().generic()),
+                isis.getDeathSound(), isis.answer()));
+        isis.setTarget(foe);
+        voice.add(isis.getAmbientSound());
+        voice.add(isis.answer());
+        List<SoundEvent> vanilla = List.of(SoundEvents.VILLAGER_AMBIENT, SoundEvents.VILLAGER_HURT, SoundEvents.VILLAGER_DEATH,
+                SoundEvents.VILLAGER_YES, SoundEvents.VILLAGER_NO, SoundEvents.VILLAGER_TRADE, SoundEvents.VILLAGER_CELEBRATE,
+                SoundEvents.EVOKER_AMBIENT, SoundEvents.EVOKER_HURT, SoundEvents.EVOKER_DEATH);
+        for (SoundEvent sound : voice) {
+            helper.assertTrue(sound != null && sound.getLocation().getNamespace().equals(MythsOfWorlds.MODID)
+                    && sound.getLocation().getPath().startsWith("entity.isis."), "Isis plays " + (sound == null ? null : sound.getLocation()));
+            helper.assertFalse(vanilla.contains(sound), "Isis plays a vanilla sound: " + sound.getLocation());
+        }
+        helper.assertTrue(voice.stream().map(SoundEvent::getLocation).distinct().count() == 6,
+                "Isis should have six sounds of her own (idle, ambient, hurt, death, yes, no): " + voice);
+        float low = Float.MAX_VALUE;
+        float high = -Float.MAX_VALUE;
+        for (int i = 0; i < 40; i++) {
+            float pitch = isis.getVoicePitch();
+            low = Math.min(low, pitch);
+            high = Math.max(high, pitch);
+        }
+        helper.assertTrue(low < high && low > 0.9F && high < 1.1F, "her pitch should vary a little: " + low + ".." + high);
+        isis.discard();
+        helper.succeed();
+    }
+
+    /** A crocodile spawns only on the shore or in the shallows: within four blocks of water, never in deep water. */
+    @GameTest(template = "empty")
+    public static void crocodileSpawnsOnlyNearWater(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        for (int x = 0; x <= 4; x++) {
+            helper.setBlock(new BlockPos(x, 1, 1), Blocks.STONE);
+            for (int y = 2; y <= 5; y++) {
+                helper.setBlock(new BlockPos(x, y, 1), Blocks.AIR);
+            }
+        }
+        BlockPos spot = helper.absolutePos(new BlockPos(0, 2, 1));
+        helper.assertFalse(Crocodile.onShore(level, spot), "a crocodile spawned far from water");
+        helper.setBlock(new BlockPos(4, 2, 1), Blocks.WATER);
+        helper.assertTrue(Crocodile.onShore(level, spot), "no crocodile on the shore, four blocks from water");
+        helper.setBlock(new BlockPos(4, 2, 1), Blocks.AIR);
+        helper.setBlock(new BlockPos(2, 2, 1), Blocks.WATER);
+        helper.assertTrue(Crocodile.onShore(level, helper.absolutePos(new BlockPos(2, 2, 1))), "no crocodile in shallow water");
+        helper.setBlock(new BlockPos(2, 3, 1), Blocks.WATER);
+        helper.setBlock(new BlockPos(2, 4, 1), Blocks.WATER);
+        helper.assertFalse(Crocodile.onShore(level, helper.absolutePos(new BlockPos(2, 2, 1))), "a crocodile spawned in deep water");
+        var biomes = level.registryAccess().registryOrThrow(Registries.BIOME);
+        TagKey<Biome> crocodileBiomes = TagKey.create(Registries.BIOME, MythsOfWorlds.id("spawns/crocodile"));
+        helper.assertTrue(biomes.getHolderOrThrow(Biomes.RIVER).is(crocodileBiomes), "no crocodiles by rivers");
+        helper.assertTrue(biomes.getHolderOrThrow(ResourceKey.create(Registries.BIOME, MythsOfWorlds.id("nile_banks"))).is(crocodileBiomes),
+                "no crocodiles on the banks of the Nile");
+        for (ResourceKey<Biome> dry : List.of(Biomes.DEEP_OCEAN, Biomes.OCEAN, Biomes.DESERT, Biomes.PLAINS)) {
+            helper.assertFalse(biomes.getHolderOrThrow(dry).is(crocodileBiomes), "crocodiles in " + dry.location());
+        }
+        helper.succeed();
+    }
+
+    /** A scorpion spawns only in a desert-type biome, on sand or terracotta. */
+    @GameTest(template = "empty")
+    public static void scorpionSpawnsOnlyInDeserts(GameTestHelper helper) {
+        var biomes = helper.getLevel().registryAccess().registryOrThrow(Registries.BIOME);
+        var desert = biomes.getHolderOrThrow(Biomes.DESERT);
+        var badlands = biomes.getHolderOrThrow(Biomes.BADLANDS);
+        var duat = biomes.getHolderOrThrow(ResourceKey.create(Registries.BIOME, MythsOfWorlds.id("duat_sands")));
+        helper.assertTrue(Scorpion.canSpawnAt(desert, Blocks.SAND.defaultBlockState()), "no scorpion on desert sand");
+        helper.assertTrue(Scorpion.canSpawnAt(badlands, Blocks.ORANGE_TERRACOTTA.defaultBlockState()), "no scorpion on badlands terracotta");
+        helper.assertTrue(Scorpion.canSpawnAt(duat, Blocks.RED_SAND.defaultBlockState()), "no scorpion in the sands of the Duat");
+        helper.assertFalse(Scorpion.canSpawnAt(desert, Blocks.STONE.defaultBlockState()), "a scorpion on stone");
+        for (ResourceKey<Biome> other : List.of(Biomes.PLAINS, Biomes.BEACH, Biomes.RIVER, Biomes.SWAMP, Biomes.JUNGLE)) {
+            helper.assertFalse(Scorpion.canSpawnAt(biomes.getHolderOrThrow(other), Blocks.SAND.defaultBlockState()),
+                    "a scorpion in " + other.location());
+        }
+        helper.assertFalse(Scorpion.canSpawnAt(biomes.getHolderOrThrow(ResourceKey.create(Registries.BIOME, MythsOfWorlds.id("nile_banks"))),
+                Blocks.SAND.defaultBlockState()), "a scorpion on the green banks of the Nile");
+        helper.succeed();
+    }
+
+    /** The traveler's boat is crafted from papyrus, linen and crocodile hide, carries two and breaks into itself. */
+    @GameTest(template = "empty")
+    public static void travelersBoatCraftsAndSeatsTwo(GameTestHelper helper) {
+        var recipe = helper.getLevel().getRecipeManager().byKey(MythsOfWorlds.id("travelers_boat"));
+        helper.assertTrue(recipe.isPresent() && recipe.get().value().getResultItem(helper.getLevel().registryAccess())
+                .is(EgyptianContent.TRAVELERS_BOAT.get()), "no recipe for the traveler's boat");
+        TravelersBoat boat = helper.spawn(EgyptianEntities.TRAVELERS_BOAT.get(), new BlockPos(1, 2, 1));
+        helper.assertTrue(boat.getDropItem() == EgyptianContent.TRAVELERS_BOAT.get(), "the boat does not break into itself");
+        Player first = helper.makeMockPlayer(GameType.SURVIVAL);
+        Player second = helper.makeMockPlayer(GameType.SURVIVAL);
+        Player third = helper.makeMockPlayer(GameType.SURVIVAL);
+        helper.assertTrue(first.startRiding(boat) && second.startRiding(boat), "two cannot ride the boat");
+        helper.assertFalse(third.startRiding(boat), "a third rides the boat");
+        helper.assertTrue(boat.getControllingPassenger() == first, "the first aboard does not steer");
+        boat.ejectPassengers();
+        boat.discard();
         helper.succeed();
     }
 }

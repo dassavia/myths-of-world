@@ -109,7 +109,7 @@ BIOMES = {
                               f"{NS}:duat_ruin_column", f"{NS}:date_palm", "minecraft:patch_dead_bush_2",
                               "minecraft:patch_cactus_desert"],
         "spawners": {
-            "monster": [spawn(f"{NS}:scarab", 50, 2, 4), spawn(f"{NS}:mummy", 40, 1, 3), spawn(f"{NS}:scorpion", 25, 1, 2),
+            "monster": [spawn(f"{NS}:scarab", 50, 2, 4), spawn(f"{NS}:mummy", 40, 1, 3),
                         spawn(f"{NS}:jackal", 20, 2, 3), spawn("minecraft:husk", 20, 1, 3), spawn("minecraft:skeleton", 10, 1, 2)],
             "creature": [spawn("minecraft:camel", 4, 1, 2), spawn("minecraft:rabbit", 4, 2, 3)],
         },
@@ -125,7 +125,7 @@ BIOMES = {
                                         "minecraft:patch_melon", "minecraft:patch_sugar_cane", "minecraft:patch_waterlily",
                                         "minecraft:seagrass_river"],
         "spawners": {
-            "monster": [spawn(f"{NS}:scarab", 20, 2, 3), spawn(f"{NS}:mummy", 20, 1, 2), spawn(f"{NS}:crocodile", 25, 1, 2),
+            "monster": [spawn(f"{NS}:scarab", 20, 2, 3), spawn(f"{NS}:mummy", 20, 1, 2),
                         spawn(f"{NS}:jackal", 10, 2, 3), spawn("minecraft:zombie", 10, 1, 2)],
             "creature": [spawn(f"{NS}:bastet_cat", 4, 1, 1), spawn("minecraft:cow", 6, 2, 4), spawn("minecraft:sheep", 6, 2, 4),
                          spawn("minecraft:frog", 4, 2, 4)],
@@ -157,7 +157,7 @@ BIOMES = {
         "features": COMMON + ["minecraft:fossil_upper", "minecraft:fossil_lower", f"{NS}:duat_ruin_column",
                               f"{NS}:nav_bone_pile", "minecraft:patch_dead_bush_badlands", "minecraft:patch_cactus_decorated"],
         "spawners": {
-            "monster": [spawn(f"{NS}:mummy", 60, 1, 3), spawn(f"{NS}:ushabti", 30, 1, 2), spawn(f"{NS}:scorpion", 30, 1, 2),
+            "monster": [spawn(f"{NS}:mummy", 60, 1, 3), spawn(f"{NS}:ushabti", 30, 1, 2),
                         spawn(f"{NS}:jackal", 20, 2, 3), spawn("minecraft:skeleton", 20, 1, 2)],
         },
     },
@@ -184,8 +184,7 @@ BIOMES = {
                               "minecraft:flower_default", "minecraft:patch_melon", "minecraft:patch_sugar_cane_desert",
                               "minecraft:patch_waterlily"],
         "spawners": {
-            "monster": [spawn(f"{NS}:scarab", 15, 1, 3), spawn(f"{NS}:jackal", 15, 2, 3), spawn(f"{NS}:mummy", 10, 1, 2),
-                        spawn(f"{NS}:crocodile", 10, 1, 1)],
+            "monster": [spawn(f"{NS}:scarab", 15, 1, 3), spawn(f"{NS}:jackal", 15, 2, 3), spawn(f"{NS}:mummy", 10, 1, 2)],
             "creature": [spawn(f"{NS}:bastet_cat", 4, 1, 1), spawn("minecraft:camel", 4, 1, 2), spawn("minecraft:rabbit", 4, 2, 3)],
         },
     },
@@ -196,7 +195,7 @@ BIOMES = {
         "sky": 0x22285A, "fog": 0x4A5A8A, "water": 0x2A5AB0, "water_fog": 0x051E3E, "grass": 0x7AB84A, "foliage": 0x5EA83A,
         "features": COMMON + g.DISKS + [f"{NS}:disk_nile_silt", "minecraft:seagrass_warm", "minecraft:warm_ocean_vegetation"],
         "spawners": {
-            "monster": [spawn("minecraft:drowned", 30, 1, 2), spawn(f"{NS}:crocodile", 20, 1, 3)],
+            "monster": [spawn("minecraft:drowned", 30, 1, 2)],
             "water_creature": [spawn("minecraft:squid", 4, 1, 3)],
             "water_ambient": [spawn("minecraft:cod", 15, 3, 6), spawn("minecraft:tropical_fish", 15, 3, 6)],
         },
@@ -780,6 +779,30 @@ def textures():
         tx.save(fn(random.Random(name + "_layer")), assets("textures", "models", "armor", f"{name}_layer_1.png"))
 
 
+# Crocodiles and scorpions are not in the biomes' own "spawners": NeoForge biome modifiers add them to every biome of
+# a tag, in the Duat and in the overworld alike, and their spawn rules (EgyptianEntities.registerSpawnPlacements)
+# decide the spot: a crocodile only within a few blocks of shallow water, a scorpion only on sand or terracotta of a
+# desert, mostly in the dark.
+SPAWN_TAGS = {
+    "crocodile": [f"{NS}:nile_banks", f"{NS}:celestial_nile", f"{NS}:oasis", "minecraft:river", "minecraft:swamp",
+                  "minecraft:mangrove_swamp"],
+    "scorpion": [f"{NS}:duat_sands", f"{NS}:valley_of_kings", "minecraft:desert", "#minecraft:is_badlands"],
+}
+# entity: (weight, min group, max group). Low weights: they are a rare sight next to the usual monsters.
+SPAWN_WEIGHTS = {"crocodile": (10, 1, 2), "scorpion": (20, 1, 2)}
+
+
+def spawn_modifiers():
+    write_json(data("tags", "block", "scorpion_spawnable_on.json"),
+               {"replace": False, "values": ["#minecraft:sand", "#minecraft:terracotta"]})
+    for mob, biomes in SPAWN_TAGS.items():
+        write_json(data("tags", "worldgen", "biome", "spawns", f"{mob}.json"), {"replace": False, "values": biomes})
+        weight, low, high = SPAWN_WEIGHTS[mob]
+        write_json(data("neoforge", "biome_modifier", f"{mob}_spawns.json"), {
+            "type": "neoforge:add_spawns", "biomes": f"#{NS}:spawns/{mob}",
+            "spawners": {"type": f"{NS}:{mob}", "weight": weight, "minCount": low, "maxCount": high}})
+
+
 def main():
     write_json(data("dimension_type", "duat.json"), duat_dimension_type())
     duat_noise_settings()
@@ -788,6 +811,7 @@ def main():
                            settings=f"{NS}:duat"))
     for name, spec in BIOMES.items():
         write_json(data("worldgen", "biome", f"{name}.json"), g.biome_json(spec, FEATURE_ORDER))
+    spawn_modifiers()
     features()
     worldgen_structures()
     loot()

@@ -2,7 +2,7 @@
   "name": "Temple of Isis",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_place",
-  "sortnum": 34,
+  "sortnum": 35,
   "pages": [
     {
       "type": "patchouli:text",

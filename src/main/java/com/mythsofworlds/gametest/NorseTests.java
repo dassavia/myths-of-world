@@ -21,7 +21,9 @@ import com.mythsofworlds.mythology.norse.entity.Troll;
 import com.mythsofworlds.mythology.norse.entity.Valkyrie;
 import com.mythsofworlds.mythology.norse.item.MjolnirItem;
 import com.mythsofworlds.mythology.relic.ArmourSets;
+import com.mythsofworlds.mythology.relic.HeimdallVision;
 import com.mythsofworlds.mythology.relic.RelicArmorItem;
+import com.mythsofworlds.mythology.relic.Relics;
 import com.mythsofworlds.registry.MetalSet;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -457,6 +459,31 @@ public class NorseTests {
         helper.assertTrue(came == 1 && valkyrie.distanceToSqr(player) < 4.0, "the wife should come at once, came " + came);
         com.mythsofworlds.core.family.FamilyRegistry.get(helper.getLevel().getServer()).remove(valkyrie.getUUID());
         valkyrie.discard();
+        helper.succeed();
+    }
+
+    /** Heimdall's vision can be switched off (no night vision, nothing glows) and on again, and starts on. */
+    @GameTest(template = "empty")
+    public static void heimdallVisionSwitchesOffAndOn(GameTestHelper helper) {
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        player.setItemSlot(EquipmentSlot.HEAD, new ItemStack(NorseContent.HEIMDALL_HELMET.get()));
+        Mob mob = helper.spawn(EntityType.ZOMBIE, new BlockPos(2, 2, 2));
+        mob.setNoAi(true);
+        player.moveTo(helper.absoluteVec(new net.minecraft.world.phys.Vec3(1.5, 2.0, 1.5)));
+        helper.assertTrue(HeimdallVision.on(player), "the vision should be on by default");
+        player.tickCount = 0;
+        Relics.heimdall(player);
+        helper.assertTrue(player.hasEffect(MobEffects.NIGHT_VISION) && mob.hasEffect(MobEffects.GLOWING), "the vision is on");
+        HeimdallVision.set(player, false, false);
+        helper.assertFalse(player.getData(PlayerData.HEIMDALL_VISION), "the choice is not kept");
+        helper.assertFalse(player.hasEffect(MobEffects.NIGHT_VISION) || mob.hasEffect(MobEffects.GLOWING),
+                "switching off leaves night vision or a glow");
+        Relics.heimdall(player);
+        helper.assertFalse(player.hasEffect(MobEffects.NIGHT_VISION) || mob.hasEffect(MobEffects.GLOWING), "the vision works while off");
+        HeimdallVision.set(player, true, false);
+        Relics.heimdall(player);
+        helper.assertTrue(player.hasEffect(MobEffects.NIGHT_VISION) && mob.hasEffect(MobEffects.GLOWING), "the vision does not come back");
+        mob.discard();
         helper.succeed();
     }
 }

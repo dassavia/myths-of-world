@@ -1,10 +1,15 @@
 package com.mythsofworlds.mythology.egyptian.entity;
 
 import com.mythsofworlds.mythology.egyptian.EgyptianContent;
+import com.mythsofworlds.mythology.egyptian.EgyptianSounds;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.BossEvent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
@@ -21,6 +26,8 @@ import net.minecraft.world.level.Level;
  */
 public class IsisGod extends EgyptianGod {
     public static final double WING_RADIUS = 9.0;
+    private static final int ANSWER_COOLDOWN = 30;
+    private int lastAnswer = -ANSWER_COOLDOWN;
 
     public IsisGod(EntityType<? extends Monster> type, Level level) {
         super(type, level, BossEvent.BossBarColor.BLUE, EgyptianContent.SCEPTRE_OF_ISIS);
@@ -62,8 +69,39 @@ public class IsisGod extends EgyptianGod {
         return struck;
     }
 
+    /** Her voice is her own (EgyptianSounds.ISIS_*): the sistrum and the choir while she rests, a hum in a fight. */
+    @Override
+    public SoundEvent getAmbientSound() {
+        return getTarget() == null ? EgyptianSounds.ISIS_IDLE.get() : EgyptianSounds.ISIS_AMBIENT.get();
+    }
+
+    @Override
+    public SoundEvent getHurtSound(DamageSource source) {
+        return EgyptianSounds.ISIS_HURT.get();
+    }
+
+    @Override
+    public SoundEvent getDeathSound() {
+        return EgyptianSounds.ISIS_DEATH.get();
+    }
+
+    /** Spoken to, she answers: a warm "yes" while at peace, a soft "no" to one she is fighting. */
+    public SoundEvent answer() {
+        return getTarget() == null ? EgyptianSounds.ISIS_YES.get() : EgyptianSounds.ISIS_NO.get();
+    }
+
+    @Override
+    protected InteractionResult mobInteract(Player player, InteractionHand hand) {
+        if (hand == InteractionHand.MAIN_HAND && !level().isClientSide && tickCount - lastAnswer > ANSWER_COOLDOWN) {
+            lastAnswer = tickCount;
+            playSound(answer(), getSoundVolume(), getVoicePitch());
+        }
+        return super.mobInteract(player, hand);
+    }
+
+    /** A little different every time she speaks. */
     @Override
     public float getVoicePitch() {
-        return 1.3F;
+        return 1.0F + (random.nextFloat() - random.nextFloat()) * 0.08F;
     }
 }

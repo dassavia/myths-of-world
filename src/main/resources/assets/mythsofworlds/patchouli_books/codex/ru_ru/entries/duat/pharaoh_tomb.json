@@ -2,7 +2,7 @@
   "name": "Гробница фараона",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_place",
-  "sortnum": 36,
+  "sortnum": 37,
   "pages": [
     {
       "type": "patchouli:text",

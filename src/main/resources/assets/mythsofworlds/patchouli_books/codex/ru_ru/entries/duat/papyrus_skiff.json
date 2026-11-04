@@ -2,7 +2,7 @@
   "name": "Папирусная лодка",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_place",
-  "sortnum": 49,
+  "sortnum": 50,
   "pages": [
     {
       "type": "patchouli:text",

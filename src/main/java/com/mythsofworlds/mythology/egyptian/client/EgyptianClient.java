@@ -11,7 +11,6 @@ import com.mythsofworlds.mythology.egyptian.entity.Scorpion;
 import com.mythsofworlds.mythology.egyptian.entity.Sphinx;
 import com.mythsofworlds.mythology.greek.client.AmazonRenderer;
 import com.mythsofworlds.mythology.greek.client.BeastModel;
-import com.mythsofworlds.mythology.greek.client.CrayfishModel;
 import com.mythsofworlds.mythology.greek.client.GreekClient;
 import com.mythsofworlds.mythology.greek.client.GreekHumanoidRenderer;
 import com.mythsofworlds.mythology.greek.client.GreekMobRenderer;
@@ -36,14 +35,15 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 /**
  * Client side of the mobs of the Duat: which model and texture each one is drawn with. Reuses the models of Hellas
  * and Jotunheim and some vanilla ones: the Sphinx is the Nemean lion's body with a king's head and nemes, Apep the
- * Hydra's body with a single long neck, the scorpion the body of Karkinos, the scarab a small spider's. The gods are
- * tall humanoids with the heads of their sacred animals drawn on; the crocodile has a model of its own.
+ * Hydra's body with a single long neck, the scarab a small spider's. The gods are
+ * tall humanoids with the heads of their sacred animals drawn on; the crocodile and the scorpion have models of their own.
  */
 @EventBusSubscriber(modid = MythsOfWorlds.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class EgyptianClient {
     /** The Hydra's body with one neck. */
     public static final ModelLayerLocation APEP = new ModelLayerLocation(MythsOfWorlds.id("apep"), "main");
     public static final ModelLayerLocation CROCODILE = new ModelLayerLocation(MythsOfWorlds.id("crocodile"), "main");
+    public static final ModelLayerLocation SCORPION = new ModelLayerLocation(MythsOfWorlds.id("scorpion"), "main");
 
     private EgyptianClient() {
     }
@@ -52,6 +52,7 @@ public final class EgyptianClient {
     public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(APEP, () -> HydraModel.createBodyLayer(1));
         event.registerLayerDefinition(CROCODILE, CrocodileModel::createBodyLayer);
+        event.registerLayerDefinition(SCORPION, ScorpionModel::createBodyLayer);
     }
 
     /** The bow of Horus draws like a vanilla bow: the "pull" and "pulling" properties pick its model. */
@@ -84,7 +85,7 @@ public final class EgyptianClient {
                 ctx -> new GreekMobRenderer<Jackal, BeastModel<Jackal>>(ctx, new BeastModel<>(ctx.bakeLayer(NorseClient.WOLF), 1),
                         "jackal", 0.8F));
         event.registerEntityRenderer(EgyptianEntities.SCORPION.get(),
-                ctx -> new GreekMobRenderer<Scorpion, CrayfishModel<Scorpion>>(ctx, new CrayfishModel<>(ctx.bakeLayer(GreekClient.KARKINOS)),
+                ctx -> new GreekMobRenderer<Scorpion, ScorpionModel<Scorpion>>(ctx, new ScorpionModel<>(ctx.bakeLayer(SCORPION)),
                         "scorpion", 0.85F));
         event.registerEntityRenderer(EgyptianEntities.SPHINX.get(),
                 ctx -> new GreekMobRenderer<Sphinx, BeastModel<Sphinx>>(ctx, new BeastModel<>(ctx.bakeLayer(GreekClient.NEMEAN_LION), 1),
@@ -117,6 +118,7 @@ public final class EgyptianClient {
                 ctx -> new GreekMobRenderer<Crocodile, CrocodileModel<Crocodile>>(ctx, new CrocodileModel<>(ctx.bakeLayer(CROCODILE)),
                         "crocodile", 1.0F));
         event.<Cat>registerEntityRenderer(EgyptianEntities.BASTET_CAT.get(), BastetCatRenderer::new);
+        event.registerEntityRenderer(EgyptianEntities.TRAVELERS_BOAT.get(), TravelersBoatRenderer::new);
         event.registerEntityRenderer(EgyptianEntities.PRIESTESS.get(), AmazonRenderer::new);
         event.<NorseMerchant>registerEntityRenderer(EgyptianEntities.EGYPTIAN_MERCHANT.get(),
                 ctx -> new NorseMerchantRenderer(ctx, "egyptian_merchant"));

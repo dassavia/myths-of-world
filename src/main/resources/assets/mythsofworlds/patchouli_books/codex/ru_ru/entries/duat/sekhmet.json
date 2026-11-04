@@ -2,7 +2,7 @@
   "name": "Сехмет",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_boss",
-  "sortnum": 32,
+  "sortnum": 33,
   "pages": [
     {
       "type": "patchouli:entity",

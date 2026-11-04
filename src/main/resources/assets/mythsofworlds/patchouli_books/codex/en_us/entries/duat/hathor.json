@@ -2,7 +2,7 @@
   "name": "Hathor",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_boss",
-  "sortnum": 30,
+  "sortnum": 31,
   "pages": [
     {
       "type": "patchouli:entity",

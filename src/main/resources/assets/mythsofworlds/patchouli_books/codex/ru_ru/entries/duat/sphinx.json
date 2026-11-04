@@ -2,12 +2,13 @@
   "name": "Сфинкс",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_boss",
-  "sortnum": 19,
+  "sortnum": 20,
   "pages": [
     {
       "type": "patchouli:entity",
       "entity": "mythsofworlds:sphinx",
-      "name": "Сфинкс"
+      "name": "Сфинкс",
+      "scale": 0.64
     },
     {
       "type": "patchouli:text",

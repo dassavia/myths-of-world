@@ -2,12 +2,13 @@
   "name": "Апоп",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_boss",
-  "sortnum": 21,
+  "sortnum": 22,
   "pages": [
     {
       "type": "patchouli:entity",
       "entity": "mythsofworlds:apep",
-      "name": "Апоп"
+      "name": "Апоп",
+      "scale": 0.45
     },
     {
       "type": "patchouli:text",

@@ -2,7 +2,7 @@
   "name": "The Great Sphinx",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_place",
-  "sortnum": 37,
+  "sortnum": 38,
   "pages": [
     {
       "type": "patchouli:text",

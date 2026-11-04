@@ -2,7 +2,7 @@
   "name": "Meteoric Iron Armour",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_intro",
-  "sortnum": 7,
+  "sortnum": 8,
   "pages": [
     {
       "type": "patchouli:text",

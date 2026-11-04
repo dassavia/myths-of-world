@@ -2,7 +2,7 @@
   "name": "Shrine of Hathor",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_place",
-  "sortnum": 45,
+  "sortnum": 46,
   "pages": [
     {
       "type": "patchouli:text",

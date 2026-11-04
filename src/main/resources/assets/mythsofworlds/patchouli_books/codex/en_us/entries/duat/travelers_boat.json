@@ -1,0 +1,17 @@
+{
+  "name": "The Traveler's Boat",
+  "icon": "mythsofworlds:ankh",
+  "category": "mythsofworlds:duat_intro",
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A boat of bound papyrus with a linen sail, like those that ply the Nile. At a crafting table: three sugar cane, mummy wrappings for the sail and two crocodile hides to keep the hull watertight."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Set it on the water with the right button. It seats two: take a companion. Break it and it comes back to you whole."
+    }
+  ],
+  "advancement": "mythsofworlds:codex/chapter/duat"
+}

@@ -66,6 +66,17 @@ ENTRIES = [
       "around the silt grow faster: sow your fields beside it.",
       "Dig the silt with a shovel, or make it of two mud and bone meal. The gift of Hapi (silt, two bone meal and "
       "sugar cane) is the strongest fertiliser: it feeds every plant in a 5x5 square three times."]),
+    ("travelers_boat", "intro", None,
+     ["Лодка странника",
+      "Лодка из связок папируса с льняным парусом, как те, что ходят по Нилу. Верстак: три тростника, повязки мумии "
+      "для паруса и две кожи крокодила, чтобы днище не пропускало воду.",
+      "Спустите её на воду правой кнопкой. В ней два места: возьмите спутника. Сломайте её, и она вернётся к вам "
+      "целой."],
+     ["The Traveler's Boat",
+      "A boat of bound papyrus with a linen sail, like those that ply the Nile. At a crafting table: three sugar cane, "
+      "mummy wrappings for the sail and two crocodile hides to keep the hull watertight.",
+      "Set it on the water with the right button. It seats two: take a companion. Break it and it comes back to you "
+      "whole."]),
     ("gods", "intro", None,
      ["Боги Египта",
       "В Дуате живут боги. Почти все не нападают первыми, но примут вызов героя. Себек и Сехмет бросаются на чужаков.",

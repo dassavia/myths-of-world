@@ -11,9 +11,11 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 /** Client side of the back slot (drawing what is worn there) and of the talaria's double jump. */
@@ -24,6 +26,14 @@ public final class ModClient {
     @EventBusSubscriber(modid = MythsOfWorlds.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static final class ModBus {
         private ModBus() {
+        }
+
+        /** With MCA Reborn installed, its women's looks are found again whenever the resources reload. */
+        @SubscribeEvent
+        public static void reloadListeners(RegisterClientReloadListenersEvent event) {
+            if (ModList.get().isLoaded("mca")) {
+                event.registerReloadListener(com.mythsofworlds.compat.mca.McaSkins.INSTANCE);
+            }
         }
 
         @SubscribeEvent

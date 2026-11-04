@@ -2,7 +2,7 @@
   "name": "Тот",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_boss",
-  "sortnum": 27,
+  "sortnum": 28,
   "pages": [
     {
       "type": "patchouli:entity",

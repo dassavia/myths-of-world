@@ -5,6 +5,7 @@ from PIL import Image
 
 from textures import (amazon, band, beast, box_faces, crayfish, face, fill_rect, humanoid, hydra, item, jitter, mix,
                       paint_box, rgb, save, scale, shade_parts, side_faces, speckle)
+from heroines import isis as heroine_isis
 from textures_norse import giant, norse_merchant
 
 __all__ = ["BLOCKS", "ITEMS", "ENTITIES", "LAYERS", "item", "save"]
@@ -423,7 +424,7 @@ def bastet_cat(rng):
 
 
 def priestess(spec):
-    return lambda rng: amazon(rng, **spec)
+    return lambda rng: amazon(rng, culture="egypt", **spec)
 
 
 PRIESTESSES = [
@@ -554,6 +555,104 @@ def crocodile(rng):
         fill_rect(img, rx, ry + rh - 1, rw, 1, dark, rng, 4)
         img.putpixel((rx, ry + rh - 1), rgb(0xD8D0B8))
         img.putpixel((rx + rw - 1, ry + rh - 1), rgb(0xD8D0B8))
+    shade_parts(img, parts)
+    return img
+
+
+# ---------------------------------------------------------------- the scorpion
+
+def scorpion(rng):
+    """Layout of client/ScorpionModel (64x64): a desert scorpion with a sand-coloured shell, every plate rimmed in dark
+    brown, the seams between the body segments and the joints of the legs and tail dark, a paler belly, two black
+    median eyes with a glint on the carapace and a row of small eyes at its front edge, heavy pincers darker at the
+    tips, the bulb of venom amber and the stinger black."""
+    img = Image.new("RGBA", (64, 64), (0, 0, 0, 0))
+    sand, light, under = rgb(0xD2A866), rgb(0xE8C890), rgb(0xE6D2A2)
+    brown, dark = rgb(0x6A4424), rgb(0x2E1C10)
+    parts = {}
+
+    def rim(rect, colour=brown):
+        x, y, w, h = rect
+        for i in range(w):
+            img.putpixel((x + i, y), colour)
+            img.putpixel((x + i, y + h - 1), colour)
+        for j in range(h):
+            img.putpixel((x, y + j), colour)
+            img.putpixel((x + w - 1, y + j), colour)
+
+    def plate(name, u, v, w, h, d, base=sand):
+        parts[name] = paint_box(img, u, v, w, h, d, base, rng, 7, faces={"bottom": under}, shaded=False)
+        x, y, fw, fh = parts[name]["top"]
+        for j in range(fh):                                           # a lighter ridge down the middle of each plate
+            img.putpixel((x + fw // 2, y + j), jitter(light, rng, 5))
+            if fw % 2 == 0:
+                img.putpixel((x + fw // 2 - 1, y + j), jitter(light, rng, 5))
+        for _ in range(fw * fh // 6):                                 # fine pits in the chitin
+            img.putpixel((x + rng.randrange(fw), y + rng.randrange(fh)), jitter(scale(sand, 0.86), rng, 5))
+        rx, ry, rw, rh = parts[name]["top"]
+        if rw >= 3 and rh >= 3:                                       # the rim of the plate, seen from above
+            rim(parts[name]["top"], scale(brown, 1.15))
+        for side in side_faces(parts[name]):                          # the sides darken to their lower edge
+            sx, sy, sw, sh = side
+            fill_rect(img, sx, sy + sh - 1, sw, 1, scale(sand, 0.72), rng, 4)
+
+    plate("carapace", 0, 0, 7, 2, 6)
+    x, y, w, h = parts["carapace"]["top"]
+    fill_rect(img, x, y, w, 1, brown, rng, 4)                         # the dark front edge with its small eyes
+    for ex in (1, w - 2):
+        img.putpixel((x + ex, y), dark)
+    img.putpixel((x + 2, y + 2), dark)                                # the two median eyes on their mound
+    img.putpixel((x + 4, y + 2), dark)
+    img.putpixel((x + 2, y + 1), rgb(0xF4E8C8))
+    img.putpixel((x + 4, y + 1), rgb(0xF4E8C8))
+    img.putpixel((x + 3, y + 2), scale(sand, 1.12))
+    fx, fy, fw, fh = parts["carapace"]["front"]
+    fill_rect(img, fx, fy, fw, fh, brown, rng, 5)                     # the mouthparts under the front edge
+    img.putpixel((fx + 2, fy + 1), dark)
+    img.putpixel((fx + fw - 3, fy + 1), dark)
+    for name, u, w in (("segment0", 0, 7), ("segment1", 20, 6), ("segment2", 38, 5)):
+        plate(name, u, 8, w, 2, 3)
+        x, y, fw, fh = parts[name]["top"]
+        fill_rect(img, x, y + fh - 1, fw, 1, dark, rng, 3)            # the seam to the next segment
+    plate("tail", 0, 14, 2, 2, 3)
+    for rect in side_faces(parts["tail"]) + [parts["tail"]["top"], parts["tail"]["bottom"]]:
+        x, y, w, h = rect
+        if rect in (parts["tail"]["top"], parts["tail"]["bottom"]):
+            fill_rect(img, x, y + h - 1, w, 1, dark, rng, 3)
+        else:
+            img.putpixel((x, y + h - 1), dark)
+    parts["telson"] = paint_box(img, 10, 14, 2, 2, 2, rgb(0xC07A2E), rng, 8, shaded=False)   # the amber bulb of venom
+    x, y, w, h = parts["telson"]["top"]
+    img.putpixel((x, y), rgb(0xE8A050))
+    parts["stinger"] = paint_box(img, 18, 14, 1, 1, 2, dark, rng, 4, shaded=False)
+    img.putpixel(parts["stinger"]["front"][:2], rgb(0x0E0806))
+    # The legs: banded sand and brown at the joints, the lower part darker towards the claw.
+    parts["leg"] = paint_box(img, 0, 20, 4, 1, 1, sand, rng, 6, shaded=False)
+    parts["knee"] = paint_box(img, 0, 22, 5, 1, 1, sand, rng, 6, shaded=False)
+    for name in ("leg", "knee"):
+        for rect in side_faces(parts[name]) + [parts[name]["top"], parts[name]["bottom"]]:
+            x, y, w, h = rect
+            if w < 3:
+                continue
+            fill_rect(img, x, y, 1, h, brown, rng, 3)                 # the joint
+            if name == "knee":
+                fill_rect(img, x + w - 1, y, 1, h, dark, rng, 3)      # the dark claw of the foot
+    # The pedipalps and the pincers: thick plates, the fingers darkening to black tips.
+    plate("arm", 0, 25, 1, 1, 4)
+    plate("forearm", 10, 25, 1, 1, 3)
+    plate("hand", 0, 31, 3, 2, 3, base=scale(sand, 0.92))
+    x, y, w, h = parts["hand"]["top"]
+    img.putpixel((x + 1, y + 1), jitter(light, rng, 4))
+    for name, u in (("fixed", 12), ("finger", 20)):
+        parts[name] = paint_box(img, u, 31, 1, 1, 3, brown, rng, 5, shaded=False)
+        for rect in parts[name].values():
+            x, y, w, h = rect
+            if w >= 3:
+                img.putpixel((x, y), dark)
+            elif h >= 3:
+                img.putpixel((x, y), dark)
+        fx, fy, fw, fh = parts[name]["front"]
+        img.putpixel((fx, fy), dark)
     shade_parts(img, parts)
     return img
 
@@ -804,27 +903,6 @@ def sobek(rng):
     return img
 
 
-def isis(rng):
-    """Isis, great of magic: a woman with a black wig and a golden band, the throne sign on her head, a white sheath
-    dress, and the feathered wings of the goddess drawn down her arms in red, blue and green."""
-    img, parts = god_body(rng, 0xC8956B, dress=0xF4F0E4, collar=(GOLD, LAPIS, TURQUOISE))
-    head = wig(img, rng, band_colour=0xE2B33C)
-    face(img, head, iris=0x2A1E14, eye_row=4, brow=0x14100E)
-    x, y, w, h = head["front"]
-    for ex in (1, 6):
-        img.putpixel((x + ex, y + 4), rgb(0x14100E))                    # the kohl lines
-    for name in ("front", "back", "right", "left"):                   # the throne sign
-        hat_px(img, name, [(2, 0), (2, 1), (2, 2), (3, 2), (4, 2), (5, 2), (5, 1)], 0x2A5AB0)
-    for x, y, w, h in side_faces(parts["arm"]):                       # the wings of the goddess on her arms
-        for j in range(2, h - 1):
-            colour = (CARNELIAN, LAPIS, TURQUOISE, GOLD)[(j // 2) % 4]
-            for i in range(w):
-                if (i + j) % 4 != 0:
-                    img.putpixel((x + i, y + j), jitter(colour, rng, 6))
-    shade_parts(img, parts)
-    return img
-
-
 def hathor(rng):
     """Hathor, lady of joy: a woman with a black wig, the cow horns and the red sun disc between them, a red sheath
     dress and the menat necklace of the goddess."""
@@ -886,7 +964,7 @@ ENTITIES = {
     "crocodile": crocodile,
     "ra": ra,
     "osiris": osiris,
-    "isis": isis,
+    "isis": heroine_isis,
     "horus": horus,
     "anubis": anubis,
     "thoth": thoth,
@@ -903,7 +981,7 @@ ENTITIES = {
     "scarab": scarab,
     "bastet_cat": bastet_cat,
     "jackal": lambda rng: beast(rng, 0x1E1A1A, 0x2E2828, 0xE2B33C, back=0x141010, belly=0x3A302A, claws=0xC8B890),
-    "scorpion": lambda rng: crayfish(rng, shell=0xC89A5A, dark=0x5A3A1A, under=0xE8C890, claw=0xA87A3A, eyes=0x141414),
+    "scorpion": scorpion,
     # The Sphinx: a lion of sandstone with the striped nemes for a mane.
     "sphinx": lambda rng: beast(rng, 0xD8B878, 0xE8CC90, 0x2A5AB0, mane=0x2A5AB0, back=0xC8A060, belly=0xE8D4A0,
                                 claws=0xA88A50),

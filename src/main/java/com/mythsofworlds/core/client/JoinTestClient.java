@@ -4,6 +4,7 @@ import com.mythsofworlds.MythsOfWorlds;
 import com.mythsofworlds.codex.CodexBook;
 import com.mythsofworlds.gametest.JoinTest;
 import com.mythsofworlds.mythology.relic.MythAttributes;
+import java.util.List;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Screenshot;
@@ -14,6 +15,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -32,6 +34,14 @@ import vazkii.patchouli.client.base.ClientAdvancements;
 public final class JoinTestClient {
     public static final String PROPERTY = "mythsofworlds.joinTestClient";
     private static final int GIVE_UP = 20 * 60 * 5;
+    /** Ticks after the suits when the Codex sweep starts, and how long each of its screenshots takes. */
+    private static final int CODEX_SWEEP = 104;
+    private static final int SHOT_TICKS = 14;
+    /** Pages of the Codex the sweep opens: the paths, small and the largest creatures (whose pictures must stay in their frame), a place, a god. */
+    private static final List<String> CODEX_PAGES = List.of("hellas/path", "hellas/hydra", "hellas/satyr", "hellas/agora",
+            "duat/apep", "duat/scorpion", "duat/isis", "jotunheim/path", "nav/path", "duat/sphinx", "hellas/cyclops",
+            "hellas/cerberus", "jotunheim/thrym", "jotunheim/surtr", "jotunheim/fenrir", "jotunheim/frost_giant",
+            "nav/zmey_gorynych");
 
     private static int ticks;
     /** Client ticks since the milestone arrived, or -1 before. */
@@ -129,14 +139,51 @@ public final class JoinTestClient {
                     mc.player.closeContainer();
                 }
             }
-            case 100 -> {
-                report("OK: joined, synced, every suit and swing drawn, the Codex, the inventory and the Curios screen opened");
-                leftAt = ticks;
-                if (mc.getConnection() != null) {
-                    mc.getConnection().getConnection().disconnect(Component.literal("done"));
+            case 88 -> mc.options.setCameraType(CameraType.FIRST_PERSON);
+            case 96 -> {
+                if (ModList.get().isLoaded("mca") && !com.mythsofworlds.compat.mca.McaSkins.INSTANCE.active()) {
+                    fail("MCA Reborn is installed but its women's looks were not found");
                 }
+                report(ModList.get().isLoaded("mca") ? "heroines drawn with MCA's looks" : "heroines drawn with the mod's own textures");
+                screenshot(mc, "heroines" + (ModList.get().isLoaded("mca") ? "_mca" : ""));
             }
             default -> {
+                if (after >= CODEX_SWEEP) {
+                    codexSweep(mc, after - CODEX_SWEEP);
+                }
+            }
+        }
+    }
+
+    /**
+     * Opens a few pages of the Codex (the path, text pages, large and small creatures) at every GUI scale from 1 to 4
+     * and takes a screenshot of each, to check that the pictures stay in their frames and the text in its place; then
+     * leaves the server.
+     */
+    private static void codexSweep(Minecraft mc, int tick) {
+        int shot = tick / SHOT_TICKS;
+        int t = tick % SHOT_TICKS;
+        if (shot < CODEX_PAGES.size() * 4) {
+            String entry = CODEX_PAGES.get(shot / 4);
+            int scale = shot % 4 + 1;
+            if (t == 0) {
+                mc.options.guiScale().set(scale);
+                mc.resizeDisplay();
+                PatchouliAPI.get().openBookEntry(CodexBook.ID, MythsOfWorlds.id(entry), 0);
+            } else if (t == SHOT_TICKS - 2) {
+                screenshot(mc, "codex_" + entry.replace('/', '_') + "_gui" + scale);
+            }
+            return;
+        }
+        if (t == 0 && shot == CODEX_PAGES.size() * 4) {
+            mc.options.guiScale().set(2);
+            mc.resizeDisplay();
+            mc.setScreen(null);
+            report("OK: joined, synced, every suit and swing drawn, the Codex at every GUI scale, the inventory and the "
+                    + "Curios screen opened");
+            leftAt = ticks;
+            if (mc.getConnection() != null) {
+                mc.getConnection().getConnection().disconnect(Component.literal("done"));
             }
         }
     }

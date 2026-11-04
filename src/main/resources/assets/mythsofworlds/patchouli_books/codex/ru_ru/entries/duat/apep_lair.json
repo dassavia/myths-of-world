@@ -2,7 +2,7 @@
   "name": "Логово Апопа",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_place",
-  "sortnum": 39,
+  "sortnum": 40,
   "pages": [
     {
       "type": "patchouli:text",

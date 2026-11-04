@@ -26,6 +26,8 @@ import vazkii.patchouli.api.PatchouliAPI;
 @EventBusSubscriber(modid = MythsOfWorlds.MODID)
 public final class CodexBook {
     public static final ResourceLocation ID = MythsOfWorlds.id("codex");
+    /** The clean font the Codex is written in (assets/mythsofworlds/font/codex.json, see mixin/PatchouliBookMixin). */
+    public static final ResourceLocation FONT = MythsOfWorlds.id("codex");
     private static final String PREFIX = "codex/";
     private static final String CRITERION = "granted";
 

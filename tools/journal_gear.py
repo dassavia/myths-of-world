@@ -160,9 +160,9 @@ def norse():
          "Surtr's sword: damage 10.5, attack speed 1.6, durability 2400, fireproof. Sets whatever it strikes on fire."),
         ("Глейпнир: 4 использования, связывает Фенрира.", "Gleipnir: 4 uses, binds Fenrir."),
         ("Шлем Хеймдалля: броня 4, твёрдость 2.5, отбрасывание -10%, прочность 418. Ночное зрение, все существа "
-         "в 100 блоках светятся сквозь стены.",
+         "в 100 блоках светятся сквозь стены. Клавиша N выключает и снова включает этот взор.",
          "Helmet of Heimdall: armour 4, toughness 2.5, knockback -10%, durability 418. Night vision, every creature "
-         "within 100 blocks glows through walls."),
+         "within 100 blocks glows through walls. The N key turns this vision off and on again."),
         BACK_SLOT,
     ])
     return [("ores", "intro", None, *ores), ("dark_iron_tools", "intro", None, *tools),

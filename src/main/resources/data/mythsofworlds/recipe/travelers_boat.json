@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SWS",
+    "HSH"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:sugar_cane"
+    },
+    "W": {
+      "item": "mythsofworlds:mummy_wrappings"
+    },
+    "H": {
+      "item": "mythsofworlds:crocodile_hide"
+    }
+  },
+  "result": {
+    "id": "mythsofworlds:travelers_boat",
+    "count": 1
+  }
+}

@@ -2,12 +2,13 @@
   "name": "Сет",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_boss",
-  "sortnum": 20,
+  "sortnum": 21,
   "pages": [
     {
       "type": "patchouli:entity",
       "entity": "mythsofworlds:set",
-      "name": "Сет"
+      "name": "Сет",
+      "scale": 0.97
     },
     {
       "type": "patchouli:text",

@@ -7,7 +7,8 @@
     {
       "type": "patchouli:entity",
       "entity": "mythsofworlds:cyclops",
-      "name": "Cyclops"
+      "name": "Cyclops",
+      "scale": 0.64
     },
     {
       "type": "patchouli:text",

@@ -2,7 +2,7 @@
   "name": "Ptah",
   "icon": "mythsofworlds:ankh",
   "category": "mythsofworlds:duat_boss",
-  "sortnum": 31,
+  "sortnum": 32,
   "pages": [
     {
       "type": "patchouli:entity",

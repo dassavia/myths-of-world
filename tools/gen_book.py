@@ -52,6 +52,38 @@ def advancement(kind, name):
                {"criteria": {"granted": {"trigger": "minecraft:impossible"}}})
 
 
+# The pictures of the creatures stay inside their frame at the top of the page, the space kept for them above the
+# text. Patchouli sizes a creature by its hitbox, but many renderers draw the model larger than that (the renderer
+# scale in the client classes), and nothing clips the picture: it would spill over the name, the text and the
+# tooltips. So each entity page is scaled down by the renderer's scale (read from the client code, one source of
+# truth); a few long or wide bodies need a little more.
+ENTITY_FIT = 1.4
+ENTITY_SCALE_OVERRIDES = {"apep": 0.45}
+
+
+def renderer_scales():
+    import glob
+    import re
+    scales = {}
+    root = os.path.join(os.path.dirname(__file__), "..", "src", "main", "java", "com", "mythsofworlds", "mythology")
+    for path in glob.glob(os.path.join(root, "*", "client", "*Client.java")):
+        with open(path, encoding="utf-8") as f:
+            source = f.read()
+        for m in re.finditer(r'registerEntityRenderer\(\w+\.([A-Z_]+)\.get\(\),(.*?)\);\n', source, re.S):
+            found = re.search(r'"([a-z_]+)",\s*([0-9.]+)F', m.group(2))
+            if found:
+                scales[m.group(1).lower()] = float(found.group(2))
+    return scales
+
+
+def entity_scale(entity, scales):
+    """How much smaller than Patchouli's own size the creature is drawn so it stays in its frame (1 = as is)."""
+    name = entity.split(":", 1)[1]
+    if name in ENTITY_SCALE_OVERRIDES:
+        return ENTITY_SCALE_OVERRIDES[name]
+    return round(min(1.0, ENTITY_FIT / scales.get(name, 1.0)), 2)
+
+
 def text(value):
     """Lang text to Patchouli markup: line breaks become $(br)."""
     return value.replace("$", "").replace("\n", "$(br)")
@@ -91,6 +123,7 @@ def main():
                         os.remove(os.path.join(dirpath, name))
 
     milestones = set()
+    scales = renderer_scales()
     for number, chapter in enumerate(chapters):
         cid = chapter["id"]
         with open(data("journal", f"{chapter['volume']}.json"), encoding="utf-8") as f:
@@ -126,7 +159,11 @@ def main():
                 key = f"journal.{NS}.{e['id']}"
                 pages = []
                 if "entity" in e:
-                    pages.append({"type": "patchouli:entity", "entity": e["entity"], "name": tr[key + ".title"]})
+                    page = {"type": "patchouli:entity", "entity": e["entity"], "name": tr[key + ".title"]}
+                    fit = entity_scale(e["entity"], scales)
+                    if fit < 1.0:
+                        page["scale"] = fit
+                    pages.append(page)
                 for page in range(1, e["pages"] + 1):
                     pages.append({"type": "patchouli:text", "text": text(tr[f"{key}.page{page}"])})
                 entry = {"name": tr[key + ".title"], "icon": chapter["icon"], "category": f"{NS}:{cid}_{e['category']}",

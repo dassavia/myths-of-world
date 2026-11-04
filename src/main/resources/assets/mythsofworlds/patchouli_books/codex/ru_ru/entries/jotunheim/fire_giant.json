@@ -7,7 +7,8 @@
     {
       "type": "patchouli:entity",
       "entity": "mythsofworlds:fire_giant",
-      "name": "Огненный великан"
+      "name": "Огненный великан",
+      "scale": 0.7
     },
     {
       "type": "patchouli:text",
