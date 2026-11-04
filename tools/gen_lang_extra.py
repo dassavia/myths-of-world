@@ -16,6 +16,9 @@ EXTRA = {
     "mythsofworlds.configuration.codexFont": ("Чистый шрифт Кодекса", "Clean font in the Codex"),
     "mythsofworlds.configuration.codexFont.tooltip": ("Писать Кодекс мифов чётким шрифтом мода с полной кириллицей вместо шрифта Patchouli",
                                                       "Write the Codex of Myths in the mod's clear font with full Cyrillic instead of Patchouli's"),
+    "mythsofworlds.configuration.worldBannerScale": ("Размер свитка с названием мира", "Size of the world's name banner"),
+    "mythsofworlds.configuration.worldBannerScale.tooltip": ("От четверти до полного свитка; надпись остаётся читаемой при любом масштабе интерфейса",
+                                                             "From a quarter to the full scroll; the name stays readable at every GUI scale"),
     "mythsofworlds.configuration.mca": ("MCA Reborn", "MCA Reborn"),
     "mythsofworlds.configuration.mca.tooltip": ("Совместная работа с Minecraft Comes Alive Reborn (если установлен)",
                                                 "Working together with Minecraft Comes Alive Reborn (when installed)"),
@@ -28,6 +31,7 @@ EXTRA = {
 }
 
 AFTER = {
+    "mythsofworlds.configuration.worldBannerScale": "mythsofworlds.configuration.showWorldName.tooltip",
     "mythsofworlds.configuration.codexFont": "mythsofworlds.configuration.showNumbers.tooltip",
 }
 
