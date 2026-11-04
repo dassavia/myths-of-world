@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "mythsofworlds:greek_merchant",
+    "mythsofworlds:norse_merchant",
+    "mythsofworlds:slavic_merchant",
+    "mythsofworlds:egyptian_merchant",
+    "mythsofworlds:priestess",
+    "mythsofworlds:amazon",
+    "mythsofworlds:valkyrie"
+  ]
+}

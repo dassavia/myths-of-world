@@ -10,6 +10,23 @@
 2. Положите скачанный `.jar` и две нужные ему библиотеки в папку `mods`: [Curios API](https://www.curseforge.com/minecraft/mc-mods/curios) 9.5 или новее (слот для крыльев) и [Patchouli](https://www.curseforge.com/minecraft/mc-mods/patchouli) (Кодекс мифов), обе для NeoForge 1.21.1 (Windows: `%appdata%\.minecraft\mods`, macOS: `~/Library/Application Support/minecraft/mods`, Linux: `~/.minecraft/mods`).
 3. Запустите Minecraft с профилем NeoForge.
 
+### Рекомендуемый спутник: MCA Reborn (необязательно)
+
+Мод полностью работает сам по себе. Если рядом установлен [Minecraft Comes Alive Reborn](https://modrinth.com/mod/minecraft-comes-alive-reborn)
+**7.7.32 или новее** для NeoForge 1.21.1 (необязательная зависимость, mod id `mca`), моды дополняют друг друга и ничего
+друг у друга не заменяют:
+
+- **Деревни.** Египетская деревня входит в тег `#minecraft:village`, MCA считает её деревней (слухи, судьбы, поиск).
+  Торговцы, жрицы и боги остаются сущностями этого мода (`mythsofworlds:*`). Внутри наших построек MCA не добавит жителя
+  рядом с торговцем или жрицей, который уже там живёт, чтобы в доме не было двух жителей
+  (`config/mythsofworlds-common.toml`, `[mca] noDoubleResidents`, по умолчанию включено; дети рождаются как обычно).
+- **Стража.** Стражники MCA нападают на чудовищ мифов (тег `mythsofworlds:mca/guard_targets`) и никогда не трогают богов,
+  торговцев и мирных существ (`mythsofworlds:mca/guard_ignored`). При запуске мод добавляет эти два тега в
+  `guardsTargetEntities` из `config/mca.json`; то, что вы сами там написали, не меняется и имеет приоритет.
+- **Пути.** Жаровня (блок необычной формы) входит в тег MCA `mca:villager_pathfinding_collision_checks`, жители не застревают о неё.
+- Всё можно выключить разом: `[mca] enabled = false`. Без MCA ничего из этого не загружается: код совместимости собран в
+  одном классе `compat/mca/McaCompat`, который подключается только при наличии мода, а теги без MCA просто не читаются.
+
 ## Что уже есть (v0.15.0)
 
 ### Путь героя и Кодекс мифов

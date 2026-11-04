@@ -1,0 +1,33 @@
+{
+  "replace": false,
+  "values": [
+    "mythsofworlds:ra",
+    "mythsofworlds:osiris",
+    "mythsofworlds:isis",
+    "mythsofworlds:horus",
+    "mythsofworlds:anubis",
+    "mythsofworlds:thoth",
+    "mythsofworlds:bastet",
+    "mythsofworlds:sobek",
+    "mythsofworlds:hathor",
+    "mythsofworlds:ptah",
+    "mythsofworlds:sekhmet",
+    "mythsofworlds:set",
+    "mythsofworlds:heimdall",
+    "mythsofworlds:greek_merchant",
+    "mythsofworlds:norse_merchant",
+    "mythsofworlds:slavic_merchant",
+    "mythsofworlds:egyptian_merchant",
+    "mythsofworlds:amazon",
+    "mythsofworlds:hippolyta",
+    "mythsofworlds:valkyrie",
+    "mythsofworlds:priestess",
+    "mythsofworlds:pegasus",
+    "mythsofworlds:golden_hind",
+    "mythsofworlds:hydra_hatchling",
+    "mythsofworlds:lion",
+    "mythsofworlds:bastet_cat",
+    "mythsofworlds:raven",
+    "mythsofworlds:firebird"
+  ]
+}

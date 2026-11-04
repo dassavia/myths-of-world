@@ -2,6 +2,7 @@ package com.mythsofworlds;
 
 import com.mythsofworlds.codex.CodexContent;
 import com.mythsofworlds.core.ClientConfig;
+import com.mythsofworlds.core.CommonConfig;
 import com.mythsofworlds.core.PlayerData;
 import com.mythsofworlds.core.back.BackSlot;
 import com.mythsofworlds.mythology.egyptian.EgyptianContent;
@@ -22,6 +23,7 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import org.slf4j.Logger;
@@ -33,6 +35,7 @@ public final class MythsOfWorlds {
 
     public MythsOfWorlds(IEventBus modBus, ModContainer container) {
         container.registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
+        container.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC);
         // One line per mythology (see mythology/Mythology.java for the list).
         PlayerData.init();
         BackSlot.init();
@@ -52,6 +55,10 @@ public final class MythsOfWorlds {
         IndianContent.init();
 
         ModRegistries.register(modBus);
+        // Optional companion mods: their compat class is only loaded when they are installed.
+        if (ModList.get().isLoaded("mca")) {
+            com.mythsofworlds.compat.mca.McaCompat.init(modBus);
+        }
     }
 
     public static ResourceLocation id(String path) {

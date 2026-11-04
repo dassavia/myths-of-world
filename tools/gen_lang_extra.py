@@ -16,6 +16,15 @@ EXTRA = {
     "mythsofworlds.configuration.codexFont": ("Чистый шрифт Кодекса", "Clean font in the Codex"),
     "mythsofworlds.configuration.codexFont.tooltip": ("Писать Кодекс мифов чётким шрифтом мода с полной кириллицей вместо шрифта Patchouli",
                                                       "Write the Codex of Myths in the mod's clear font with full Cyrillic instead of Patchouli's"),
+    "mythsofworlds.configuration.mca": ("MCA Reborn", "MCA Reborn"),
+    "mythsofworlds.configuration.mca.tooltip": ("Совместная работа с Minecraft Comes Alive Reborn (если установлен)",
+                                                "Working together with Minecraft Comes Alive Reborn (when installed)"),
+    "mythsofworlds.configuration.mcaCompat": ("Совместимость с MCA Reborn", "MCA Reborn compatibility"),
+    "mythsofworlds.configuration.mcaCompat.tooltip": ("Стража MCA бьёт чудовищ мифов и не трогает богов, торговцев и мирных существ",
+                                                      "MCA's guards fight the monsters of the myths and leave gods, traders and friendly creatures alone"),
+    "mythsofworlds.configuration.mcaNoDoubleResidents": ("Без двойных жителей", "No double residents"),
+    "mythsofworlds.configuration.mcaNoDoubleResidents.tooltip": ("В постройках мифов житель MCA не появляется рядом с торговцем или жрицей, который там уже живёт",
+                                                                 "In the buildings of the myths, an MCA villager is not added next to a trader or priestess who already lives there"),
 }
 
 AFTER = {
