@@ -5,11 +5,11 @@ import com.mythsofworlds.core.ClientConfig;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import javax.annotation.Nullable;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 import net.neoforged.fml.ModList;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * The client side of {@link McaCompat}: with MCA Reborn installed, the priestesses of Isis, the amazons and the
